@@ -1,15 +1,16 @@
 import QtQuick 2.0
-import Ubuntu.Components 0.1
+//import Ubuntu.Components 0.1
 import "../js/getURL.js" as GetURL
+import Sailfish.Silica 1.0
 
-UbuntuShape {
+/*UbuntuShape*/ Rectangle{
     id: usWeiboContent
     anchors {
         left: parent.left; right: parent.right
 //                    leftMargin: units.gu(1); rightMargin: units.gu(1)
     }
-    height: isInvalid ? 0 : columnWContent.height + units.gu(2)
-    radius: "medium"
+    height: isInvalid ? 0 : columnWContent.height + 2/* units.gu(2)*/
+    //radius: "medium"
     color: Qt.rgba(255, 255, 255, 0.3)
 
     property var retweetWeibo
@@ -39,18 +40,21 @@ UbuntuShape {
     Column {
         id: columnWContent
         anchors {
-            top: parent.top; topMargin: units.gu(1)
-            left: parent.left; right: parent.right
-            leftMargin: units.gu(1); rightMargin: units.gu(1)
+            top: parent.top
+            topMargin: 1//units.gu(1)
+            left: parent.left
+            right: parent.right
+            leftMargin: 1// units.gu(1)
+            rightMargin:1// units.gu(1)
         }
-        spacing: units.gu(0.5)
+        spacing: 0.5;//units.gu(0.5)
         height: childrenRect.height
 //            rowUser.height + labelWeibo.paintedHeight + gridWeiboPics.height + units.gu(1)
 
         Row {
             id: rowUser
             anchors { left: parent.left; right: parent.right }
-            spacing: units.gu(0.5)
+            spacing: 0.5//units.gu(0.5)
             height: labelUserName.paintedHeight
 
 //            UbuntuShape {
@@ -96,7 +100,7 @@ UbuntuShape {
                 delegate: Component {
                     Image {
                         fillMode: Image.PreserveAspectCrop;
-                        width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - units.gu(3) ;
+                        width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - 3;//units.gu(3) ;
                         height: modelImages.count == 1 ? implicitHeight : width
                         source: model.thumbnail_pic
 

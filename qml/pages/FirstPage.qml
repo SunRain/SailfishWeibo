@@ -29,45 +29,351 @@
 */
 
 import QtQuick 2.0
+import QtWebKit 3.0
 import Sailfish.Silica 1.0
+
+import com.sunrain.sinaweibo 1.0
+
+//import "../js/Settings.js" as settings
+
+import "../ui"
+import "../components"
+import "../js"
+import "../js/Settings.js" as Settings
 
 
 Page {
-    id: page
+    id: mainView
     
-    // To enable PullDownMenu, place our content in a SilicaFlickable
-    SilicaFlickable {
+    property bool settingsInitialized: false
+    property int runningBusyIndicator: 1
+    
+    Loader{
+        id:loader
         anchors.fill: parent
+    }
+    
+    onStatusChanged: {
+        if (mainView.status === PageStatus.Active) {
+            console.log("=== PageStatus.Active");
+            
+            if (!settingsInitialized) {
+                Settings.initialize();
+                settingsInitialized = true
+            }
+            
+            reset();
+           // loader.sourceComponent = mainComponent;
+        }
+    }
+    
+    //FIXME:这个column是起什么作用？
+//    Column {
+//        id: notificationBar
+//        anchors {
+//            fill: parent
+//            topMargin: 10//units.gu(10)
+//            leftMargin: parent.width / 2
+//            rightMargin: 2//units.gu(2)
+//            bottomMargin: 2//units.gu(2)
+//        }
+//        z: 9999
+//        spacing: 1//units.gu(1)
         
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-        PullDownMenu {
-            MenuItem {
-                text: qsTr("Show Page 2")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))	            
+//        move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
+//    }
+    
+    function reset() {
+        runningBusyIndicator = 0;
+        if (Settings.getAccess_token() == "") {
+            startLogin()
+        }
+        else {
+            weiboApiHandler.checkToken(Settings.getAccess_token())
+        }
+    }
+    
+    function startLogin() {
+        console.log("=== startLogin()");
+        //PopupUtils.open(loginSheet)
+        loader.sourceComponent = loader.Null;
+        loader.sourceComponent = loginSheet;
+        
+        //pageStack.push(Qt.resolvedUrl("../components/LoginSheet.qml"));        
+    }
+    
+    
+    Component{
+        id:mainComponent
+        WeiboTab {
+            id: weiboTab
+            
+            Component.onCompleted: {
+                weiboTab.refresh();
             }
         }
+
         
-        // Tell SilicaFlickable the height of its content.
-        contentHeight: column.height
         
-        // Place our content in a Column.  The PageHeader is always placed at the top
-        // of the page, followed by our content.
-        Column {
-            id: column
+
+        // To enable PullDownMenu, place our content in a SilicaFlickable
+//        SilicaFlickable {
+//            anchors.fill: parent
             
-            width: page.width
-            spacing: Theme.paddingLarge
-            PageHeader {
-                title: qsTr("UI Template")
+//            // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
+//            PullDownMenu {
+//                MenuItem {
+//                    text: qsTr("Show Page 2")
+//                    onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))	            
+//                }
+//            }
+            
+//            // Tell SilicaFlickable the height of its content.
+//            contentHeight: /*notificationBar.height+*/column.height
+            
+////            Column {
+////                id: notificationBar
+////                anchors {
+////                    fill: parent
+////                    topMargin: 10//units.gu(10)
+////                    leftMargin: parent.width / 2
+////                    rightMargin: 2//units.gu(2)
+////                    bottomMargin: 2//units.gu(2)
+////                }
+////                z: 9999
+////                spacing: 1//units.gu(1)
+                
+////                Label { 
+////                    x: Theme.paddingLarge
+////                    text: qsTr("notificationBar")
+////                    color: Theme.secondaryHighlightColor
+////                    font.pixelSize: Theme.fontSizeExtraLarge
+////                }
+                
+////                move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
+////            }
+                
+//            // Place our content in a Column.  The PageHeader is always placed at the top
+//            // of the page, followed by our content.
+//            Column {
+//                id: column
+                
+//                width: mainView.width
+//                spacing: Theme.paddingLarge
+//                PageHeader {
+//                    title: qsTr("UI Template")
+//                }
+//                Label { 
+//                    x: Theme.paddingLarge
+//                    text: qsTr("Hello Sailors")
+//                    color: Theme.secondaryHighlightColor
+//                    font.pixelSize: Theme.fontSizeExtraLarge
+//                }
+//            }
+            
+//            Component.onCompleted: {
+//                console.log("mainComponent onCompleted");
+//                //addNotification(notificationBar, qsTr("Welcome"), 3);
+//                //var text = inText == undefined ? "" : inText
+//                //var time = inTime == undefined ? 3 : inTime
+//               // var noti = Qt.createComponent("../components/Notification.qml")
+//                //var notiItem = noti.createObject(notificationBar, { "text": "Welcome", "time": "3" })
+//            }
+                       
+//        }
+    }
+    
+    
+    //////////////////////////////////////////////////////////////
+    
+    Component {
+        id: loginSheet
+        SilicaFlickable {
+            anchors.fill: parent
+            
+            contentHeight: Screen.height
+            contentWidth: Screen.width
+            
+            SilicaWebView {
+                id: webView
+                
+                Component.onCompleted:{
+                    console.log("---- loginSheet webView onCompleted");
+                }
+                
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                    bottom: navigationColumn.top
+                }
+                
+                opacity: 0
+                onLoadingChanged: {
+                    switch (loadRequest.status)
+                    {
+                    case WebView.LoadSucceededStatus:
+                        opacity = 1
+                        break
+                    case WebView.LoadFailedStatus:
+                        opacity = 0
+                        viewPlaceHolder.errorString = loadRequest.errorString
+                        break
+                    default:
+                        opacity = 0
+                        break
+                    }
+                    
+                    console.log("==== loginSheet url: ", loadRequest.url)
+                    var url = loadRequest.url + ""
+                    var temp = url.split("code=")
+                    if (temp[0].indexOf("https://api.weibo.com/oauth2/default.html") == 0) {
+                        console.log("final code: ", temp[1])
+                        getAccessCode(temp[1])
+                        // PopupUtils.close(webviewSheet)
+                        //pageStack.pop();
+                    }
+                }
+                
+                FadeAnimation on opacity {}
+                PullDownMenu {
+                    MenuItem {
+                        text: "Reload"
+                        onClicked: webView.reload()
+                    }
+                }
             }
-            Label { 
-                x: Theme.paddingLarge
-                text: qsTr("Hello Sailors")
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
+            
+            ViewPlaceholder {
+                id: viewPlaceHolder
+                property string errorString
+                
+                enabled: webView.opacity === 0 && !webView.loading
+                text: "Web content load error: " + errorString
+                hintText: "Check network connectivity and pull down to reload"
+            }
+            
+            Column {
+                id: navigationColumn
+                width: parent.width
+                anchors.bottom: parent.bottom
+                spacing: Theme.paddingSmall
+                
+                Label {
+                    x: Theme.paddingLarge
+                    width: parent.width - 2 * Theme.paddingLarge
+                    text: qsTr("About oauth2 info");
+                }
+                Button {
+                    text: qsTr("Click to oauth")
+                    enabled: true
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: {
+                        webView.url = "https://open.weibo.cn/oauth2/authorize?client_id=" + appData.key + "&redirect_uri=https://api.weibo.com/oauth2/default.html&display=mobile&response_type=code"
+                    }
+                }
             }
         }
     }
+    
+    /////////////////////////////////////////////////////////
+    
+    MyType {
+        id: appData
+    }
+    
+    
+    //////////////////////////////////////////////////////////////////         notificationBar
+    //FIXME:这个column是起什么作用？
+//    Column {
+//        id: notificationBar
+//        anchors {
+//            fill: parent
+//            topMargin: 10//units.gu(10)
+//            leftMargin: parent.width / 2
+//            rightMargin: 2//units.gu(2)
+//            bottomMargin: 2//units.gu(2)
+//        }
+//        z: 9999
+//        spacing: 1//units.gu(1)
+
+//        move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
+//    }
+    
+    //TODO:Need a better way to add Notification
+    
+    // pls use this function to add notification: mainView.addNotification(string, int)
+    function addNotification(obj, inText, inTime) {
+//        var text = inText == undefined ? "" : inText
+//        var time = inTime == undefined ? 3 : inTime
+//        var noti = Qt.createComponent("../components/Notification.qml")
+//        var notiItem = noti.createObject(/*notificationBar*/obj, { "text": text, "time": time })
+    }
+
+    
+    //////////////////////////////////////////////////////////////////
+    //api handlers
+    ////////////////
+    function getAccessCode(code) {
+        weiboApiHandler.login(appData.key, appData.secret, code)
+    }
+    
+    WeiboApiHandler {
+        id: weiboApiHandler
+
+        function initialData() {
+            console.log("===== we got token succeed, here we go ^_^");
+            
+            //remove the loginSheet
+            loader.sourceComponent = loader.Null;
+            loader.sourceComponent = mainComponent;
+            
+            //console.log("===== addNotification");
+           // addNotification(qsTr("Welcome"), 3)
+            
+            //weiboTab.refresh()
+            //messageTab.refresh()
+            //userTab.getInfo()
+            //tabsWeibo.selectedTabIndex = 0
+            
+             //weiboTab.refresh();
+        }
+
+        onLogined: {
+//            weiboTab.refresh()
+            initialData()
+        }
+
+        onTokenExpired: {
+            loader.sourceComponent = loader.Null;
+            
+            if (isExpired) {
+                startLogin()
+            }
+            else {
+//                weiboTab.refresh()
+                initialData()
+            }
+        }
+
+        onSendedWeibo: {
+            loader.sourceComponent = loader.Null;
+            //TODO: what is this for ????
+            //mainStack.pop() 
+        }
+    }
+    
+    //////////////////////////////////////////////////////////////////         settings
+    /*Settings {
+        id: settings
+    }*/
+
+    //////////////////////////////////////////////////////////////////         settings
+    NetworkHelper {
+        id: networkHelper
+    }
+    
+    
 }
 
 

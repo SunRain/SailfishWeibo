@@ -1,5 +1,6 @@
 import QtQuick 2.0
-import Ubuntu.Components 0.1
+//import Ubuntu.Components 0.1
+import Sailfish.Silica 1.0
 
 Item {
     id: notification
@@ -11,6 +12,7 @@ Item {
     property int time: 3
 
     Component.onCompleted: {
+        console.log("notification ===  onCompleted");
         opacity = 1
         timerDisplay.start()
     }
@@ -27,7 +29,7 @@ Item {
         }
     }
 
-    UbuntuShape {
+    /*UbuntuShape*/ Rectangle{
         id: usContainer
 //        gradientColor: "#000080"
         color: "#000080"
@@ -68,17 +70,17 @@ Item {
         ParallelAnimation {
 //            running: animaDestroy.running
 
-            UbuntuNumberAnimation {
+            /*UbuntuNumberAnimation*/ NumberAnimation {
                 target: notification
                 property: "scale"
                 to: 0.3
             }
-            UbuntuNumberAnimation {
+            /*UbuntuNumberAnimation*/ NumberAnimation {
                 target: usContainer
                 property: "x"
                 to: usContainer.width * 2
             }
-            UbuntuNumberAnimation {
+            /*UbuntuNumberAnimation*/NumberAnimation {
                 target: notification
                 property: "opacity"
                 to: 0

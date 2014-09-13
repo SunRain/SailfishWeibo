@@ -27,10 +27,8 @@ OTHER_FILES += qml/SailfishWeibo.qml \
     rpm/SailfishWeibo.yaml \
     translations/*.ts \
     SailfishWeibo.desktop \
-    qml/Settings.qml \
     qml/aesyweibo.qml \
     qml/components/Notification.qml \
-    qml/components/LoginSheet.qml \
     qml/components/FooterLoadMore.qml \
     qml/components/DelegateWeibo.qml \
     qml/components/DelegateRepostedWeibo.qml \
@@ -61,7 +59,10 @@ OTHER_FILES += qml/SailfishWeibo.qml \
     qml/ui/FriendsPage.qml \
     qml/ui/CommentMentioned.qml \
     qml/ui/CommentAllPage.qml \
-    qml/ui/AboutPage.qml
+    qml/ui/AboutPage.qml \
+    qml/js/LocalStore.js \
+    qml/js/Settings.js \
+    qml/components/MainComponent.qml
     
 # to disable building translations every time, comment out the
 # following CONFIG line

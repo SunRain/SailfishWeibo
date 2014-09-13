@@ -1,14 +1,15 @@
 import QtQuick 2.0
 import "./weiboapi.js" as WB
+import "../js/Settings.js" as Settings
 
 QtObject {
     id: weiboApiHandler
-
+    
     signal tokenExpired(bool isExpired)
     signal logined
     signal sendedWeibo
     signal getComments
-
+    
     //////////////////////////////////////////////////////////////////         login
     function login(id, secret, code)
     {
@@ -22,8 +23,8 @@ QtObject {
                     }else {
                         // right result
                         console.log("access_token: ", result.access_token)
-                        settings.setAccess_token(result.access_token)
-                        settings.setUid(result.uid)
+                        Settings.setAccess_token(result.access_token)
+                        Settings.setUid(result.uid)
                         logined()
                     }
                 }else{
@@ -31,10 +32,10 @@ QtObject {
                 }
             }
         }
-
+        
         WB.weiboGetAccessCode(id, secret, code, new observer())
     }
-
+    
     //////////////////////////////////////////////////////////////////         check token
     function checkToken(token)
     {
@@ -45,7 +46,7 @@ QtObject {
                 if (status == "no_network") {
                     mainView.addNotification(i18n.tr("Opps, Something wrong with the network ?"), 99)
                 }
-
+                
                 if(result != undefined){
                     if(result.error_code != undefined) {
                         // TODO  error handler
@@ -59,7 +60,7 @@ QtObject {
                         }
                     }else {
                         // right result
-                        console.log("token: ", settings.getAccess_token())
+                        console.log("token: ", Settings.getAccess_token())
                         if (result.expire_in < 1) {
                             tokenExpired(true)
                         }
@@ -72,11 +73,11 @@ QtObject {
                 }
             }
         }
-
+        
         WB.weiboCheckToken(token, new observer())
     }
-
-
-
-
+    
+    
+    
+    
 }
