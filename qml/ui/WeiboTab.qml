@@ -68,7 +68,7 @@ import Sailfish.Silica 1.0
     }
 
     // Tell SilicaFlickable the height of its content.
-    contentHeight: /*notificationBar.height+*/column.height
+    contentHeight: column.height
     
     Column{
         id: column
@@ -102,13 +102,6 @@ import Sailfish.Silica 1.0
                 model: modelWeibo
                 footer: footerWeibo
                 delegate: delegateWeibo
-                
-                //            property real curY: 0
-                //            onMovementStarted: { curY = contentY; console.log("onFlickingChanged: ", curY);  }
-                
-                //            onContentYChanged: {
-                //                console.log("visibleArea.yPosition: ", visibleArea.yPosition)
-                //            }
             }
         }
     }
@@ -117,8 +110,8 @@ import Sailfish.Silica 1.0
         
         DelegateWeibo {
             onClicked: {
-                console.log("weibo Detail:", JSON.stringify(modelWeibo.get(index)))
-                //mainView.toWeiboPage(modelWeibo, index)
+                console.log("weibo Detail:" + JSON.stringify(modelWeibo.get(index)))
+                mainView.toWeiboPage(modelWeibo, index)
             }
         }
     }

@@ -46,6 +46,7 @@ Page {
     id: mainView
     
     property bool settingsInitialized: false
+    property bool firstUiLaunchTime: true
     property int runningBusyIndicator: 1
     
     Loader{
@@ -59,10 +60,14 @@ Page {
             
             if (!settingsInitialized) {
                 Settings.initialize();
-                settingsInitialized = true
+                settingsInitialized = true;
+            }
+            if (firstUiLaunchTime) {
+                reset();
+                firstUiLaunchTime = false;
             }
             
-            reset();
+            console.log("====================== page depth is "+ pageStack.depth);
            // loader.sourceComponent = mainComponent;
         }
     }
@@ -112,78 +117,8 @@ Page {
                 weiboTab.refresh();
             }
         }
-
-        
-        
-
-        // To enable PullDownMenu, place our content in a SilicaFlickable
-//        SilicaFlickable {
-//            anchors.fill: parent
-            
-//            // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-//            PullDownMenu {
-//                MenuItem {
-//                    text: qsTr("Show Page 2")
-//                    onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))	            
-//                }
-//            }
-            
-//            // Tell SilicaFlickable the height of its content.
-//            contentHeight: /*notificationBar.height+*/column.height
-            
-////            Column {
-////                id: notificationBar
-////                anchors {
-////                    fill: parent
-////                    topMargin: 10//units.gu(10)
-////                    leftMargin: parent.width / 2
-////                    rightMargin: 2//units.gu(2)
-////                    bottomMargin: 2//units.gu(2)
-////                }
-////                z: 9999
-////                spacing: 1//units.gu(1)
-                
-////                Label { 
-////                    x: Theme.paddingLarge
-////                    text: qsTr("notificationBar")
-////                    color: Theme.secondaryHighlightColor
-////                    font.pixelSize: Theme.fontSizeExtraLarge
-////                }
-                
-////                move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
-////            }
-                
-//            // Place our content in a Column.  The PageHeader is always placed at the top
-//            // of the page, followed by our content.
-//            Column {
-//                id: column
-                
-//                width: mainView.width
-//                spacing: Theme.paddingLarge
-//                PageHeader {
-//                    title: qsTr("UI Template")
-//                }
-//                Label { 
-//                    x: Theme.paddingLarge
-//                    text: qsTr("Hello Sailors")
-//                    color: Theme.secondaryHighlightColor
-//                    font.pixelSize: Theme.fontSizeExtraLarge
-//                }
-//            }
-            
-//            Component.onCompleted: {
-//                console.log("mainComponent onCompleted");
-//                //addNotification(notificationBar, qsTr("Welcome"), 3);
-//                //var text = inText == undefined ? "" : inText
-//                //var time = inTime == undefined ? 3 : inTime
-//               // var noti = Qt.createComponent("../components/Notification.qml")
-//                //var notiItem = noti.createObject(notificationBar, { "text": "Welcome", "time": "3" })
-//            }
-                       
-//        }
     }
-    
-    
+
     //////////////////////////////////////////////////////////////
     
     Component {
@@ -282,6 +217,15 @@ Page {
         id: appData
     }
     
+    //////////////////////////////////////////////////////////////////         go to weibo page
+    function toWeiboPage(model, index) {
+        console.log("toWeiboPage  index " + index);
+        //weiboPage.setFeed(model, index)
+        //mainStack.push(weiboPage)
+        pageStack.push(Qt.resolvedUrl("../ui/WeiboPage.qml"),{
+                                                  "weiboModel":model,
+                                                  "newIndex":index})
+    }
     
     //////////////////////////////////////////////////////////////////         notificationBar
     //FIXME:这个column是起什么作用？

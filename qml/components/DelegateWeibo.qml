@@ -61,9 +61,6 @@ import Sailfish.Silica 1.0
             rightMargin: Theme.paddingSmall //units.gu(1)
         }
         spacing: Theme.paddingSmall //units.gu(1)
-        //height: //childrenRect.height
-        //height:        rowUser.height + labelWeibo.paintedHeight + gridWeiboPics.height + itemRetweetContainer.height + 1.5//units.gu(1.5)*/
-        
         Row {
             id: rowUser
             anchors { 
@@ -97,7 +94,7 @@ import Sailfish.Silica 1.0
             
             Column {
                 id:rowUserColumn
-                spacing: Theme.paddingSmal
+                spacing: Theme.paddingSmall
                 
                 Label {
                     id: labelUserName
@@ -165,8 +162,7 @@ import Sailfish.Silica 1.0
                 rightMargin: Theme.paddingSmall//units.gu(1)
             }
             height: childrenRect.height
-            //                model.retweeted_status != undefined ? childrenRect.height : 0
-            
+
             DelegateRepostedWeibo{
                 visible: model.retweeted_status != undefined
                 retweetWeibo: model.retweeted_status
@@ -175,7 +171,6 @@ import Sailfish.Silica 1.0
             }
         }
         
-        //TODO:暂时移除
         Column {
             width: parent.width; height: childrenRect.height
             //TODO:这个是什么作用？
