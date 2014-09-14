@@ -86,6 +86,18 @@
         <source>Show Page 2</source>
         <translation type="obsolete">Zur Seite 2</translation>
     </message>
+    <message>
+        <source>Reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeiboTab</name>

@@ -69,6 +69,21 @@
     </message>
 </context>
 <context>
+    <name>WeiboPage</name>
+    <message>
+        <source>Reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WeiboTab</name>
     <message>
         <source>click here to load more..</source>

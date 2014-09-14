@@ -96,65 +96,112 @@ Page {
 //        }
 //    }
 
-
-    //////////////////////////////////////////////      a listview to show the weibo content
-    SilicaListView {
-        id: weiboListview
+    DockedPanel {
+        id: actionPanel
         
-        anchors.fill: parent     
-        //                snapMode: ListView.SnapOneItem
-        //                boundsBehavior: Flickable.StopAtBounds
-        //                orientation: ListView.Horizontal
-        contentHeight: parent.width * count
-        model: weiboListviewModel//weiboModel
-        delegate: xmlDelegate
-        clip: true
-        //currentIndex: -1;
-        //                highlightFollowsCurrentItem: true
-        //                highlightRangeMode: ListView.StrictlyEnforceRange
+        width:parent.width// weiboPage.isPortrait ? parent.width : Theme.itemSizeExtraSmall /*  + Theme.paddingLarge*/
+        height:Theme.itemSizeExtraSmall+Theme.paddingMedium*2// weiboPage.isPortrait ? Theme.itemSizeExtraSmall /*  + Theme.paddingLarge*/ : parent.height
         
-        onCurrentIndexChanged: {
-            console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
-            console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
-            if (preventIndexChangeHandler) {
-                preventIndexChangeHandler = false
-                return
+        dock: Dock.Top// weiboPage.isPortrait ? Dock.Top : Dock.Left
+        
+        Flow {
+            anchors.centerIn: parent
+            spacing: Theme.paddingSmall 
+            //TODO:添加具体的点击功能
+            Button {
+                text: qsTr("Reply")
+                width: Theme.itemSizeSmall
+                height: Theme.itemSizeSmall
+                onClicked: {
+                    console.log("comment info: ", JSON.stringify(weiboPage.commentInfo))
+                    //PopupUtils.close(dialogue)
+                    //mainView.toSendPage("reply", weiboPage.commentInfo)
+                }
             }
-            
-            /*if (weiboModel.count == 0)*/ // It is normal bevaviour.
-            if (weiboListviewModel.count == 0)
-                return
-            
-//            if (weiboModel == null || weiboModel.get == undefined) {
-            if (weiboListviewModel == null || weiboListviewModel.get == undefined) {
-                console.log("---- Stange behavior ----")
-                console.trace()
-                return
+            Button {
+                text: qsTr("Copy")
+                width: Theme.itemSizeSmall
+                height: Theme.itemSizeSmall
+                //onClicked: PopupUtils.close(dialogue)
             }
-            
-            weiboItem = weiboListviewModel.get(currentIndex);//weiboModel.get(currentIndex)
-            
-            currentItem.getComments(Settings.getAccess_token(), weiboItem.id, 1)
-            //            console.log("weiboItem: ", JSON.stringify(weiboItem))
-            //            commentsWanted(weiboItem.id, currentIndex)
-            
-            //            weiboTitle = weiboItem.feed_name
-            
-            //            if (weiboItem.status != "1") {
-            //                var dbResult = DB.updateArticleStatus(weiboItem.id, "1")
-            //                if (dbResult.rowsAffected == 1) {
-            //                    articleStatusChanged(weiboItem.tagId, weiboItem.id, "1")
-            //                }
-            //            }
+            Button{
+                text: qsTr("Cancel")
+                width: Theme.itemSizeSmall
+                height: Theme.itemSizeSmall
+                //onClicked: PopupUtils.close(dialogue)
+            }
         }
+    }
+    //////////////////////////////////////////////      a listview to show the weibo content
+    SilicaFlickable {
+        id:mainFlickableView
+        anchors {
+            fill: parent
+            //leftMargin: page.isPortrait ? 0 : actionPanel.visibleSize
+            topMargin: actionPanel.visibleSize ? actionPanel.height : 0//page.isPortrait ? actionPanel.visibleSize : 0
+            //rightMargin: page.isPortrait ? 0 : actionPanel.visibleSize
+            //bottomMargin: page.isPortrait ? actionPanel.visibleSize : 0
+        }
+        Behavior on topMargin {
+            FadeAnimation {}
+        }
+        contentHeight: weiboListview.height
         
-        Component.onCompleted: {
-            console.log("== weiboPageSilicaFlickable onCompleted");
-            weiboListviewModel.clear();
-            weiboListviewModel.append(weiboModel.get(newIndex));
-            weiboListview.currentIndex = 0//newIndex;
-            weiboListview.positionViewAtIndex(weiboListview.currentIndex, ListView.Center);
+        SilicaListView {
+            id: weiboListview
+            width: mainFlickableView.width
+            height: mainFlickableView.height
+
+            contentHeight: parent.width * count
+            model: weiboListviewModel//weiboModel
+            delegate: xmlDelegate
+            clip: true
+            onCurrentIndexChanged: {
+                console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
+                console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
+                if (preventIndexChangeHandler) {
+                    preventIndexChangeHandler = false
+                    return
+                }
+                
+                /*if (weiboModel.count == 0)*/ // It is normal bevaviour.
+                if (weiboListviewModel.count == 0)
+                    return
+                
+                //            if (weiboModel == null || weiboModel.get == undefined) {
+                if (weiboListviewModel == null || weiboListviewModel.get == undefined) {
+                    console.log("---- Stange behavior ----")
+                    console.trace()
+                    return
+                }
+                
+                weiboItem = weiboListviewModel.get(currentIndex);//weiboModel.get(currentIndex)
+                
+                currentItem.getComments(Settings.getAccess_token(), weiboItem.id, 1)
+                //            console.log("weiboItem: ", JSON.stringify(weiboItem))
+                //            commentsWanted(weiboItem.id, currentIndex)
+                
+                //            weiboTitle = weiboItem.feed_name
+                
+                //            if (weiboItem.status != "1") {
+                //                var dbResult = DB.updateArticleStatus(weiboItem.id, "1")
+                //                if (dbResult.rowsAffected == 1) {
+                //                    articleStatusChanged(weiboItem.tagId, weiboItem.id, "1")
+                //                }
+                //            }
+            }
             
+            Component.onCompleted: {
+                console.log("== weiboPageSilicaFlickable onCompleted");
+                console.log("== listview heigt is " + weiboListview.height);
+                console.log("== weiboPageSilicaFlickable heigt is " + mainFlickableView.height);
+                
+                weiboListviewModel.clear();
+                weiboListviewModel.append(weiboModel.get(newIndex));
+                weiboListview.currentIndex = 0//newIndex;
+                weiboListview.positionViewAtIndex(weiboListview.currentIndex, ListView.Center);
+                
+            }
         }
     }
     
@@ -220,6 +267,7 @@ Page {
 
                 DelegateWeibo {
                     onClicked: {
+                        //TODO:添加相关功能的具体实现
                         console.log("WeiboPage ==== DelegateWeibo item clicked");
 //                        console.log("model.pic_urls: ", JSON.stringify(pic_urls))
 //                        var tmp = []
@@ -229,6 +277,8 @@ Page {
 //                            }
 //                            mainView.toGalleryPage(tmp, 1)
 //                        }
+                        //controlPanel.open = !controlPanel.open
+                        actionPanel.open = !actionPanel.open;
                     }
                 }
 
@@ -351,6 +401,7 @@ Page {
 //                                weiboPage.commentInfo = { "id": weiboModel.get(weiboIndex).id, "cid": model.id}
 //                                PopupUtils.open(dialog)
                                 console.log("weiboPage ==== delegateComment click")
+                                actionPanel.open = !actionPanel.open;
                             }
                         }
                     }
