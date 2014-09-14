@@ -222,9 +222,9 @@ Page {
         console.log("toWeiboPage  index " + index);
         //weiboPage.setFeed(model, index)
         //mainStack.push(weiboPage)
-        pageStack.push(Qt.resolvedUrl("../ui/WeiboPage.qml"),{
-                                                  "weiboModel":model,
-                                                  "newIndex":index})
+        pageStack.push(Qt.resolvedUrl("../ui/WeiboPage.qml"),
+                        {"weiboModel":model,
+                           "newIndex":index})
     }
     
     //////////////////////////////////////////////////////////////////         notificationBar

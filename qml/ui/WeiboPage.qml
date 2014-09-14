@@ -106,30 +106,34 @@ Page {
         //                boundsBehavior: Flickable.StopAtBounds
         //                orientation: ListView.Horizontal
         contentHeight: parent.width * count
-        model: weiboModel
+        model: weiboListviewModel//weiboModel
         delegate: xmlDelegate
         clip: true
-        currentIndex: -1;
+        //currentIndex: -1;
         //                highlightFollowsCurrentItem: true
         //                highlightRangeMode: ListView.StrictlyEnforceRange
         
         onCurrentIndexChanged: {
             console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
+            console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
             if (preventIndexChangeHandler) {
                 preventIndexChangeHandler = false
                 return
             }
             
-            if (weiboModel.count == 0) // It is normal bevaviour.
+            /*if (weiboModel.count == 0)*/ // It is normal bevaviour.
+            if (weiboListviewModel.count == 0)
                 return
             
-            if (weiboModel == null || weiboModel.get == undefined) {
+//            if (weiboModel == null || weiboModel.get == undefined) {
+            if (weiboListviewModel == null || weiboListviewModel.get == undefined) {
                 console.log("---- Stange behavior ----")
                 console.trace()
                 return
             }
             
-            weiboItem = weiboModel.get(currentIndex)
+            weiboItem = weiboListviewModel.get(currentIndex);//weiboModel.get(currentIndex)
+            
             currentItem.getComments(Settings.getAccess_token(), weiboItem.id, 1)
             //            console.log("weiboItem: ", JSON.stringify(weiboItem))
             //            commentsWanted(weiboItem.id, currentIndex)
@@ -146,12 +150,17 @@ Page {
         
         Component.onCompleted: {
             console.log("== weiboPageSilicaFlickable onCompleted");
-            weiboListview.currentIndex = newIndex;
+            weiboListviewModel.clear();
+            weiboListviewModel.append(weiboModel.get(newIndex));
+            weiboListview.currentIndex = 0//newIndex;
             weiboListview.positionViewAtIndex(weiboListview.currentIndex, ListView.Center);
             
         }
     }
     
+    ListModel {
+        id:weiboListviewModel
+    }
 
     //////////////////////////////////////////////      delegate for ListView
     Component {

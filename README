@@ -9,4 +9,4 @@ oauth登入，数据存储
 
 
 TODO: 
-WeiboPage列表当前滚动的时候会滚动到下一条微博，需要采用其他View
+WeiboPage列表当前滚动的时候会滚动到下一条微博，需要采用其他View (Fixed)
