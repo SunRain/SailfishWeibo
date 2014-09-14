@@ -145,62 +145,76 @@ Page {
         Behavior on topMargin {
             FadeAnimation {}
         }
-        contentHeight: weiboListview.height
+        contentHeight: column.height
         
-        SilicaListView {
-            id: weiboListview
-            width: mainFlickableView.width
-            height: mainFlickableView.height
-
-            contentHeight: parent.width * count
-            model: weiboListviewModel//weiboModel
-            delegate: xmlDelegate
-            clip: true
-            onCurrentIndexChanged: {
-                console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
-                console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
-                if (preventIndexChangeHandler) {
-                    preventIndexChangeHandler = false
-                    return
-                }
-                
-                /*if (weiboModel.count == 0)*/ // It is normal bevaviour.
-                if (weiboListviewModel.count == 0)
-                    return
-                
-                //            if (weiboModel == null || weiboModel.get == undefined) {
-                if (weiboListviewModel == null || weiboListviewModel.get == undefined) {
-                    console.log("---- Stange behavior ----")
-                    console.trace()
-                    return
-                }
-                
-                weiboItem = weiboListviewModel.get(currentIndex);//weiboModel.get(currentIndex)
-                
-                currentItem.getComments(Settings.getAccess_token(), weiboItem.id, 1)
-                //            console.log("weiboItem: ", JSON.stringify(weiboItem))
-                //            commentsWanted(weiboItem.id, currentIndex)
-                
-                //            weiboTitle = weiboItem.feed_name
-                
-                //            if (weiboItem.status != "1") {
-                //                var dbResult = DB.updateArticleStatus(weiboItem.id, "1")
-                //                if (dbResult.rowsAffected == 1) {
-                //                    articleStatusChanged(weiboItem.tagId, weiboItem.id, "1")
-                //                }
-                //            }
+        Column {
+            id:column
+            spacing: Theme.paddingSmall 
+            anchors.fill: parent
+            
+            PageHeader {
+                id:pageHeader
+                title: qsTr("Sailfish Weibo")
             }
             
-            Component.onCompleted: {
-                console.log("== weiboPageSilicaFlickable onCompleted");
-                console.log("== listview heigt is " + weiboListview.height);
-                console.log("== weiboPageSilicaFlickable heigt is " + mainFlickableView.height);
+            SilicaListView {
+                id: weiboListview
+                width: mainFlickableView.width 
+                height: mainFlickableView.height - pageHeader.height - Theme.paddingSmall
                 
-                weiboListviewModel.clear();
-                weiboListviewModel.append(weiboModel.get(newIndex));
-                weiboListview.currentIndex = 0//newIndex;
-                weiboListview.positionViewAtIndex(weiboListview.currentIndex, ListView.Center);
+                contentHeight: parent.height * count
                 
+                model: weiboListviewModel//weiboModel
+                delegate: xmlDelegate
+                clip: true
+                onCurrentIndexChanged: {
+                    console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
+                    console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
+                    if (preventIndexChangeHandler) {
+                        preventIndexChangeHandler = false
+                        return
+                    }
+                    
+                    /*if (weiboModel.count == 0)*/ // It is normal bevaviour.
+                    if (weiboListviewModel.count == 0)
+                        return
+                    
+                    //            if (weiboModel == null || weiboModel.get == undefined) {
+                    if (weiboListviewModel == null || weiboListviewModel.get == undefined) {
+                        console.log("---- Stange behavior ----")
+                        console.trace()
+                        return
+                    }
+                    
+                    weiboItem = weiboListviewModel.get(currentIndex);//weiboModel.get(currentIndex)
+                    
+                    currentItem.getComments(Settings.getAccess_token(), weiboItem.id, 1)
+                    //            console.log("weiboItem: ", JSON.stringify(weiboItem))
+                    //            commentsWanted(weiboItem.id, currentIndex)
+                    
+                    //            weiboTitle = weiboItem.feed_name
+                    
+                    //            if (weiboItem.status != "1") {
+                    //                var dbResult = DB.updateArticleStatus(weiboItem.id, "1")
+                    //                if (dbResult.rowsAffected == 1) {
+                    //                    articleStatusChanged(weiboItem.tagId, weiboItem.id, "1")
+                    //                }
+                    //            }
+                }
+                
+                Component.onCompleted: {
+                    console.log("== weiboPageSilicaFlickable onCompleted");
+                    console.log("== listview heigt is " + weiboListview.height);
+                    console.log("== weiboPageSilicaFlickable heigt is " + mainFlickableView.height);
+                    
+                    weiboListviewModel.clear();
+                    weiboListviewModel.append(weiboModel.get(newIndex));
+                    weiboListview.currentIndex = 0//newIndex;
+                    weiboListview.positionViewAtIndex(weiboListview.currentIndex, ListView.Center);
+                    
+                }
+                
+                VerticalScrollDecorator { flickable: weiboListview }
             }
         }
     }

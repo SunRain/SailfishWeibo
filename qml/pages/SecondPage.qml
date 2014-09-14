@@ -31,30 +31,68 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-
 Page {
-    id: page
+    id: mainPage
+
+    ListModel {
+        id: pagesModel
+
+        ListElement {
+            //page: 
+            title: "Message"
+        }
+        ListElement {
+            title: "Friends"
+        }
+        ListElement {
+            title: "UserPage"
+        }
+        ListElement {
+            title: "UserWeibo"
+        }
+        ListElement {
+            title: "UserPhoto"
+        }
+        ListElement {
+            title: "Settings"
+        }
+        
+    }
     SilicaListView {
         id: listView
-        model: 20
         anchors.fill: parent
-        header: PageHeader {
-            title: qsTr("Nested Page")
+        model: pagesModel
+        header: PageHeader { 
+            title: qsTr("Sailfish Weibo")
         }
+
         delegate: BackgroundItem {
-            id: delegate
-            
+            width: listView.width
             Label {
-                x: Theme.paddingLarge
-                text: qsTr("Item") + " " + index
-                anchors.verticalCenter: parent.verticalCenter
-                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                text: qsTr(model.title)
+                color: highlighted ? Theme.highlightColor : Theme.primaryColor
+                anchors{
+                    left: parent.left
+                    leftMargin: Theme.paddingMedium
+                    right: parent.right
+                    rightMargin: Theme.paddingMedium
+                    verticalCenter: parent.verticalCenter
+                }
             }
-            onClicked: console.log("Clicked " + index)
+            onClicked: {
+                //pageStack.push(Qt.resolvedUrl(page))
+                console.log("click item " + title);
+            }
         }
         VerticalScrollDecorator {}
     }
 }
+
+
+
+
+
+
 
 
 

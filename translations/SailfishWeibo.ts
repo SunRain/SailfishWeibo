@@ -37,6 +37,10 @@
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source></source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>MainComponent</name>
@@ -64,11 +68,7 @@
 <context>
     <name>SecondPage</name>
     <message>
-        <source>Nested Page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Item</source>
+        <source>Sailfish Weibo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -86,11 +86,19 @@
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sailfish Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeiboTab</name>
     <message>
         <source>click here to load more..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sailfish Weibo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -78,38 +78,40 @@ Item {
     Column{
         id: column
         
-        width: mainView.width
-        spacing: Theme.itemSizeMedium 
-        Item{
-            id:wrapper
-            //color: "#3a5ac2"
-            width: parent.width
-            height: Screen.height
-            SilicaListView{
-                id: lvHomeWeibo
-                anchors {
-                    fill: parent
-                    margins: Theme.paddingSmall
-                }
-                // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-//                PullDownMenu {
-//                    MenuItem {
-//                        text: qsTr("Refresh")
-//                        onClicked: {
-//                            //pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
-//                            refresh();
-//                        }
-//                    }
-//                }
-                
-                cacheBuffer: 999999/*height * 2*/
-                spacing: Theme.paddingMedium
-                model: modelWeibo
-                footer: footerWeibo
-                delegate: delegateWeibo
-            }
+        spacing: Theme.paddingSmall 
+        //anchors.fill: parent
+        
+        PageHeader {
+            id:pageHeader
+            title: qsTr("Sailfish Weibo")
         }
+        
+        
+        SilicaListView{
+            id: lvHomeWeibo
+            width: weiboTab.width 
+            height: weiboTab.height// - pageHeader.height - Theme.paddingSmall
+            
+           // anchors.fill: parent
+            
+//            PageHeader {
+//                id:pageHeader
+//                title: qsTr("Sailfish Weibo")
+//            }
+            
+            contentHeight: parent.height * count
+            
+            cacheBuffer: 999999/*height * 2*/
+            spacing: Theme.paddingMedium
+            model: modelWeibo
+            footer: footerWeibo
+            delegate: delegateWeibo
+            
+        }
+        
+        VerticalScrollDecorator { flickable: lvHomeWeibo }
     }
+    
     Component {
         id: delegateWeibo
         

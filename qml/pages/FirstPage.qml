@@ -65,10 +65,11 @@ Page {
             if (firstUiLaunchTime) {
                 reset();
                 firstUiLaunchTime = false;
+            } else {
+                attachSecondPage();
             }
-            
             console.log("====================== page depth is "+ pageStack.depth);
-           // loader.sourceComponent = mainComponent;
+
         }
     }
     
@@ -107,7 +108,25 @@ Page {
         //pageStack.push(Qt.resolvedUrl("../components/LoginSheet.qml"));        
     }
     
-    
+    function attachSecondPage() {
+        if (pageStack.depth == 1) {
+            pageStack.pushAttached("SecondPage.qml");
+        }
+    }
+
+    function popAttachedPages() {
+        // find the first page
+        var firstPage = pageStack.previousPage();
+        if (!firstPage) {
+            return;
+        }
+        while (pageStack.previousPage(firstPage)) {
+            firstPage = pageStack.previousPage(firstPage);
+        }
+        // pop to first page
+        pageStack.pop(firstPage);
+    }
+
     Component{
         id:mainComponent
         
@@ -132,48 +151,60 @@ Page {
                         weiboTab.refresh();
                     }
                 }
+//                MenuItem {
+//                    text: qsTr("")
+//                }
             }
-            
-//            Item{
-//                id:notiItem
-//                width: mainView.width
-//                height: 200
-//                Column {
-//                    id: notificationBar
-//                    anchors {
-//                        //fill: parent
-//                        topMargin: 10//units.gu(10)
-//                        leftMargin: parent.width / 2
-//                        rightMargin: 2//units.gu(2)
-//                        bottomMargin: 2//units.gu(2)
-//                    }
-//                    //z: 9999
-//                    spacing: 1//units.gu(1)
-////                    Label {
-////                        text: "sssssssssssssssssssssssssss"
-////                    }
-                    
-//                    move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
-//                }
+            Column {
+                spacing: Theme.paddingSmall 
+                anchors.fill: parent
                 
-//                //TODO:Notification现在不起作用
-//                Component.onCompleted: {
-//                    var noti = Qt.createComponent("../components/Notification.qml")
-//                    var notiItem = noti.createObject(notificationBar, { "text": "welcome", "time": "3" })
-//                }
-//            }
-            
-            WeiboTab {
-                id: weiboTab
-                width: parent.width
-                height: mainView.height/* - notiItem.height*/
+                //            Item{
+                //                id:notiItem
+                //                width: mainView.width
+                //                height: 200
+                //                Column {
+                //                    id: notificationBar
+                //                    anchors {
+                //                        //fill: parent
+                //                        topMargin: 10//units.gu(10)
+                //                        leftMargin: parent.width / 2
+                //                        rightMargin: 2//units.gu(2)
+                //                        bottomMargin: 2//units.gu(2)
+                //                    }
+                //                    //z: 9999
+                //                    spacing: 1//units.gu(1)
+                ////                    Label {
+                ////                        text: "sssssssssssssssssssssssssss"
+                ////                    }
+                
+                //                    move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
+                //                }
+                
+                //                //TODO:Notification现在不起作用
+                //                Component.onCompleted: {
+                //                    var noti = Qt.createComponent("../components/Notification.qml")
+                //                    var notiItem = noti.createObject(notificationBar, { "text": "welcome", "time": "3" })
+                //                }
+                //            }
+                
+                WeiboTab {
+                    id: weiboTab
+                    width: parent.width
+                    height: mainView.height/* - notiItem.height*/
+                    //                Component.onCompleted: {
+                    //                    weiboTab.refresh();
+                    ////                    console.log("weibolist height" + weibolist.height + " notiItem " + notiItem.height + " weiboTab " + weiboTab.height);
+                    //                }
+                    
+//                    VerticalScrollDecorator { flickable: weiboTab }
+                }
                 Component.onCompleted: {
                     weiboTab.refresh();
-//                    console.log("weibolist height" + weibolist.height + " notiItem " + notiItem.height + " weiboTab " + weiboTab.height);
+                    //                    console.log("weibolist height" + weibolist.height + " notiItem " + notiItem.height + " weiboTab " + weiboTab.height);
+                    attachSecondPage();
                 }
-                
-                VerticalScrollDecorator { flickable: weiboTab }
-            }            
+            }
         }
     }
 
@@ -274,10 +305,11 @@ Page {
     MyType {
         id: appData
     }
-    
+ 
     //////////////////////////////////////////////////////////////////         go to weibo page
     function toWeiboPage(model, index) {
         console.log("toWeiboPage  index " + index);
+        popAttachedPages();
         pageStack.push(Qt.resolvedUrl("../ui/WeiboPage.qml"),
                         {"weiboModel":model,
                            "newIndex":index})
