@@ -14,7 +14,7 @@ import Sailfish.Silica 1.0
  *  - 下部的转发/评论/顶的按钮
  *  
 ************************************************/
-/*UbuntuShape*/Rectangle {
+Rectangle {
     id: usWeiboContent
     anchors {
         left: parent.left; right: parent.right
@@ -107,14 +107,16 @@ import Sailfish.Silica 1.0
                 
                 Label {
                     id: labelUserName
-                    color: "black"
+                    //color: "black"
+                    color: Theme.primaryColor
                     text: model.user.screen_name
                     font.pixelSize: Theme.fontSizeExtraSmall
                 }
                 
                 Label {
                     id: labelWeiboTime
-                    color: "grey"
+                    //color: "grey"
+                    color: Theme.secondaryColor
                     text:"Weibo Time"/* {
                         //                        console.log("appData.dateParse(model.created_at): ", appData.dateParse(model.created_at))
                         //                        var ddd = new Date(appData.dateParse(model.created_at) + "")
@@ -132,7 +134,8 @@ import Sailfish.Silica 1.0
             id: labelWeibo
             width: parent.width
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            color: "black"
+            //color: "black"
+            color: Theme.primaryColor 
             text: GetURL.replaceReg(model.text)
             font.pixelSize: Theme.fontSizeMedium
             onLinkActivated: {
@@ -181,7 +184,8 @@ import Sailfish.Silica 1.0
         }
         
         Column {
-            width: parent.width; height: childrenRect.height
+            width: parent.width//; height: childrenRect.height
+            spacing: Theme.paddingSmall
             //TODO:这个是什么作用？
             //ListItem.ThinDivider { }
             
@@ -195,7 +199,7 @@ import Sailfish.Silica 1.0
                     
                     Label {
                         anchors.centerIn: parent
-                        color: "black"
+                        color: Theme.secondaryColor//"black"
                         font.pixelSize: Theme.fontSizeTiny
                         text: qsTr("repost: ") + model.reposts_count
                     }
@@ -210,10 +214,10 @@ import Sailfish.Silica 1.0
                     }
                 }
                 Rectangle {
-                    y:2// units.gu(0.2);
-                    width: 0.1//units.gu(0.1);
+                    //y:0.2// units.gu(0.2);
+                    width: 1//units.gu(0.1);
                     height: Theme.fontSizeSmall -2
-                    color: "grey"
+                    color: Theme.highlightColor//"grey"
                 }
                 Item {
                     width: columnWContent.width / 3 - 0.5//units.gu(0.5);  
@@ -221,7 +225,7 @@ import Sailfish.Silica 1.0
                     
                     Label {
                         anchors.centerIn: parent
-                        color: "black"
+                        color: Theme.secondaryColor//"black"
                         font.pixelSize: Theme.fontSizeTiny
                         text: qsTr("comment: ") + model.comments_count
                     }
@@ -233,17 +237,19 @@ import Sailfish.Silica 1.0
                         }
                     }
                 }
-                Rectangle {y: 0.2//units.gu(0.2); 
-                    width: 0.1//units.gu(0.1); 
+                Rectangle {
+                    //y: 0.2//units.gu(0.2); 
+                    width: 1//units.gu(0.1); 
                     height: Theme.fontSizeSmall -2
-                    color: "grey"}
+                    color: Theme.highlightColor//"grey"
+                }
                 Item {
                     width: columnWContent.width / 3 - 0.5//units.gu(0.5);  
                     height: Theme.fontSizeSmall
                     
                     Label {
                         anchors.centerIn: parent
-                        color: "black"
+                        color: Theme.secondaryColor//"black"
                         font.pixelSize: Theme.fontSizeTiny
                         text: qsTr("like: ") + model.attitudes_count
                     }

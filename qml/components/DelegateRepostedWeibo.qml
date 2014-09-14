@@ -9,7 +9,7 @@ import Sailfish.Silica 1.0
         left: parent.left; right: parent.right
 //                    leftMargin: units.gu(1); rightMargin: units.gu(1)
     }
-    height: isInvalid ? 0 : columnWContent.height + 2/* units.gu(2)*/
+    height: isInvalid ? 0 : columnWContent.height + Theme.paddingMedium/* units.gu(2)*/
     //radius: "medium"
     color: Qt.rgba(255, 255, 255, 0.3)
 
@@ -41,20 +41,22 @@ import Sailfish.Silica 1.0
         id: columnWContent
         anchors {
             top: parent.top
-            topMargin: 1//units.gu(1)
+            topMargin: Theme.paddingSmall// 1//units.gu(1)
             left: parent.left
             right: parent.right
-            leftMargin: 1// units.gu(1)
-            rightMargin:1// units.gu(1)
+            leftMargin: Theme.paddingSmall//1// units.gu(1)
+            rightMargin:Theme.paddingSmall//1// units.gu(1)
+//            bottom: parent.bottom
+//            bottomMargin: Theme.paddingSmall
         }
-        spacing: 0.5;//units.gu(0.5)
-        height: childrenRect.height
+        spacing: Theme.paddingSmall//0.5;//units.gu(0.5)
+        //height: childrenRect.height
 //            rowUser.height + labelWeibo.paintedHeight + gridWeiboPics.height + units.gu(1)
 
         Row {
             id: rowUser
             anchors { left: parent.left; right: parent.right }
-            spacing: 0.5//units.gu(0.5)
+            spacing: Theme.paddingSmall//0.5//units.gu(0.5)
             height: labelUserName.paintedHeight
 
 //            UbuntuShape {
@@ -68,7 +70,7 @@ import Sailfish.Silica 1.0
 
             Label {
                 id: labelUserName
-                color: "black"
+                color: Theme.highlightColor//"black"
                 text: isInvalid ? "" : retweetWeibo.user.screen_name
 
                 MouseArea {
@@ -82,7 +84,7 @@ import Sailfish.Silica 1.0
             id: labelWeibo
             width: parent.width
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            color: "black"
+            color: Theme.primaryColor//"black"
             text: isInvalid ? "" : GetURL.replaceReg(retweetWeibo.text)
 
             onLinkActivated: {
@@ -92,15 +94,15 @@ import Sailfish.Silica 1.0
 
         Grid {
             id: gridWeiboPics
-            columns: 3; spacing: 2; /*visible: isInvalid ? false : retweetWeibo.pic_urls.count != 0*/
-            width: parent.width; height: childrenRect.height
+            columns: 3; spacing: Theme.paddingSmall;//2; /*visible: isInvalid ? false : retweetWeibo.pic_urls.count != 0*/
+            //width: parent.width; height: childrenRect.height
 
             Repeater {
                 model: ListModel { id: modelImages }
                 delegate: Component {
                     Image {
                         fillMode: Image.PreserveAspectCrop;
-                        width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - 3;//units.gu(3) ;
+                        width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - Theme.paddingSmall;//units.gu(3) ;
                         height: modelImages.count == 1 ? implicitHeight : width
                         source: model.thumbnail_pic
 

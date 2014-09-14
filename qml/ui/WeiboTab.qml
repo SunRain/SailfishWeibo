@@ -110,7 +110,7 @@ import Sailfish.Silica 1.0
         
         DelegateWeibo {
             onClicked: {
-                console.log("weibo Detail:" + JSON.stringify(modelWeibo.get(index)))
+                //console.log("weibo Detail:" + JSON.stringify(modelWeibo.get(index)))
                 mainView.toWeiboPage(modelWeibo, index)
             }
         }
@@ -121,19 +121,26 @@ import Sailfish.Silica 1.0
         
         Item {
             width: lvHomeWeibo.width
-            height: Theme.fontSizeMedium + 4
+            height: Theme.itemSizeMedium
             
-            Label {
+//            Label {
+//                anchors.centerIn: parent
+//                font.pixelSize: Theme.fontSizeMedium
+//                text: qsTr("click here to load more..")
+//            }
+            
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked: {
+//                    console.log("WeiboTab === footerWeibo click")
+//                    weiboTab.addMore()
+//                }
+//            }
+            Button {
                 anchors.centerIn: parent
-                font.pixelSize: Theme.fontSizeMedium
                 text: qsTr("click here to load more..")
-            }
-            
-            MouseArea {
-                anchors.fill: parent
                 onClicked: {
-                    console.log("WeiboTab === footerWeibo click")
-                    weiboTab.addMore()
+                    weiboTab.addMore();
                 }
             }
         }
