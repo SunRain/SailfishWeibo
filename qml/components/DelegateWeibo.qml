@@ -5,6 +5,15 @@ import "../js/dateutils.js" as DateUtils
 import "../js/getURL.js" as GetURL
 import Sailfish.Silica 1.0
 
+/**********************************************
+ *  微博内容展示框
+ *  包含
+ *  - 用户头像/用户名/微博发送时间
+ *  - 微博文字内容
+ *  - 转发微博时候相关的转发信息（使用另一个代理）
+ *  - 下部的转发/评论/顶的按钮
+ *  
+************************************************/
 /*UbuntuShape*/Rectangle {
     id: usWeiboContent
     anchors {

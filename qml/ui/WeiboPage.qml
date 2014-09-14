@@ -109,6 +109,7 @@ Page {
         model: weiboModel
         delegate: xmlDelegate
         clip: true
+        currentIndex: -1;
         //                highlightFollowsCurrentItem: true
         //                highlightRangeMode: ListView.StrictlyEnforceRange
         
@@ -210,6 +211,7 @@ Page {
 
                 DelegateWeibo {
                     onClicked: {
+                        console.log("WeiboPage ==== DelegateWeibo item clicked");
 //                        console.log("model.pic_urls: ", JSON.stringify(pic_urls))
 //                        var tmp = []
 //                        if (model.pic_urls != undefined && model.pic_urls.count > 0) {
@@ -221,10 +223,11 @@ Page {
                     }
                 }
 
-                Rectangle {
+                //////////////微博下面评论/转发的内容（listView展示）
+                Item {
                     width: parent.width
                     height: childrenRect.height
-                    color: Qt.rgba(255, 255, 255, 0.2)
+                    //color: Qt.rgba(255, 255, 255, 0.2)
 
                     /*ListView*/SilicaListView {
                         width: parent.width
@@ -239,20 +242,17 @@ Page {
                     }
                 }
 
+                //////////////微博下面评论/转发的内容（listView的代理）
                 Component {
                     id: delegateComment
 
-                    Item {
+                    Rectangle {
                         width: parent.width
                         height: childrenRect.height
+                        color: Qt.rgba(255, 255, 255, 0.3)
 
                         Column {
                             id: columnWContent
-//                            anchors {
-//                                top: parent.top; topMargin: units.gu(1)
-//                                left: parent.left; right: parent.right
-//                                leftMargin: units.gu(1); rightMargin: units.gu(1)
-//                            }
                             anchors {
                                 top: parent.top
                                 topMargin: Theme.paddingSmall //units.gu(1)
@@ -261,15 +261,18 @@ Page {
                                 leftMargin: Theme.paddingSmall //units.gu(1)
                                 rightMargin: Theme.paddingSmall //units.gu(1)
                             }
-                            spacing: Theme.paddingSmall //units.gu(1)
+                            spacing: Theme.paddingMedium //units.gu(1)
 
-                            height: childrenRect.height
+                            //height: rowUser.height + labelWeibo.height//childrenRect.height
 
+                            ////////用户头像/姓名/评论发送时间
                             Row {
                                 id: rowUser
                                 anchors { 
                                     left: parent.left
-                                    right: parent.right 
+                                    leftMargin: Theme.paddingSmall
+                                    right: parent.right
+                                    rightMargin: Theme.paddingSmall
                                 }
                                 spacing:Theme.paddingSmall
                                 //height: usAvatar.height
@@ -277,7 +280,7 @@ Page {
 
                                 Item {
                                     id: usAvatar
-                                    width: 64
+                                    width: 48
                                     height: width
                                     Image {
                                         width: parent.width
@@ -290,31 +293,40 @@ Page {
 
                                 Column {
                                     id:rowUserColumn
-                                    spacing: Theme.paddingSmall
+                                    spacing: Theme.paddingSmall/2
 
                                     Label {
                                         id: labelUserName
-                                        color: "black"
+                                        color: Theme.secondaryColor //"black"
                                         text: model.user.screen_name
-                                        font.pixelSize: Theme.fontSizeExtraSmall
+                                        font.pixelSize: Theme.fontSizeTiny
                                     }
 
                                     Label {
                                         id: labelCommentTime
-                                        color: "grey"
+                                        color: Theme.secondaryColor // "grey"
+                                        //TODO:添加微博的时间
                                         text: "weibo Time" /*{
                                             return DateUtils.formatRelativeTime(i18n, DateUtils.parseDate(appData.dateParse(model.created_at)))
                                         }*/
-                                        font.pixelSize: Theme.fontSizeTiny 
+                                        font.pixelSize: Theme.fontSizeTiny
                                     }
                                 }
                             }
 
+                            /////////评论/转发内容
                             Label {
                                 id: labelWeibo
+                                //                                width: parent.width
+//                                anchors {
+//                                    left: parent.left
+//                                    right: parent.right
+//                                    margins: Theme.paddingSmall
+//                                }
                                 width: parent.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                                color: "black"
+                                color: Theme.primaryColor
+                                font.pixelSize: Theme.fontSizeExtraSmall
                                 text: model.text
                             }
 
@@ -329,6 +341,7 @@ Page {
                                 //TODO:暂时移除此处
 //                                weiboPage.commentInfo = { "id": weiboModel.get(weiboIndex).id, "cid": model.id}
 //                                PopupUtils.open(dialog)
+                                console.log("weiboPage ==== delegateComment click")
                             }
                         }
                     }
