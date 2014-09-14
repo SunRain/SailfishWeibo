@@ -53,6 +53,10 @@
         <source></source>
         <translation></translation>
     </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainComponent</name>
@@ -89,6 +93,93 @@
     </message>
     <message>
         <source>Sailfish Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SendPage</name>
+    <message>
+        <source>No comments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment current Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment original Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not comment original Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Also comment original Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Weibo sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Oops.. something wrong</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repost sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reply sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploading, please wait..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This feature only support in desktop</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

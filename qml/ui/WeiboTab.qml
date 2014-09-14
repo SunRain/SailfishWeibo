@@ -36,6 +36,10 @@ Item {
         homeStatus(Settings.getAccess_token(), pageNum)
     }
 
+    function gotoSendNewWeibo() {
+        weiboTab.sendNewWeibo();
+    }
+
     //////////////////////////////////////////////////////////////////         home status
     function homeStatus(token, page)
     {

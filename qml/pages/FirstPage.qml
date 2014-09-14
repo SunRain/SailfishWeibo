@@ -151,9 +151,12 @@ Page {
                         weiboTab.refresh();
                     }
                 }
-//                MenuItem {
-//                    text: qsTr("")
-//                }
+                MenuItem {
+                    text: qsTr("New")
+                    onClicked: {
+                        weiboTab.gotoSendNewWeibo();
+                    }
+                }
             }
             Column {
                 spacing: Theme.paddingSmall 
@@ -198,6 +201,12 @@ Page {
                     //                }
                     
 //                    VerticalScrollDecorator { flickable: weiboTab }
+                    onSendNewWeibo: {
+                        //TODO 添加相关功能//代码太复杂，需要重构
+                        console.log("MainView == WeiboTab onSendNewWeibo");
+                        toSendPage("", {});
+                        
+                    }
                 }
                 Component.onCompleted: {
                     weiboTab.refresh();
@@ -315,6 +324,16 @@ Page {
                            "newIndex":index})
     }
     
+    //////////////////////////////////////////////////////////////////         go to send page
+    function toSendPage(mode, info) {
+        //sendPage.setMode(mode, info)
+        //mainStack.push(sendPage)
+        popAttachedPages();
+        pageStack.push(Qt.resolvedUrl("../ui/SendPage.qml"),
+                        {"mode":mode,
+                           "info":info})
+    }
+    
     //////////////////////////////////////////////////////////////////         notificationBar
     //FIXME:这个column是起什么作用？
 //    Column {
@@ -337,7 +356,7 @@ Page {
     // pls use this function to add notification: mainView.addNotification(string, int)
     //TODO:需要使用更好的方式来提供notifaction 功能
     function addNotification(inText, inTime) {
-        console.log("FirstPage == OOPS, we don't have notifaction for "+inText + " " +inText);
+        console.log("FirstPage == OOPS, we don't have notifaction for ["+inText + "] " +inTime);
 //        var text = inText == undefined ? "" : inText
 //        var time = inTime == undefined ? 3 : inTime
 //        var noti = Qt.createComponent("../components/Notification.qml")
@@ -391,7 +410,7 @@ Page {
         }
 
         onSendedWeibo: {
-            loader.sourceComponent = loader.Null;
+            //loader.sourceComponent = loader.Null;
             //TODO: what is this for ????
             //mainStack.pop() 
         }
