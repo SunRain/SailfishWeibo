@@ -110,6 +110,7 @@ Page {
     
     Component{
         id:mainComponent
+        
         SilicaFlickable {
             
             id:weibolist
@@ -121,7 +122,7 @@ Page {
                 right: parent.right
             }
             
-            contentHeight: notiItem.height + weiboTab.height
+            contentHeight: /*notiItem.height + */weiboTab.height
             
             // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
             PullDownMenu {
@@ -133,42 +134,42 @@ Page {
                 }
             }
             
-            Item{
-                id:notiItem
-                width: mainView.width
-                height: 200
-                Column {
-                    id: notificationBar
-                    anchors {
-                        //fill: parent
-                        topMargin: 10//units.gu(10)
-                        leftMargin: parent.width / 2
-                        rightMargin: 2//units.gu(2)
-                        bottomMargin: 2//units.gu(2)
-                    }
-                    //z: 9999
-                    spacing: 1//units.gu(1)
-//                    Label {
-//                        text: "sssssssssssssssssssssssssss"
+//            Item{
+//                id:notiItem
+//                width: mainView.width
+//                height: 200
+//                Column {
+//                    id: notificationBar
+//                    anchors {
+//                        //fill: parent
+//                        topMargin: 10//units.gu(10)
+//                        leftMargin: parent.width / 2
+//                        rightMargin: 2//units.gu(2)
+//                        bottomMargin: 2//units.gu(2)
 //                    }
+//                    //z: 9999
+//                    spacing: 1//units.gu(1)
+////                    Label {
+////                        text: "sssssssssssssssssssssssssss"
+////                    }
                     
-                    move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
-                }
+//                    move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
+//                }
                 
-                //TODO:Notification现在不起作用
-                Component.onCompleted: {
-                    var noti = Qt.createComponent("../components/Notification.qml")
-                    var notiItem = noti.createObject(notificationBar, { "text": "welcome", "time": "3" })
-                }
-            }
+//                //TODO:Notification现在不起作用
+//                Component.onCompleted: {
+//                    var noti = Qt.createComponent("../components/Notification.qml")
+//                    var notiItem = noti.createObject(notificationBar, { "text": "welcome", "time": "3" })
+//                }
+//            }
             
             WeiboTab {
                 id: weiboTab
                 width: parent.width
-                height: mainView.height - notiItem.height
+                height: mainView.height/* - notiItem.height*/
                 Component.onCompleted: {
                     weiboTab.refresh();
-                    console.log("weibolist height" + weibolist.height + " notiItem " + notiItem.height + " weiboTab " + weiboTab.height);
+//                    console.log("weibolist height" + weibolist.height + " notiItem " + notiItem.height + " weiboTab " + weiboTab.height);
                 }
                 
                 VerticalScrollDecorator { flickable: weiboTab }
