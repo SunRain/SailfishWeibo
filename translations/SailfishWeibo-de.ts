@@ -45,6 +45,10 @@
         <source>Click to oauth</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainComponent</name>
@@ -107,10 +111,6 @@
     </message>
     <message>
         <source>click here to load more..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

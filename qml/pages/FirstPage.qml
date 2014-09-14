@@ -110,12 +110,69 @@ Page {
     
     Component{
         id:mainComponent
-        WeiboTab {
-            id: weiboTab
+        SilicaFlickable {
             
-            Component.onCompleted: {
-                weiboTab.refresh();
+            id:weibolist
+            
+            anchors{
+                top:parent.top
+                bottom: parent.bottom
+                left: parent.left
+                right: parent.right
             }
+            
+            contentHeight: notiItem.height + weiboTab.height
+            
+            // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
+            PullDownMenu {
+                MenuItem {
+                    text: qsTr("Refresh")
+                    onClicked: {
+                        weiboTab.refresh();
+                    }
+                }
+            }
+            
+            Item{
+                id:notiItem
+                width: mainView.width
+                height: 200
+                Column {
+                    id: notificationBar
+                    anchors {
+                        //fill: parent
+                        topMargin: 10//units.gu(10)
+                        leftMargin: parent.width / 2
+                        rightMargin: 2//units.gu(2)
+                        bottomMargin: 2//units.gu(2)
+                    }
+                    //z: 9999
+                    spacing: 1//units.gu(1)
+//                    Label {
+//                        text: "sssssssssssssssssssssssssss"
+//                    }
+                    
+                    move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
+                }
+                
+                //TODO:Notification现在不起作用
+                Component.onCompleted: {
+                    var noti = Qt.createComponent("../components/Notification.qml")
+                    var notiItem = noti.createObject(notificationBar, { "text": "welcome", "time": "3" })
+                }
+            }
+            
+            WeiboTab {
+                id: weiboTab
+                width: parent.width
+                height: mainView.height - notiItem.height
+                Component.onCompleted: {
+                    weiboTab.refresh();
+                    console.log("weibolist height" + weibolist.height + " notiItem " + notiItem.height + " weiboTab " + weiboTab.height);
+                }
+                
+                VerticalScrollDecorator { flickable: weiboTab }
+            }            
         }
     }
 
@@ -220,8 +277,6 @@ Page {
     //////////////////////////////////////////////////////////////////         go to weibo page
     function toWeiboPage(model, index) {
         console.log("toWeiboPage  index " + index);
-        //weiboPage.setFeed(model, index)
-        //mainStack.push(weiboPage)
         pageStack.push(Qt.resolvedUrl("../ui/WeiboPage.qml"),
                         {"weiboModel":model,
                            "newIndex":index})
@@ -247,11 +302,13 @@ Page {
     //TODO:Need a better way to add Notification
     
     // pls use this function to add notification: mainView.addNotification(string, int)
-    function addNotification(obj, inText, inTime) {
+    //TODO:需要使用更好的方式来提供notifaction 功能
+    function addNotification(inText, inTime) {
+        console.log("FirstPage == OOPS, we don't have notifaction for "+inText + " " +inText);
 //        var text = inText == undefined ? "" : inText
 //        var time = inTime == undefined ? 3 : inTime
 //        var noti = Qt.createComponent("../components/Notification.qml")
-//        var notiItem = noti.createObject(/*notificationBar*/obj, { "text": text, "time": time })
+//        var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
     }
 
     
@@ -272,8 +329,8 @@ Page {
             loader.sourceComponent = loader.Null;
             loader.sourceComponent = mainComponent;
             
-            //console.log("===== addNotification");
-           // addNotification(qsTr("Welcome"), 3)
+           //console.log("===== addNotification");
+           //addNotification(qsTr("Welcome"), 3)
             
             //weiboTab.refresh()
             //messageTab.refresh()

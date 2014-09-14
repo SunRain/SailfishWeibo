@@ -5,11 +5,16 @@ import "../js/weiboapi.js" as WB
 import "../js/Settings.js" as Settings
 import Sailfish.Silica 1.0
 
-/*Tab*/SilicaFlickable {
-    id: weiboTab
-    anchors.fill: parent
-    //title: qsTr("Weibo")
+/*************************************************
+  微博程序的首页以及微博条目展示列表
+*************************************************/
 
+Item {
+    id: weiboTab
+    //anchors.fill: parent
+    //title: qsTr("Weibo")
+    //clip : true
+    
     property int pageNum: 1
     property bool isRefresh: false
 
@@ -68,7 +73,7 @@ import Sailfish.Silica 1.0
     }
 
     // Tell SilicaFlickable the height of its content.
-    contentHeight: column.height
+   // contentHeight: column.height
     
     Column{
         id: column
@@ -87,15 +92,15 @@ import Sailfish.Silica 1.0
                     margins: Theme.paddingSmall
                 }
                 // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-                PullDownMenu {
-                    MenuItem {
-                        text: qsTr("Refresh")
-                        onClicked: {
-                            //pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
-                            refresh();
-                        }
-                    }
-                }
+//                PullDownMenu {
+//                    MenuItem {
+//                        text: qsTr("Refresh")
+//                        onClicked: {
+//                            //pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+//                            refresh();
+//                        }
+//                    }
+//                }
                 
                 cacheBuffer: 999999/*height * 2*/
                 spacing: Theme.paddingMedium
