@@ -37,6 +37,9 @@
         <source>Hello Sailors</source>
         <translation type="obsolete">Hallo Matrosen</translation>
     </message>
+</context>
+<context>
+    <name>LoginSheet</name>
     <message>
         <source>About oauth2 info</source>
         <translation type="unfinished"></translation>
