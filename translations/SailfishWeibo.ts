@@ -24,7 +24,7 @@
     </message>
 </context>
 <context>
-    <name>LoginSheet</name>
+    <name>FirstPage</name>
     <message>
         <source>About oauth2 info</source>
         <translation type="unfinished"></translation>
