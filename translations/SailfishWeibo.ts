@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>AtUserComponent</name>
+    <message>
+        <source>SearchUser</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>My Cover</source>
@@ -139,15 +146,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Send</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploading, please wait..</source>
+        <source>@SomeOne</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -155,11 +154,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This feature only support in desktop</source>
+        <source>Send</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

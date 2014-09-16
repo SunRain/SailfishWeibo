@@ -63,7 +63,9 @@ OTHER_FILES += qml/SailfishWeibo.qml \
     qml/js/LocalStore.js \
     qml/js/Settings.js \
     qml/components/MainComponent.qml \
-    qml/ui/BusyIndicator.qml
+    qml/ui/BusyIndicator.qml \
+    qml/ui/SendPage.qml.bak \
+    qml/components/AtUserComponent.qml
     
 # to disable building translations every time, comment out the
 # following CONFIG line
