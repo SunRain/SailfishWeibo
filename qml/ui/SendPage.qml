@@ -15,39 +15,14 @@ Page {
     //flickable: null
     
     property string mode: ""
-    property var repostType: [qsTr("No comments"), qsTr("Comment current Weibo"), qsTr("Comment original Weibo"), qsTr("Both")]
-    property var commentType: [qsTr("Do not comment original Weibo"), qsTr("Also comment original Weibo")]
+//    property var repostType: [qsTr("No comments"), qsTr("Comment current Weibo"), qsTr("Comment original Weibo"), qsTr("Both")]
+//    property var commentType: [qsTr("Do not comment original Weibo"), qsTr("Also comment original Weibo")]
     
     property string sendTitle
     property var info         // include id, cid, etc..
     property string imgPath: ""
-    
-    //////////////////////////////////////////////////////////////////         set mode
-    function setMode(mode, info)
-    {
-        //        sendPage.mode = mode
-        //        sendPage.info = info
-        switch (mode) {
-        case "repost" :
-            sendTitle = qsTr("Repost")
-            //selectorType.values = repostType
-            break
-        case "comment" :
-            sendTitle = qsTr("Comment")
-            //selectorType.values = commentType
-            break
-        case "reply" :
-            sendTitle = qsTr("Reply")
-            // selectorType.values = commentType
-            break
-        default:
-            //sendPage.mode = ""
-            sendTitle = qsTr("Send Weibo")
-            // selectorType.values = [""]
-            break
-        }
-    }
-    
+    property int optionIndex: 0
+
     //////////////////////////////////////////////////////////////////         send weibo
     function sendStatus(token, status)
     {
@@ -208,19 +183,61 @@ Page {
             }
         }
     }
+
+    Component {
+        id:commentOption
+        ComboBox {
+            id: commentOptionComboBox
+            width: parent.width
+            label: qsTr("comment option")
+            currentIndex: 0
+            menu: ContextMenu {
+                MenuItem {
+                    text: qsTr("Do not comment original Weibo")
+                    onClicked: { optionIndex = 0; }
+                }
+                MenuItem {
+                    text: qsTr("Also comment original Weibo")
+                    onClicked: { optionIndex = 1;}
+                }
+            }
+        }
+    }
+
+    Component {
+        id: repostOption
+        ComboBox {
+            id: repostTypeComboBox
+            width: parent.parent
+            label: qsTr("repost option")
+            currentIndex: 0
+            menu: ContextMenu {
+                MenuItem {
+                    text: qsTr("No comments")
+                    onClicked: { optionIndex = 0; }
+                }
+                MenuItem {
+                    text: qsTr("Comment current Weibo")
+                    onClicked: { optionIndex = 1; }
+                }
+                MenuItem {
+                    text: qsTr("Comment original Weibo")
+                    onClicked:  { optionIndex = 2; }
+                }
+                MenuItem {
+                    text: qsTr("Both")
+                    onClicked:  { optionIndex = 3; }
+                }
+            }
+        }
+    }
     
     /////////////////////////////// 主页面
     Drawer {
         id: drawer
-        
         anchors.fill: parent
         dock: Dock.Bottom
         
-
-        Component.onCompleted: {
-            sendPage.setMode(mode,info);
-        }
-
         background: Loader {
             id:drawerBackgroundLoader
             anchors.fill: parent
@@ -240,10 +257,11 @@ Page {
                 MenuItem {
                     text: qsTr("Send")
                     onClicked: {
-                        console.log("SendPage == SendIcon click, we send [" + content.text +"]");
+                        console.log("SendPage == SendIcon click, we send [" + content.text +"] " + optionIndex);
+
                         //TODO 是否添加图片在微博中
                         //noPic added in content
-                        sendStatus(Settings.getAccess_token(), content.text)
+                        //sendStatus(Settings.getAccess_token(), content.text)
                         //pic addedin content
                         //mainView.addNotification(i18n.tr("Uploading, please wait.."), 2)
                         //var status = encodeURIComponent(textSendContent.text)
@@ -277,7 +295,7 @@ Page {
                 spacing: Theme.paddingLarge
                 width: parent.width
                 enabled: !drawer.opened
-                
+
                 PageHeader { title: sendTitle }
                 
                 TextArea {
@@ -286,10 +304,41 @@ Page {
                     height: Math.max(parent.width/2, implicitHeight)
                     focus: true
                     horizontalAlignment: TextInput.AlignLeft
-                    
                     placeholderText: "Type multi-line text here"
                     label: "Expanding text area"
                     
+                }
+
+                Loader {
+                    id: optionLoader
+                    width: parent.width
+                }
+            }
+
+            //添加输入框下部选型列表
+            Component.onCompleted: {
+                optionLoader.sourceComponent = optionLoader.Null;
+                switch (mode) {
+                case "repost" :
+                    sendTitle = qsTr("Repost")
+                    //selectorType.values = repostType
+                    optionLoader.sourceComponent = repostOption;
+                    break;
+                case "comment" :
+                    sendTitle = qsTr("Comment")
+                    //selectorType.values = commentType
+                    optionLoader.sourceComponent = commentOption;
+                    break;
+                case "reply" :
+                    sendTitle = qsTr("Reply")
+                    // selectorType.values = commentType
+                    optionLoader.sourceComponent = commentOption;
+                    break;
+                default:
+                    //sendPage.mode = ""
+                    sendTitle = qsTr("Send Weibo")
+                    // selectorType.values = [""]
+                    break
                 }
             }
         }

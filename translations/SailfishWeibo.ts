@@ -110,22 +110,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Repost</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Send Weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New Weibo sent</source>
         <translation type="unfinished"></translation>
     </message>
@@ -155,6 +139,14 @@
     </message>
     <message>
         <source>Send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>comment option</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>repost option</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
