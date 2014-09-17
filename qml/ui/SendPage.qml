@@ -260,7 +260,8 @@ Page {
                 MenuItem {
                     text: qsTr("Send")
                     onClicked: {
-                        console.log("SendPage == SendIcon click, we send [" + content.text +"] " + optionIndex);
+                        console.log("SendPage == SendIcon click, we send [" + content.text +"]  for mode " 
+                                    + sendPage.mode + " with option " + optionIndex);
 
                         //TODO 是否添加图片在微博中
                         //noPic added in content
@@ -268,7 +269,28 @@ Page {
                         //pic addedin content
                         //mainView.addNotification(i18n.tr("Uploading, please wait.."), 2)
                         //var status = encodeURIComponent(textSendContent.text)
-                        // networkHelper.uploadImgStatus(settings.getAccess_token(), status, imgPath)
+                        // networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
+                        switch (sendPage.mode) {
+                        case "repost" :
+                            repostStatus(Settings.getAccess_token(), content.text, info.id, optionIndex)
+                            break
+                        case "comment" :
+                            sendComment(Settings.getAccess_token(), content.text, info.id, optionIndex)
+                            break
+                        case "reply" :
+                            replyComment(Settings.getAccess_token(), content.text, info.id, optionIndex, info.cid, 0)
+                            break
+                        default:
+                            if (imgPath == "" || imgPath == undefined) {
+                                sendStatus(Settings.getAccess_token(), content.text)
+                            }
+                            else {
+                                //mainView.addNotification(i18n.tr("Uploading, please wait.."), 2)
+                                var status = encodeURIComponent(content.text)
+                                networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
+                            }
+                            break
+                        }
                     }
                 }
             }
@@ -301,13 +323,15 @@ Page {
 
                 PageHeader { title: sendTitle }
                 
+                ////////////////////////////////////////文字输入框
+                
                 TextArea {
                     id:content
                     width: parent.width
                     height: Math.max(parent.width/2, implicitHeight)
                     focus: true
                     horizontalAlignment: TextInput.AlignLeft
-                    placeholderText: "Type multi-line text here"
+                    placeholderText: qsTr("Input Weibo content here");
                     label: "Expanding text area"                   
                 }
 
@@ -347,297 +371,3 @@ Page {
     }
 }
     
-    
-    
-    
-    
-    
-    //////////////////////////////////////////////////////////////////         header
-//    Rectangle {
-//        id: recHeader
-//        anchors { left: parent.left; right: parent.right }
-//        height: btnCancel.height + 2//units.gu(2)
-//        color: Qt.rgba(255, 255, 255, 0.2)
-
-//        Label {
-//            id: labelTitle
-//            anchors.centerIn: parent
-//            //fontSize: "large"
-//            color: "black"
-//            text: sendTitle
-//        }
-
-//        Button{
-//            id: btnCancel
-//            anchors {
-//                left: parent.left; leftMargin: 1//units.gu(1)
-//                verticalCenter: parent.verticalCenter
-//            }
-//            //gradient: UbuntuColors.greyGradient
-//            text: qsTr("Cancel")
-
-//            onClicked: {
-//                pageStack.pop()
-//            }
-//        }
-
-//        Button{
-//            id: btnSend
-//            anchors {
-//                right: parent.right; rightMargin: 1//units.gu(1)
-//                verticalCenter: parent.verticalCenter
-//            }
-//            text: qsTr("Send")
-
-//            onClicked: {
-//                switch (sendPage.mode) {
-//                    //TODO 待完成后实现此功能
-////                case "repost" :
-////                    repostStatus(Settings.getAccess_token(), textSendContent.text, info.id, selectorType.selectedIndex)
-////                    break
-////                case "comment" :
-////                    sendComment(Settings.getAccess_token(), textSendContent.text, info.id, selectorType.selectedIndex)
-////                    break
-////                case "reply" :
-////                    replyComment(Settings.getAccess_token(), textSendContent.text, info.id, selectorType.selectedIndex, info.cid, 0)
-////                    break
-//                default:
-//                    if (imgPath == "" || imgPath == undefined) {
-//                        sendStatus(Settings.getAccess_token(), textSendContent.text)
-//                    }
-//                    else {
-//                        mainView.addNotification(qsTr("Uploading, please wait.."), 2)
-//                        var status = encodeURIComponent(textSendContent.text)
-//                        networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
-//                    }
-//                    break
-//                }
-//            }
-//        }
-        
-//        //TODO:暂时加在这里测试
-//        Component.onCompleted: {
-//            console.log("SendPage == header on onCompleted");
-//            setMode(mode, info);
-//        }
-//    }
-
-
-//    //////////////////////////////////////////////////////////////////         content
-//    Column {
-//        id: colContent
-//        anchors {
-////            fill: parent
-//            top: recHeader.bottom;  topMargin: 1//units.gu(1)
-//            left: parent.left; right: parent.right
-//            leftMargin: /*units.gu(1)*/1; rightMargin: 1//units.gu(1)
-//            bottomMargin: Qt.inputMethod.keyboardRectangle.height
-//        }
-//        spacing: /*units.gu(1)*/1
-        
-//        /*TextArea*/Label {
-//            id: textSendContent
-//            width: parent.width
-//            height: 6//units.gu(16)
-//        }
-
-//        Row {
-//            height:  6//units.gu(6)
-//            spacing: 1//units.gu(1)
-
-//            Button {
-//                anchors.verticalCenter: parent.verticalCenter
-//                text: "@Someone"
-//                onClicked: {
-//                    //TODO here we @someone
-//                    console.log("here we want to @someone we love lol");
-//                    //PopupUtils.open(componentAtSheet)
-//                }
-//            }
-
-//            Button {
-//                anchors.verticalCenter: parent.verticalCenter
-//                text: imgPath == "" ? qsTr("Add Image") : qsTr("Remove image")
-////                text: "adada"
-//                visible: sendPage.mode == ""
-////                iconSource: imgPath
-//                onClicked: {
-//                    if (imgPath == "") {
-//                        if (appData.isARM == 0) {
-//                            mainStack.push(Qt.resolvedUrl("./LocalPhotoPicker.qml"))
-//                            mainStack.currentPage.imgPicked.connect(setImgPath)
-//                        }
-//                        else {
-//                            mainView.addNotification(qsTr("This feature only support in desktop"), 3)
-//                        }
-//                    }
-//                    else {
-//                        imgPath = ""
-//                    }
-//                }
-//            }
-
-//            Image {
-//                id: imgPreview
-//                fillMode: Image.PreserveAspectFit
-//                source: imgPath
-//                sourceSize.height: parent.height
-//                visible: imgPath != ""
-//            }
-//        }
-
-        //TODO 需要使用Sailfish的控件来实现这个选项功能
-//        ListItem.ValueSelector {
-//            id: selectorType
-//            text: qsTr("Options: ")
-//            values:  [""]
-//            visible: mode == "" ? false : true
-//            selectedIndex: 0
-
-//            onSelectedIndexChanged: {}
-//        }
-//    }
-
-    //////////////////////////////////////////////////////////////////         Popup "@someone"
-    //TODO @某人的功能，可以使用Sailfish的 Search或者Pop Panels实现
-//    Component {
-//        id: componentAtSheet
-
-//        ComposerSheet {
-//            id: sheetAt
-//            title: qsTr("@User")
-//            contentsHeight: parent.height
-
-//            function searchAtUser(kw) {
-//                function observer() {}
-//                observer.prototype = {
-//                    update: function(status, result)
-//                    {
-//                        if(status != "error"){
-//                            if(result.error) {
-//                                // TODO  error handler
-//                            }else {
-//                                // right result
-////                                console.log("search at users: ", JSON.stringify(result))
-//                                modelAtUser.clear()
-//                                for (var i=0; i<result.length; i++) {
-//                                    modelAtUser.append(result[i])
-//                                }
-//                            }
-//                        }else{
-//                            // TODO  empty result
-//                        }
-//                    }
-//                }
-
-//                WB.searchAtUser(Settings.getAccess_token(), kw, 20, 0, 2, new observer())
-//            }
-
-//            onCancelClicked: PopupUtils.close(sheetAt)
-//            onConfirmClicked: {
-////                var atUserList = new Array
-//                for (var i=0; i<modelAtUser.count; i++) {
-//                    if (repeaterAtUser.itemAt(i).isChecked) {
-////                        atUserList.push(modelAtUser.get(i))
-//                        textSendContent.text += " @" + modelAtUser.get(i).nickname + " "
-//                    }
-//                }
-
-//                PopupUtils.close(sheetAt)
-//            }
-
-//            Flickable {
-//                id: scrollArea
-//                boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
-//                anchors.fill: parent
-//                contentWidth: width
-//                contentHeight: innerAreaColumn.height/* + units.gu(2)*/
-
-//                Column {
-//                    id: innerAreaColumn
-
-//                    spacing: units.gu(1)
-//                    anchors {
-//                        top: parent.top;
-//                        //                topMargin: units.gu(1)
-//                        //                margins: units.gu(1)
-//                        left: parent.left; right: parent.right
-//                        //                leftMargin: units.gu(1); rightMargin: units.gu(1)
-//                    }
-//                    height: childrenRect.height
-
-//                    TextField {
-//                        id: tfSearch
-//                        anchors { left: parent.left; right: parent.right }
-//                        placeholderText: qsTr("Please input a keyword")
-
-//                        onTextChanged: {
-//                            sheetAt.searchAtUser(tfSearch.text)
-//                        }
-//                    }
-
-//                    Column {
-//                        id: colAtUser
-//                        anchors { left: parent.left; right: parent.right }
-
-//                        Repeater {
-//                            id: repeaterAtUser
-//                            model: ListModel { id: modelAtUser }
-//                            delegate: Component {
-//                                Item {
-//                                    anchors { left: parent.left; right: parent.right }
-//                                    height: childrenRect.height
-
-//                                    property alias isChecked: switchAtUser.checked
-
-//                                    Column {
-//                                        id: columnAtContent
-//                                        anchors {
-//                                            top: parent.top; topMargin: units.gu(0.5)
-//                                            left: parent.left; right: parent.right
-////                                            leftMargin: units.gu(1); rightMargin: units.gu(1)
-//                                        }
-//                                        spacing: units.gu(0.5)
-//                                        height: childrenRect.height
-
-//                                        Item {
-//                                            anchors {
-//                                                left: parent.left; right: parent.right
-//                                                leftMargin: units.gu(1); rightMargin: units.gu(1)
-//                                            }
-//                                            height: switchAtUser.height
-
-//                                            Label {
-//                                                id: labelUserName
-//                                                anchors.verticalCenter: parent.verticalCenter
-//                                                color: "black"
-//                                                text: model.nickname
-//                                            }
-
-//                                            Switch {
-//                                                id: switchAtUser
-//                                                anchors { right: parent.right; rightMargin: units.gu(1) }
-//                                            }
-//                                        }
-
-////                                        ListItem.ThinDivider {
-//////                                            width: parent.width
-////                                        }
-//                                    }
-
-//                                    MouseArea {
-//                                        anchors.fill: parent
-//                                        onClicked: {
-//                                            switchAtUser.checked = !switchAtUser.checked
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-
-//        }
-//    }// component
-//}

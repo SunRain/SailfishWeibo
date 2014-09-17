@@ -185,6 +185,10 @@
         <source>Send Weibo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Input Weibo content here</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeiboPage</name>
