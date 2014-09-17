@@ -172,14 +172,17 @@ Page {
         id:atUserSheet
         AtUserComponent {
             id:atUserComponent
-            anchors.fill: parent
-            
+            anchors.fill: parent           
             onUserClicked: {
                 console.log("SendPage === We love " + userName);
                 drawer.open = !drawer.open;
                 parent.focus = true;
                 
                 content.text += " @" + userName + " "
+            }
+            onCloseIconClicked: {
+                drawer.hide();
+                parent.focus = true;
             }
         }
     }
@@ -305,8 +308,7 @@ Page {
                     focus: true
                     horizontalAlignment: TextInput.AlignLeft
                     placeholderText: "Type multi-line text here"
-                    label: "Expanding text area"
-                    
+                    label: "Expanding text area"                   
                 }
 
                 Loader {

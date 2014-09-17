@@ -10,6 +10,7 @@ Item {
     anchors.fill: parent
     
     signal userClicked(string userName)
+    signal closeIconClicked
     
     Column {
         id:mainColumn
@@ -34,7 +35,7 @@ Item {
             
             TextField {
                 id:searchInput
-                width: drawer.width - searchIcon.width - Theme.paddingSmall
+                width: drawer.width - searchIcon.width - closeIcon.width - Theme.paddingSmall
                 label: "Text field"
                 placeholderText: "Type here"
                 focus: true
@@ -57,6 +58,19 @@ Item {
                     modelAtUser.searchAtUser(searchInput.text);
                 }
             }
+            //icon.source: "image://theme/icon-m-clear"
+            IconButton {
+                id:closeIcon
+                icon.source: "image://theme/icon-m-clear"
+                highlighted: down || searchInput._editor.activeFocus
+                
+                enabled: searchInput.enabled
+                
+                onClicked: {
+                    atUserComponent.closeIconClicked();
+                }
+            }
+            
         }
         
         SilicaListView {
