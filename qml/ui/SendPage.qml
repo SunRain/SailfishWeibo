@@ -216,6 +216,11 @@ Page {
         anchors.fill: parent
         dock: Dock.Bottom
         
+
+        Component.onCompleted: {
+            sendPage.setMode(mode,info);
+        }
+
         background: Loader {
             id:drawerBackgroundLoader
             anchors.fill: parent
@@ -231,6 +236,38 @@ Page {
                 //bottomMargin: page.isPortrait ? progressPanel.visibleSize : 0
             }
             
+            PullDownMenu {
+                MenuItem {
+                    text: qsTr("Send")
+                    onClicked: {
+                        console.log("SendPage == SendIcon click, we send [" + content.text +"]");
+                        //TODO 是否添加图片在微博中
+                        //noPic added in content
+                        sendStatus(Settings.getAccess_token(), content.text)
+                        //pic addedin content
+                        //mainView.addNotification(i18n.tr("Uploading, please wait.."), 2)
+                        //var status = encodeURIComponent(textSendContent.text)
+                        // networkHelper.uploadImgStatus(settings.getAccess_token(), status, imgPath)
+                    }
+                }
+            }
+
+            PushUpMenu {
+                MenuItem {
+                    text: qsTr("@SomeOne")
+                    onClicked: {
+                        drawer.open = !drawer.open;
+                    }
+                }
+                MenuItem {
+                    text: qsTr("Add Image")
+                    //TODO 点击按钮后添加图片
+                    onClicked: {
+                        console.log("SendPage == here we want to add some images");
+                    }
+                }
+            }
+
             contentHeight: column.height + Theme.paddingLarge
             
             VerticalScrollDecorator {}
@@ -241,18 +278,12 @@ Page {
                 width: parent.width
                 enabled: !drawer.opened
                 
-                PageHeader { title: "Send Weibo" }
+                PageHeader { title: sendTitle }
                 
-//                Label {
-//                    id: labeltest
-//                    color: Theme.secondaryColor
-//                    text: "text"
-//                    font.pixelSize: Theme.fontSizeLarge
-//                }
                 TextArea {
                     id:content
                     width: parent.width
-                    height: Math.max(parent.width/3, implicitHeight)
+                    height: Math.max(parent.width/2, implicitHeight)
                     focus: true
                     horizontalAlignment: TextInput.AlignLeft
                     
@@ -260,69 +291,7 @@ Page {
                     label: "Expanding text area"
                     
                 }
-                
-                Row {
-                    anchors{
-                        right: parent.right
-                        rightMargin: Theme.paddingMedium
-                    }
-                    
-                    spacing: Theme.paddingSmall
-                    
-                    Button {
-                        id:atButton
-                        width: Theme.itemSizeSmall
-                        height: Theme.itemSizeSmall
-                        
-                        text: qsTr("@SomeOne")
-                        
-                        onClicked: {
-                            drawer.open = !drawer.open;
-                        }
-                    }
-
-                    Button {
-                        id:adImgButton
-                        width: Theme.itemSizeSmall
-                        height: Theme.itemSizeSmall
-                       
-                        text: qsTr("Add Image")
-                        
-                        //TODO 点击按钮后添加图片
-                        onClicked: {
-                            console.log("SendPage == here we want to add some images");
-                        }
-                    }
-
-                    Button {
-                        id:sendButton
-                        text: qsTr("Send")
-                        width: Theme.itemSizeMedium
-                        height: Theme.itemSizeMedium
-                        //anchors.right: parent.right
-                        //anchors.rightMargin: Theme.paddingMedium
-                        onClicked: {
-                            console.log("SendPage == SendIcon click, we send [" + content.text +"]");
-                            //TODO 是否添加图片在微博中
-                            //noPic added in content
-                            sendStatus(Settings.getAccess_token(), content.text)
-                            //pic addedin content
-                            //mainView.addNotification(i18n.tr("Uploading, please wait.."), 2)
-                            //var status = encodeURIComponent(textSendContent.text)
-                            // networkHelper.uploadImgStatus(settings.getAccess_token(), status, imgPath)
-                        }
-                    }
-                }
             }
-            //TODO 点击@以后调用
-//            MouseArea {
-//                //enabled: drawer.open
-//                anchors.fill: column
-//                onClicked: {
-//                    console.log("SendPage == SilicaFlickable clicked");
-//                    drawer.open = !drawer.open;
-//                }
-//            }
         }
     }
 }
