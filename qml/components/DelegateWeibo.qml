@@ -14,14 +14,14 @@ import Sailfish.Silica 1.0
  *  - 下部的转发/评论/顶的按钮
  *  
 ************************************************/
-Rectangle {
+Item {
     id: usWeiboContent
     anchors {
         left: parent.left; right: parent.right
         //                    leftMargin: units.gu(1); rightMargin: units.gu(1)
     }
     height: columnWContent.height + Theme.paddingMedium 
-    color: Qt.rgba(255, 255, 255, 0.3)
+    //color: Qt.rgba(255, 255, 255, 0.3)
     //radius: "medium"
     //color: Qt.rgba(255, 255, 255, 0.3)
     
@@ -49,7 +49,11 @@ Rectangle {
     
     ////        onMessage: console.log("addImages.js done: ", messageObject.reply)
     //    }
-    
+    Image {
+        id: background
+        source: "../graphics/mask_background_grid.png"
+        fillMode: Image.PreserveAspectCrop
+    }
     MouseArea {
         anchors.fill: parent
         onClicked: {
@@ -69,7 +73,7 @@ Rectangle {
             leftMargin: Theme.paddingSmall //units.gu(1)
             rightMargin: Theme.paddingSmall //units.gu(1)
         }
-        spacing: Theme.paddingSmall //units.gu(1)
+        spacing: Theme.paddingMedium//Theme.paddingSmall //units.gu(1)
         Row {
             id: rowUser
             anchors { 
@@ -134,7 +138,6 @@ Rectangle {
             id: labelWeibo
             width: parent.width
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            //color: "black"
             color: Theme.primaryColor 
             text: GetURL.replaceReg(model.text)
             font.pixelSize: Theme.fontSizeMedium
@@ -186,9 +189,7 @@ Rectangle {
         Column {
             width: parent.width//; height: childrenRect.height
             spacing: Theme.paddingSmall
-            //TODO:这个是什么作用？
-            //ListItem.ThinDivider { }
-            
+
             Row {
                 width: childrenRect.width; height: childrenRect.height
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -261,6 +262,11 @@ Rectangle {
                     }
                 }
             }
+        }
+        
+        Separator {
+            width: parent.width
+            color: Theme.highlightColor
         }
     }
 }

@@ -3,7 +3,7 @@ import QtQuick 2.0
 import "../js/getURL.js" as GetURL
 import Sailfish.Silica 1.0
 
-/*UbuntuShape*/ Rectangle{
+ Item{
     id: usWeiboContent
     anchors {
         left: parent.left; right: parent.right
@@ -11,7 +11,7 @@ import Sailfish.Silica 1.0
     }
     height: isInvalid ? 0 : columnWContent.height + Theme.paddingMedium/* units.gu(2)*/
     //radius: "medium"
-    color: Qt.rgba(255, 255, 255, 0.3)
+    //color: Qt.rgba(255, 255, 255, 0.3)
 
     property var retweetWeibo
     property bool isInvalid: retweetWeibo == undefined
@@ -37,6 +37,12 @@ import Sailfish.Silica 1.0
         }
     }
 
+    Image {
+        id: background
+        source: "../graphics/mask_background_reposted.png"
+        fillMode:Image.PreserveAspectCrop
+    }
+    
     Column {
         id: columnWContent
         anchors {
@@ -46,31 +52,39 @@ import Sailfish.Silica 1.0
             right: parent.right
             leftMargin: Theme.paddingSmall//1// units.gu(1)
             rightMargin:Theme.paddingSmall//1// units.gu(1)
-//            bottom: parent.bottom
-//            bottomMargin: Theme.paddingSmall
         }
-        spacing: Theme.paddingSmall//0.5;//units.gu(0.5)
-        //height: childrenRect.height
-//            rowUser.height + labelWeibo.paintedHeight + gridWeiboPics.height + units.gu(1)
+        spacing: Theme.paddingSmall
 
         Row {
             id: rowUser
             anchors { left: parent.left; right: parent.right }
-            spacing: Theme.paddingSmall//0.5//units.gu(0.5)
-            height: labelUserName.paintedHeight
-
-//            UbuntuShape {
-//                id: usAvatar
-//                width: units.gu(6)
-//                height: width
-//                image: Image {
-//                    source: retweetWeibo.user.profile_image_url
-//                }
-//            }
+            spacing: Theme.paddingSmall
+            height: Math.max(usAvatar.height, labelUserName.height) + Theme.paddingSmall
+            
+            Item {
+                id: usAvatar
+                width: 48
+                height: width
+                Image {
+                    width: parent.width
+                    height: parent.height
+                    smooth: true
+                    fillMode: Image.PreserveAspectFit
+                    source: retweetWeibo.user.profile_image_url
+                }
+                
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("===  usAvatar clicked");
+                        //mainView.toUserPage(model.user.id)
+                    }
+                }
+            }
 
             Label {
                 id: labelUserName
-                color: Theme.highlightColor//"black"
+                color: Theme.highlightColor
                 text: isInvalid ? "" : retweetWeibo.user.screen_name
 
                 MouseArea {
@@ -84,7 +98,8 @@ import Sailfish.Silica 1.0
             id: labelWeibo
             width: parent.width
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            color: Theme.primaryColor//"black"
+            color: Theme.primaryColor
+            font.pixelSize: Theme.fontSizeSmall
             text: isInvalid ? "" : GetURL.replaceReg(retweetWeibo.text)
 
             onLinkActivated: {

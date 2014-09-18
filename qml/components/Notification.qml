@@ -28,15 +28,19 @@ Item {
             animaDestroy.start()
         }
     }
-
-    Rectangle {
+    
+    Item {
         id: usContainer
-        border.color: Theme.highlightColor
-        opacity: 0.3
 
         width: parent.width
         height: labelNotification.height + Theme.paddingMedium
 
+        Image {
+            id: background
+            source: "../graphics/notifactionbar.png"
+            fillMode: Image.PreserveAspectCrop
+        }
+        
         Label {
             id: labelNotification
             anchors {
