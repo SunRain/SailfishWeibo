@@ -208,9 +208,8 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            //TODO:添加点击功能
                             console.log("repost id" + model.id);
-                            //mainView.toSendPage("repost", {"id": model.id})
+                            /*mainView.*/toSendPage("repost", {"id": model.id})
                         }
                     }
                 }
@@ -234,7 +233,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            //mainView.toSendPage("comment", {"id": model.id})
+                            /*mainView.*/toSendPage("comment", {"id": model.id})
                         }
                     }
                 }
@@ -254,12 +253,12 @@ Item {
                         font.pixelSize: Theme.fontSizeTiny
                         text: qsTr("like: ") + model.attitudes_count
                     }
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            //mainView.toSendPage("comment", {"id": model.id})
-                        }
-                    }
+//                    MouseArea {
+//                        anchors.fill: parent
+//                        onClicked: {
+//                            mainView.toSendPage("comment", {"id": model.id})
+//                        }
+//                    }
                 }
             }
         }

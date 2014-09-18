@@ -68,6 +68,44 @@ ApplicationWindow
             var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
         }
     }
+    
+    function attachSecondPage() {
+        if (pageStack.depth == 1) {
+            pageStack.pushAttached("pages/SecondPage.qml");
+        }
+    }
+
+    function popAttachedPages() {
+        // find the first page
+        var firstPage = pageStack.previousPage();
+        if (!firstPage) {
+            return;
+        }
+        while (pageStack.previousPage(firstPage)) {
+            firstPage = pageStack.previousPage(firstPage);
+        }
+        // pop to first page
+        pageStack.pop(firstPage);
+    }
+    
+    //////////////////////////////////////////////////////////////////         go to weibo page
+    function toWeiboPage(model, index) {
+        console.log("toWeiboPage  index " + index);
+        popAttachedPages();
+        pageStack.push(Qt.resolvedUrl("ui/WeiboPage.qml"),
+                        {"weiboModel":model,
+                           "newIndex":index})
+    }
+    
+    //////////////////////////////////////////////////////////////////         go to send page
+    function toSendPage(mode, info) {
+        //sendPage.setMode(mode, info)
+        //mainStack.push(sendPage)
+        popAttachedPages();
+        pageStack.push(Qt.resolvedUrl("ui/SendPage.qml"),
+                        {"mode":mode,
+                           "info":info})
+    }
 }
 
 

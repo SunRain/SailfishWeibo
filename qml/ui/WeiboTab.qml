@@ -113,7 +113,7 @@ Item {
         DelegateWeibo {
             onClicked: {
                 //console.log("weibo Detail:" + JSON.stringify(modelWeibo.get(index)))
-                mainView.toWeiboPage(modelWeibo, index)
+                toWeiboPage(modelWeibo, index)
             }
         }
     }
