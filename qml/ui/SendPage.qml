@@ -36,15 +36,13 @@ Page {
                     }else {
                         // right result
                         if (result.id != undefined) {
-                            //TODO  no Notification work atm
-                            mainView.addNotification(qsTr("New Weibo sent"), 3)
+                            addNotification(qsTr("New Weibo sent"), 3)
                             pageStack.pop()
                         }
                     }
                 }else{
                     // TODO  empty result
-                    //TODO  no Notification work atm
-                    mainView.addNotification(qsTr("Oops.. something wrong"), 3)
+                    addNotification(qsTr("Oops.. something wrong"), 3)
                 }
             }
         }
@@ -64,13 +62,11 @@ Page {
         onUploadFinished: {
             var reply = JSON.parse(response)
             if (reply.error) {
-                //TODO  no Notification work atm
-                mainView.addNotification(qsTr("Oops.. something wrong"), 3)
+                addNotification(qsTr("Oops.. something wrong"), 3)
             }
             else {
                 if (reply.id != undefined) {
-                    //TODO  no Notification work atm
-                    mainView.addNotification(qsTr("New Weibo sent"), 3)
+                    addNotification(qsTr("New Weibo sent"), 3)
                     pageStack.pop()
                 }
             }
@@ -91,13 +87,13 @@ Page {
                     }else {
                         // right result
                         if (result.id != undefined) {
-                            mainView.addNotification(qsTr("Repost sent"), 3)
+                            addNotification(qsTr("Repost sent"), 3)
                             pageStack.pop()
                         }
                     }
                 }else{
                     // TODO  empty result
-                    mainView.addNotification(qsTr("Oops.. something wrong"), 3)
+                    addNotification(qsTr("Oops.. something wrong"), 3)
                 }
             }
         }
@@ -119,13 +115,13 @@ Page {
                     }else {
                         // right result
                         if (result.id != undefined) {
-                            mainView.addNotification(qsTr("Comment sent"), 3)
+                            addNotification(qsTr("Comment sent"), 3)
                             pageStack.pop()
                         }
                     }
                 }else{
                     // TODO  empty result
-                    mainView.addNotification(qsTr("Oops.. something wrong"), 3)
+                    addNotification(qsTr("Oops.. something wrong"), 3)
                 }
             }
         }
@@ -147,13 +143,13 @@ Page {
                     }else {
                         // right result
                         if (result.id != undefined) {
-                            mainView.addNotification(qsTr("Reply sent"), 3)
+                            addNotification(qsTr("Reply sent"), 3)
                             pageStack.pop()
                         }
                     }
                 }else{
                     // TODO  empty result
-                    mainView.addNotification(qsTr("Oops.. something wrong"), 3)
+                    addNotification(qsTr("Oops.. something wrong"), 3)
                 }
             }
         }
@@ -285,7 +281,7 @@ Page {
                                 sendStatus(Settings.getAccess_token(), content.text)
                             }
                             else {
-                                //mainView.addNotification(i18n.tr("Uploading, please wait.."), 2)
+                                addNotification(i18n.tr("Uploading, please wait.."), 2)
                                 var status = encodeURIComponent(content.text)
                                 networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
                             }

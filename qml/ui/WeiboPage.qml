@@ -100,8 +100,8 @@ Page {
                 delegate: xmlDelegate
                 clip: true
                 onCurrentIndexChanged: {
-                    console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
-                    console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
+                    //console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
+                    //console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
                     if (preventIndexChangeHandler) {
                         preventIndexChangeHandler = false
                         return
@@ -135,9 +135,9 @@ Page {
                 }
                 
                 Component.onCompleted: {
-                    console.log("== weiboPageSilicaFlickable onCompleted");
-                    console.log("== listview heigt is " + weiboListview.height);
-                    console.log("== weiboPageSilicaFlickable heigt is " + mainFlickableView.height);
+                   /// console.log("== weiboPageSilicaFlickable onCompleted");
+                    ///console.log("== listview heigt is " + weiboListview.height);
+                   // console.log("== weiboPageSilicaFlickable heigt is " + mainFlickableView.height);
                     
                     weiboListviewModel.clear();
                     weiboListviewModel.append(weiboModel.get(newIndex));
@@ -334,7 +334,7 @@ Page {
                                 MenuItem {
                                     text: qsTr("Reply")
                                     onClicked: {
-                                        console.log("weiboPage ==== delegateComment click, weiboIndex is " + weiboIndex);
+                                        //console.log("weiboPage ==== delegateComment click, weiboIndex is " + weiboIndex);
                                         weiboPage.commentInfo = { "id": weiboListviewModel.get(weiboIndex).id, "cid": model.id}
                                         pageStack.push(Qt.resolvedUrl("../ui/SendPage.qml"),
                                                        {"mode":"reply",

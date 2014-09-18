@@ -75,22 +75,6 @@ Page {
         }
     }
     
-    //FIXME:这个column是起什么作用？
-//    Column {
-//        id: notificationBar
-//        anchors {
-//            fill: parent
-//            topMargin: 10//units.gu(10)
-//            leftMargin: parent.width / 2
-//            rightMargin: 2//units.gu(2)
-//            bottomMargin: 2//units.gu(2)
-//        }
-//        z: 9999
-//        spacing: 1//units.gu(1)
-        
-//        move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
-//    }
-    
     function reset() {
         runningBusyIndicator = 0;
         if (Settings.getAccess_token() == "") {
@@ -105,9 +89,7 @@ Page {
         console.log("=== startLogin()");
         //PopupUtils.open(loginSheet)
         loader.sourceComponent = loader.Null;
-        loader.sourceComponent = loginSheet;
-        
-        //pageStack.push(Qt.resolvedUrl("../components/LoginSheet.qml"));        
+        loader.sourceComponent = loginSheet;      
     }
     
     function attachSecondPage() {
@@ -150,8 +132,7 @@ Page {
                 MenuItem {
                     text: qsTr("Refresh")
                     onClicked: {
-                        addNotification("hello", 3);
-                        //weiboTab.refresh();
+                        weiboTab.refresh();
                     }
                 }
                 MenuItem {
@@ -164,46 +145,12 @@ Page {
             Column {
                 spacing: Theme.paddingSmall 
                 anchors.fill: parent
-                
-                //            Item{
-                //                id:notiItem
-                //                width: mainView.width
-                //                height: 200
-                //                Column {
-                //                    id: notificationBar
-                //                    anchors {
-                //                        //fill: parent
-                //                        topMargin: 10//units.gu(10)
-                //                        leftMargin: parent.width / 2
-                //                        rightMargin: 2//units.gu(2)
-                //                        bottomMargin: 2//units.gu(2)
-                //                    }
-                //                    //z: 9999
-                //                    spacing: 1//units.gu(1)
-                ////                    Label {
-                ////                        text: "sssssssssssssssssssssssssss"
-                ////                    }
-                
-                //                    move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
-                //                }
-                
-                //                //TODO:Notification现在不起作用
-                //                Component.onCompleted: {
-                //                    var noti = Qt.createComponent("../components/Notification.qml")
-                //                    var notiItem = noti.createObject(notificationBar, { "text": "welcome", "time": "3" })
-                //                }
-                //            }
-                
+
                 WeiboTab {
                     id: weiboTab
                     width: parent.width
-                    height: mainView.height/* - notiItem.height*/
-                    //                Component.onCompleted: {
-                    //                    weiboTab.refresh();
-                    ////                    console.log("weibolist height" + weibolist.height + " notiItem " + notiItem.height + " weiboTab " + weiboTab.height);
-                    //                }
-                    
-//                    VerticalScrollDecorator { flickable: weiboTab }
+                    height: mainView.height
+
                     onSendNewWeibo: {
                         //TODO 添加相关功能//代码太复杂，需要重构
                         console.log("MainView == WeiboTab onSendNewWeibo");
@@ -337,35 +284,6 @@ Page {
                            "info":info})
     }
     
-    //////////////////////////////////////////////////////////////////         notificationBar
-    //FIXME:这个column是起什么作用？
-//    Column {
-//        id: notificationBar
-//        anchors {
-//            fill: parent
-//            topMargin: 10//units.gu(10)
-//            leftMargin: parent.width / 2
-//            rightMargin: 2//units.gu(2)
-//            bottomMargin: 2//units.gu(2)
-//        }
-//        z: 9999
-//        spacing: 1//units.gu(1)
-
-//        move: Transition { /*UbuntuNumberAnimation*/NumberAnimation { properties: "y" } }
-//    }
-    
-    //TODO:Need a better way to add Notification
-    
-    // pls use this function to add notification: mainView.addNotification(string, int)
-    //TODO:需要使用更好的方式来提供notifaction 功能
-//    function addNotification(inText, inTime) {
-//        console.log("FirstPage == OOPS, we don't have notifaction for ["+inText + "] " +inTime);
-////        var text = inText == undefined ? "" : inText
-////        var time = inTime == undefined ? 3 : inTime
-////        var noti = Qt.createComponent("../components/Notification.qml")
-////        var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
-//    }
-
     
     //////////////////////////////////////////////////////////////////
     //api handlers

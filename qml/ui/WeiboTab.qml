@@ -83,26 +83,17 @@ Item {
         id: column
         
         spacing: Theme.paddingSmall 
-        //anchors.fill: parent
-        
+
         PageHeader {
             id:pageHeader
             title: qsTr("Sailfish Weibo")
         }
-        
-        
+
         SilicaListView{
             id: lvHomeWeibo
             width: weiboTab.width 
-            height: weiboTab.height// - pageHeader.height - Theme.paddingSmall
-            
-           // anchors.fill: parent
-            
-//            PageHeader {
-//                id:pageHeader
-//                title: qsTr("Sailfish Weibo")
-//            }
-            
+            height: weiboTab.height
+
             contentHeight: parent.height * count
             
             cacheBuffer: 999999/*height * 2*/
@@ -133,20 +124,6 @@ Item {
         Item {
             width: lvHomeWeibo.width
             height: Theme.itemSizeMedium
-            
-//            Label {
-//                anchors.centerIn: parent
-//                font.pixelSize: Theme.fontSizeMedium
-//                text: qsTr("click here to load more..")
-//            }
-            
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked: {
-//                    console.log("WeiboTab === footerWeibo click")
-//                    weiboTab.addMore()
-//                }
-//            }
             Button {
                 anchors.centerIn: parent
                 text: qsTr("click here to load more..")
