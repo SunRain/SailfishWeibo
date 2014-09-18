@@ -29,31 +29,29 @@ Item {
         }
     }
 
-    /*UbuntuShape*/ Rectangle{
+    Rectangle {
         id: usContainer
-//        gradientColor: "#000080"
-        color: "#000080"
-        radius: "medium"
+        border.color: Theme.highlightColor
+        opacity: 0.3
 
-//        anchors {
-//            left: parent.left; right: parent.right
-//        }
         width: parent.width
-        height: labelNotification.paintedHeight + units.gu(2)
+        height: labelNotification.height + Theme.paddingMedium
 
         Label {
             id: labelNotification
-            text: notification.text
-//            fontSize: "large"
-            color: "white"
-//            elide: Text.ElideRight
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+                margins:Theme.paddingSmall
+            }
+            font.pixelSize:Theme.fontSizeSmall
+
+            color: Theme.highlightColor
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
 
-            anchors {
-                top: parent.top; topMargin: units.gu(1)
-                horizontalCenter: parent.horizontalCenter
-            }
-            width: parent.width - units.gu(2)
+            text: notification.text
         }
     }
 

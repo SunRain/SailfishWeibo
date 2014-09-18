@@ -68,6 +68,8 @@ Page {
             } else {
                 attachSecondPage();
             }
+
+            //addNotification("hello", 3);
             console.log("====================== page depth is "+ pageStack.depth);
 
         }
@@ -148,7 +150,8 @@ Page {
                 MenuItem {
                     text: qsTr("Refresh")
                     onClicked: {
-                        weiboTab.refresh();
+                        addNotification("hello", 3);
+                        //weiboTab.refresh();
                     }
                 }
                 MenuItem {
@@ -355,13 +358,13 @@ Page {
     
     // pls use this function to add notification: mainView.addNotification(string, int)
     //TODO:需要使用更好的方式来提供notifaction 功能
-    function addNotification(inText, inTime) {
-        console.log("FirstPage == OOPS, we don't have notifaction for ["+inText + "] " +inTime);
-//        var text = inText == undefined ? "" : inText
-//        var time = inTime == undefined ? 3 : inTime
-//        var noti = Qt.createComponent("../components/Notification.qml")
-//        var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
-    }
+//    function addNotification(inText, inTime) {
+//        console.log("FirstPage == OOPS, we don't have notifaction for ["+inText + "] " +inTime);
+////        var text = inText == undefined ? "" : inText
+////        var time = inTime == undefined ? 3 : inTime
+////        var noti = Qt.createComponent("../components/Notification.qml")
+////        var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
+//    }
 
     
     //////////////////////////////////////////////////////////////////

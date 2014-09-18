@@ -36,6 +36,38 @@ ApplicationWindow
 {
     initialPage: /*Qt.resolvedUrl("pages/FirstPage.qml")*/Component { FirstPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
+
+    Item{
+        id:notiItem
+        width: parent.width
+        height:Screen.height/5
+        z: 20
+        Column {
+            id: notificationBar
+            anchors {
+                top:parent.top
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+                margins:Theme.paddingMedium
+                // bottomMargin: Theme.paddingMedium
+                //verticalCenter: parent.verticalCenter
+            }
+
+            spacing: Theme.paddingMedium
+
+            move: Transition { NumberAnimation { properties: "y" } }
+        }
+    }
+
+    function addNotification(inText, inTime) {
+        var text = inText == undefined ? "" : inText
+        var time = inTime == undefined ? 3 : inTime
+        var noti = Qt.createComponent("components/Notification.qml")
+        if (noti.status == Component.Ready) {
+            var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
+        }
+    }
 }
 
 
