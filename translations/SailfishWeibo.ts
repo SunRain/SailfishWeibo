@@ -22,6 +22,10 @@
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>All comments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -91,10 +95,6 @@
     </message>
     <message>
         <source>Message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>model.title</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

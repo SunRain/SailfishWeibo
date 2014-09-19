@@ -95,70 +95,88 @@ Page {
         }
     }
 
-    ListView {
+    SilicaListView {
         anchors.fill: parent
-        width: parent.width
-        height: contentItem.childrenRect.height
+        //width: parent.width
+        //height: contentItem.childrenRect.height
 //        clip: true
-        spacing: 1//units.gu(1)
+       // spacing: 1//units.gu(1)
         model: ListModel { id: modelComment }
         delegate: delegateComment
         cacheBuffer: 9999
+        header:PageHeader {
+            id:pageHeader
+            title: qsTr("All comments")
+        }
     }
 
 
     Component {
         id: delegateComment
 
-        Item {
+        /*Item*/ListItem {
+           // width: parent.width
+            //height: childrenRect.height
             width: parent.width
-            height: childrenRect.height
+            contentHeight: columnWContent.height + Theme.paddingMedium 
+            //color: Qt.rgba(255, 255, 255, 0.3)
+
+            //menu: contextMenu
 
             Column {
                 id: columnWContent
                 anchors {
                     top: parent.top
-                    topMargin: 0.5//units.gu(0.5)
-                    left: parent.left; right: parent.right
+                    topMargin: Theme.paddingMedium//0.5//units.gu(0.5)
+                    left: parent.left
+                    right: parent.right
 //                    leftMargin: units.gu(1); rightMargin: units.gu(1)
                 }
-                spacing:0.5// units.gu(0.5)
-                height: childrenRect.height
+                spacing: Theme.paddingMedium
+                //height: childrenRect.height
 
                 Row {
                     id: rowUser
-                    anchors { left: parent.left
+                    anchors { 
+                        left: parent.left
                         right: parent.right
-                        leftMargin: 1//units.gu(1)
-                        rightMargin:1// units.gu(1) 
+                        leftMargin: Theme.paddingSmall 
+                        rightMargin:Theme.paddingSmall 
                     }
-                    spacing:1// units.gu(1)
-                    height: usAvatar.height
+                    spacing:Theme.paddingSmall 
+                    height: owUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height//usAvatar.height
 
-                    /*UbuntuShape*/ Item{
+                    Item{
                         id: usAvatar
-                        width: 4.5//units.gu(4.5)
+                        width: 64//units.gu(4.5)
                         height: width
                         Image {
+                            width: parent.width
+                            height: parent.height
+                            smooth: true
+                            fillMode: Image.PreserveAspectFit
                             source: model.user.profile_image_url
                         }
                     }
 
                     Column {
-                        spacing: 0.2//units.gu(0.2)
+                        id:rowUserColumn
+                        spacing: Theme.paddingSmall
 
                         Label {
                             id: labelUserName
-                            color: "black"
+                            color: Theme.primaryColor
+                            font.pixelSize: Theme.fontSizeExtraSmall
                             text: model.user.screen_name
                         }
 
                         Label {
                             id: labelCommentTime
-                            color: "grey"
-                            text: {
+                            color: Theme.secondaryColor
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            text:"Weibo Time" /*{
                                 return DateUtils.formatRelativeTime(i18n, DateUtils.parseDate(appData.dateParse(model.created_at)))
-                            }
+                            }*/
                         }
                     }
                 }
@@ -168,51 +186,59 @@ Page {
                     anchors { 
                         left: parent.left
                         right: parent.right
-                        leftMargin: 1//units.gu(1)
-                        rightMargin:1// units.gu(1) 
+                        leftMargin: Theme.paddingSmall 
+                        rightMargin: Theme.paddingSmall 
                     }
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    color: "black"
+                    color: Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeMedium
                     text: model.text
                 }
 
                 // user weibo
-                /*UbuntuShape*/Item {
+                Item {
                     id: usWeiboContent
                     anchors {
-                        left: parent.left; right: parent.right
-                        leftMargin: 1//units.gu(1);
-                        rightMargin: 1//units.gu(1)
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: Theme.paddingSmall 
+                        rightMargin: Theme.paddingSmall 
                     }
-                    height: colWeibo.height + 1.5//units.gu(1.5)
-                    //radius: "medium"
-                    //color: Qt.rgba(255, 255, 255, 0.3)
-
+                    height: colWeibo.height + Theme.paddingSmall //1.5//units.gu(1.5)
                     // use reply_comment if reply_comment exist
                     property var status: model.reply_comment == undefined ? model.status : model.reply_comment
 
                     signal clicked
 
+                    Image {
+                        id: background
+                        source: "../graphics/mask_background_reposted.png"
+                        fillMode: Image.PreserveAspectCrop
+                    }
+                    
                     Column {
                         id: colWeibo
                         anchors {
-                            top: parent.top; topMargin:1// units.gu(1)
-                            left: parent.left; right: parent.right
-                            leftMargin: 1//units.gu(1);
-                            rightMargin: 1// units.gu(1)
+                            top: parent.top
+                            topMargin:Theme.paddingSmall 
+                            left: parent.left
+                            right: parent.right
+                            leftMargin: Theme.paddingSmall 
+                            rightMargin: Theme.paddingSmall 
                         }
-                        spacing:1// units.gu(1)
-                        height: childrenRect.height
+                        spacing:Theme.paddingSmall 
+                        //height: childrenRect.height
 
                         Column {
                             id: colUser
                             anchors { left: parent.left; right: parent.right }
-                            spacing:0.5// units.gu(0.5)
+                            spacing: Theme.paddingSmall 
                             height: childrenRect.height
 
                             Label {
                                 id: labelWeiboUserName
-                                color: "black"
+                                color: Theme.secondaryHighlightColor
+                                font.pixelSize: Theme.fontSizeExtraSmall
                                 text: usWeiboContent.status.user.screen_name
                             }
                         }
@@ -221,16 +247,18 @@ Page {
                             id: labelWeibo
                             width: parent.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                            color: "black"
+                            color: Theme.secondaryColor
+                            font.pixelSize: Theme.fontSizeSmall
                             text: usWeiboContent.status.text
                         }
 
                     } // column
-
-
                 } // user weibo
-
-               // ListItem.ThinDivider {}
+                
+                Separator {
+                    width: parent.width
+                    color: Theme.highlightColor
+                }
             }
 
             MouseArea {
