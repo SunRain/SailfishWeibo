@@ -1,15 +1,18 @@
 import QtQuick 2.0
-import QtQuick.XmlListModel 2.0
-import Ubuntu.Components 0.1
-import Ubuntu.Components.ListItems 0.1 as ListItem
-import Ubuntu.Components.Popups 0.1
+//import QtQuick.XmlListModel 2.0
+//import Ubuntu.Components 0.1
+//import Ubuntu.Components.ListItems 0.1 as ListItem
+//import Ubuntu.Components.Popups 0.1
+import Sailfish.Silica 1.0
+
 import "../js/dateutils.js" as DateUtils
 import "../js/weiboapi.js" as WB
+import "../js/Settings.js" as Settings
 import "../components"
 
 Page {
     id: commentAllPage
-    title: i18n.tr("All comments")
+    //title: qsTr("All comments")
 
     property var uid
     property string userName: ""
@@ -23,12 +26,12 @@ Page {
 
         pageNum = 1
 //        isRefresh = true
-        commentAll(settings.getAccess_token(), pageNum)
+        commentAll(Settings.getAccess_token(), pageNum)
     }
 
     function addMore() {
         pageNum++
-        commentAll(settings.getAccess_token(), pageNum)
+        commentAll(Settings.getAccess_token(), pageNum)
     }
 
     //////////////////////////////////////////////////////////////////         get all comment
@@ -56,16 +59,19 @@ Page {
 
         WB.messageGetAllComment(token, page, new observer())
     }
+    Component.onCompleted: {
+        refresh();
+    }
 
     Component {
         id: dialog
         Dialog {
             id: dialogue
-            title: i18n.tr("Comment options")
-            text: i18n.tr("Please choose one of the following options")
+            //title: qsTr("Comment options")
+            //text: qsTr("Please choose one of the following options")
 
             Button {
-                text: i18n.tr("Reply")
+                text: qsTr("Reply")
                 onClicked: {
                     console.log("comment info: ", JSON.stringify(commentAllPage.commentInfo))
                     PopupUtils.close(dialogue)
@@ -73,7 +79,7 @@ Page {
                 }
             }
             Button {
-                text: i18n.tr("View weibo")
+                text: qsTr("View weibo")
                 onClicked: {
                     modelWeiboTemp.clear()
                     modelWeiboTemp.append(weiboTmp)
@@ -82,8 +88,8 @@ Page {
                 }
             }
             Button{
-                gradient: UbuntuColors.greyGradient
-                text: i18n.tr("Cancel")
+                //gradient: UbuntuColors.greyGradient
+                text: qsTr("Cancel")
                 onClicked: PopupUtils.close(dialogue)
             }
         }
@@ -94,7 +100,7 @@ Page {
         width: parent.width
         height: contentItem.childrenRect.height
 //        clip: true
-        spacing: units.gu(1)
+        spacing: 1//units.gu(1)
         model: ListModel { id: modelComment }
         delegate: delegateComment
         cacheBuffer: 9999
@@ -111,30 +117,35 @@ Page {
             Column {
                 id: columnWContent
                 anchors {
-                    top: parent.top; topMargin: units.gu(0.5)
+                    top: parent.top
+                    topMargin: 0.5//units.gu(0.5)
                     left: parent.left; right: parent.right
 //                    leftMargin: units.gu(1); rightMargin: units.gu(1)
                 }
-                spacing: units.gu(0.5)
+                spacing:0.5// units.gu(0.5)
                 height: childrenRect.height
 
                 Row {
                     id: rowUser
-                    anchors { left: parent.left; right: parent.right; leftMargin: units.gu(1); rightMargin: units.gu(1) }
-                    spacing: units.gu(1)
+                    anchors { left: parent.left
+                        right: parent.right
+                        leftMargin: 1//units.gu(1)
+                        rightMargin:1// units.gu(1) 
+                    }
+                    spacing:1// units.gu(1)
                     height: usAvatar.height
 
-                    UbuntuShape {
+                    /*UbuntuShape*/ Item{
                         id: usAvatar
-                        width: units.gu(4.5)
+                        width: 4.5//units.gu(4.5)
                         height: width
-                        image: Image {
+                        Image {
                             source: model.user.profile_image_url
                         }
                     }
 
                     Column {
-                        spacing: units.gu(0.2)
+                        spacing: 0.2//units.gu(0.2)
 
                         Label {
                             id: labelUserName
@@ -154,22 +165,28 @@ Page {
 
                 Label {
                     id: labelComment
-                    anchors { left: parent.left; right: parent.right; leftMargin: units.gu(1); rightMargin: units.gu(1) }
+                    anchors { 
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: 1//units.gu(1)
+                        rightMargin:1// units.gu(1) 
+                    }
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     color: "black"
                     text: model.text
                 }
 
                 // user weibo
-                UbuntuShape {
+                /*UbuntuShape*/Item {
                     id: usWeiboContent
                     anchors {
                         left: parent.left; right: parent.right
-                        leftMargin: units.gu(1); rightMargin: units.gu(1)
+                        leftMargin: 1//units.gu(1);
+                        rightMargin: 1//units.gu(1)
                     }
-                    height: colWeibo.height + units.gu(1.5)
-                    radius: "medium"
-                    color: Qt.rgba(255, 255, 255, 0.3)
+                    height: colWeibo.height + 1.5//units.gu(1.5)
+                    //radius: "medium"
+                    //color: Qt.rgba(255, 255, 255, 0.3)
 
                     // use reply_comment if reply_comment exist
                     property var status: model.reply_comment == undefined ? model.status : model.reply_comment
@@ -179,17 +196,18 @@ Page {
                     Column {
                         id: colWeibo
                         anchors {
-                            top: parent.top; topMargin: units.gu(1)
+                            top: parent.top; topMargin:1// units.gu(1)
                             left: parent.left; right: parent.right
-                            leftMargin: units.gu(1); rightMargin: units.gu(1)
+                            leftMargin: 1//units.gu(1);
+                            rightMargin: 1// units.gu(1)
                         }
-                        spacing: units.gu(1)
+                        spacing:1// units.gu(1)
                         height: childrenRect.height
 
                         Column {
                             id: colUser
                             anchors { left: parent.left; right: parent.right }
-                            spacing: units.gu(0.5)
+                            spacing:0.5// units.gu(0.5)
                             height: childrenRect.height
 
                             Label {
@@ -212,7 +230,7 @@ Page {
 
                 } // user weibo
 
-                ListItem.ThinDivider {}
+               // ListItem.ThinDivider {}
             }
 
             MouseArea {
@@ -221,7 +239,7 @@ Page {
 //                    console.log("reply comment: ", JSON.stringify(model.reply_comment))
                     commentAllPage.commentInfo = { "id": model.status.id, "cid": model.id}
                     commentAllPage.weiboTmp = model.status
-                    PopupUtils.open(dialog)
+                    //PopupUtils.open(dialog)
                 }
             }
         }
