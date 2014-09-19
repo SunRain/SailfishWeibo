@@ -69,6 +69,17 @@
     </message>
 </context>
 <context>
+    <name>MessageTab</name>
+    <message>
+        <source>You have no new message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>S:</name>
     <message>
         <source></source>

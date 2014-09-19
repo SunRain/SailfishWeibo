@@ -38,8 +38,8 @@ Page {
         id: pagesModel
 
         ListElement {
-            //page: 
             title: "Message"
+            page:"../ui/MessageTab.qml"
         }
         ListElement {
             title: "Friends"
@@ -80,8 +80,8 @@ Page {
                 }
             }
             onClicked: {
-                //pageStack.push(Qt.resolvedUrl(page))
-                console.log("click item " + title);
+                console.log("click item " + title + "with targe " + page);
+                pageStack.push(Qt.resolvedUrl(page))
             }
         }
         VerticalScrollDecorator {}
