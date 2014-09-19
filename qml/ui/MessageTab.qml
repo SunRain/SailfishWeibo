@@ -101,7 +101,7 @@ Page {
                         right: right.left
                         verticalCenter: parent.verticalCenter
                     }
-                    text: qsTr("model.title")
+                    text: qsTr(model.title)
                     font.pixelSize: Theme.fontSizeMedium
                 }
                 Item {
