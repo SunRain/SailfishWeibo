@@ -24,6 +24,21 @@
     </message>
 </context>
 <context>
+    <name>CommentMentioned</name>
+    <message>
+        <source>Comments mentioned me</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>My Cover</source>
@@ -65,6 +80,13 @@
     </message>
     <message>
         <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FooterLoadMore</name>
+    <message>
+        <source>click here to load more..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -193,6 +215,17 @@
     </message>
     <message>
         <source>Input Weibo content here</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WeiboMentioned</name>
+    <message>
+        <source>Weibo mentioned me</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>click here to load more..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

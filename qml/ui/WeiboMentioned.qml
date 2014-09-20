@@ -1,15 +1,14 @@
 import QtQuick 2.0
-import QtQuick.XmlListModel 2.0
-import Ubuntu.Components 0.1
-import Ubuntu.Components.ListItems 0.1 as ListItem
-import Ubuntu.Components.Popups 0.1
+import Sailfish.Silica 1.0
+
 import "../js/dateutils.js" as DateUtils
 import "../js/weiboapi.js" as WB
+import "../js/Settings.js" as Settings
 import "../components"
 
 Page {
     id: weiboMentionedPage
-    title: i18n.tr("Weibo mentioned me")
+    //title: qsTr("Weibo mentioned me")
 
     property var uid
     property string userName: ""
@@ -20,12 +19,12 @@ Page {
 
         pageNum = 1
 //        isRefresh = true
-        weiboMentioned(settings.getAccess_token(), pageNum)
+        weiboMentioned(Settings.getAccess_token(), pageNum)
     }
 
     function addMore() {
         pageNum++
-        weiboMentioned(settings.getAccess_token(), pageNum)
+        weiboMentioned(Settings.getAccess_token(), pageNum)
     }
 
     //////////////////////////////////////////////////////////////////         user status mentioned me
@@ -54,17 +53,25 @@ Page {
         WB.messageGetWeiboMentioned(token, page, new observer())
     }
 
+    Component.onCompleted: {
+        weiboMentionedPage.refresh();
+    }
+
     ListView{
         id: lvUserWeibo
         anchors {
             fill: parent
-            margins: units.gu(1)
+            //margins: units.gu(1)
         }
         cacheBuffer: 999999/*height * 2*/
-        spacing: units.gu(1)
+        //spacing: units.gu(1)
         model: modelWeibo
         footer: footerWeibo
         delegate: delegateWeibo
+        header:PageHeader {
+            id:pageHeader
+            title: qsTr("Weibo mentioned me")
+        }
 
     }
 
@@ -74,7 +81,10 @@ Page {
         DelegateWeibo {
             onClicked: {
                 //                        console.log("weibo Detail:", JSON.stringify(modelWeibo.get(index)))
-                mainView.toWeiboPage(modelWeibo, index)
+                //toWeiboPage(modelWeibo, index)
+                pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+                                {"weiboModel":modelWeibo,
+                                   "newIndex":index})
             }
         }
     }
@@ -84,16 +94,23 @@ Page {
 
         Item {
             width: lvUserWeibo.width
-            height: units.gu(7)
+            height: Theme.itemSizeMedium
 
-            Label {
+//            Label {
+//                anchors.centerIn: parent
+//                text: qsTr("click here to load more..")
+//            }
+
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked: userWeibo.addMore()
+//            }
+            Button {
                 anchors.centerIn: parent
-                text: i18n.tr("click here to load more..")
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: userWeibo.addMore()
+                text: qsTr("click here to load more..")
+                onClicked: {
+                    weiboMentionedPage.addMore();
+                }
             }
         }
     }
