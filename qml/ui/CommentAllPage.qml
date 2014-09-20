@@ -12,7 +12,6 @@ import "../components"
 
 Page {
     id: commentAllPage
-    //title: qsTr("All comments")
 
     property var uid
     property string userName: ""
@@ -63,44 +62,8 @@ Page {
         refresh();
     }
 
-    Component {
-        id: dialog
-        Dialog {
-            id: dialogue
-            //title: qsTr("Comment options")
-            //text: qsTr("Please choose one of the following options")
-
-            Button {
-                text: qsTr("Reply")
-                onClicked: {
-                    console.log("comment info: ", JSON.stringify(commentAllPage.commentInfo))
-                    PopupUtils.close(dialogue)
-                    mainView.toSendPage("reply", commentAllPage.commentInfo)
-                }
-            }
-            Button {
-                text: qsTr("View weibo")
-                onClicked: {
-                    modelWeiboTemp.clear()
-                    modelWeiboTemp.append(weiboTmp)
-                    mainView.toWeiboPage(modelWeiboTemp, 0)
-                    PopupUtils.close(dialogue)
-                }
-            }
-            Button{
-                //gradient: UbuntuColors.greyGradient
-                text: qsTr("Cancel")
-                onClicked: PopupUtils.close(dialogue)
-            }
-        }
-    }
-
     SilicaListView {
         anchors.fill: parent
-        //width: parent.width
-        //height: contentItem.childrenRect.height
-//        clip: true
-       // spacing: 1//units.gu(1)
         model: ListModel { id: modelComment }
         delegate: delegateComment
         cacheBuffer: 9999
@@ -114,14 +77,11 @@ Page {
     Component {
         id: delegateComment
 
-        /*Item*/ListItem {
-           // width: parent.width
-            //height: childrenRect.height
+        ListItem {
             width: parent.width
             contentHeight: columnWContent.height + Theme.paddingMedium 
-            //color: Qt.rgba(255, 255, 255, 0.3)
 
-            //menu: contextMenu
+            menu: contextMenu
 
             Column {
                 id: columnWContent
@@ -130,10 +90,8 @@ Page {
                     topMargin: Theme.paddingMedium//0.5//units.gu(0.5)
                     left: parent.left
                     right: parent.right
-//                    leftMargin: units.gu(1); rightMargin: units.gu(1)
                 }
                 spacing: Theme.paddingMedium
-                //height: childrenRect.height
 
                 Row {
                     id: rowUser
@@ -144,7 +102,7 @@ Page {
                         rightMargin:Theme.paddingSmall 
                     }
                     spacing:Theme.paddingSmall 
-                    height: owUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height//usAvatar.height
+                    height: Math.max(rowUserColumn.height,usAvatar.height)//owUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height//usAvatar.height
 
                     Item{
                         id: usAvatar
@@ -261,13 +219,37 @@ Page {
                 }
             }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-//                    console.log("reply comment: ", JSON.stringify(model.reply_comment))
-                    commentAllPage.commentInfo = { "id": model.status.id, "cid": model.id}
-                    commentAllPage.weiboTmp = model.status
-                    //PopupUtils.open(dialog)
+            //TODO 使用ApplicationWindow定义的方法切换qml会出错，需要使用更好的全局方法来替代冗余的pageStack.push
+            Component {
+                id: contextMenu
+                ContextMenu {
+                    MenuItem {
+                        text: qsTr("Reply comment")
+                        onClicked: {
+                                        /////////// Ugly code
+                            commentAllPage.commentInfo = { "id": model.status.id, "cid": model.id}
+                            commentAllPage.weiboTmp = model.status
+                           //toSendPage("reply", commentAllPage.commentInfo)
+                            pageStack.push(Qt.resolvedUrl("SendPage.qml"),
+                                           {"mode":"reply",
+                                               "info":commentAllPage.commentInfo})
+                        }
+                    }
+                    MenuItem {
+                        text: qsTr("View weibo")
+                        onClicked: {
+                                        /////////// Ugly code
+                            commentAllPage.commentInfo = { "id": model.status.id, "cid": model.id}
+                            commentAllPage.weiboTmp = model.status
+                            
+                            modelWeiboTemp.clear()
+                            modelWeiboTemp.append(weiboTmp)
+                            //toWeiboPage(modelWeiboTemp, 0)
+                            pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+                                            {"weiboModel":modelWeiboTemp,
+                                               "newIndex":"0"})
+                        }
+                    }
                 }
             }
         }

@@ -56,7 +56,7 @@ Page {
     
     onStatusChanged: {
         if (mainView.status === PageStatus.Active) {
-            console.log("=== PageStatus.Active");
+            console.log("FirstPage === PageStatus.Active");
             
             if (!settingsInitialized) {
                 Settings.initialize();

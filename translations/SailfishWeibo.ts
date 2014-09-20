@@ -11,19 +11,15 @@
 <context>
     <name>CommentAllPage</name>
     <message>
-        <source>Reply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>View weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
+        <source>All comments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All comments</source>
+        <source>Reply comment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
