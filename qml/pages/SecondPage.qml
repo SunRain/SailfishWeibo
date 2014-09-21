@@ -31,6 +31,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import "../js/Settings.js" as Settings
+
 Page {
     id: mainPage
 
@@ -40,22 +42,25 @@ Page {
         ListElement {
             title: "Message"
             page:"../ui/MessageTab.qml"
+            arg:""
         }
-        ListElement {
-            title: "Friends"
-        }
+//        ListElement {
+//            title: "Friends"
+//        }
         ListElement {
             title: "UserPage"
+            page:"../ui/UserPage/qml"
+            arg:"getUid"
         }
-        ListElement {
-            title: "UserWeibo"
-        }
-        ListElement {
-            title: "UserPhoto"
-        }
-        ListElement {
-            title: "Settings"
-        }
+//        ListElement {
+//            title: "UserWeibo"
+//        }
+//        ListElement {
+//            title: "UserPhoto"
+//        }
+//        ListElement {
+//            title: "Settings"
+//        }
         
     }
     SilicaListView {
@@ -80,8 +85,14 @@ Page {
                 }
             }
             onClicked: {
-                console.log("click item " + title + "with targe " + page);
-                pageStack.push(Qt.resolvedUrl(page))
+                console.log("click item " + title + "with targe " + page + "arg " + arg);
+                if (arg == "getUid") {
+                    //pageStack.push(Qt.resolvedUrl(page))
+                    var uid = Settings.getUid();
+                    toUserPage(uid);
+                } else {
+                    pageStack.push(Qt.resolvedUrl(page))
+                }
             }
         }
         VerticalScrollDecorator {}
