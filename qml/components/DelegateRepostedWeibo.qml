@@ -6,10 +6,10 @@ import Sailfish.Silica 1.0
  Item{
     id: usWeiboContent
     anchors {
-        left: parent.left; right: parent.right
-//                    leftMargin: units.gu(1); rightMargin: units.gu(1)
+        left: parent.left
+        right: parent.right
     }
-    height: isInvalid ? 0 : columnWContent.height + Theme.paddingMedium/* units.gu(2)*/
+    height: isInvalid ? 0 : columnWContent.height + Theme.paddingMedium
     //radius: "medium"
     //color: Qt.rgba(255, 255, 255, 0.3)
 
@@ -32,8 +32,8 @@ import Sailfish.Silica 1.0
         anchors.fill: parent
         onClicked: {
             usWeiboContent.retweetClicked()
-//            var tmp = retweetWeibo.retweeted_status
-//            console.log("retweetWeibo.retweeted_status: ", JSON.stringify(tmp))
+            var tmp = retweetWeibo.retweeted_status
+           console.log("retweetWeibo.retweeted_status: ", JSON.stringify(tmp))
         }
     }
 

@@ -84,20 +84,20 @@ Item {
         
         spacing: Theme.paddingSmall 
 
-        PageHeader {
-            id:pageHeader
-            title: qsTr("Sailfish Weibo")
-        }
-
         SilicaListView{
             id: lvHomeWeibo
             width: weiboTab.width 
             height: weiboTab.height
 
-            contentHeight: parent.height * count
+            header: PageHeader {
+                id:pageHeader
+                title: qsTr("Sailfish Weibo")
+            }
+            
+            //contentHeight: parent.height * count
             
             cacheBuffer: 999999/*height * 2*/
-            spacing: Theme.paddingMedium
+            //spacing: Theme.paddingMedium
             model: modelWeibo
             footer: /*footerWeibo*/FooterLoadMore{
                 onClicked: {weiboTab.addMore();}
@@ -113,9 +113,17 @@ Item {
         id: delegateWeibo
         
         DelegateWeibo {
-            onClicked: {
-                //console.log("weibo Detail:" + JSON.stringify(modelWeibo.get(index)))
-                toWeiboPage(modelWeibo, index)
+//            onClicked: {
+//                console.log("WeiboTab === weibo Detail:" + JSON.stringify(modelWeibo.get(index)))
+//                toWeiboPage(modelWeibo, index)
+//            }
+            onUsWeiboClicked: {
+                console.log("WeiboTab === onUsWeiboClicked")
+                toWeiboPage(modelWeibo, index);
+            }
+            onRepostedWeiboClicked: {
+                //TODO 添加方法
+                console.log("WeiboTab === onRepostedWeiboClicked")
             }
         }
     }

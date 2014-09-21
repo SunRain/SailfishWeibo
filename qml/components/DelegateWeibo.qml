@@ -25,7 +25,9 @@ Item {
     //radius: "medium"
     //color: Qt.rgba(255, 255, 255, 0.3)
     
-    signal clicked
+    //signal cicked
+    signal repostedWeiboClicked
+    signal usWeiboClicked
     
     Component.onCompleted: {
         //        if (model.retweeted_status) {
@@ -57,7 +59,8 @@ Item {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            usWeiboContent.clicked()
+            //usWeiboContent.clicked()
+            usWeiboContent.usWeiboClicked();
             //            var tmp = model.pic_urls
             //            console.log("model.pic_urls: ", JSON.stringify(tmp), gridWeiboPics.height, itemRetweetContainer.height)
         }
@@ -183,7 +186,10 @@ Item {
                 visible: model.retweeted_status != undefined
                 retweetWeibo: model.retweeted_status
                 
-                onRetweetClicked: usWeiboContent.clicked()
+                onRetweetClicked: {
+                    //usWeiboContent.clicked()
+                    usWeiboContent.repostedWeiboClicked();
+                }
             }
         }
         

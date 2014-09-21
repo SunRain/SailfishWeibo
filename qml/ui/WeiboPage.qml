@@ -212,19 +212,26 @@ Page {
                 }
 
                 DelegateWeibo {
-                    onClicked: {
-                        //TODO:添加相关功能的具体实现
-                        console.log("WeiboPage ==== DelegateWeibo item clicked");
-//                        console.log("model.pic_urls: ", JSON.stringify(pic_urls))
-//                        var tmp = []
-//                        if (model.pic_urls != undefined && model.pic_urls.count > 0) {
-//                            for (var i=0; i<model.pic_urls.count; i++) {
-//                                tmp.push(model.pic_urls.get(i))
-//                            }
-//                            mainView.toGalleryPage(tmp, 1)
-//                        }
-                        //controlPanel.open = !controlPanel.open
-                        //actionPanel.open = !actionPanel.open;
+//                    onClicked: {
+//                        //TODO:添加相关功能的具体实现
+//                        console.log("WeiboPage ==== DelegateWeibo item clicked");
+////                        console.log("model.pic_urls: ", JSON.stringify(pic_urls))
+////                        var tmp = []
+////                        if (model.pic_urls != undefined && model.pic_urls.count > 0) {
+////                            for (var i=0; i<model.pic_urls.count; i++) {
+////                                tmp.push(model.pic_urls.get(i))
+////                            }
+////                            mainView.toGalleryPage(tmp, 1)
+////                        }
+//                        //controlPanel.open = !controlPanel.open
+//                        //actionPanel.open = !actionPanel.open;
+//                    }
+                    onUsWeiboClicked: {
+                        //不需要方法
+                    }
+                    onRepostedWeiboClicked: {
+                        //TODO 添加方法
+                        console.log("WeiboPage ==== onRepostedWeiboClicked item clicked");
                     }
                 }
 
