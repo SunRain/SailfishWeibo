@@ -83,14 +83,12 @@ Page {
             id:column
             spacing: Theme.paddingSmall 
             anchors.fill: parent
-            
+
             SilicaListView {
                 id: weiboListview
                 width: mainFlickableView.width 
-                //height: mainFlickableView.height - pageHeader.height - Theme.paddingSmall
-                
-                //contentHeight: parent.height * count
-                
+                height: mainFlickableView.height// - pageHeader.height - Theme.paddingSmall
+
                 header: PageHeader {
                     id:pageHeader
                     title: qsTr("Sailfish Weibo")
@@ -100,8 +98,9 @@ Page {
                 delegate: xmlDelegate
                 clip: true
                 onCurrentIndexChanged: {
-                    //console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
-                    //console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
+//                    console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
+//                    console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
+                    
                     if (preventIndexChangeHandler) {
                         preventIndexChangeHandler = false
                         return
@@ -135,12 +134,18 @@ Page {
                 }
                 
                 Component.onCompleted: {
-                   /// console.log("== weiboPageSilicaFlickable onCompleted");
-                    ///console.log("== listview heigt is " + weiboListview.height);
-                   // console.log("== weiboPageSilicaFlickable heigt is " + mainFlickableView.height);
+//                    console.log("== weiboPageSilicaFlickable onCompleted");
+//                    console.log("== listview heigt is " + weiboListview.height);
+//                    console.log("== weiboPageSilicaFlickable heigt is " + mainFlickableView.height);
                     
                     weiboListviewModel.clear();
-                    weiboListviewModel.append(weiboModel.get(newIndex));
+                    //TODO MagicNumber
+                    if (newIndex == "-100") {
+                        console.log("WeiboPage === use MagicNubmer");
+                        weiboListviewModel.append(weiboModel)
+                    } else {
+                        weiboListviewModel.append(weiboModel.get(newIndex));
+                    }
                     weiboListview.currentIndex = 0//newIndex;
                     weiboListview.positionViewAtIndex(weiboListview.currentIndex, ListView.Center);
                     
@@ -227,11 +232,15 @@ Page {
 //                        //actionPanel.open = !actionPanel.open;
 //                    }
                     onUsWeiboClicked: {
-                        //不需要方法
+                        console.log("WeiboPage ==== onUsWeiboClicked item clicked");
                     }
                     onRepostedWeiboClicked: {
                         //TODO 添加方法
                         console.log("WeiboPage ==== onRepostedWeiboClicked item clicked");
+                        //toWeiboPage(weiboListviewModel.get(0).retweeted_status, "-100");
+                        pageStack.replace(Qt.resolvedUrl("WeiboPage.qml"),
+                                        {"weiboModel":weiboListviewModel.get(0).retweeted_status,
+                                           "newIndex":"-100"})
                     }
                 }
 

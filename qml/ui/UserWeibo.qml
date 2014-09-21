@@ -82,7 +82,7 @@ Page {
         id: delegateWeibo
 
         DelegateWeibo {
-            onClicked: {
+            onUsWeiboClicked: {
                 //                        console.log("weibo Detail:", JSON.stringify(modelWeibo.get(index)))
                 toWeiboPage(modelWeibo, index)
             }

@@ -90,7 +90,7 @@ ApplicationWindow
     
     //////////////////////////////////////////////////////////////////         go to weibo page
     function toWeiboPage(model, index) {
-        console.log("toWeiboPage  index " + index + " model " + model);
+        //console.log("toWeiboPage  index " + index + " model " + model);
         popAttachedPages();
         pageStack.push(Qt.resolvedUrl("ui/WeiboPage.qml"),
                         {"weiboModel":model,

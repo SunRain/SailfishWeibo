@@ -59,7 +59,7 @@ import Sailfish.Silica 1.0
             id: rowUser
             anchors { left: parent.left; right: parent.right }
             spacing: Theme.paddingSmall
-            height: Math.max(usAvatar.height, labelUserName.height) + Theme.paddingSmall
+            height: Math.max(usAvatar.height, rowUserColumn.height) + Theme.paddingSmall
             
             Item {
                 id: usAvatar
@@ -77,21 +77,39 @@ import Sailfish.Silica 1.0
                     anchors.fill: parent
                     onClicked: {
                         //console.log("===  usAvatar clicked");
-                        toUserPage(model.user.id)
+                        toUserPage(retweetWeibo.user.id)
                     }
                 }
             }
-
-            Label {
-                id: labelUserName
-                color: Theme.highlightColor
-                text: isInvalid ? "" : retweetWeibo.user.screen_name
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked:  {
-                        toUserPage(retweetWeibo.user.id)
-                    }
+            Column {
+                id:rowUserColumn
+                spacing: Theme.paddingSmall
+                
+                Label {
+                    id: labelUserName
+                    color: Theme.highlightColor
+                    text: isInvalid ? "" : retweetWeibo.user.screen_name
+                    font.pixelSize: Theme.fontSizeTiny 
+                }
+                Label {
+                    id: labelWeiboTime
+                    color: Theme.secondaryColor
+                    text:isInvalid ? "" : "Weibo Time"/* {
+                        //                        console.log("appData.dateParse(model.created_at): ", appData.dateParse(model.created_at))
+                        //                        var ddd = new Date(appData.dateParse(model.created_at) + "")
+                        //                        console.log("ddd: ", ddd.getTime())
+                        
+                        //FIXME:适配Sailfish OS
+                        //return DateUtils.formatRelativeTime(i18n, DateUtils.parseDate(appData.dateParse(retweetWeibo.created_at)))
+                    }*/
+                    font.pixelSize: Theme.fontSizeTiny 
+                }
+            }
+            
+            MouseArea {
+                anchors.fill: parent
+                onClicked:  {
+                    toUserPage(retweetWeibo.user.id)
                 }
             }
         }

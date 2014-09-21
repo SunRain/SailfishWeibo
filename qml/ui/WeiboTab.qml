@@ -118,12 +118,16 @@ Item {
 //                toWeiboPage(modelWeibo, index)
 //            }
             onUsWeiboClicked: {
-                console.log("WeiboTab === onUsWeiboClicked")
+                console.log("WeiboTab === onUsWeiboClicked");
                 toWeiboPage(modelWeibo, index);
             }
             onRepostedWeiboClicked: {
                 //TODO 添加方法
-                console.log("WeiboTab === onRepostedWeiboClicked")
+                console.log("WeiboTab === onRepostedWeiboClicked");
+//                console.log("******" +JSON.stringify(modelWeibo.get(index).retweeted_status));
+
+                //TODO MagicNumber
+                toWeiboPage(modelWeibo.get(index).retweeted_status, "-100");
             }
         }
     }
