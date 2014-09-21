@@ -228,7 +228,6 @@ Page {
                         //bottom: parent.bottom
                         margins:Theme.paddingSmall
                     }
-                    //height: childrenRect.height
                     spacing: Theme.paddingSmall
 
                     Label {
@@ -255,21 +254,16 @@ Page {
                 anchors { 
                     left: parent.left
                     right: parent.right
-                }
-                //anchors.horizontalCenter: parent.horizontalCenter
-                
+                } 
                 height: rowFriends.height + Theme.paddingMedium
-                //color: Qt.rgba(255, 255, 255, 0.5)
 
                 Row {
                     id: rowFriends
                     anchors { 
                         left: parent.left
                         right: parent.right
-                        //top: parent.top
                         margins:  Theme.paddingSmall
                     }
-                    //height: childrenRect.height
                    spacing: Theme.paddingSmall
 
                     Item {
@@ -284,8 +278,7 @@ Page {
                         }
                     }
                     Rectangle {
-                        //y: 2//units.gu(0.2)
-                        width: 2//units.gu(0.1)
+                        width: 2
                         height: parent.height - Theme.paddingSmall
                         color: Theme.highlightColor
                     }
@@ -299,17 +292,15 @@ Page {
                             font.pixelSize: Theme.fontSizeExtraSmall
                             text: qsTr("following: ") + userInfo.friends_count
                         }
-                        
+                        //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                //toFriendsPage("following", userInfo.id)
                                 pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfo.id })
                             }
                         }
                     }
                     Rectangle {
-                        //y:2// units.gu(0.2);
                         width: 2//units.gu(0.1)
                         height: parent.height - Theme.paddingSmall
                         color: Theme.highlightColor
@@ -324,6 +315,7 @@ Page {
                             font.pixelSize: Theme.fontSizeExtraSmall
                             text: qsTr("follower: ") + userInfo.followers_count
                         }
+                        //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -384,8 +376,6 @@ Page {
                         rightMargin: Theme.paddingMedium
                     }
                     spacing: Theme.paddingSmall
-                    //height: childrenRect.height
-
                     Column {
                         id: colUser
                         anchors { 
@@ -393,7 +383,6 @@ Page {
                             right: parent.right
                         }
                         spacing: Theme.paddingSmall
-                        //height: childrenRect.height
 
                         Label {
                             id: labelWeiboUserName
@@ -415,7 +404,7 @@ Page {
                     Grid {
                         id: gridWeiboPics
                         columns: 3
-                        spacing:Theme.paddingSmall// units.gu(0.5); /*visible: status.pic_urls == undefined ? false : status.pic_urls.count != 0*/
+                        spacing:Theme.paddingSmall
                         width: parent.width
                         height: childrenRect.height
 
@@ -459,9 +448,6 @@ Page {
 
                     Column {
                         width: parent.width
-                        //height: childrenRect.height
-                        //ListItem.ThinDivider { }
-
                         Row {
                             anchors{
                                 left: parent.left
