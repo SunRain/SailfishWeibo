@@ -486,7 +486,7 @@ function userGetBilateral(token, uid, count, page, observer)
 function userGetWeibo(token, uid, page, observer)
 {
     var url = "https://api.weibo.com/2/statuses/user_timeline.json?access_token=" + token + "&uid=" + uid + "&page=" + page
-    console.log("userGetWeibo start...")
+    console.log("userGetWeibo start..." + url);
 
     var doc = new XMLHttpRequest();
     doc.onreadystatechange = function() {

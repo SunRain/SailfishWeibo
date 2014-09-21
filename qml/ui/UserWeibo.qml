@@ -1,30 +1,34 @@
 import QtQuick 2.0
-import Ubuntu.Components 0.1
-import Ubuntu.Components.ListItems 0.1 as ListItem
-import Ubuntu.Components.Popups 0.1
+import Sailfish.Silica 1.0
+
 import "../js/dateutils.js" as DateUtils
 import "../js/weiboapi.js" as WB
+import "../js/Settings.js" as Settings
 import "../components"
 
 Page {
     id: userWeibo
-    title: userName + i18n.tr("'s Weibo")
+    //title: userName + qsTr("'s Weibo")
 
     property var uid
     property string userName: ""
     property int pageNum: 1
+
+    Component.onCompleted:  {
+        refresh();
+    }
 
     function refresh() {
         modelWeibo.clear()
 
         pageNum = 1
 //        isRefresh = true
-        userStatus(settings.getAccess_token(), pageNum)
+        userStatus(Settings.getAccess_token(), pageNum)
     }
 
     function addMore() {
         pageNum++
-        userStatus(settings.getAccess_token(), pageNum)
+        userStatus(Settings.getAccess_token(), pageNum)
     }
 
     //////////////////////////////////////////////////////////////////         user status
@@ -53,16 +57,23 @@ Page {
         WB.userGetWeibo(token, uid, page, new observer())
     }
 
-    ListView{
+    SilicaListView{
         id: lvUserWeibo
         anchors {
             fill: parent
-            margins: units.gu(1)
+            margins: Theme.paddingMedium
         }
+        header: PageHeader {
+            title: userName + qsTr("'s Weibo")
+        }
+
         cacheBuffer: 999999/*height * 2*/
-        spacing: units.gu(1)
+        //spacing: units.gu(1)
         model: modelWeibo
-        footer: footerWeibo
+        footer: FooterLoadMore {
+            onClicked: {userWeibo.addMore()}
+        }
+
         delegate: delegateWeibo
 
     }
@@ -73,26 +84,7 @@ Page {
         DelegateWeibo {
             onClicked: {
                 //                        console.log("weibo Detail:", JSON.stringify(modelWeibo.get(index)))
-                mainView.toWeiboPage(modelWeibo, index)
-            }
-        }
-    }
-
-    Component {
-        id: footerWeibo
-
-        Item {
-            width: lvUserWeibo.width
-            height: units.gu(7)
-
-            Label {
-                anchors.centerIn: parent
-                text: i18n.tr("click here to load more..")
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: userWeibo.addMore()
+                toWeiboPage(modelWeibo, index)
             }
         }
     }

@@ -270,6 +270,13 @@
     </message>
 </context>
 <context>
+    <name>UserWeibo</name>
+    <message>
+        <source>&apos;s Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WeiboMentioned</name>
     <message>
         <source>Weibo mentioned me</source>
