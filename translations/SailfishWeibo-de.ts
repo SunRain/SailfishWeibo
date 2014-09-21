@@ -302,10 +302,6 @@
         <source>Weibo mentioned me</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>click here to load more..</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WeiboPage</name>
@@ -335,10 +331,6 @@
     <message>
         <source>Show Page 2</source>
         <translation type="obsolete">Zur Seite 2</translation>
-    </message>
-    <message>
-        <source>click here to load more..</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sailfish Weibo</source>

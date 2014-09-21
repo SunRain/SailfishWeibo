@@ -23,10 +23,10 @@ Item {
             title: qsTr("SearchUser")
         }
         
-        Component.onCompleted:  {
-            console.log("atUserComponent == onCompleted  searchArea height " + searchArea.height
-                        + "SilicaListView heigt " + findUserList.height + " atUserComponent heigt " + atUserComponent.height);
-        }
+//        Component.onCompleted:  {
+//            console.log("atUserComponent == onCompleted  searchArea height " + searchArea.height
+//                        + "SilicaListView heigt " + findUserList.height + " atUserComponent heigt " + atUserComponent.height);
+//        }
         
         Row {
             id:searchArea
@@ -54,7 +54,7 @@ Item {
                 enabled: searchInput.enabled
                 
                 onClicked: {
-                    console.log("SendPage == search for UserName " + searchInput.text);
+                    //console.log("SendPage == search for UserName " + searchInput.text);
                     modelAtUser.searchAtUser(searchInput.text);
                 }
             }

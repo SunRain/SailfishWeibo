@@ -352,7 +352,6 @@ Page {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        //TODO 添加方法
                         toUserWeibo(userInfo.id, userInfo.screen_name)
                     }
                 }

@@ -66,7 +66,9 @@ Page {
         cacheBuffer: 999999/*height * 2*/
         //spacing: units.gu(1)
         model: modelWeibo
-        footer: footerWeibo
+        footer: /*footerWeibo*/FooterLoadMore {
+            onClicked: { weiboMentionedPage.addMore();}
+        }
         delegate: delegateWeibo
         header:PageHeader {
             id:pageHeader
@@ -89,31 +91,22 @@ Page {
         }
     }
 
-    Component {
-        id: footerWeibo
+//    Component {
+//        id: footerWeibo
 
-        Item {
-            width: lvUserWeibo.width
-            height: Theme.itemSizeMedium
+//        Item {
+//            width: lvUserWeibo.width
+//            height: Theme.itemSizeMedium
 
-//            Label {
+//            Button {
 //                anchors.centerIn: parent
 //                text: qsTr("click here to load more..")
+//                onClicked: {
+//                    weiboMentionedPage.addMore();
+//                }
 //            }
-
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked: userWeibo.addMore()
-//            }
-            Button {
-                anchors.centerIn: parent
-                text: qsTr("click here to load more..")
-                onClicked: {
-                    weiboMentionedPage.addMore();
-                }
-            }
-        }
-    }
+//        }
+//    }
 
     ListModel {
         id: modelWeibo

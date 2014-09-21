@@ -99,8 +99,8 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        console.log("===  usAvatar clicked");
-                        //mainView.toUserPage(model.user.id)
+                        //console.log("===  usAvatar clicked");
+                        toUserPage(model.user.id)
                     }
                 }
             }
@@ -111,7 +111,6 @@ Item {
                 
                 Label {
                     id: labelUserName
-                    //color: "black"
                     color: Theme.primaryColor
                     text: model.user.screen_name
                     font.pixelSize: Theme.fontSizeExtraSmall
@@ -119,7 +118,6 @@ Item {
                 
                 Label {
                     id: labelWeiboTime
-                    //color: "grey"
                     color: Theme.secondaryColor
                     text:"Weibo Time"/* {
                         //                        console.log("appData.dateParse(model.created_at): ", appData.dateParse(model.created_at))
@@ -162,7 +160,10 @@ Item {
                         
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: mainView.toGalleryPage(modelImages, index)
+                            onClicked: {
+                                //TODO 添加方法
+                               // mainView.toGalleryPage(modelImages, index)
+                            }
                         }
                     }
                 }
@@ -208,8 +209,8 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            console.log("repost id" + model.id);
-                            /*mainView.*/toSendPage("repost", {"id": model.id})
+                            //console.log("repost id" + model.id);
+                            toSendPage("repost", {"id": model.id})
                         }
                     }
                 }
@@ -233,7 +234,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            /*mainView.*/toSendPage("comment", {"id": model.id})
+                            toSendPage("comment", {"id": model.id})
                         }
                     }
                 }

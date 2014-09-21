@@ -146,8 +146,6 @@ Page {
                     anchors.fill: parent
                     onClicked: {
                         if (model.toFunction === "1") {
-                            //TODO 转到Friends page
-                            //mainView.toFriendsPage("follower", Settings.getUid())
                             pageStack.push(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: Settings.getUid() })
                         } else {
                             //page

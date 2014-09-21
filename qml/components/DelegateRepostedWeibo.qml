@@ -76,8 +76,8 @@ import Sailfish.Silica 1.0
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        console.log("===  usAvatar clicked");
-                        //mainView.toUserPage(model.user.id)
+                        //console.log("===  usAvatar clicked");
+                        toUserPage(model.user.id)
                     }
                 }
             }
@@ -89,7 +89,9 @@ import Sailfish.Silica 1.0
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: mainView.toUserPage(retweetWeibo.user.id)
+                    onClicked:  {
+                        toUserPage(retweetWeibo.user.id)
+                    }
                 }
             }
         }
@@ -123,7 +125,10 @@ import Sailfish.Silica 1.0
 
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: mainView.toGalleryPage(modelImages, index)
+                            onClicked: {
+                                //TODO 添加方法
+                                //mainView.toGalleryPage(modelImages, index)
+                            }
                         }
                     }
                 }

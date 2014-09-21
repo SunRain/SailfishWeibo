@@ -52,8 +52,8 @@ Item {
                         // TODO  error handler
                     }else {
                         // right result
-                          console.log("status length: ", result.statuses.length)
-                          console.log("status 0:", JSON.stringify(result.statuses[0]))
+//                          console.log("status length: ", result.statuses.length)
+//                          console.log("status 0:", JSON.stringify(result.statuses[0]))
                         //                        if (page == 1) mainView.refreshHome(result)
                         if (isRefresh) {
                             isRefresh = false
@@ -99,7 +99,9 @@ Item {
             cacheBuffer: 999999/*height * 2*/
             spacing: Theme.paddingMedium
             model: modelWeibo
-            footer: footerWeibo
+            footer: /*footerWeibo*/FooterLoadMore{
+                onClicked: {weiboTab.addMore();}
+            }
             delegate: delegateWeibo
             
         }
@@ -118,19 +120,19 @@ Item {
         }
     }
     
-    Component {
-        id: footerWeibo
+//    Component {
+//        id: footerWeibo
         
-        Item {
-            width: lvHomeWeibo.width
-            height: Theme.itemSizeMedium
-            Button {
-                anchors.centerIn: parent
-                text: qsTr("click here to load more..")
-                onClicked: {
-                    weiboTab.addMore();
-                }
-            }
-        }
-    }
+//        Item {
+//            width: lvHomeWeibo.width
+//            height: Theme.itemSizeMedium
+//            Button {
+//                anchors.centerIn: parent
+//                text: qsTr("click here to load more..")
+//                onClicked: {
+//                    weiboTab.addMore();
+//                }
+//            }
+//        }
+//    }
 }
