@@ -1,10 +1,13 @@
 import QtQuick 2.0
 //import QtQuick.XmlListModel 2.0
-import Ubuntu.Components 0.1
-import Ubuntu.Components.ListItems 0.1 as ListItem
-import Ubuntu.Components.Popups 0.1
+//import Ubuntu.Components 0.1
+//import Ubuntu.Components.ListItems 0.1 as ListItem
+//import Ubuntu.Components.Popups 0.1
+import Sailfish.Silica 1.0
+
 import "../js/dateutils.js" as DateUtils
 import "../js/weiboapi.js" as WB
+import "../js/Settings.js" as Settings
 import "../components"
 
 Page {
@@ -14,6 +17,10 @@ Page {
     property var userInfo: {"id":-1,"idstr":"","class":1,"screen_name":"","name":"","province":"","city":"","location":"","description":"","url":"","profile_image_url":"","profile_url":"","domain":"","weihao":"","gender":"","followers_count":0,"friends_count":0,"statuses_count":0,"favourites_count":0,"created_at":"Sun Jan 22 13:32:37 +0800 1999","following":false,"allow_all_act_msg":false,"geo_enabled":true,"verified":false,"verified_type":-1,"remark":"","status":{"text": "", "reposts_count": 0, "comments_count": 0, "attitudes_count": 0},"ptype":0,"allow_all_comment":true,"avatar_large":"","avatar_hd":"","verified_reason":"","follow_me":false,"online_status":0,"bi_followers_count":0,"lang":"zh-cn","star":0,"mbtype":0,"mbrank":0,"block_word":0}
     property bool isFollowing: false
 
+    Component.onCompleted: {
+        userGetInfo(Settings.getAccess_token())
+    }
+    
     function userGetInfo(token)
     {
         function observer() {}
@@ -58,7 +65,7 @@ Page {
             }
         }
 
-        WB.userFriendshipCreate(settings.getAccess_token(), uid, new observer())
+        WB.userFriendshipCreate(Settings.getAccess_token(), uid, new observer())
     }
 
     function userFollowCancel()
@@ -82,134 +89,161 @@ Page {
             }
         }
 
-        WB.userFriendshipdestroy(settings.getAccess_token(), uid, new observer())
+        WB.userFriendshipdestroy(Settings.getAccess_token(), uid, new observer())
     }
 
-    Flickable {
+    SilicaFlickable {
         id: scrollArea
-        boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
+        //boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
         anchors.fill: parent
-        contentWidth: width
-        contentHeight: innerAreaColumn.height + units.gu(2)
+        //contentWidth: width
+        contentHeight: innerAreaColumn.height + Theme.paddingSmall
 
         Column {
             id: innerAreaColumn
 
-            spacing: units.gu(1)
+            spacing: Theme.paddingMedium
             anchors {
                 top: parent.top;
-                //                topMargin: units.gu(1)
-                //                margins: units.gu(1)
-                left: parent.left; right: parent.right
-                //                leftMargin: units.gu(1); rightMargin: units.gu(1)
+                left: parent.left
+                right: parent.right
             }
-            height: childrenRect.height
-
+            
+            PageHeader {
+                id:pageHeader
+                title: qsTr("About user")
+            }
+            
             // user
-            Rectangle {
+            Item {
                 anchors { left: parent.left; right: parent.right }
-                height: rowUser.height + units.gu(2)
-                color: Qt.rgba(255, 255, 255, 0.5)
+                height: rowUser.height + Theme.paddingMedium
+                //color: Qt.rgba(255, 255, 255, 0.5)
 
                 Row {
                     id: rowUser
-                    anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(1) }
-                    spacing: units.gu(1)
-                    height: usAvatar.height
+                    anchors { 
+                        left: parent.left
+                        //right: parent.right
+                        top: parent.top
+                        margins: Theme.paddingSmall
+                    }
+                    spacing: Theme.paddingMedium
+                    height: Math.max(rowUserColumn.height,usAvatar.height)//usAvatar.height
 
-                    UbuntuShape {
+                    Item {
                         id: usAvatar
-                        width: units.gu(9)
+                        width: 160
                         height: width
-                        radius: "medium"
-                        image: Image {
+                        //radius: "medium"
+                        Image {
+                            width: parent.width
+                            height: parent.height
+                            smooth: true
+                            fillMode: Image.PreserveAspectFit
                             source: userInfo.avatar_hd
                         }
                     }
 
                     Column {
-                        width: childrenRect.width
-                        spacing: units.gu(1)
+                        id:rowUserColumn
+                        //width: childrenRect.width
+                        spacing: Theme.paddingSmall
 
                         Label {
                             id: labelUserName
-                            color: "black"
-                            fontSize: "large"
+                            color: Theme.primaryColor
+                            font.pixelSize: Theme.fontSizeMedium
+                            width: parent.width
+                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             text: userInfo.screen_name
                         }
 
                         Label {
                             id: labelLocation
-                            color: "grey"
+                            color: Theme.secondaryColor
+                            font.pixelSize: Theme.fontSizeSmall 
+                            width: parent.width
+                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             text: userInfo.location
                         }
-                    }
-
-
-                }
-
-                Button {
-                    anchors {
-                        top: parent.top; topMargin: units.gu(1)
-                        right: parent.right; rightMargin: units.gu(1)
-                    }
-                    text: {
-                        if (isFollowing == true) {
-                            if (userInfo.follow_me == true) {
-                                return i18n.tr("Bilateral")
+                        Button {
+                            text: {
+                                if (isFollowing == true) {
+                                    if (userInfo.follow_me == true) {
+                                        return qsTr("Bilateral")
+                                    }
+                                    else {
+                                        return qsTr("Following")
+                                    }
+                                } else {
+                                    if (userInfo.follow_me == true) {
+                                        return qsTr("Follower")
+                                    }
+                                    else {
+                                        return qsTr("Follow")
+                                    }
+                                }
                             }
-                            else {
-                                return i18n.tr("Following")
+                            visible: userInfo.id != Settings.getUid()
+                            onClicked: {
+                                if (isFollowing == true) {
+                                    userFollowCancel()
+                                } else {
+                                    userFollowCreate()
+                                }
                             }
-                        }
-                        else {
-                            if (userInfo.follow_me == true) {
-                                return i18n.tr("Follower")
-                            }
-                            else {
-                                return i18n.tr("Follow")
-                            }
-                        }
-                    }
-                        //i18n.tr("following")
-                    height: units.gu(4)
-                    gradient: isFollowing == true ? UbuntuColors.greyGradient : UbuntuColors.orangeGradient
-                    visible: userInfo.id != settings.getUid()
-//                        style: Component {
-//                            UbuntuShape {}
-//                        }
-                    onClicked: {
-                        if (isFollowing == true) {
-                            userFollowCancel()
-                        }
-                        else {
-                            userFollowCreate()
                         }
                     }
                 }
+
             }
 
             // description
-            Rectangle {
-                anchors { left: parent.left; right: parent.right }
-                height: colDesc.height + units.gu(2)
-                color: Qt.rgba(255, 255, 255, 0.5)
-
+            Item {
+                anchors { 
+                    left: parent.left
+                    right: parent.right
+                }
+                height: colDesc.height + Theme.paddingMedium
+ 
+                Image {
+                    anchors {
+                        top:parent.top
+                        left: parent.left
+                        right: parent.right
+                        bottom: parent.bottom
+                    }
+                    smooth: true
+                    fillMode: Image.TileHorizontally
+                    source: "../graphics/mask_background_reposted.png"
+                }
+                
                 Column {
                     id: colDesc
-                    anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(1) }
-                    height: childrenRect.height
-                    spacing: units.gu(0.5)
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        top: parent.top
+                        //bottom: parent.bottom
+                        margins:Theme.paddingSmall
+                    }
+                    //height: childrenRect.height
+                    spacing: Theme.paddingSmall
 
                     Label {
                         id: labelDesc
-                        color: "grey"
-                        text: i18n.tr("Description: ")
+                        color: Theme.highlightColor
+                        font.pixelSize: Theme.fontSizeMedium
+                        text: qsTr("Description: ")
                     }
 
                     Label {
                         id: labelDescription
-                        color: "black"
+                        color: Theme.primaryColor
+                        width: parent.width
+                        font.pixelSize: Theme.fontSizeMedium
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         text: userInfo.description
                     }
                 }
@@ -217,67 +251,98 @@ Page {
             }
 
             // friends
-            Rectangle {
-                anchors { left: parent.left; right: parent.right }
-                height: rowFriends.height + units.gu(2)
-                color: Qt.rgba(255, 255, 255, 0.5)
+            Item {
+                anchors { 
+                    left: parent.left
+                    right: parent.right
+                }
+                //anchors.horizontalCenter: parent.horizontalCenter
+                
+                height: rowFriends.height + Theme.paddingMedium
+                //color: Qt.rgba(255, 255, 255, 0.5)
 
                 Row {
                     id: rowFriends
-                    anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(1) }
-                    height: childrenRect.height
-//                    spacing: units.gu(0.5)
+                    anchors { 
+                        left: parent.left
+                        right: parent.right
+                        //top: parent.top
+                        margins:  Theme.paddingSmall
+                    }
+                    //height: childrenRect.height
+                   spacing: Theme.paddingSmall
 
                     Item {
-                        width: parent.width / 3 - units.gu(0.1);  height: units.gu(4)
+                        width: parent.width / 4 - Theme.paddingSmall
+                        height: Theme.fontSizeSmall + Theme.paddingSmall
 
                         Label {
                             anchors.centerIn: parent
-                            color: "black"
-                            text: i18n.tr("Weibo: ") + userInfo.statuses_count
+                            color: Theme.secondaryColor
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            text: qsTr("Weibo: ") + userInfo.statuses_count
                         }
                     }
-                    Rectangle {y: units.gu(0.2); width: units.gu(0.1); height: units.gu(3.5); color: "grey"}
+                    Rectangle {
+                        //y: 2//units.gu(0.2)
+                        width: 2//units.gu(0.1)
+                        height: parent.height - Theme.paddingSmall
+                        color: Theme.highlightColor
+                    }
                     Item {
-                        width: parent.width / 3 - units.gu(0.1);  height: units.gu(4)
+                        width: parent.width / 4 - Theme.paddingSmall
+                        height: Theme.fontSizeSmall + Theme.paddingSmall
 
                         Label {
                             anchors.centerIn: parent
-                            color: "black"
-                            text: i18n.tr("following: ") + userInfo.friends_count
+                            color: Theme.secondaryColor
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            text: qsTr("following: ") + userInfo.friends_count
+                        }
+                        
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                //toFriendsPage("following", userInfo.id)
+                                pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfo.id })
+                            }
                         }
                     }
-                    Rectangle {y: units.gu(0.2); width: units.gu(0.1); height: units.gu(3.5); color: "grey"}
+                    Rectangle {
+                        //y:2// units.gu(0.2);
+                        width: 2//units.gu(0.1)
+                        height: parent.height - Theme.paddingSmall
+                        color: Theme.highlightColor
+                    }
                     Item {
-                        width: parent.width / 3 - units.gu(0.1);  height: units.gu(4)
+                        width: parent.width / 4 - Theme.paddingSmall
+                        height: Theme.fontSizeSmall + Theme.paddingSmall
 
                         Label {
                             anchors.centerIn: parent
-                            color: "black"
-                            text: i18n.tr("follower: ") + userInfo.followers_count
+                            color: Theme.secondaryColor
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            text: qsTr("follower: ") + userInfo.followers_count
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: userInfo.id })
+                            }
                         }
                     }
 
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        mainView.toFriendsPage("following", userInfo.id)
-                    }
                 }
             }
 
             // user weibo
-            UbuntuShape {
+           Item {
                 id: usWeiboContent
                 anchors {
-                    left: parent.left; right: parent.right
-            //                    leftMargin: units.gu(1); rightMargin: units.gu(1)
+                    left: parent.left
+                    right: parent.right
                 }
-                height: columnWContent.height + units.gu(1.5)
-                radius: "medium"
-                color: Qt.rgba(255, 255, 255, 0.3)
+                height: columnWContent.height + Theme.paddingMedium
 
                 property var status: userInfo.status
 
@@ -295,29 +360,45 @@ Page {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        mainView.toUserWeibo(userInfo.id, userInfo.screen_name)
+                        //TODO 添加方法
+                        toUserWeibo(userInfo.id, userInfo.screen_name)
                     }
                 }
 
+                Image {
+                    id: imageBackground
+                    width: parent.width
+                    height: parent.height
+                    fillMode: Image.PreserveAspectCrop
+                    source: "../graphics/mask_background_grid.png"
+                }
+                
                 Column {
                     id: columnWContent
                     anchors {
-                        top: parent.top; topMargin: units.gu(1)
-                        left: parent.left; right: parent.right
-                        leftMargin: units.gu(1); rightMargin: units.gu(1)
+                        top: parent.top
+                        topMargin: Theme.paddingMedium
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: Theme.paddingMedium
+                        rightMargin: Theme.paddingMedium
                     }
-                    spacing: units.gu(1)
-                    height: childrenRect.height
+                    spacing: Theme.paddingSmall
+                    //height: childrenRect.height
 
                     Column {
                         id: colUser
-                        anchors { left: parent.left; right: parent.right }
-                        spacing: units.gu(0.5)
-                        height: childrenRect.height
+                        anchors { 
+                            left: parent.left
+                            right: parent.right
+                        }
+                        spacing: Theme.paddingSmall
+                        //height: childrenRect.height
 
                         Label {
                             id: labelWeiboUserName
-                            color: "black"
+                            color: Theme.highlightColor
+                            font.pixelSize: Theme.fontSizeSmall
                             text: userInfo.screen_name
                         }
                     }
@@ -326,27 +407,33 @@ Page {
                         id: labelWeibo
                         width: parent.width
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        color: "black"
+                        color: Theme.secondaryColor
+                        font.pixelSize: Theme.fontSizeSmall
                         text: usWeiboContent.status.text
                     }
 
                     Grid {
                         id: gridWeiboPics
-                        columns: 3; spacing: units.gu(0.5); /*visible: status.pic_urls == undefined ? false : status.pic_urls.count != 0*/
-                        width: parent.width; height: childrenRect.height
+                        columns: 3
+                        spacing:Theme.paddingSmall// units.gu(0.5); /*visible: status.pic_urls == undefined ? false : status.pic_urls.count != 0*/
+                        width: parent.width
+                        height: childrenRect.height
 
                         Repeater {
                             model: ListModel { id: modelImages }
                             delegate: Component {
                                 Image {
                                     fillMode: Image.PreserveAspectCrop;
-                                    width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - units.gu(3) ;
+                                    width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - 3;//units.gu(3) ;
                                     height: modelImages.count == 1 ? implicitHeight : width
                                     source: model.thumbnail_pic
 
                                     MouseArea {
                                         anchors.fill: parent
-                                        onClicked: mainView.toGalleryPage(modelImages, index)
+                                        onClicked: {
+                                            //TODO 添加方法
+                                            //mainView.toGalleryPage(modelImages, index)
+                                        }
                                     }
                                 }
                             }
@@ -371,20 +458,28 @@ Page {
 //                    }
 
                     Column {
-                        width: parent.width; height: childrenRect.height
-                        ListItem.ThinDivider { }
+                        width: parent.width
+                        //height: childrenRect.height
+                        //ListItem.ThinDivider { }
 
                         Row {
-                            width: childrenRect.width; height: childrenRect.height
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors{
+                                left: parent.left
+                                right: parent.right
+                                margins:  Theme.paddingSmall
+                            }
+                            
+                            spacing: Theme.paddingSmall
 
                             Item {
-                                width: columnWContent.width / 3 - units.gu(0.5);  height: units.gu(4)
+                                width: parent.width / 4 - Theme.paddingSmall
+                                height: Theme.fontSizeSmall + Theme.paddingSmall
 
                                 Label {
                                     anchors.centerIn: parent
-                                    color: "black"
-                                    text: i18n.tr("repost: ") + usWeiboContent.status.reposts_count
+                                    color: Theme.secondaryColor
+                                    font.pixelSize: Theme.fontSizeExtraSmall
+                                    text: qsTr("repost: ") + usWeiboContent.status.reposts_count
                                 }
 
 //                                MouseArea {
@@ -394,14 +489,20 @@ Page {
 //                                    }
 //                                }
                             }
-                            Rectangle {y: units.gu(0.2); width: units.gu(0.1); height: units.gu(3.5); color: "grey"}
+                            Rectangle {
+                                width: 2
+                                height: parent.height - Theme.paddingSmall
+                                color: Theme.highlightColor
+                            }
                             Item {
-                                width: columnWContent.width / 3 - units.gu(0.5);  height: units.gu(4)
+                                width: parent.width / 4 - Theme.paddingSmall
+                                height: Theme.fontSizeSmall + Theme.paddingSmall
 
                                 Label {
                                     anchors.centerIn: parent
-                                    color: "black"
-                                    text: i18n.tr("comment: ") + usWeiboContent.status.comments_count
+                                    color: Theme.secondaryColor
+                                    font.pixelSize: Theme.fontSizeExtraSmall
+                                    text: qsTr("comment: ") + usWeiboContent.status.comments_count
                                 }
 
 //                                MouseArea {
@@ -411,19 +512,29 @@ Page {
 //                                    }
 //                                }
                             }
-                            Rectangle {y: units.gu(0.2); width: units.gu(0.1); height: units.gu(3.5); color: "grey"}
+                            Rectangle {
+                                width: 2
+                                height: parent.height - Theme.paddingSmall
+                                color: Theme.highlightColor
+                            }
                             Item {
-                                width: columnWContent.width / 3 - units.gu(0.5);  height: units.gu(4)
+                                width: parent.width / 4 - Theme.paddingSmall
+                                height: Theme.fontSizeSmall + Theme.paddingSmall
 
                                 Label {
                                     anchors.centerIn: parent
-                                    color: "black"
-                                    text: i18n.tr("like: ") + usWeiboContent.status.attitudes_count
+                                    color: Theme.secondaryColor
+                                    font.pixelSize: Theme.fontSizeExtraSmall
+                                    text: qsTr("like: ") + usWeiboContent.status.attitudes_count
                                 }
                             }
                         }
                     }
-
+                    
+                    Separator {
+                        width: parent.width
+                        color: Theme.highlightColor
+                    }
 
                 } // column
 
@@ -436,7 +547,7 @@ Page {
 //                    left: parent.left; right: parent.right
 //                    leftMargin: units.gu(1); rightMargin: units.gu(1)
 //                }
-//                text: i18n.tr("view user's photo album")
+//                text: qsTr("view user's photo album")
 
 //                onClicked: {
 //                    mainView.toUserPhoto(userInfo.id)

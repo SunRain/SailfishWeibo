@@ -219,6 +219,57 @@
     </message>
 </context>
 <context>
+    <name>UserPage</name>
+    <message>
+        <source>Bilateral</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Following</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weibo: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>following: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>follower: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>repost: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>comment: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>like: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About user</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WeiboMentioned</name>
     <message>
         <source>Weibo mentioned me</source>

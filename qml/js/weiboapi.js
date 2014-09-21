@@ -414,7 +414,7 @@ function userGetFollowing(token, uid, count, cursor, observer)
 function userGetFollower(token, uid, count, cursor, observer)
 {
     var url = "https://api.weibo.com/2/friendships/followers.json?access_token=" + token + "&uid=" + uid + "&count=" + count + "&cursor=" + cursor
-    console.log("userGetFollower start...")
+    console.log("userGetFollower start..." + url)
 
     var doc = new XMLHttpRequest();
     doc.onreadystatechange = function() {

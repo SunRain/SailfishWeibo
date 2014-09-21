@@ -106,6 +106,19 @@ ApplicationWindow
                         {"mode":mode,
                            "info":info})
     }
+    
+    function toUserPage(uid) {
+        pageStack.push(Qt.resolvedUrl("ui/UserPage.qml"), { uid: uid/*, title: qsTr("About user")*/ })
+    }
+    
+    function toFriendsPage(mode, uid) {
+        pageStack.push(Qt.resolvedUrl("ui/FriendsPage.qml"), { mode: mode, uid: uid })
+    }
+    
+    function toUserWeibo(uid, name) {
+        pageStack.push(Qt.resolvedUrl("ui/UserWeibo.qml"), { uid: uid, userName: name })
+        //mainStack.currentPage.refresh()
+    }
 }
 
 

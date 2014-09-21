@@ -17,11 +17,10 @@ Page {
 
     Component.onCompleted: setMode(mode, uid)
 
+    //3984244261
     //qsTr("Following"), qsTr("Follower"), qsTr("Bilateral")
     function setMode(mode, uid) {
-//        userGetFollowing(Settings.getAccess_token(), uid, 10, 0)
-//        friendsPage.uid = uid
-//        selectorFriend.selectedIndex = -1
+        console.log("friendsPage == setMod " + mode + " uid " + uid);
         switch (mode) {
         case "following":
             titleName = "Following"
@@ -70,7 +69,7 @@ Page {
                         // TODO  error handler
                     }else {
                         // right result
-//                        console.log("cursor: ", result.next_cursor, result.previous_cursor)
+                       console.log("cursor: ", result.next_cursor, result.previous_cursor)
                         modelFollowing.cursor = result.next_cursor
                         if (result.next_cursor == 0) {
                             lvUsers0.footerItem.visible = false
@@ -105,7 +104,7 @@ Page {
                         // TODO  error handler
                     }else {
                         // right result
-//                        console.log("cursor: ", result.next_cursor, result.previous_cursor)
+                        console.log("cursor: ", result.next_cursor, result.previous_cursor)
                         modelFollower.cursor = result.next_cursor
                         if (result.next_cursor == 0) {
                             lvUsers1.footerItem.visible = false
@@ -344,6 +343,7 @@ Page {
                     //TODO 转到UserPage
                    // mainView.toUserPage(model.id)
                     console.log("===== clicked");
+                    toUserPage(model.id);
                 }
             }
         }
