@@ -84,17 +84,17 @@ Page {
             spacing: Theme.paddingSmall 
             anchors.fill: parent
             
-            PageHeader {
-                id:pageHeader
-                title: qsTr("Sailfish Weibo")
-            }
-            
             SilicaListView {
                 id: weiboListview
                 width: mainFlickableView.width 
-                height: mainFlickableView.height - pageHeader.height - Theme.paddingSmall
+                //height: mainFlickableView.height - pageHeader.height - Theme.paddingSmall
                 
-                contentHeight: parent.height * count
+                //contentHeight: parent.height * count
+                
+                header: PageHeader {
+                    id:pageHeader
+                    title: qsTr("Sailfish Weibo")
+                }
                 
                 model: weiboListviewModel//weiboModel
                 delegate: xmlDelegate

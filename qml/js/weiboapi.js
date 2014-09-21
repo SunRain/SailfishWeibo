@@ -120,7 +120,7 @@ function weiboLogOut(token, observer)
 function weiboHomeStatus(token, page , observer)
 {
     var url = "https://api.weibo.com/2/statuses/home_timeline.json?access_token=" + token + "&page=" + page
-    console.log("home status start...")
+    console.log("home status start..." + url)
 
     var doc = new XMLHttpRequest();
     doc.onreadystatechange = function() {
