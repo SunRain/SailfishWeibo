@@ -81,12 +81,17 @@ Page {
         id: delegateWeibo
 
         DelegateWeibo {
-            onClicked: {
+            onUsWeiboClicked: {
                 //                        console.log("weibo Detail:", JSON.stringify(modelWeibo.get(index)))
                 //toWeiboPage(modelWeibo, index)
                 pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
                                 {"weiboModel":modelWeibo,
                                    "newIndex":index})
+            }
+            onRepostedWeiboClicked: {
+                pageStack.replace(Qt.resolvedUrl("WeiboPage.qml"),
+                                {"weiboModel":modelWeibo.get(index).retweeted_status,
+                                   "newIndex":"-100"})
             }
         }
     }
