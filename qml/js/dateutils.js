@@ -31,12 +31,12 @@ function parseDate(dateAsStr) {
 }
 
 // date is a number of seconds since  1970-01-01
-function formatRelativeTime(i18n, date) {
+function formatRelativeTime(/*i18n,*/ date) {
     // fallback if none of the other formatters matched
     function defaultFallbackFormat(then) {
         // TRANSLATORS: this is a time formatting string,
         // see http://qt-project.org/doc/qt-5.0/qtqml/qml-qtquick2-date.html#details for valid expressions
-        return Qt.formatDateTime(then, i18n.tr("MMMM d"))
+        return Qt.formatDateTime(then, qsTr("MMMM d"))
     }
 
     // Simple matches all diffs < limit, formats using the format function.
@@ -51,10 +51,10 @@ function formatRelativeTime(i18n, date) {
             return diff < DAY_LIMIT && now.getDate() !== then.getDate();
         }
         this.format = function (now, then, diff) {
-            return i18n.tr("Yesterday at %1").arg(
+            return qsTr("Yesterday at %1").arg(
                         /* TRANSLATORS: this is a time formatting string,
                            see http://qt-project.org/doc/qt-5.0/qtqml/qml-qtquick2-date.html#details for valid expressions */
-                        Qt.formatDateTime(then, i18n.tr("h:mm AP")))
+                        Qt.formatDateTime(then, qsTr("h:mm AP")))
         }
     }
 
@@ -66,27 +66,27 @@ function formatRelativeTime(i18n, date) {
         this.format = function (now, then, diff) {
             // TRANSLATORS: this is a time formatting string,
             // see http://qt-project.org/doc/qt-5.0/qtqml/qml-qtquick2-date.html#details for valid expressions
-            return Qt.formatDateTime(then, i18n.tr("ddd, h:mm AP"));
+            return Qt.formatDateTime(then, qsTr("ddd, h:mm AP"));
         }
     }
 
     // An array of formatting object processed from 0 up to a matching object.
     // If none of the object matches a default fallback formatter will be used.
     var FORMATTERS = [
-                new SimpleFormatter(SECONDS_LIMIT, function (now, then, diff) { return i18n.tr("A few seconds ago...") }),
+                new SimpleFormatter(SECONDS_LIMIT, function (now, then, diff) { return qsTr("A few seconds ago...") }),
                 new SimpleFormatter(MINUTES_LIMIT, function (now, then, diff) {
                     var val = Math.floor(diff / SECONDS_LIMIT)
-                    return i18n.tr("%1 minute ago", "%1 minutes ago", val).arg(val)
+                    return qsTr("%1 minute ago", "%1 minutes ago", val).arg(val)
                 }),
                 new SimpleFormatter(HOURS_LIMIT, function (now, then, diff) {
                     var val = Math.floor(diff / MINUTES_LIMIT)
-                    return i18n.tr("%1 hour ago", "%1 hours ago", val).arg(val)
+                    return qsTr("%1 hour ago", "%1 hours ago", val).arg(val)
                 }),
                 new YesterdayFormatter(),
                 new WeekFormatter(),
                 new SimpleFormatter(DAYS_LIMIT, function (now, then, diff) {
                     var val = Math.floor(diff / DAY_LIMIT)
-                    return i18n.tr("%1 day ago", "%1 days ago", val).arg(val)
+                    return qsTr("%1 day ago", "%1 days ago", val).arg(val)
                 })
             ]
 

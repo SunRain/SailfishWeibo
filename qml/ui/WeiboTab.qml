@@ -79,10 +79,10 @@ Item {
     // Tell SilicaFlickable the height of its content.
    // contentHeight: column.height
     
-    Column{
-        id: column
+//    Column{
+//        id: column
         
-        spacing: Theme.paddingSmall 
+//        spacing: Theme.paddingSmall 
 
         SilicaListView{
             id: lvHomeWeibo
@@ -106,8 +106,8 @@ Item {
             
         }
         
-        VerticalScrollDecorator { flickable: lvHomeWeibo }
-    }
+//        VerticalScrollDecorator { flickable: lvHomeWeibo }
+//    }
     
     Component {
         id: delegateWeibo

@@ -6,6 +6,9 @@ import "../js/weiboapi.js" as WB
 import "../js/Settings.js" as Settings
 import Sailfish.Silica 1.0
 
+//import QtDocGallery 5.0
+//import org.nemomobile.thumbnailer 1.0
+
 import "../components"
 import com.sunrain.sinaweibo 1.0
 
@@ -20,7 +23,8 @@ Page {
     
     property string sendTitle
     property var info         // include id, cid, etc..
-    property string imgPath: ""
+    //property string imgPath: ""
+    property var imgPath: ""
     property int optionIndex: 0
 
     //////////////////////////////////////////////////////////////////         send weibo
@@ -164,6 +168,30 @@ Page {
         //        mainStack.pop()
     }
     
+    function sendWeibo() {
+        switch (sendPage.mode) {
+        case "repost" :
+            repostStatus(Settings.getAccess_token(), content.text, info.id, optionIndex)
+            break
+        case "comment" :
+            sendComment(Settings.getAccess_token(), content.text, info.id, optionIndex)
+            break
+        case "reply" :
+            replyComment(Settings.getAccess_token(), content.text, info.id, optionIndex, info.cid, 0)
+            break
+        default:
+            if (imgPath == "" || imgPath == undefined) {
+                sendStatus(Settings.getAccess_token(), content.text)
+            }
+            else {
+                addNotification(qsTr("Uploading, please wait.."), 2)
+                var status = encodeURIComponent(content.text)
+                networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
+            }
+            break
+        }
+    }
+
     Component {
         id:atUserSheet
         AtUserComponent {
@@ -179,6 +207,21 @@ Page {
             onCloseIconClicked: {
                 drawer.hide();
                 parent.focus = true;
+            }
+        }
+    }
+    
+    Component {
+        id:insertImageSheet
+        ImagePreviewComponent {
+            id: imagePreviewComponent
+            anchors.fill: parent
+
+            onImageClicked: {
+                //console.log("SendPage == imagePreviewComponent clicked " +  model.url);
+                modelImages.append(
+                            {"path":/*model.get(index).url*/model.url.toString()}
+                            );
             }
         }
     }
@@ -240,7 +283,7 @@ Page {
         background: Loader {
             id:drawerBackgroundLoader
             anchors.fill: parent
-            sourceComponent: atUserSheet
+            //sourceComponent: atUserSheet
         }
         
         SilicaFlickable {
@@ -252,13 +295,20 @@ Page {
                 //bottomMargin: page.isPortrait ? progressPanel.visibleSize : 0
             }
             
+//            //打开Draw的时候点击任意界面关闭
+            MouseArea {
+                enabled: drawer.open
+                anchors.fill: column
+                onClicked: drawer.open = false
+            }
+            
             PullDownMenu {
                 MenuItem {
                     text: qsTr("Send")
                     onClicked: {
                         console.log("SendPage == SendIcon click, we send [" + content.text +"]  for mode " 
                                     + sendPage.mode + " with option " + optionIndex);
-
+                        sendWeibo();
                         //TODO 是否添加图片在微博中
                         //noPic added in content
                         //sendStatus(Settings.getAccess_token(), content.text)
@@ -266,27 +316,27 @@ Page {
                         //mainView.addNotification(i18n.tr("Uploading, please wait.."), 2)
                         //var status = encodeURIComponent(textSendContent.text)
                         // networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
-                        switch (sendPage.mode) {
-                        case "repost" :
-                            repostStatus(Settings.getAccess_token(), content.text, info.id, optionIndex)
-                            break
-                        case "comment" :
-                            sendComment(Settings.getAccess_token(), content.text, info.id, optionIndex)
-                            break
-                        case "reply" :
-                            replyComment(Settings.getAccess_token(), content.text, info.id, optionIndex, info.cid, 0)
-                            break
-                        default:
-                            if (imgPath == "" || imgPath == undefined) {
-                                sendStatus(Settings.getAccess_token(), content.text)
-                            }
-                            else {
-                                addNotification(i18n.tr("Uploading, please wait.."), 2)
-                                var status = encodeURIComponent(content.text)
-                                networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
-                            }
-                            break
-                        }
+//                        switch (sendPage.mode) {
+//                        case "repost" :
+//                            repostStatus(Settings.getAccess_token(), content.text, info.id, optionIndex)
+//                            break
+//                        case "comment" :
+//                            sendComment(Settings.getAccess_token(), content.text, info.id, optionIndex)
+//                            break
+//                        case "reply" :
+//                            replyComment(Settings.getAccess_token(), content.text, info.id, optionIndex, info.cid, 0)
+//                            break
+//                        default:
+//                            if (imgPath == "" || imgPath == undefined) {
+//                                sendStatus(Settings.getAccess_token(), content.text)
+//                            }
+//                            else {
+//                                addNotification(i18n.tr("Uploading, please wait.."), 2)
+//                                var status = encodeURIComponent(content.text)
+//                                networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
+//                            }
+//                            break
+//                        }
                     }
                 }
             }
@@ -295,14 +345,21 @@ Page {
                 MenuItem {
                     text: qsTr("@SomeOne")
                     onClicked: {
-                        drawer.open = !drawer.open;
+                        drawerBackgroundLoader.sourceComponent = drawerBackgroundLoader.Null
+                        drawerBackgroundLoader.sourceComponent = atUserSheet;
+                        if (!drawer.opened) {
+                            drawer.open = true;
+                        }
                     }
                 }
                 MenuItem {
                     text: qsTr("Add Image")
-                    //TODO 点击按钮后添加图片
                     onClicked: {
-                        console.log("SendPage == here we want to add some images");
+                        drawerBackgroundLoader.sourceComponent = drawerBackgroundLoader.Null
+                        drawerBackgroundLoader.sourceComponent = insertImageSheet;
+                        if (!drawer.opened) {
+                            drawer.open = true;
+                        } 
                     }
                 }
             }
@@ -329,6 +386,46 @@ Page {
                     horizontalAlignment: TextInput.AlignLeft
                     placeholderText: qsTr("Input Weibo content here");
                     label: "Expanding text area"                   
+                }
+                
+                Label {
+                    visible: modelImages.count > 0
+                    width: parent.width
+                    color: Theme.secondaryColor
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    text: qsTr("Click the inserted image to remove from the uploading queue")
+                }
+
+                Grid {
+                    id: gridWeiboPics
+                    columns: 4
+                    spacing: Theme.paddingSmall
+                    width: parent.width
+                    height: childrenRect.height
+                    
+                    Repeater {
+                        model: ListModel { id: modelImages }
+                        delegate: Component {
+                            Image {
+                                id:image
+                                fillMode: Image.PreserveAspectFit
+                                width: modelImages.count == 1 ? implicitWidth : column.width / 4 - Theme.paddingSmall
+                                height: modelImages.count == 1 ? implicitHeight : width
+                                source: path
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: {
+                                        console.log("SendPage === inserted image clicked" + index);
+                                        modelImages.remove(index);
+                                    }
+                                    onDoubleClicked: {
+                                        console.log("SendPage === inserted image onDoubleClicked")
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 Loader {

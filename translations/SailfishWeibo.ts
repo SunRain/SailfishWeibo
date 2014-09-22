@@ -46,6 +46,13 @@
     </message>
 </context>
 <context>
+    <name>DelegateRepostedWeibo</name>
+    <message>
+        <source> From </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DelegateWeibo</name>
     <message>
         <source>repost: </source>
@@ -57,6 +64,10 @@
     </message>
     <message>
         <source>like: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> From </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -87,6 +98,13 @@
     <name>FooterLoadMore</name>
     <message>
         <source>click here to load more..</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImagePreviewComponent</name>
+    <message>
+        <source>Images</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -122,6 +140,47 @@
         <source></source>
         <comment>this is a time formatting string,</comment>
         <translation></translation>
+    </message>
+    <message>
+        <source>Yesterday at %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>h:mm AP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ddd, h:mm AP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A few seconds ago...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 minute ago</source>
+        <comment>%1 minutes ago</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 hour ago</source>
+        <comment>%1 hours ago</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 day ago</source>
+        <comment>%1 days ago</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>MMMM d</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -217,6 +276,14 @@
         <source>Input Weibo content here</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Uploading, please wait..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click the inserted image to remove from the uploading queue</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserPage</name>
@@ -287,14 +354,6 @@
     <name>WeiboPage</name>
     <message>
         <source>Reply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

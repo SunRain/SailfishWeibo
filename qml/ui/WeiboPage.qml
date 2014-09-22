@@ -28,67 +28,68 @@ Page {
 
     property var commentInfo
 
-    DockedPanel {
-        id: actionPanel
+//    DockedPanel {
+//        id: actionPanel
         
-        width:parent.width// weiboPage.isPortrait ? parent.width : Theme.itemSizeExtraSmall /*  + Theme.paddingLarge*/
-        height:Theme.itemSizeExtraSmall+Theme.paddingMedium*2// weiboPage.isPortrait ? Theme.itemSizeExtraSmall /*  + Theme.paddingLarge*/ : parent.height
+//        width:parent.width// weiboPage.isPortrait ? parent.width : Theme.itemSizeExtraSmall /*  + Theme.paddingLarge*/
+//        height:Theme.itemSizeExtraSmall+Theme.paddingMedium*2// weiboPage.isPortrait ? Theme.itemSizeExtraSmall /*  + Theme.paddingLarge*/ : parent.height
         
-        dock: Dock.Top// weiboPage.isPortrait ? Dock.Top : Dock.Left
+//        dock: Dock.Top// weiboPage.isPortrait ? Dock.Top : Dock.Left
         
-        Flow {
-            anchors.centerIn: parent
-            spacing: Theme.paddingSmall 
-            //TODO:添加具体的点击功能
-            Button {
-                text: qsTr("Reply")
-                width: Theme.itemSizeSmall
-                height: Theme.itemSizeSmall
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("../ui/SendPage.qml"),
-                                    {"mode":"reply",
-                                       "info":weiboPage.commentInfo})
-                }
-            }
-            Button {
-                text: qsTr("Copy")
-                width: Theme.itemSizeSmall
-                height: Theme.itemSizeSmall
-                //onClicked: PopupUtils.close(dialogue)
-            }
-            Button{
-                text: qsTr("Cancel")
-                width: Theme.itemSizeSmall
-                height: Theme.itemSizeSmall
-                //onClicked: PopupUtils.close(dialogue)
-            }
-        }
-    }
+//        Flow {
+//            anchors.centerIn: parent
+//            spacing: Theme.paddingSmall 
+//            //TODO:添加具体的点击功能
+//            Button {
+//                text: qsTr("Reply")
+//                width: Theme.itemSizeSmall
+//                height: Theme.itemSizeSmall
+//                onClicked: {
+//                    pageStack.push(Qt.resolvedUrl("../ui/SendPage.qml"),
+//                                    {"mode":"reply",
+//                                       "info":weiboPage.commentInfo})
+//                }
+//            }
+//            Button {
+//                text: qsTr("Copy")
+//                width: Theme.itemSizeSmall
+//                height: Theme.itemSizeSmall
+//                //onClicked: PopupUtils.close(dialogue)
+//            }
+//            Button{
+//                text: qsTr("Cancel")
+//                width: Theme.itemSizeSmall
+//                height: Theme.itemSizeSmall
+//                //onClicked: PopupUtils.close(dialogue)
+//            }
+//        }
+//    }
     //////////////////////////////////////////////      a listview to show the weibo content
-    SilicaFlickable {
-        id:mainFlickableView
-        anchors {
-            fill: parent
-            //leftMargin: page.isPortrait ? 0 : actionPanel.visibleSize
-            topMargin: actionPanel.visibleSize ? actionPanel.height : 0//page.isPortrait ? actionPanel.visibleSize : 0
-            //rightMargin: page.isPortrait ? 0 : actionPanel.visibleSize
-            //bottomMargin: page.isPortrait ? actionPanel.visibleSize : 0
-        }
-        Behavior on topMargin {
-            FadeAnimation {}
-        }
-        contentHeight: column.height
+//    SilicaFlickable {
+//        id:mainFlickableView
+//        anchors {
+//            fill: parent
+//            //leftMargin: page.isPortrait ? 0 : actionPanel.visibleSize
+//            topMargin: actionPanel.visibleSize ? actionPanel.height : 0//page.isPortrait ? actionPanel.visibleSize : 0
+//            //rightMargin: page.isPortrait ? 0 : actionPanel.visibleSize
+//            //bottomMargin: page.isPortrait ? actionPanel.visibleSize : 0
+//        }
+//        Behavior on topMargin {
+//            FadeAnimation {}
+//        }
+//        contentHeight: column.height
         
-        Column {
-            id:column
-            spacing: Theme.paddingSmall 
-            anchors.fill: parent
+//        Column {
+//            id:column
+//            spacing: Theme.paddingSmall 
+//            anchors.fill: parent
 
             SilicaListView {
                 id: weiboListview
-                width: mainFlickableView.width 
-                height: mainFlickableView.height// - pageHeader.height - Theme.paddingSmall
-
+//                width: mainFlickableView.width 
+//                height: mainFlickableView.height// - pageHeader.height - Theme.paddingSmall
+                anchors.fill: parent
+                
                 header: PageHeader {
                     id:pageHeader
                     title: qsTr("Sailfish Weibo")
@@ -153,8 +154,8 @@ Page {
                 
                 VerticalScrollDecorator { flickable: weiboListview }
             }
-        }
-    }
+//        }
+//    }
     
     ListModel {
         id:weiboListviewModel
@@ -190,8 +191,8 @@ Page {
                                 // TODO  error handler
                             }else {
                                 // right result
-                                console.log("comments length: ", result.comments.length)
-//                              console.log("comments : ", JSON.stringify(result))
+//                                console.log("comments length: ", result.comments.length)
+//                                console.log("comments : ", JSON.stringify(result))
                                 modelComment.clear()
                                 for (var i=0; i<result.comments.length; i++) {
                                     modelComment.append(result.comments[i])

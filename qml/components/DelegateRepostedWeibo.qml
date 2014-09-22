@@ -39,6 +39,14 @@ import Sailfish.Silica 1.0
 
     Image {
         id: background
+        anchors {
+            top: parent.top
+            topMargin: Theme.paddingSmall// 1//units.gu(1)
+            left: parent.left
+            right: parent.right
+            leftMargin: Theme.paddingSmall//1// units.gu(1)
+            rightMargin:Theme.paddingSmall//1// units.gu(1)
+        }
         source: "../graphics/mask_background_reposted.png"
         fillMode:Image.PreserveAspectCrop
     }
@@ -58,7 +66,7 @@ import Sailfish.Silica 1.0
         Row {
             id: rowUser
             anchors { left: parent.left; right: parent.right }
-            spacing: Theme.paddingSmall
+            spacing: Theme.paddingMedium
             height: Math.max(usAvatar.height, rowUserColumn.height) + Theme.paddingSmall
             
             Item {
@@ -94,14 +102,9 @@ import Sailfish.Silica 1.0
                 Label {
                     id: labelWeiboTime
                     color: Theme.secondaryColor
-                    text:isInvalid ? "" : "Weibo Time"/* {
-                        //                        console.log("appData.dateParse(model.created_at): ", appData.dateParse(model.created_at))
-                        //                        var ddd = new Date(appData.dateParse(model.created_at) + "")
-                        //                        console.log("ddd: ", ddd.getTime())
-                        
-                        //FIXME:适配Sailfish OS
-                        //return DateUtils.formatRelativeTime(i18n, DateUtils.parseDate(appData.dateParse(retweetWeibo.created_at)))
-                    }*/
+                    text:isInvalid ? "" : 
+                        DateUtils.formatRelativeTime( DateUtils.parseDate(appData.dateParse(retweetWeibo.created_at)))
+                                     + qsTr(" From ") +GetURL.linkToStr(model.source)
                     font.pixelSize: Theme.fontSizeTiny 
                 }
             }
@@ -120,7 +123,7 @@ import Sailfish.Silica 1.0
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             color: Theme.primaryColor
             font.pixelSize: Theme.fontSizeSmall
-            text: isInvalid ? "" : GetURL.replaceReg(retweetWeibo.text)
+            text: isInvalid ? "" : GetURL.replaceReg(retweetWeibo.text, Theme.highlightColor)
 
             onLinkActivated: {
                 Qt.openUrlExternally(link)

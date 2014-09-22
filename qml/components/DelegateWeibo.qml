@@ -53,6 +53,14 @@ Item {
     //    }
     Image {
         id: background
+        anchors {
+            top: parent.top
+            topMargin: Theme.paddingSmall //units.gu(1)
+            left: parent.left
+            right: parent.right
+            leftMargin: Theme.paddingLarge 
+            rightMargin: Theme.paddingLarge 
+        }
         source: "../graphics/mask_background_grid.png"
         fillMode: Image.PreserveAspectCrop
     }
@@ -73,8 +81,8 @@ Item {
             topMargin: Theme.paddingSmall //units.gu(1)
             left: parent.left
             right: parent.right
-            leftMargin: Theme.paddingSmall //units.gu(1)
-            rightMargin: Theme.paddingSmall //units.gu(1)
+            leftMargin: Theme.paddingLarge 
+            rightMargin: Theme.paddingLarge 
         }
         spacing: Theme.paddingMedium//Theme.paddingSmall //units.gu(1)
         Row {
@@ -83,7 +91,7 @@ Item {
                 left: parent.left
                 right: parent.right 
             }
-            spacing: Theme.paddingSmall //units.gu(0.5)
+            spacing: Theme.paddingMedium
             height: rowUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height//usAvatar.height
             
             Item {
@@ -122,14 +130,13 @@ Item {
                 Label {
                     id: labelWeiboTime
                     color: Theme.secondaryColor
-                    text:"Weibo Time"/* {
+                    text: {
                         //                        console.log("appData.dateParse(model.created_at): ", appData.dateParse(model.created_at))
                         //                        var ddd = new Date(appData.dateParse(model.created_at) + "")
                         //                        console.log("ddd: ", ddd.getTime())
-                        
-                        //FIXME:适配Sailfish OS
-                        //return DateUtils.formatRelativeTime(i18n, DateUtils.parseDate(appData.dateParse(model.created_at)))
-                    }*/
+                        return DateUtils.formatRelativeTime(/*i18n,*/ DateUtils.parseDate(appData.dateParse(model.created_at)))
+                        + qsTr(" From ") + GetURL.linkToStr(model.source)
+                    }
                     font.pixelSize: Theme.fontSizeTiny 
                 }
             }
@@ -140,7 +147,7 @@ Item {
             width: parent.width
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             color: Theme.primaryColor 
-            text: GetURL.replaceReg(model.text)
+            text: GetURL.replaceReg(model.text, Theme.highlightColor)
             font.pixelSize: Theme.fontSizeMedium
             onLinkActivated: {
                 Qt.openUrlExternally(link)
@@ -157,7 +164,7 @@ Item {
                 delegate: Component {
                     Image {
                         fillMode: Image.PreserveAspectCrop;
-                        width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - 3;//units.gu(3) ;
+                        width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - Theme.paddingSmall
                         height: modelImages.count == 1 ? implicitHeight : width
                         source: model.thumbnail_pic
                         
@@ -176,8 +183,8 @@ Item {
             id: itemRetweetContainer
             anchors {
                 left: parent.left; right: parent.right
-                leftMargin: Theme.paddingSmall//units.gu(1); 
-                rightMargin: Theme.paddingSmall//units.gu(1)
+                //leftMargin: Theme.paddingSmall//units.gu(1); 
+                //rightMargin: Theme.paddingSmall//units.gu(1)
             }
             height: childrenRect.height
 

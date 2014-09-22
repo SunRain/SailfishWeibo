@@ -23,11 +23,6 @@ Item {
             title: qsTr("SearchUser")
         }
         
-//        Component.onCompleted:  {
-//            console.log("atUserComponent == onCompleted  searchArea height " + searchArea.height
-//                        + "SilicaListView heigt " + findUserList.height + " atUserComponent heigt " + atUserComponent.height);
-//        }
-        
         Row {
             id:searchArea
             spacing: Theme.paddingSmall 

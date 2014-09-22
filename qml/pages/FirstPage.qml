@@ -142,9 +142,9 @@ Page {
                     }
                 }
             }
-            Column {
-                spacing: Theme.paddingSmall 
-                anchors.fill: parent
+//            Column {
+//                spacing: Theme.paddingSmall 
+//                anchors.fill: parent
 
                 WeiboTab {
                     id: weiboTab
@@ -163,7 +163,7 @@ Page {
                     //                    console.log("weibolist height" + weibolist.height + " notiItem " + notiItem.height + " weiboTab " + weiboTab.height);
                     attachSecondPage();
                 }
-            }
+//            }
         }
     }
 
