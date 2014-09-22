@@ -1,21 +1,25 @@
 import QtQuick 2.0
-import Ubuntu.Components 0.1
+import Sailfish.Silica 1.0
 
 Page {
     id: gallery
     anchors.fill: parent
-    flickable: null
+   // flickable: null
 
-    property var modelGallery
-
-    function setModel(model, index) {
-//        console.log("pic_urls: ", model)
-//        modelImage.clear()
-//        for (var i=0; i<pic_urls.length; i++) {
-//            modelImage.append( { "thumbnail_pic": pic_urls[i].thumbnail_pic } )
-//        }
-        modelGallery = model
-        setNewIndex(index)
+    //property var modelGallery
+    property alias modelGallery: imageListview.model
+    property var index
+//    function setModel(model, index) {
+////        console.log("pic_urls: ", model)
+////        modelImage.clear()
+////        for (var i=0; i<pic_urls.length; i++) {
+////            modelImage.append( { "thumbnail_pic": pic_urls[i].thumbnail_pic } )
+////        }
+//        modelGallery = model
+//        setNewIndex(index)
+//    }
+    Component.onCompleted: {
+        setNewIndex(index);
     }
 
     function setNewIndex(imageIndex) {
@@ -31,56 +35,62 @@ Page {
         return tmp
     }
 
-    Rectangle {
-        id: bg
-        anchors.fill: parent
-        color: "black"
-    }
-
     //////////////////////////////////////////////      a listview to show the images of one weibo
-    ListView {
+    SilicaListView {
         id: imageListview
 
-        width: parent.width
-        anchors.bottom: parent.bottom
-//        anchors.bottomMargin: units.gu(2)
-        anchors.top: parent.top
-//        anchors.topMargin: units.gu(2)
+        anchors{
+            top:parent.top
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            margins: Theme.paddingSmall
+        }
+        
         snapMode: ListView.SnapOneItem
-        boundsBehavior: Flickable.StopAtBounds
-        orientation: ListView.Horizontal
-        contentHeight: parent.width * count
+        orientation: ListView.HorizontalFlick
         model: modelGallery
         delegate: delageteImage
         clip: true
-        highlightFollowsCurrentItem: true
+        cacheBuffer: width
         highlightRangeMode: ListView.StrictlyEnforceRange
     }
 
     Component {
         id: delageteImage
 
-        Flickable {
+       Item {
             id: flickContainer
             width: imageListview.width
             height: imageListview.height
-            contentHeight: imageweibo.height
-            contentWidth: imageweibo.width
-
+            clip: true
+            
             Image {
                 id: imageweibo
+                anchors.fill: parent
+                
                 fillMode: Image.PreserveAspectFit
-                anchors.centerIn: parent
-                width: parent.width
-                height: parent.height
+                sourceSize.height: window.height * 8
+                sourceSize.width: window.height * 2
+                //asynchronous for LOCAL filesystem, http are always loaded asynchonously.
+                //anyway, we set this
+                asynchronous: true
+                
                 source: {
                     toLarge(model.thumbnail_pic)
+                }
+                BusyIndicator {
+                    running: imageweibo.status != Image.Ready
+                    size: BusyIndicatorSize.Large
+                    anchors.centerIn: parent
+                }
+                PinchArea {
+                    anchors.fill: parent
+                    pinch.target: parent
+                    pinch.minimumScale: 1
+                    pinch.maximumScale: 4
                 }
             }
         }
     }
-
-//    ListModel {
-//        id: modelImage
-//    }
 }

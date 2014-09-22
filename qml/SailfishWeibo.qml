@@ -119,6 +119,10 @@ ApplicationWindow
         pageStack.push(Qt.resolvedUrl("ui/UserWeibo.qml"), { uid: uid, userName: name })
         //mainStack.currentPage.refresh()
     }
+    
+    function toGalleryPage(model, index) {
+        pageStack.push(Qt.resolvedUrl("ui/Gallery.qml"), { "modelGallery": model, "index": index })
+    }
 }
 
 

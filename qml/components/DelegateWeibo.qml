@@ -164,8 +164,7 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                //TODO 添加方法
-                               // mainView.toGalleryPage(modelImages, index)
+                                toGalleryPage(modelImages, index)
                             }
                         }
                     }
