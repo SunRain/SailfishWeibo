@@ -219,9 +219,12 @@ Page {
 
             onImageClicked: {
                 //console.log("SendPage == imagePreviewComponent clicked " +  model.url);
+                //TODO 暂时只支持上传一张图片
+                modelImages.clear();
                 modelImages.append(
                             {"path":/*model.get(index).url*/model.url.toString()}
                             );
+                setImgPath(model.url.toString());
             }
         }
     }
@@ -399,7 +402,8 @@ Page {
 
                 Grid {
                     id: gridWeiboPics
-                    columns: 4
+                    //columns: 4
+                    columns: 1
                     spacing: Theme.paddingSmall
                     width: parent.width
                     height: childrenRect.height
@@ -418,6 +422,7 @@ Page {
                                     onClicked: {
                                         console.log("SendPage === inserted image clicked" + index);
                                         modelImages.remove(index);
+                                        setImgPath("");
                                     }
                                     onDoubleClicked: {
                                         console.log("SendPage === inserted image onDoubleClicked")

@@ -11,8 +11,14 @@ NetworkHelper::NetworkHelper(QObject *parent) :
 void NetworkHelper::uploadImgStatus(const QString &token, const QString &status, const QString &fileUrl)
 {
     QUrl url("https://upload.api.weibo.com/2/statuses/upload.json?access_token=" + token /* + "&status=" + status*/);
-    QFileInfo imgInfo(fileUrl);
-//    qDebug() << "file path: " << imgInfo.filePath();
+    
+    QString fUrl = fileUrl;
+    if (fUrl.startsWith("file://")) {
+        fUrl = fUrl.replace("file://", "");
+    } 
+    
+    QFileInfo imgInfo(fUrl);
+    qDebug() << "file path: " << imgInfo.filePath();
 
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
@@ -25,9 +31,10 @@ void NetworkHelper::uploadImgStatus(const QString &token, const QString &status,
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/" + imgInfo.suffix()));
     imagePart.setHeader(QNetworkRequest::ContentDispositionHeader,
                         QVariant("form-data; name=\"pic\"; filename=" + imgInfo.fileName()));
-    QFile *file = new QFile(fileUrl);
+    QFile *file = new QFile(fUrl);
     bool isOpen = file->open(QIODevice::ReadOnly);
-    qDebug() << "file open? " << isOpen;
+    qDebug() << "file open? " << isOpen <<" file is exist "<<file->exists();
+    
     imagePart.setBodyDevice(file);
     file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
 
