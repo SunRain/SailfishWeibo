@@ -60,6 +60,24 @@ ApplicationWindow
         }
     }
 
+    Item{
+        id:busyIndicatorItem
+        width: Screen.width
+        height:Screen.height
+        z: 10
+        BusyIndicator {
+            id:busyIndicator
+            size: BusyIndicatorSize.Large
+            anchors.centerIn: parent
+        }
+    }
+    function showBusyIndicator() {
+        busyIndicator.running = true;
+    }
+    function stopBusyIndicator() {
+        busyIndicator.running = false;
+    }
+    
     function addNotification(inText, inTime) {
         var text = inText == undefined ? "" : inText
         var time = inTime == undefined ? 3 : inTime

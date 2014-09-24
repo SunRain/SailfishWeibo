@@ -21,6 +21,8 @@ Item {
     signal sendNewWeibo
 
     function refresh() {
+        showBusyIndicator();
+        
         // TODO refresh all weibo
         modelWeibo.clear()
 //        for (var i=0; i<result.statuses.length; i++) {
@@ -47,6 +49,8 @@ Item {
         observer.prototype = {
             update: function(status, result)
             {
+                stopBusyIndicator();
+                
                 if(status != "error"){
                     if(result.error) {
                         // TODO  error handler
@@ -83,7 +87,6 @@ Item {
 //        id: column
         
 //        spacing: Theme.paddingSmall 
-
         SilicaListView{
             id: lvHomeWeibo
             width: weiboTab.width 
@@ -99,15 +102,20 @@ Item {
             cacheBuffer: 999999/*height * 2*/
             //spacing: Theme.paddingMedium
             model: modelWeibo
-            footer: /*footerWeibo*/FooterLoadMore{
-                onClicked: {weiboTab.addMore();}
-            }
+            footer: modelWeibo.count == 0 ? "" : footerComponent
             delegate: delegateWeibo
             
         }
         
 //        VerticalScrollDecorator { flickable: lvHomeWeibo }
 //    }
+        
+        Component {
+            id: footerComponent
+            FooterLoadMore {
+                 onClicked: {weiboTab.addMore();}
+            }
+        }
     
     Component {
         id: delegateWeibo

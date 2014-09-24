@@ -13,6 +13,7 @@ Page {
     property var remind: {"status":0,"follower":0,"cmt":0,"dm":0,"mention_status":0,"mention_cmt":0,"group":0,"notice":0,"invite":0,"badge":0,"photo":0}
     
     function refresh() {
+        showBusyIndicator();
         messageGetRemind(Settings.getAccess_token(), Settings.getUid())
     }
     
@@ -27,6 +28,8 @@ Page {
         observer.prototype = {
             update: function(status, result)
             {
+                stopBusyIndicator();
+                
                 if(status != "error"){
                     if(result.error) {
                         // TODO  error handler
