@@ -4,6 +4,7 @@ import Sailfish.Silica 1.0
 import "../js/dateutils.js" as DateUtils
 import "../js/weiboapi.js" as WB
 import "../js/Settings.js" as Settings
+import "../js/getURL.js" as GetURL
 import "../components"
 
 Page {
@@ -128,9 +129,10 @@ Page {
                             id: labelCommentTime
                             color: Theme.secondaryColor
                             font.pixelSize: Theme.fontSizeExtraSmall
-                            text:"Weibo Time" /*{
-                                return DateUtils.formatRelativeTime(i18n, DateUtils.parseDate(appData.dateParse(model.created_at)))
-                            }*/
+                            text:{
+                                return DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
+                                + qsTr(" From ") + GetURL.linkToStr(model.source)
+                            }
                         }
                     }
                 }

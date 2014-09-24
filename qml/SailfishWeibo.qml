@@ -32,6 +32,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
 
+import com.sunrain.sinaweibo 1.0
+
 ApplicationWindow
 {
     initialPage: /*Qt.resolvedUrl("pages/FirstPage.qml")*/Component { FirstPage { } }
@@ -140,6 +142,10 @@ ApplicationWindow
     
     function toGalleryPage(model, index) {
         pageStack.push(Qt.resolvedUrl("ui/Gallery.qml"), { "modelGallery": model, "index": index })
+    }
+    
+    MyType {
+        id: appData
     }
 }
 

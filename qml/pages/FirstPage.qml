@@ -261,9 +261,9 @@ Page {
     
     /////////////////////////////////////////////////////////
     
-    MyType {
-        id: appData
-    }
+//    MyType {
+//        id: appData
+//    }
  
 //    //////////////////////////////////////////////////////////////////         go to weibo page
 //    function toWeiboPage(model, index) {

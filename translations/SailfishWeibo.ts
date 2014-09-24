@@ -22,6 +22,10 @@
         <source>Reply comment</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source> From </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CommentMentioned</name>
@@ -35,6 +39,10 @@
     </message>
     <message>
         <source>View weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> From </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -358,6 +366,10 @@
     </message>
     <message>
         <source>Sailfish Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> From </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -325,10 +325,10 @@ Page {
                                     Label {
                                         id: labelCommentTime
                                         color: Theme.secondaryColor // "grey"
-                                        //TODO:添加微博的时间
-                                        text: "weibo Time" /*{
-                                            return DateUtils.formatRelativeTime(i18n, DateUtils.parseDate(appData.dateParse(model.created_at)))
-                                        }*/
+                                        text:  {
+                                            return DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
+                                            + qsTr(" From ") + GetURL.linkToStr(model.source)
+                                        }
                                         font.pixelSize: Theme.fontSizeTiny
                                     }
                                 }
