@@ -1,6 +1,7 @@
 import QtQuick 2.0
 //import Ubuntu.Components 0.1
 import "../js/getURL.js" as GetURL
+import "../js/dateutils.js" as DateUtils
 import Sailfish.Silica 1.0
 
  Item{
@@ -104,7 +105,7 @@ import Sailfish.Silica 1.0
                     color: Theme.secondaryColor
                     text:isInvalid ? "" : 
                         DateUtils.formatRelativeTime( DateUtils.parseDate(appData.dateParse(retweetWeibo.created_at)))
-                                     + qsTr(" From ") +GetURL.linkToStr(model.source)
+                                     + qsTr(" From ") +GetURL.linkToStr(retweetWeibo.source)
                     font.pixelSize: Theme.fontSizeTiny 
                 }
             }
