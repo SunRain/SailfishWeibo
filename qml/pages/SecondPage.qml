@@ -49,12 +49,13 @@ Page {
 //        }
         ListElement {
             title: "UserPage"
-            page:"../ui/UserPage/qml"
+            //page:"../ui/UserPage.qml"
             arg:"getUid"
         }
-//        ListElement {
-//            title: "UserWeibo"
-//        }
+        ListElement {
+            title: "About"
+            page:"AboutPage.qml"
+        }
 //        ListElement {
 //            title: "UserPhoto"
 //        }
@@ -85,7 +86,7 @@ Page {
                 }
             }
             onClicked: {
-                console.log("click item " + title + "with targe " + page + "arg " + arg);
+                console.log("click item " + title + "with targe " + page + " arg " + arg);
                 if (arg == "getUid") {
                     //pageStack.push(Qt.resolvedUrl(page))
                     var uid = Settings.getUid();

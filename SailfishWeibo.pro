@@ -70,7 +70,8 @@ OTHER_FILES += qml/SailfishWeibo.qml \
     qml/graphics/mask_background_reposted.png \
     qml/graphics/notifactionbar.png \
     qml/graphics/arrow_right.png \
-    qml/components/ImagePreviewComponent.qml
+    qml/components/ImagePreviewComponent.qml \
+    qml/pages/AboutPage.qml
     
 # to disable building translations every time, comment out the
 # following CONFIG line

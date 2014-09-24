@@ -2,6 +2,45 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>AboutPage</name>
+    <message>
+        <source>About Sailfish Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sailfish Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author:wanggjghost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>E-mail:41245110@qq.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Github: https://github.com/SunRain/SailfishWeibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Credit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UbuntuTouch Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author:Joey_Chan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AtUserComponent</name>
     <message>
         <source>SearchUser</source>
