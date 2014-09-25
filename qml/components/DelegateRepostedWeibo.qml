@@ -79,7 +79,7 @@ import Sailfish.Silica 1.0
                     height: parent.height
                     smooth: true
                     fillMode: Image.PreserveAspectFit
-                    source: retweetWeibo.user.profile_image_url
+                    source: isInvalid ? "" :retweetWeibo.user.profile_image_url
                 }
                 
                 MouseArea {
