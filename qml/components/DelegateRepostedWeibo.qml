@@ -66,10 +66,8 @@ import Sailfish.Silica 1.0
 
         Row {
             id: rowUser
-            anchors { left: parent.left; right: parent.right }
             spacing: Theme.paddingMedium
-            height: Math.max(usAvatar.height, rowUserColumn.height) + Theme.paddingSmall
-            
+
             Item {
                 id: usAvatar
                 width: 48
@@ -81,11 +79,9 @@ import Sailfish.Silica 1.0
                     fillMode: Image.PreserveAspectFit
                     source: isInvalid ? "" :retweetWeibo.user.profile_image_url
                 }
-                
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        //console.log("===  usAvatar clicked");
                         toUserPage(retweetWeibo.user.id)
                     }
                 }
@@ -107,13 +103,6 @@ import Sailfish.Silica 1.0
                         DateUtils.formatRelativeTime( DateUtils.parseDate(appData.dateParse(retweetWeibo.created_at)))
                                      + qsTr(" From ") +GetURL.linkToStr(retweetWeibo.source)
                     font.pixelSize: Theme.fontSizeTiny 
-                }
-            }
-            
-            MouseArea {
-                anchors.fill: parent
-                onClicked:  {
-                    toUserPage(retweetWeibo.user.id)
                 }
             }
         }
