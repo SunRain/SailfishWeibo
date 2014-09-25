@@ -52,8 +52,6 @@ Item {
         observer.prototype = {
             update: function(status, result)
             {
-                stopBusyIndicator();
-                
                 if(status != "error"){
                     if(result.error) {
                         // TODO  error handler
@@ -73,6 +71,7 @@ Item {
                     // TODO  empty result
                     console.log("weiboTab === homeStatus error");
                 }
+                stopBusyIndicator();
             }
         }
         
