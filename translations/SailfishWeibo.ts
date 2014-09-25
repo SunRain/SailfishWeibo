@@ -121,14 +121,6 @@
 <context>
     <name>FirstPage</name>
     <message>
-        <source>About oauth2 info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click to oauth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -144,6 +136,26 @@
         <source>Sailfish Weibo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pull down menu to start oauth login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Web content load error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check network connectivity and pull down to reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FooterLoadMore</name>
@@ -156,6 +168,13 @@
     <name>ImagePreviewComponent</name>
     <message>
         <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LoginComponent</name>
+    <message>
+        <source>click the enter key if the webview login icon not work</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
