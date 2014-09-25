@@ -114,21 +114,20 @@ Page {
     Component{
         id:mainComponent
         
-        SilicaFlickable {
-            
-            id:weibolist
-            
+        WeiboTab {
+            id: weiboTab
             anchors{
                 top:parent.top
                 bottom: parent.bottom
                 left: parent.left
                 right: parent.right
             }
-            
-            contentHeight: /*notiItem.height + */weiboTab.height
-            
-            // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
-            PullDownMenu {
+
+            header: PageHeader {
+                id:pageHeader
+                title: qsTr("Sailfish Weibo")
+            }
+            menus {
                 MenuItem {
                     text: qsTr("Refresh")
                     onClicked: {
@@ -142,28 +141,17 @@ Page {
                     }
                 }
             }
-//            Column {
-//                spacing: Theme.paddingSmall 
-//                anchors.fill: parent
-
-                WeiboTab {
-                    id: weiboTab
-                    width: parent.width
-                    height: mainView.height
-
-                    onSendNewWeibo: {
-                        //TODO 添加相关功能//代码太复杂，需要重构
-                        console.log("MainView == WeiboTab onSendNewWeibo");
-                        toSendPage("", {});
-                        
-                    }
-                }
-                Component.onCompleted: {
-                    weiboTab.refresh();
-                    //                    console.log("weibolist height" + weibolist.height + " notiItem " + notiItem.height + " weiboTab " + weiboTab.height);
-                    attachSecondPage();
-                }
-//            }
+            
+            onSendNewWeibo: {
+                //TODO 添加相关功能//代码太复杂，需要重构
+                console.log("MainView == WeiboTab onSendNewWeibo");
+                toSendPage("", {});
+            }
+            
+            Component.onCompleted: {
+                weiboTab.refresh();
+                attachSecondPage();
+            }
         }
     }
 

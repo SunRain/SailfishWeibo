@@ -140,6 +140,10 @@
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sailfish Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FooterLoadMore</name>
@@ -409,13 +413,6 @@
     </message>
     <message>
         <source> From </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>WeiboTab</name>
-    <message>
-        <source>Sailfish Weibo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

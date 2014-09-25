@@ -18,6 +18,9 @@ Item {
     property int pageNum: 1
     property bool isRefresh: false
 
+    property alias menus: lvHomeWeiboPullDownMenu._content
+    property alias header: lvHomeWeibo.header
+    
     signal sendNewWeibo
 
     function refresh() {
@@ -92,11 +95,10 @@ Item {
             width: weiboTab.width 
             height: weiboTab.height
 
-            header: PageHeader {
-                id:pageHeader
-                title: qsTr("Sailfish Weibo")
+            PullDownMenu {
+                id:lvHomeWeiboPullDownMenu
             }
-            
+
             //contentHeight: parent.height * count
             
             cacheBuffer: 999999/*height * 2*/
