@@ -161,12 +161,7 @@ Page {
         LoginComponent {
             id:loginView
             anchors.fill: parent
-            header: PageHeader {
-                id:pageHeader
-                title: qsTr("Login")
-            }
             placeholderText: qsTr("pull down menu to start oauth login")
-            
             menus {
                 MenuItem {
                     text: qsTr("Reload")
@@ -175,7 +170,6 @@ Page {
                 MenuItem {
                     text: qsTr("Login")
                     onClicked: {
-                        console.log("== click Login");
                         loginView.loadLoginView();
                     }
                 }

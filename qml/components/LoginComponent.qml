@@ -7,7 +7,7 @@ Item {
     id:loginComponent
     
     property alias menus: viewPullDownMenu._content
-    property alias header: webView.header
+    //property alias header: webView.header
     property alias placeholderText: viewPlaceHolder.text
     property alias placeholderHintText: viewPlaceHolder.hintText
     
@@ -35,6 +35,23 @@ Item {
         Column {
             id:column
             spacing: Theme.paddingMedium
+
+            Label {
+                id:infoLabel
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingLarge
+                    right: parent.right
+                    rightMargin: Theme.paddingLarge
+                }
+
+                color: Theme.highlightColor
+                width: loginComponent.width
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+
+                font.pixelSize: Theme.fontSizeMedium
+                text: webView.opacity === 1 ? qsTr("click the enter key if the webview login icon not work") : ""
+            }
 
             SilicaWebView {
                 id: webView
@@ -68,23 +85,6 @@ Item {
                 }
                 
                 FadeAnimation on opacity {}
-            }
-            
-            Label {
-                id:infoLabel
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
-                    right: parent.right
-                    rightMargin: Theme.paddingLarge
-                }
-
-                color: Theme.highlightColor
-                //width: loginComponent.width
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                
-                font.pixelSize: Theme.fontSizeMedium 
-                text: webView.opacity === 1 ? qsTr("click the enter key if the webview login icon not work") : ""
             }
         }
         
