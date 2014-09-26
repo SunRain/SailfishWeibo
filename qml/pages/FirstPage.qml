@@ -78,8 +78,7 @@ Page {
         runningBusyIndicator = 0;
         if (Settings.getAccess_token() == "") {
             startLogin()
-        }
-        else {
+        } else {
             weiboApiHandler.checkToken(Settings.getAccess_token())
         }
     }
@@ -127,6 +126,14 @@ Page {
                 title: qsTr("Sailfish Weibo")
             }
             menus {
+                MenuItem {
+                    text: qsTr("Logout")
+                    onClicked: {
+                        weiboLogout();
+                        pageStack.popAttached(undefined, PageStackAction.Animated);
+                        reset();
+                    }
+                }
                 MenuItem {
                     text: qsTr("Refresh")
                     onClicked: {

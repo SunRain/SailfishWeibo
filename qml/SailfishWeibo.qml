@@ -32,6 +32,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
 
+import "js/Settings.js" as Settings
+
 import com.sunrain.sinaweibo 1.0
 
 ApplicationWindow
@@ -144,6 +146,10 @@ ApplicationWindow
         pageStack.push(Qt.resolvedUrl("ui/Gallery.qml"), { "modelGallery": model, "index": index })
     }
     
+    function weiboLogout() {
+        Settings.setAccess_token("");
+    }
+
     MyType {
         id: appData
     }

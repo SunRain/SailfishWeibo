@@ -168,6 +168,10 @@
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FooterLoadMore</name>
