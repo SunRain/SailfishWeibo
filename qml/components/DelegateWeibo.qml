@@ -87,12 +87,12 @@ Item {
         spacing: Theme.paddingMedium//Theme.paddingSmall //units.gu(1)
         Row {
             id: rowUser
-            anchors { 
-                left: parent.left
-                right: parent.right 
-            }
+//            anchors {
+//                left: parent.left
+//                right: parent.right
+//            }
             spacing: Theme.paddingMedium
-            height: rowUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height//usAvatar.height
+            //height: rowUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height//usAvatar.height
             
             Item {
                 id: usAvatar
@@ -157,7 +157,7 @@ Item {
         Grid {
             id: gridWeiboPics
             columns: 3; spacing: Theme.paddingSmall//units.gu(0.5); /*visible: model.pic_urls == undefined ? false : model.pic_urls.count != 0*/
-            width: parent.width; height: childrenRect.height
+            //width: parent.width; height: childrenRect.height
             
             Repeater {
                 model: ListModel { id: modelImages }
@@ -181,15 +181,17 @@ Item {
         
         Item {
             id: itemRetweetContainer
-            anchors {
-                left: parent.left; right: parent.right
-                //leftMargin: Theme.paddingSmall//units.gu(1); 
-                //rightMargin: Theme.paddingSmall//units.gu(1)
-            }
-            height: childrenRect.height
+//            anchors {
+//                left: parent.left; right: parent.right
+//                //leftMargin: Theme.paddingSmall//units.gu(1);
+//                //rightMargin: Theme.paddingSmall//units.gu(1)
+//            }
+            width: parent.width
+            height: delegateRepostedWeibo.height//childrenRect.height
 
             DelegateRepostedWeibo{
-                visible: model.retweeted_status != undefined
+                id:delegateRepostedWeibo
+                visible: model.retweeted_status != undefined || model.retweeted_status != ""
                 retweetWeibo: model.retweeted_status
                 
                 onRetweetClicked: {
@@ -204,7 +206,7 @@ Item {
             spacing: Theme.paddingSmall
 
             Row {
-                width: childrenRect.width; height: childrenRect.height
+                //width: childrenRect.width; height: childrenRect.height
                 anchors.horizontalCenter: parent.horizontalCenter
                 
                 Item {
