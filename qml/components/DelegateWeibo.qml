@@ -55,11 +55,12 @@ Item {
         id: background
         anchors {
             top: parent.top
-            topMargin: Theme.paddingSmall //units.gu(1)
+            //topMargin: Theme.paddingSmall //units.gu(1)
             left: parent.left
             right: parent.right
-            leftMargin: Theme.paddingLarge 
-            rightMargin: Theme.paddingLarge 
+            bottom: parent.bottom
+            //leftMargin: Theme.paddingLarge
+            //rightMargin: Theme.paddingLarge
         }
         source: "../graphics/mask_background_grid.png"
         fillMode: Image.PreserveAspectCrop
