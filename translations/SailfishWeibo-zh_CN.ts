@@ -122,22 +122,22 @@
 <context>
     <name>DelegateWeibo</name>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="138"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="139"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="218"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="221"/>
         <source>repost: </source>
         <translation>转发：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="243"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="246"/>
         <source>comment: </source>
         <translation>评论：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="267"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="270"/>
         <source>like: </source>
         <translation>顶：</translation>
     </message>
@@ -145,43 +145,47 @@
 <context>
     <name>FirstPage</name>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="127"/>
+        <location filename="../qml/pages/FirstPage.qml" line="126"/>
         <source>Sailfish Weibo</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="131"/>
+        <location filename="../qml/pages/FirstPage.qml" line="130"/>
+        <source>Logout</source>
+        <translation>注销</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/FirstPage.qml" line="138"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="137"/>
+        <location filename="../qml/pages/FirstPage.qml" line="144"/>
         <source>New</source>
         <translation>写微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="166"/>
-        <location filename="../qml/pages/FirstPage.qml" line="176"/>
+        <location filename="../qml/pages/FirstPage.qml" line="178"/>
         <source>Login</source>
         <translation>登入</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="168"/>
+        <location filename="../qml/pages/FirstPage.qml" line="171"/>
         <source>pull down menu to start oauth login</source>
         <translation>在下拉菜单中选择登入开始微博之旅</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="172"/>
+        <location filename="../qml/pages/FirstPage.qml" line="174"/>
         <source>Reload</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="187"/>
+        <location filename="../qml/pages/FirstPage.qml" line="188"/>
         <source>Web content load error: </source>
         <translation>载入错误：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="188"/>
+        <location filename="../qml/pages/FirstPage.qml" line="189"/>
         <source>Check network connectivity and pull down to reload</source>
         <translation>查看网络链接或者刷新登入界面</translation>
     </message>
@@ -205,7 +209,7 @@
 <context>
     <name>LoginComponent</name>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="87"/>
+        <location filename="../qml/components/LoginComponent.qml" line="53"/>
         <source>click the enter key if the webview login icon not work</source>
         <translation>如果页面的登入按钮点击无效，请尝试点击软键盘的回车键来登入</translation>
     </message>
