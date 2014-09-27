@@ -72,12 +72,14 @@ OTHER_FILES += qml/SailfishWeibo.qml \
     qml/graphics/arrow_right.png \
     qml/components/ImagePreviewComponent.qml \
     qml/pages/AboutPage.qml \
-    qml/components/LoginComponent.qml
+    qml/components/LoginComponent.qml \
+    translations/SailfishWeibo-zh_CN.ts
     
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
-TRANSLATIONS += translations/SailfishWeibo-de.ts
+TRANSLATIONS += translations/SailfishWeibo-de.ts \
+                translations/SailfishWeibo-zh_CN.ts
 
 HEADERS += \
     src/networkhelper.h \
