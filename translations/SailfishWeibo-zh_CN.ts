@@ -127,17 +127,17 @@
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="221"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="223"/>
         <source>repost: </source>
         <translation>转发：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="246"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="248"/>
         <source>comment: </source>
         <translation>评论：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="270"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="272"/>
         <source>like: </source>
         <translation>顶：</translation>
     </message>

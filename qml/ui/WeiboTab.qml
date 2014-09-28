@@ -103,7 +103,7 @@ Item {
             cacheBuffer: 999999/*height * 2*/
             //spacing: Theme.paddingMedium
             model: modelWeibo
-            footer: modelWeibo.count == 0 ? "" : footerComponent
+            footer: modelWeibo.count == 0 ? null : footerComponent
             delegate: delegateWeibo
             
         }

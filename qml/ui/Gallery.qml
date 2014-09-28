@@ -34,6 +34,14 @@ Page {
 //        console.log("image tmp: ", tmp)
         return tmp
     }
+    
+    function isGifImage(url) {
+        var tmp = url + "";
+        if (tmp.substr(-4,4) == ".gif") {
+            return true;
+        }
+        return false;
+    }
 
     //////////////////////////////////////////////      a listview to show the images of one weibo
     SilicaListView {
@@ -65,30 +73,59 @@ Page {
             height: imageListview.height
             clip: true
             
-            Image {
-                id: imageweibo
+            Loader {
                 anchors.fill: parent
-                
-                fillMode: Image.PreserveAspectFit
-                sourceSize.height: window.height * 8
-                sourceSize.width: window.height * 2
-                //asynchronous for LOCAL filesystem, http are always loaded asynchonously.
-                //anyway, we set this
-                asynchronous: true
-                
-                source: {
-                    toLarge(model.thumbnail_pic)
-                }
-                BusyIndicator {
-                    running: imageweibo.status != Image.Ready
-                    size: BusyIndicatorSize.Large
-                    anchors.centerIn: parent
-                }
-                PinchArea {
+                sourceComponent: isGifImage(model.thumbnail_pic) ? animatedImageComponent : imageComponent
+            }
+
+            Component {
+                id:animatedImageComponent
+                AnimatedImage {
+                    id:animatedImageWeibo
                     anchors.fill: parent
-                    pinch.target: parent
-                    pinch.minimumScale: 1
-                    pinch.maximumScale: 4
+                    fillMode: Image.PreserveAspectFit
+                    //asynchronous for LOCAL filesystem, http are always loaded asynchonously.
+                    //anyway, we set this
+                    asynchronous: true
+                    
+                    source: {
+                        toLarge(model.thumbnail_pic)
+                    }
+                    BusyIndicator {
+                        running: animatedImageWeibo.status != AnimatedImage.Ready
+                        size: BusyIndicatorSize.Large
+                        anchors.centerIn: parent
+                    }
+                }
+            }
+
+            Component {
+                id:imageComponent
+                Image {
+                    id: imageweibo
+                    anchors.fill: parent
+                    
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize.height: window.height * 8
+                    sourceSize.width: window.height * 2
+                    //asynchronous for LOCAL filesystem, http are always loaded asynchonously.
+                    //anyway, we set this
+                    asynchronous: true
+                    
+                    source: {
+                        toLarge(model.thumbnail_pic)
+                    }
+                    BusyIndicator {
+                        running: imageweibo.status != Image.Ready
+                        size: BusyIndicatorSize.Large
+                        anchors.centerIn: parent
+                    }
+                    PinchArea {
+                        anchors.fill: parent
+                        pinch.target: parent
+                        pinch.minimumScale: 1
+                        pinch.maximumScale: 4
+                    }
                 }
             }
         }

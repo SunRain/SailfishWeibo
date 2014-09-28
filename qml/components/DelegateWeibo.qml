@@ -169,6 +169,8 @@ Item {
                         height: modelImages.count == 1 ? implicitHeight : width
                         source: model.thumbnail_pic
                         
+                        //onStatusChanged: playing = (status == AnimatedImage.Ready)
+                        
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
