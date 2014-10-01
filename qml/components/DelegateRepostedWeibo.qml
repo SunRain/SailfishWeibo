@@ -129,17 +129,22 @@ import Sailfish.Silica 1.0
                 model: ListModel { id: modelImages }
                 delegate: Component {
                     Image{
+                        id:image
                         fillMode: Image.PreserveAspectCrop;
                         width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - Theme.paddingSmall;//units.gu(3) ;
                         height: modelImages.count == 1 ? implicitHeight : width
-                        source: model.thumbnail_pic
+                        source: util.parseImageUrl(model.thumbnail_pic)
 
-                        //onStatusChanged: playing = (status == AnimatedImage.Ready)
-                        
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 toGalleryPage(modelImages, index)
+                            }
+                        }
+                        
+                        onStatusChanged: {
+                            if(image.status == Image.Ready) {
+                                util.saveRemoteImage(model.thumbnail_pic);
                             }
                         }
                     }

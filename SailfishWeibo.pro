@@ -16,7 +16,9 @@ CONFIG += sailfishapp
 
 SOURCES += src/SailfishWeibo.cpp \
     src/networkhelper.cpp \
-    src/mytype.cpp
+    src/mytype.cpp \
+    src/MyNetworkAccessManagerFactory.cpp \
+    src/Util.cpp
 
 OTHER_FILES += qml/SailfishWeibo.qml \
     qml/cover/CoverPage.qml \
@@ -84,5 +86,7 @@ TRANSLATIONS += translations/SailfishWeibo-de.ts \
 HEADERS += \
     src/networkhelper.h \
     src/mytype.h \
-    src/app.h
+    src/app.h \
+    src/MyNetworkAccessManagerFactory.h \
+    src/Util.h
 

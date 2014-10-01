@@ -37,6 +37,8 @@
 
 #include "mytype.h"
 #include "networkhelper.h"
+#include "MyNetworkAccessManagerFactory.h"
+#include "Util.h"
 
 
 int main(int argc, char *argv[])
@@ -53,6 +55,23 @@ int main(int argc, char *argv[])
     qmlRegisterType<MyType>("com.sunrain.sinaweibo", 1, 0, "MyType");
     qmlRegisterType<NetworkHelper>("com.sunrain.sinaweibo", 1, 0, "NetworkHelper");
     
-    return SailfishApp::main(argc, argv);
+    //return SailfishApp::main(argc, argv);
+    QScopedPointer<QGuiApplication> app (SailfishApp::application(argc, argv));
+    app.data()->setOrganizationName("SunRain");
+    app.data()->setApplicationName("SailfishWeibo");
+    
+    QScopedPointer<QQuickView> view (SailfishApp::createView());
+    
+    MyNetworkAccessManagerFactory factory;
+    view->engine()->setNetworkAccessManagerFactory(&factory);
+    
+    Util *util = Util::getInstance();
+    util->setEngine(view->engine());
+    view->rootContext()->setContextProperty("util", util);
+    
+    view->setSource(SailfishApp::pathTo("qml/SailfishWeibo.qml"));
+    view->show();
+    
+    return app->exec();
 }
 
