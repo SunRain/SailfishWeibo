@@ -147,8 +147,9 @@ Item {
             id: labelWeibo
             width: parent.width
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            color: Theme.primaryColor 
-            text: GetURL.replaceReg(model.text, Theme.highlightColor)
+            //color: Theme.primaryColor 
+            textFormat: Text.StyledText
+            text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)//GetURL.replaceReg(model.text, Theme.highlightColor)
             font.pixelSize: Theme.fontSizeMedium
             onLinkActivated: {
                 Qt.openUrlExternally(link)

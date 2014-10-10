@@ -11,7 +11,7 @@ class Util : public QObject
     Q_OBJECT
 public:
     static Util *getInstance();
-    ~Util();
+    virtual ~Util();
     
     void setEngine(QQmlEngine* engine);
     
@@ -20,6 +20,11 @@ public:
     Q_INVOKABLE QVariant getValue(const QString &key, const QVariant defaultValue = QVariant());
     Q_INVOKABLE bool saveToCache(const QString &remoteUrl, const QString &dirName, const QString &fileName);
     
+    //解析微博内容，替换表情/链接等
+    Q_INVOKABLE QString parseWeiboContent(const QString &weiboContent,
+                                          const QString &contentColor, 
+                                          const QString &userColor,
+                                          const QString &linkColor);
     ///解析图片链接，返回本地缓存/远程链接
     Q_INVOKABLE QString parseImageUrl(const QString &remoteUrl);
     Q_INVOKABLE void saveRemoteImage(const QString &remoteUrl);
@@ -30,6 +35,7 @@ public slots:
 private:
     explicit Util(QObject *parent = 0);
     bool cacheImageFiles(const QString &remoteUrl);
+    QString parseEmoticons(const QString &pattern,const QString &emoticonStr);
 private:
     QPointer<QSettings> m_Settings;
     QPointer<QQmlEngine> m_Engine;

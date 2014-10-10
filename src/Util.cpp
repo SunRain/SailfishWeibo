@@ -1,8 +1,12 @@
 
 #include <QSettings>
 #include <QGuiApplication>
+#include <QRegExp>
+
+#include <sailfishapp.h>
 
 #include "MyNetworkAccessManagerFactory.h"
+#include "Emoticons.h"
 #include "Util.h"
 
 Util *Util::getInstance()
@@ -68,6 +72,63 @@ bool Util::saveToCache(const QString &remoteUrl, const QString &dirName, const Q
     return false;
 }
 
+QString Util::parseWeiboContent(const QString &weiboContent, const QString &contentColor, const QString &userColor, const QString &linkColor)
+{
+    QString tmp = weiboContent;
+
+    //注意这几行代码的顺序不能乱，否则会造成多次替换
+    tmp.replace("&","&amp;");     
+    tmp.replace(">","&gt;");
+    tmp.replace("<","&lt;");
+    tmp.replace("\"","&quot;");
+    tmp.replace("\'","&#39;");
+    tmp.replace(" ","&nbsp;");
+    tmp.replace("\n","<br>");
+    tmp.replace("\r","<br>");
+
+    //'<font color="' +aa +'">aa + </font> <img src="' + '../emoticons/cool_org.png"' + '> <b>Hello</b> <i>World! ddddddddddddddddddddddddddd</i>'
+    //设置主要字体
+    QString content = QString("<font color=\"%1\">%2</font>").arg(contentColor).arg(tmp);
+
+    //替换网页链接
+    tmp = QString();
+    int pos = -1;
+    QString reText;
+
+    QRegExp urlRE("http://[\\w+&@#/%?=~_\\\\-|!:,\\\\.;]*[\\w+&@#/%=~_|]");
+                  //("http://[a-zA-Z0-9+&@#/%?=~_\\-|!:,\\.;]*[a-zA-Z0-9+&@#/%=~_|]");
+                 //("http://([\\w-]+\\.)+[\\w-]+(/[A-Za-z0-9]*)");
+    while((pos = urlRE.indexIn(content, pos+1)) != -1) {
+        tmp = urlRE.cap(0);
+        reText = QString("<a href=\"%1\"><font color=\"%2\">%3</font></a>").arg(tmp).arg(linkColor).arg(tmp);
+                // "<a href=\"" +urlRE.cap(0) +"\">"+urlRE.cap(0)+"</a>";
+        content.replace(pos, tmp.length(), reText);
+        pos += reText.length();
+    }
+
+    //替换@用户
+    pos = -1;
+    reText = QString();
+    tmp = QString();
+    
+    //"@[\\w\\p{InCJKUnifiedIdeographs}-]{1,26}"
+    QRegExp atRE("@[\\w\\p{InCJKUnifiedIdeographs}-]{1,26}");
+
+    while((pos = atRE.indexIn(content, pos+1)) != -1) {
+        tmp = atRE.cap(0).replace("@", "@:");
+        reText = QString("<a href=\"%1\"><font color=\"%2\">%3</font></a>").arg(tmp).arg(userColor).arg(atRE.cap(0));
+                //"<a href=\"" +atRE.cap(0) +"\">"+atRE.cap(0)+"</a>";
+        content.replace(pos, atRE.cap(0).length(), reText);
+        pos += reText.length();
+    }
+
+    //替换表情符号
+    content = parseEmoticons("\\[(\\S{1,2})\\]", content);
+    content = parseEmoticons("\\[(\\S{3,4})\\]", content);
+
+    return content;
+}
+
 QString Util::parseImageUrl(const QString &remoteUrl)
 {
     QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
@@ -76,10 +137,8 @@ QString Util::parseImageUrl(const QString &remoteUrl)
     QString filePath = QString("%1%2%3").arg(cachePath).arg(QDir::separator()).arg(fileName);
     QFile file(filePath);
     if (file.exists()) {
-        qDebug()<<"url [" + remoteUrl + "] from local : " +filePath;
         return filePath;
     }
-    qDebug()<<"url [" + remoteUrl + "] from remote";
     return remoteUrl;
     
 }
@@ -101,4 +160,34 @@ Util::Util(QObject *parent) :
     QObject(parent)
 {
     m_Settings = new QSettings(qApp->organizationName(), qApp->applicationName());
+}
+
+QString Util::parseEmoticons(const QString &pattern, const QString &str)
+{
+    QString tmp = str;
+
+    int  pos = 0;
+    QString reText;
+    QString emoticons;
+    
+    QRegExp emoticonRE(pattern);
+    while((pos = emoticonRE.indexIn(tmp, pos)) != -1) {
+        //'<img src="'+path+'.png">
+        //reText = "<a href=\"" +emoticonRE.cap(0) +"\">"+emoticonRE.cap(0)+"</a>";
+        emoticons = emoticonRE.cap(0);
+        emoticons = Emoticons::getInstance()->getEmoticonName(emoticons);
+        emoticons = SailfishApp::pathTo(QString("qml/emoticons/%1").arg(emoticons)).toString();
+        ///FIXME 似乎以file:///path 形式的路径在qml里面显示有问题，所以去掉file：///，直接使用绝对路径
+        emoticons = emoticons.replace("file:///", "/");   
+        QFile f(emoticons);
+        if (f.exists()) {
+            reText = QString("<img src=\"%1\"").arg(emoticons);
+            tmp.replace(pos, emoticonRE.cap(0).length(), reText);
+        } else {
+            reText = emoticonRE.cap(0);
+        }
+        pos += reText.length();
+    }
+     
+    return tmp;
 }

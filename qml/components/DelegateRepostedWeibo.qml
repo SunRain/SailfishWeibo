@@ -111,9 +111,10 @@ import Sailfish.Silica 1.0
             id: labelWeibo
             width: parent.width
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            color: Theme.primaryColor
+            //color: Theme.primaryColor
             font.pixelSize: Theme.fontSizeSmall
-            text: isInvalid ? "" : GetURL.replaceReg(retweetWeibo.text, Theme.highlightColor)
+            textFormat: Text.StyledText
+            text: isInvalid ? "" : util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)//GetURL.replaceReg(retweetWeibo.text, Theme.highlightColor)
 
             onLinkActivated: {
                 Qt.openUrlExternally(link)
