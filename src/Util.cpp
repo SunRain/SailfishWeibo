@@ -125,7 +125,6 @@ QString Util::parseWeiboContent(const QString &weiboContent, const QString &cont
     //替换表情符号
     content = parseEmoticons("\\[(\\S{1,2})\\]", content);
     content = parseEmoticons("\\[(\\S{3,4})\\]", content);
-
     return content;
 }
 
@@ -172,20 +171,18 @@ QString Util::parseEmoticons(const QString &pattern, const QString &str)
     
     QRegExp emoticonRE(pattern);
     while((pos = emoticonRE.indexIn(tmp, pos)) != -1) {
-        //'<img src="'+path+'.png">
-        //reText = "<a href=\"" +emoticonRE.cap(0) +"\">"+emoticonRE.cap(0)+"</a>";
         emoticons = emoticonRE.cap(0);
         emoticons = Emoticons::getInstance()->getEmoticonName(emoticons);
+        if (emoticons.isEmpty()) {
+            //qDebug()<<" ====== skip empty file "<<emoticonRE.cap(0);
+            pos += emoticonRE.cap(0).length();
+            continue;
+        }
         emoticons = SailfishApp::pathTo(QString("qml/emoticons/%1").arg(emoticons)).toString();
         ///FIXME 似乎以file:///path 形式的路径在qml里面显示有问题，所以去掉file：///，直接使用绝对路径
         emoticons = emoticons.replace("file:///", "/");   
-        QFile f(emoticons);
-        if (f.exists()) {
-            reText = QString("<img src=\"%1\"").arg(emoticons);
-            tmp.replace(pos, emoticonRE.cap(0).length(), reText);
-        } else {
-            reText = emoticonRE.cap(0);
-        }
+        reText = QString("<img src=\"%1\">").arg(emoticons);
+        tmp.replace(pos, emoticonRE.cap(0).length(), reText);
         pos += reText.length();
     }
      

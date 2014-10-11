@@ -199,7 +199,8 @@ OTHER_FILES += qml/SailfishWeibo.qml \
     qml/emoticons/bs_org.png \
     qml/emoticons/bs2_org.png \
     qml/emoticons/bba_org.png \
-    qml/emoticons/angrya_org.png
+    qml/emoticons/angrya_org.png \
+    qml/emoticons/emoticons.dat
     
 # to disable building translations every time, comment out the
 # following CONFIG line
