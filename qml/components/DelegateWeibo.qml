@@ -149,7 +149,7 @@ Item {
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             //color: Theme.primaryColor 
             textFormat: Text.StyledText
-            text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)//GetURL.replaceReg(model.text, Theme.highlightColor)
+            text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
             font.pixelSize: Theme.fontSizeMedium
             onLinkActivated: {
                 Qt.openUrlExternally(link)
@@ -245,7 +245,7 @@ Item {
                     color: Theme.highlightColor//"grey"
                 }
                 Item {
-                    width: columnWContent.width / 3 - 0.5//units.gu(0.5);  
+                    width: columnWContent.width / 3 - Theme.paddingSmall //units.gu(0.5);  
                     height: Theme.fontSizeSmall
                     
                     Label {
@@ -269,7 +269,7 @@ Item {
                     color: Theme.highlightColor//"grey"
                 }
                 Item {
-                    width: columnWContent.width / 3 - 0.5//units.gu(0.5);  
+                    width: columnWContent.width / 3 - Theme.paddingSmall //units.gu(0.5);  
                     height: Theme.fontSizeSmall
                     
                     Label {

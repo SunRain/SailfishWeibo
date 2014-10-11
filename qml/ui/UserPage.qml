@@ -250,46 +250,42 @@ Page {
             }
 
             // friends
-            Item {
+            Column {
                 anchors { 
                     left: parent.left
                     right: parent.right
                 } 
-                height: rowFriends.height + Theme.paddingMedium
 
+                spacing: Theme.paddingSmall
+                
                 Row {
                     id: rowFriends
-                    anchors { 
-                        left: parent.left
-                        right: parent.right
-                        margins:  Theme.paddingSmall
-                    }
-                   spacing: Theme.paddingSmall
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     Item {
-                        width: parent.width / 4 - Theme.paddingSmall
-                        height: Theme.fontSizeSmall + Theme.paddingSmall
+                        width: innerAreaColumn.width/3 - Theme.paddingSmall
+                        height: Theme.fontSizeSmall
 
                         Label {
                             anchors.centerIn: parent
                             color: Theme.secondaryColor
-                            font.pixelSize: Theme.fontSizeExtraSmall
+                            font.pixelSize: Theme.fontSizeTiny 
                             text: qsTr("Weibo: ") + userInfo.statuses_count
                         }
                     }
                     Rectangle {
-                        width: 2
-                        height: parent.height - Theme.paddingSmall
+                        width: 1
+                        height: Theme.fontSizeSmall -2
                         color: Theme.highlightColor
                     }
                     Item {
-                        width: parent.width / 4 - Theme.paddingSmall
-                        height: Theme.fontSizeSmall + Theme.paddingSmall
+                        width: innerAreaColumn.width/3 - Theme.paddingSmall
+                        height: Theme.fontSizeSmall
 
                         Label {
                             anchors.centerIn: parent
                             color: Theme.secondaryColor
-                            font.pixelSize: Theme.fontSizeExtraSmall
+                            font.pixelSize:Theme.fontSizeTiny
                             text: qsTr("following: ") + userInfo.friends_count
                         }
                         //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
@@ -301,18 +297,18 @@ Page {
                         }
                     }
                     Rectangle {
-                        width: 2//units.gu(0.1)
-                        height: parent.height - Theme.paddingSmall
+                        width: 1//units.gu(0.1)
+                        height: Theme.fontSizeSmall - 2
                         color: Theme.highlightColor
                     }
                     Item {
-                        width: parent.width / 4 - Theme.paddingSmall
-                        height: Theme.fontSizeSmall + Theme.paddingSmall
+                        width: innerAreaColumn.width/3 - Theme.paddingSmall
+                        height: Theme.fontSizeSmall
 
                         Label {
                             anchors.centerIn: parent
                             color: Theme.secondaryColor
-                            font.pixelSize: Theme.fontSizeExtraSmall
+                            font.pixelSize: Theme.fontSizeTiny
                             text: qsTr("follower: ") + userInfo.followers_count
                         }
                         //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
@@ -324,6 +320,11 @@ Page {
                         }
                     }
 
+                }
+                
+                Separator {
+                    width: parent.width
+                    color: Theme.highlightColor
                 }
             }
 
@@ -375,29 +376,41 @@ Page {
                         rightMargin: Theme.paddingMedium
                     }
                     spacing: Theme.paddingSmall
-                    Column {
-                        id: colUser
-                        anchors { 
-                            left: parent.left
-                            right: parent.right
-                        }
-                        spacing: Theme.paddingSmall
 
-                        Label {
-                            id: labelWeiboUserName
-                            color: Theme.highlightColor
-                            font.pixelSize: Theme.fontSizeSmall
-                            text: userInfo.screen_name
-                        }
+                    Label {
+                        color: Theme.highlightColor
+                        font.pixelSize: Theme.fontSizeMedium
+                        text: userInfo.screen_name + qsTr("'s RecentWeibo")
                     }
+                    
+                    Separator {
+                        width: parent.width
+                        color: Theme.highlightColor
+                    }
+                    
+//                    Column {
+//                        id: colUser
+//                        anchors { 
+//                            left: parent.left
+//                            right: parent.right
+//                        }
+//                        spacing: Theme.paddingSmall
+
+//                        Label {
+//                            id: labelWeiboUserName
+//                            color: Theme.highlightColor
+//                            font.pixelSize: Theme.fontSizeSmall
+//                            text: userInfo.screen_name
+//                        }
+//                    }
 
                     Label {
                         id: labelWeibo
                         width: parent.width
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        color: Theme.secondaryColor
+                        textFormat: Text.StyledText
                         font.pixelSize: Theme.fontSizeSmall
-                        text: usWeiboContent.status.text
+                        text: util.parseWeiboContent(usWeiboContent.status.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
                     }
 
                     Grid {
@@ -445,24 +458,23 @@ Page {
 //                    }
 
                     Column {
-                        width: parent.width
+                        anchors { 
+                            left: parent.left
+                            right: parent.right
+                        } 
+                        spacing: Theme.paddingSmall
+                        
                         Row {
-                            anchors{
-                                left: parent.left
-                                right: parent.right
-                                margins:  Theme.paddingSmall
-                            }
-                            
-                            spacing: Theme.paddingSmall
+                            anchors.horizontalCenter: parent.horizontalCenter
 
                             Item {
-                                width: parent.width / 4 - Theme.paddingSmall
-                                height: Theme.fontSizeSmall + Theme.paddingSmall
+                                width: innerAreaColumn.width/3 - Theme.paddingSmall
+                                height: Theme.fontSizeSmall
 
                                 Label {
                                     anchors.centerIn: parent
                                     color: Theme.secondaryColor
-                                    font.pixelSize: Theme.fontSizeExtraSmall
+                                    font.pixelSize: Theme.fontSizeTiny 
                                     text: qsTr("repost: ") + usWeiboContent.status.reposts_count
                                 }
 
@@ -474,18 +486,18 @@ Page {
 //                                }
                             }
                             Rectangle {
-                                width: 2
-                                height: parent.height - Theme.paddingSmall
+                                width: 1
+                                height: Theme.fontSizeSmall -2
                                 color: Theme.highlightColor
                             }
                             Item {
-                                width: parent.width / 4 - Theme.paddingSmall
-                                height: Theme.fontSizeSmall + Theme.paddingSmall
+                                width: innerAreaColumn.width/3 - Theme.paddingSmall
+                                height: Theme.fontSizeSmall
 
                                 Label {
                                     anchors.centerIn: parent
                                     color: Theme.secondaryColor
-                                    font.pixelSize: Theme.fontSizeExtraSmall
+                                    font.pixelSize: Theme.fontSizeTiny
                                     text: qsTr("comment: ") + usWeiboContent.status.comments_count
                                 }
 
@@ -497,18 +509,18 @@ Page {
 //                                }
                             }
                             Rectangle {
-                                width: 2
-                                height: parent.height - Theme.paddingSmall
+                                width: 1
+                                height: parent.height - 2
                                 color: Theme.highlightColor
                             }
                             Item {
-                                width: parent.width / 4 - Theme.paddingSmall
-                                height: Theme.fontSizeSmall + Theme.paddingSmall
+                                width: innerAreaColumn.width/3 - Theme.paddingSmall
+                                height: Theme.fontSizeSmall
 
                                 Label {
                                     anchors.centerIn: parent
                                     color: Theme.secondaryColor
-                                    font.pixelSize: Theme.fontSizeExtraSmall
+                                    font.pixelSize: Theme.fontSizeTiny
                                     text: qsTr("like: ") + usWeiboContent.status.attitudes_count
                                 }
                             }

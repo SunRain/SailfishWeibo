@@ -467,32 +467,37 @@
         <translation>基本信息</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="277"/>
+        <location filename="../qml/ui/UserPage.qml" line="273"/>
         <source>Weibo: </source>
         <translation>微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="293"/>
+        <location filename="../qml/ui/UserPage.qml" line="289"/>
         <source>following: </source>
         <translation>Ta关注的用户</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="316"/>
+        <location filename="../qml/ui/UserPage.qml" line="312"/>
         <source>follower: </source>
         <translation>关注Ta的</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="466"/>
+        <location filename="../qml/ui/UserPage.qml" line="383"/>
+        <source>&apos;s RecentWeibo</source>
+        <translation>的最新微博</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserPage.qml" line="478"/>
         <source>repost: </source>
         <translation>转发：</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="489"/>
+        <location filename="../qml/ui/UserPage.qml" line="501"/>
         <source>comment: </source>
         <translation>回复：</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="512"/>
+        <location filename="../qml/ui/UserPage.qml" line="524"/>
         <source>like: </source>
         <translation>顶：</translation>
     </message>

@@ -409,6 +409,10 @@
         <source>About user</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&apos;s RecentWeibo</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserWeibo</name>
