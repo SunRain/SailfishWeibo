@@ -341,9 +341,10 @@ Page {
                                 id: labelWeibo
                                 width: parent.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                                color: Theme.primaryColor
+                                //color: Theme.primaryColor
+                                textFormat: Text.StyledText
                                 font.pixelSize: Theme.fontSizeExtraSmall
-                                text: model.text
+                                text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
                             }
                         }
 

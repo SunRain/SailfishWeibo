@@ -526,7 +526,7 @@
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="354"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="355"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
