@@ -165,19 +165,16 @@
         <translation>写微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="178"/>
         <source>Login</source>
-        <translation>登入</translation>
+        <translation type="obsolete">登入</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="171"/>
         <source>pull down menu to start oauth login</source>
-        <translation>在下拉菜单中选择登入开始微博之旅</translation>
+        <translation type="obsolete">在下拉菜单中选择登入开始微博之旅</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="174"/>
         <source>Reload</source>
-        <translation>刷新</translation>
+        <translation type="obsolete">刷新</translation>
     </message>
     <message>
         <location filename="../qml/pages/FirstPage.qml" line="188"/>
@@ -209,9 +206,23 @@
 <context>
     <name>LoginComponent</name>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="53"/>
         <source>click the enter key if the webview login icon not work</source>
-        <translation>如果页面的登入按钮点击无效，请尝试点击软键盘的回车键来登入</translation>
+        <translation type="obsolete">如果页面的登入按钮点击无效，请尝试点击软键盘的回车键来登入</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/LoginComponent.qml" line="141"/>
+        <source>UserName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/LoginComponent.qml" line="149"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/LoginComponent.qml" line="153"/>
+        <source>Logiin</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

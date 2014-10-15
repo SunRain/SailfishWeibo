@@ -40,6 +40,7 @@
 #include "MyNetworkAccessManagerFactory.h"
 #include "Util.h"
 
+#include "include/QSinaWeibo.h"
 
 int main(int argc, char *argv[])
 {
@@ -68,6 +69,9 @@ int main(int argc, char *argv[])
     Util *util = Util::getInstance();
     util->setEngine(view->engine());
     view->rootContext()->setContextProperty("util", util);
+    
+    QSinaWeiboAPI::QSinaWeibo api;
+    view->rootContext()->setContextProperty("api", &api);
     
     view->setSource(SailfishApp::pathTo("qml/SailfishWeibo.qml"));
     view->show();

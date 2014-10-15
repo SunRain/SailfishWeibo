@@ -168,19 +168,19 @@ Page {
         LoginComponent {
             id:loginView
             anchors.fill: parent
-            placeholderText: qsTr("pull down menu to start oauth login")
-            menus {
-                MenuItem {
-                    text: qsTr("Reload")
-                    onClicked: loginView.refreshLoginView();
-                }
-                MenuItem {
-                    text: qsTr("Login")
-                    onClicked: {
-                        loginView.loadLoginView();
-                    }
-                }
-            }
+//            placeholderText: qsTr("pull down menu to start oauth login")
+//            menus {
+//                MenuItem {
+//                    text: qsTr("Reload")
+//                    onClicked: loginView.refreshLoginView();
+//                }
+//                MenuItem {
+//                    text: qsTr("Login")
+//                    onClicked: {
+//                        loginView.loadLoginView();
+//                    }
+//                }
+//            }
             onLoginSucceed: {
                  getAccessCode(code);
             }

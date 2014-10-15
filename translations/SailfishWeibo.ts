@@ -137,23 +137,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Login</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pull down menu to start oauth login</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Web content load error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Check network connectivity and pull down to reload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -178,7 +166,15 @@
 <context>
     <name>LoginComponent</name>
     <message>
-        <source>click the enter key if the webview login icon not work</source>
+        <source>UserName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logiin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
