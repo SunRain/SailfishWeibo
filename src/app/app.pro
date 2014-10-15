@@ -20,9 +20,9 @@ HEADERS += \
     Emoticons.h
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QSinaWeiboApi/weiboAPI/ -lSailfishWeibo
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../QSinaWeiboApi/weiboAPI/ -lSailfishWeibod
-else:unix: LIBS += -L$$OUT_PWD/../QSinaWeiboApi/weiboAPI/ -lSailfishWeibo
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QSinaWeiboApi/weiboAPI/ -lQSinaWeiboAPI
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../QSinaWeiboApi/weiboAPI/ -lQSinaWeiboAPId
+else:unix: LIBS += -L$$OUT_PWD/../QSinaWeiboApi/weiboAPI/ -lQSinaWeiboAPI
 
 INCLUDEPATH += $$PWD/../QSinaWeiboApi/weiboAPI
 DEPENDPATH += $$PWD/../QSinaWeiboApi/weiboAPI

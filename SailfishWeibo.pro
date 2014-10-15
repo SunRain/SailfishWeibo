@@ -13,20 +13,25 @@
 TEMPLATE = subdirs
 SUBDIRS += src
 
+CONFIG += sailfishapp
+
 OTHER_FILES += qml/SailfishWeibo.qml \
     qml/cover/*.qml \
     qml/pages/*.qml \
     qml/components/*.qml \
-    qml/graphics/*.png \
+    qml/graphics/* \
     qml/js/*.js \
     qml/js/*.qml \
     qml/ui/*.qml \
+    qml/graphics/* \
     qml/emoticons/* \
     rpm/SailfishWeibo.changes.in \
     rpm/SailfishWeibo.spec \
     rpm/SailfishWeibo.yaml \
     translations/*.ts \
-    SailfishWeibo.desktop
+    SailfishWeibo.desktop \
+    translations/*
+
     
 # to disable building translations every time, comment out the
 # following CONFIG line

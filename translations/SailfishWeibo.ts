@@ -198,6 +198,13 @@
     </message>
 </context>
 <context>
+    <name>MainWindow</name>
+    <message>
+        <source>MainWindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MessageTab</name>
     <message>
         <source>You have no new message</source>
@@ -205,6 +212,24 @@
     </message>
     <message>
         <source>Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>Qt wrapper for sina weibo api.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distributed under the terms of LGPLv2.1 or later.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shanghai University, Shanghai, China
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

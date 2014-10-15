@@ -1,4 +1,4 @@
 TEMPLATE = subdirs
-QSinaWeiboApi.file = QSinaWeiboApi/weiboAPI/weiboAPI.pro
+QSinaWeiboApi.file = QSinaWeiboApi/weiboAPI/SailfishWeiboAPI.pro
 app.depends = QSinaWeiboApi
 SUBDIRS += QSinaWeiboApi app
