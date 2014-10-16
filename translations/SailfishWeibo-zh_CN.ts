@@ -177,14 +177,12 @@
         <translation type="obsolete">刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="188"/>
         <source>Web content load error: </source>
-        <translation>载入错误：</translation>
+        <translation type="obsolete">载入错误：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="189"/>
         <source>Check network connectivity and pull down to reload</source>
-        <translation>查看网络链接或者刷新登入界面</translation>
+        <translation type="obsolete">查看网络链接或者刷新登入界面</translation>
     </message>
 </context>
 <context>
@@ -210,17 +208,28 @@
         <translation type="obsolete">如果页面的登入按钮点击无效，请尝试点击软键盘的回车键来登入</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="117"/>
+        <location filename="../qml/components/LoginComponent.qml" line="55"/>
         <source>UserName</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="125"/>
+        <location filename="../qml/components/LoginComponent.qml" line="63"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="129"/>
+        <location filename="../qml/components/LoginComponent.qml" line="108"/>
+        <source>Login fail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/LoginComponent.qml" line="108"/>
+        <source>Please try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/LoginComponent.qml" line="30"/>
+        <location filename="../qml/components/LoginComponent.qml" line="69"/>
         <source>Login</source>
         <translation type="unfinished">登入</translation>
     </message>

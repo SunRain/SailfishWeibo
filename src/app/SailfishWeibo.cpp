@@ -41,6 +41,7 @@
 #include "Util.h"
 
 #include "include/QSinaWeibo.h"
+#include "include/QWeiboMethod.h"
 
 int main(int argc, char *argv[])
 {
@@ -72,6 +73,9 @@ int main(int argc, char *argv[])
     
     QSinaWeiboAPI::QSinaWeibo api;
     view->rootContext()->setContextProperty("api", &api);
+    
+    QSinaWeiboAPI::QWeiboMethod weiboMethod;
+    view->rootContext()->setContextProperty("weibomethod", &weiboMethod);
     
     view->setSource(SailfishApp::pathTo("qml/SailfishWeibo.qml"));
     view->show();

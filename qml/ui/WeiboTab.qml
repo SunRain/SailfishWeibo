@@ -33,7 +33,12 @@ Item {
 //        }
         pageNum = 1
         isRefresh = true
-        homeStatus(Settings.getAccess_token(), pageNum)
+        //homeStatus(Settings.getAccess_token(), pageNum)
+        var method = weibomethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
+        
+        console.log(" for method "+ method);
+        
+        api.setWeiboAction(method, {'page':pageNum});
     }
 
     function addMore() {

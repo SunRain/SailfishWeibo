@@ -182,12 +182,14 @@ Page {
 //                }
 //            }
             onLoginSucceed: {
-                 getAccessCode(code);
+                // getAccessCode(code);
+                loader.sourceComponent = loader.Null;
+                loader.sourceComponent = mainComponent;
             }
-            onLoginFailed: {
-                loginView.placeholderText = qsTr("Web content load error: ") + code;
-                loginView.placeholderHintText = qsTr("Check network connectivity and pull down to reload");
-            }
+//            onLoginFailed: {
+//                loginView.placeholderText = qsTr("Web content load error: ") + code;
+//                loginView.placeholderHintText = qsTr("Check network connectivity and pull down to reload");
+//            }
         }
     }
     

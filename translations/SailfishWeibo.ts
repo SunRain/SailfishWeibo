@@ -137,14 +137,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Web content load error: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Check network connectivity and pull down to reload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -175,6 +167,14 @@
     </message>
     <message>
         <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login fail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
