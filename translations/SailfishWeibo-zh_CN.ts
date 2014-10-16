@@ -210,19 +210,19 @@
         <translation type="obsolete">如果页面的登入按钮点击无效，请尝试点击软键盘的回车键来登入</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="141"/>
+        <location filename="../qml/components/LoginComponent.qml" line="117"/>
         <source>UserName</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="149"/>
+        <location filename="../qml/components/LoginComponent.qml" line="125"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="153"/>
-        <source>Logiin</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qml/components/LoginComponent.qml" line="129"/>
+        <source>Login</source>
+        <translation type="unfinished">登入</translation>
     </message>
 </context>
 <context>

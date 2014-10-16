@@ -95,34 +95,52 @@ Item {
 //    }
     
         
-    Item {
-        anchors {
-            left: loginComponent.left
-            leftMargin: (loginComponent.width - column.width)/2
-            top:loginComponent.top
-            topMargin: (loginComponent.height - column.height)/2
-        }
+//    Item {
+//        anchors {
+//            left: loginComponent.left
+//            leftMargin: (loginComponent.width - column.width)/2
+//            top:loginComponent.top
+//            topMargin: (loginComponent.height - column.height)/2
+//        }
         Column {
             id:column
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+
             spacing: Theme.paddingMedium
-            TextArea {
+            TextField {
                 id:userName
                 width:loginComponent.width - Theme.paddingLarge*4
                 height:implicitHeight
+                font.pixelSize: Theme.fontSizeMedium 
                 placeholderText: "Enter Username"
                 label: qsTr("UserName")
             }
-            TextArea {
+            TextField {
                 id:password
                 width:loginComponent.width - Theme.paddingLarge*4
                 height:implicitHeight
+                font.pixelSize: Theme.fontSizeMedium 
                 placeholderText: "Enter Password"
                 label: qsTr("Password")
             }
             Button {
-                text: qsTr("Logiin")
-                onClicked: console.log("clicked!")
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Login")
+                onClicked: {
+                    api.username = userName.text;
+                    api.password = password.text;
+                    api.login();
+                }
             }
         }
-    }
+        
+        Connections {
+            target: api
+            onLoginSucceed: {
+                console.log("== login succeed "+accessToken + " " + uid);
+            }
+        }
+
+//    }
 }

@@ -174,7 +174,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logiin</source>
+        <source>Login</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
