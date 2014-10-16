@@ -1,4 +1,4 @@
 [submodule "src/QSinaWeiboApi"]
 	path = src/QSinaWeiboApi
-	url = git@github.com:SunRain/QSinaWeiboApi.git
+	url = https://github.com/SunRain/QSinaWeiboApi.git
 	
