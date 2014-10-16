@@ -12,3 +12,6 @@ TODO:
 第三方客户端似乎无法查看除自身以外的其他用户的follower/following数据
 
 Emoji显示问题（似乎由Sailfish OS本身的问题所引起，暂时等待上游更新）
+
+下载依赖库
+git submodule update --init --recursive
