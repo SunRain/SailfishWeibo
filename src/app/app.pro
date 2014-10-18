@@ -14,8 +14,7 @@ SOURCES += SailfishWeibo.cpp \
     ../QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp \
     ../QSinaWeiboApi/weiboAPI/QWeiboMethod.cpp \
     ../QSinaWeiboApi/weiboAPI/QWeiboPut.cpp \
-    ../QSinaWeiboApi/weiboAPI/QWeiboRequest.cpp \
-    ../QSinaWeiboApi/weiboAPI/QWeiboRequestApiList.cpp
+    ../QSinaWeiboApi/weiboAPI/QWeiboRequest.cpp
 
 HEADERS += \
     networkhelper.h \
