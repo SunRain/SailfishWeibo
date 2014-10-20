@@ -47,7 +47,8 @@ Item {
 
     function addMore() {
         pageNum++
-        homeStatus(Settings.getAccess_token(), pageNum)
+        //homeStatus(Settings.getAccess_token(), pageNum)
+        api.setWeiboAction(method, {'page':pageNum});
     }
 
     function gotoSendNewWeibo() {
@@ -89,6 +90,18 @@ Item {
     
     ListModel {
         id: modelWeibo
+    }
+
+    Connections {
+        target: api
+        //weiboPutSucceed(const QString& replyData);
+        onWeiboPutSucceed: {
+            var json = JSON.parse(replyData);
+            for (var i=0; i<json.statuses.length; i++) {
+                modelWeibo.append( json.statuses[i] )
+            }
+            stopBusyIndicator();
+        }
     }
 
     // Tell SilicaFlickable the height of its content.
