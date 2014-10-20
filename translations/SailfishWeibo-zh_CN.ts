@@ -208,28 +208,28 @@
         <translation type="obsolete">如果页面的登入按钮点击无效，请尝试点击软键盘的回车键来登入</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="55"/>
+        <location filename="../qml/components/LoginComponent.qml" line="57"/>
         <source>UserName</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="63"/>
+        <location filename="../qml/components/LoginComponent.qml" line="65"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="108"/>
+        <location filename="../qml/components/LoginComponent.qml" line="112"/>
         <source>Login fail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="108"/>
+        <location filename="../qml/components/LoginComponent.qml" line="112"/>
         <source>Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="30"/>
-        <location filename="../qml/components/LoginComponent.qml" line="69"/>
+        <location filename="../qml/components/LoginComponent.qml" line="32"/>
+        <location filename="../qml/components/LoginComponent.qml" line="71"/>
         <source>Login</source>
         <translation type="unfinished">登入</translation>
     </message>
@@ -570,19 +570,19 @@
 <context>
     <name>WeiboPage</name>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="97"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="29"/>
         <source>Sailfish Weibo</source>
-        <translation></translation>
+        <translation type="unfinished">Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="332"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="275"/>
         <source> From </source>
-        <translation>来自</translation>
+        <translation type="unfinished">来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="355"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="298"/>
         <source>Reply</source>
-        <translation>回复</translation>
+        <translation type="unfinished">回复</translation>
     </message>
 </context>
 </TS>

@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<MyType>("com.sunrain.sinaweibo", 1, 0, "MyType");
     qmlRegisterType<NetworkHelper>("com.sunrain.sinaweibo", 1, 0, "NetworkHelper");
+    qmlRegisterType<QSinaWeiboAPI::QSinaWeibo>("com.sunrain.sinaweibo", 1, 0, "WeiboApi");
     //qmlRegisterType<QSinaWeiboAPI::QWeiboMethod>("com.sunrain.sinaweibo", 1, 0, "WeiboMethod");
     qmlRegisterUncreatableType<QSinaWeiboAPI::QWeiboMethod>("com.sunrain.sinaweibo", 1, 0, "WeiboMethod", "");
     //return SailfishApp::main(argc, argv);
@@ -73,8 +74,8 @@ int main(int argc, char *argv[])
     util->setEngine(view->engine());
     view->rootContext()->setContextProperty("util", util);
     
-    QSinaWeiboAPI::QSinaWeibo api;
-    view->rootContext()->setContextProperty("api", &api);
+//    QSinaWeiboAPI::QSinaWeibo api;
+//    view->rootContext()->setContextProperty("api", &api);
     
 //    QSinaWeiboAPI::QWeiboMethod weiboMethod;
 //    view->rootContext()->setContextProperty("weibomethod", &weiboMethod);

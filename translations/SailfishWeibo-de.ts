@@ -476,15 +476,15 @@
         <translation type="obsolete">Zur Seite 2</translation>
     </message>
     <message>
-        <source>Reply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sailfish Weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source> From </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
