@@ -153,6 +153,10 @@ ApplicationWindow
     MyType {
         id: appData
     }
+    
+    WeiboApi {
+        id:api
+    }
 }
 
 
