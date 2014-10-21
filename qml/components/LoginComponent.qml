@@ -104,7 +104,7 @@ Item {
                 api.uid = uid;
                 Settings.setAccess_token(accessToken);
                 Settings.setUid(uid);
-                loginSucceed();
+                loginComponent.loginSucceed();
             }
             onLoginFail: {
                 busyIndicator.running = false;

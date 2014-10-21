@@ -145,22 +145,22 @@
 <context>
     <name>FirstPage</name>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="126"/>
+        <location filename="../qml/pages/FirstPage.qml" line="83"/>
         <source>Sailfish Weibo</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="130"/>
+        <location filename="../qml/pages/FirstPage.qml" line="87"/>
         <source>Logout</source>
         <translation>注销</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="138"/>
+        <location filename="../qml/pages/FirstPage.qml" line="95"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="144"/>
+        <location filename="../qml/pages/FirstPage.qml" line="101"/>
         <source>New</source>
         <translation>写微博</translation>
     </message>
