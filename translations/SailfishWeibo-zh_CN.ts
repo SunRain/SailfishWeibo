@@ -575,12 +575,12 @@
         <translation type="unfinished">Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="275"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="277"/>
         <source> From </source>
         <translation type="unfinished">来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="298"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="300"/>
         <source>Reply</source>
         <translation type="unfinished">回复</translation>
     </message>
