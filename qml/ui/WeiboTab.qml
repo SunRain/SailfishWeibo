@@ -52,12 +52,7 @@ Item {
         target: api
         //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
         onWeiboPutSucceed: {
-            console.log(" ============ onWeiboPutSucceed with action " + action);
-            
             if (action == WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE) {
-                
-                console.log(" ============ onWeiboPutSucceed with action WBOPT_GET_STATUSES_FRIENDS_TIMELINE");
-                
                 var json = JSON.parse(replyData);
                 for (var i=0; i<json.statuses.length; i++) {
                     modelWeibo.append( json.statuses[i] )
@@ -65,9 +60,8 @@ Item {
                 stopBusyIndicator();
             }
         }
-        
         onTokenExpired: {
-            console.log("====== WeiboTab onTokenExpired value is "+ tokenExpired);
+//            console.log("====== WeiboTab onTokenExpired value is "+ tokenExpired);
         }
     }
     

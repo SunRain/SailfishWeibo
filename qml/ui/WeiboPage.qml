@@ -54,7 +54,7 @@ Page {
             
             weiboItem = weiboListviewModel.get(currentIndex);//weiboModel.get(currentIndex)
             
-            currentItem.getComments(Settings.getAccess_token(), weiboItem.id, 1)
+            currentItem.getComments(/*Settings.getAccess_token(),*/ weiboItem.id, 1)
             //            console.log("weiboItem: ", JSON.stringify(weiboItem))
             //            commentsWanted(weiboItem.id, currentIndex)
             
@@ -142,14 +142,16 @@ Page {
                 //var url = "https://api.weibo.com/2/comments/show.json?access_token=" + token + "&id=" + id + "&page=" + page
                 modelComment.clear();
                 var method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-                api.setWeiboAction(method, {'id':id, 'page':page});
+                api.setWeiboAction(method, {'id':" "+id+" ", 'page':page});
             }
             Connections {
                 target: api
                 onWeiboPutSucceed: {
-                    var json = JSON.parse(replyData);
-                    for (var i=0; i<json.comments.length; i++) {
-                        modelComment.append(json.comments[i])
+                    if (action == WeiboMethod.WBOPT_GET_COMMENTS_SHOW) {
+                        var json = JSON.parse(replyData);
+                        for (var i=0; i<json.comments.length; i++) {
+                            modelComment.append(json.comments[i])
+                        }
                     }
                 }
             }
