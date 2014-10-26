@@ -33,9 +33,10 @@ import Sailfish.Silica 1.0
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            usRepostWeiboContent.retweetClicked()
             var tmp = retweetWeibo.retweeted_status
            console.log("retweetWeibo.retweeted_status: ", JSON.stringify(tmp))
+            
+            usRepostWeiboContent.retweetClicked()
         }
     }
 
@@ -43,11 +44,8 @@ import Sailfish.Silica 1.0
         id: background
         anchors {
             top: usRepostWeiboContent.top
-//            topMargin: Theme.paddingSmall/2 // 1//units.gu(1)
             left: usRepostWeiboContent.left
             right: usRepostWeiboContent.right
-//            leftMargin: Theme.paddingSmall/2 //1// units.gu(1)
-//            rightMargin:Theme.paddingSmall/2 //1// units.gu(1)
             bottom: usRepostWeiboContent.bottom
         }
         source: "../graphics/mask_background_reposted.png"
@@ -66,50 +64,25 @@ import Sailfish.Silica 1.0
         }
         spacing: Theme.paddingSmall
 
-        Row {
-            id: rowUser
-            spacing: Theme.paddingMedium
+        UserAvatarHeader {
+            id:repostAvaterHeader
+            width: parent.width *7/10
+            height:Theme.itemSizeSmall
+            visible: isInvalid
+            
+            userName: isInvalid ? "" : retweetWeibo.user.screen_name
+            userNameFontSize: Theme.fontSizeExtraSmall
+            userAvatar: isInvalid ? "" :retweetWeibo.user.profile_image_url
+            weiboTime: isInvalid ? "" : 
+                               DateUtils.formatRelativeTime( DateUtils.parseDate(appData.dateParse(retweetWeibo.created_at)))
+                               + qsTr(" From ") +GetURL.linkToStr(retweetWeibo.source)
 
-            Item {
-                id: usAvatar
-                width: 48
-                height: width
-                Image {
-                    width: parent.width
-                    height: parent.height
-                    smooth: true
-                    fillMode: Image.PreserveAspectFit
-                    source: isInvalid ? "" :retweetWeibo.user.profile_image_url
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        console.log("=== DelegateReposted Weibo usAvatar clicked");
-                        toUserPage(retweetWeibo.user.id)
-                    }
-                }
-            }
-            Column {
-                id:rowUserColumn
-                spacing: Theme.paddingSmall
-                
-                Label {
-                    id: labelUserName
-                    color: Theme.highlightColor
-                    text: isInvalid ? "" : retweetWeibo.user.screen_name
-                    font.pixelSize: Theme.fontSizeTiny 
-                }
-                Label {
-                    id: labelWeiboTime
-                    color: Theme.secondaryColor
-                    text:isInvalid ? "" : 
-                        DateUtils.formatRelativeTime( DateUtils.parseDate(appData.dateParse(retweetWeibo.created_at)))
-                                     + qsTr(" From ") +GetURL.linkToStr(retweetWeibo.source)
-                    font.pixelSize: Theme.fontSizeTiny 
-                }
+            onUserAvatarClicked: {
+                console.log("======== DelegateReposted Weibo usAvatar clicked");
+                toUserPage(retweetWeibo.user.id)
             }
         }
-
+        
         Label {
             id: labelWeibo
             width: parent.width
