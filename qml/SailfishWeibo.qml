@@ -120,13 +120,16 @@ ApplicationWindow
     }
     
     //////////////////////////////////////////////////////////////////         go to send page
-    function toSendPage(mode, info) {
+    function toSendPage(mode, userInfo, placeHoldText, shouldPopAttachedPages) {
         //sendPage.setMode(mode, info)
         //mainStack.push(sendPage)
-        popAttachedPages();
+        if(shouldPopAttachedPages == true)
+            popAttachedPages();
+
         pageStack.push(Qt.resolvedUrl("ui/SendPage.qml"),
                         {"mode":mode,
-                           "info":info})
+                           "placeHoldText":placeHoldText,
+                           "userInfo":userInfo})
     }
     
     function toUserPage(uid) {

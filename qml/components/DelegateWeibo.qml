@@ -17,13 +17,15 @@ import Sailfish.Silica 1.0
 Item {
     id: usWeiboContent
     anchors {
-        left: parent.left; right: parent.right
-        //                    leftMargin: units.gu(1); rightMargin: units.gu(1)
+        left: parent.left
+        right: parent.right
     }
     height: columnWContent.height + Theme.paddingMedium 
     //color: Qt.rgba(255, 255, 255, 0.3)
     //radius: "medium"
     //color: Qt.rgba(255, 255, 255, 0.3)
+
+    property alias optionMenu: optionItem.menu
     
     //signal cicked
     signal repostedWeiboClicked
@@ -45,100 +47,91 @@ Item {
         }
     }
     
-    //    WorkerScript {
-    //        id: workerImages
-    //        source: "../js/addImages.js"
-    
-    ////        onMessage: console.log("addImages.js done: ", messageObject.reply)
-    //    }
-    Image {
-        id: background
-        anchors {
-            top: parent.top
-            //topMargin: Theme.paddingSmall //units.gu(1)
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            //leftMargin: Theme.paddingLarge
-            //rightMargin: Theme.paddingLarge
-        }
-        source: "../graphics/mask_background_grid.png"
-        fillMode: Image.PreserveAspectCrop
-    }
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            //usWeiboContent.clicked()
-            usWeiboContent.usWeiboClicked();
-            //            var tmp = model.pic_urls
-            //            console.log("model.pic_urls: ", JSON.stringify(tmp), gridWeiboPics.height, itemRetweetContainer.height)
-        }
-    }
-    
     Column {
         id: columnWContent
         anchors {
             top: parent.top
-            topMargin: Theme.paddingSmall //units.gu(1)
+            topMargin: Theme.paddingSmall
             left: parent.left
             right: parent.right
             leftMargin: Theme.paddingLarge 
             rightMargin: Theme.paddingLarge 
         }
-        spacing: Theme.paddingMedium//Theme.paddingSmall //units.gu(1)
-        Row {
-            id: rowUser
-//            anchors {
-//                left: parent.left
-//                right: parent.right
-//            }
-            spacing: Theme.paddingMedium
-            //height: rowUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height//usAvatar.height
+        spacing: Theme.paddingMedium
+        Item {
+            width: columnWContent.width
+            height: optionItem.menuOpen ? rowUser.height + optionItem.height : rowUser.height
             
-            Item {
-                id: usAvatar
-                width: 64//units.gu(6)
-                height: width
-                //color: "#c5ca2c"
-                Image {
-                    width: parent.width
-                    height: parent.height
-                    smooth: true
-                    fillMode: Image.PreserveAspectFit
-                    source: model.user.profile_image_url
+            Row {
+                id: rowUser
+                spacing: Theme.paddingMedium
+
+                Item {
+                    id: usAvatar
+                    width: 64
+                    height: width
+                    Image {
+                        width: parent.width
+                        height: parent.height
+                        smooth: true
+                        fillMode: Image.PreserveAspectFit
+                        source: model.user.profile_image_url
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            console.log("=== DelegateWeibo usAvatar clicked");
+                            toUserPage(model.user.id)
+                        }
+                    }
                 }
                 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        //console.log("===  usAvatar clicked");
-                        toUserPage(model.user.id)
+                Column {
+                    id:rowUserColumn
+                    spacing: Theme.paddingSmall
+                    
+                    Label {
+                        id: labelUserName
+                        color: Theme.primaryColor
+                        text: model.user.screen_name
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                    }
+                    
+                    Label {
+                        id: labelWeiboTime
+                        color: Theme.secondaryColor
+                        text: {
+                            //                        console.log("appData.dateParse(model.created_at): ", appData.dateParse(model.created_at))
+                            //                        var ddd = new Date(appData.dateParse(model.created_at) + "")
+                            //                        console.log("ddd: ", ddd.getTime())
+                            return DateUtils.formatRelativeTime(/*i18n,*/ DateUtils.parseDate(appData.dateParse(model.created_at)))
+                                    + qsTr(" From ") + GetURL.linkToStr(model.source)
+                        }
+                        font.pixelSize: Theme.fontSizeTiny 
                     }
                 }
             }
-            
-            Column {
-                id:rowUserColumn
-                spacing: Theme.paddingSmall
-                
-                Label {
-                    id: labelUserName
-                    color: Theme.primaryColor
-                    text: model.user.screen_name
-                    font.pixelSize: Theme.fontSizeExtraSmall
+            OptionItem{
+                id:optionItem
+                anchors{
+                    left: rowUser.right
+                    right: parent.right
                 }
-                
-                Label {
-                    id: labelWeiboTime
-                    color: Theme.secondaryColor
-                    text: {
-                        //                        console.log("appData.dateParse(model.created_at): ", appData.dateParse(model.created_at))
-                        //                        var ddd = new Date(appData.dateParse(model.created_at) + "")
-                        //                        console.log("ddd: ", ddd.getTime())
-                        return DateUtils.formatRelativeTime(/*i18n,*/ DateUtils.parseDate(appData.dateParse(model.created_at)))
-                        + qsTr(" From ") + GetURL.linkToStr(model.source)
+                visible: optionMenu != null
+                Image {
+                    anchors{
+                        top:parent.top
+                        bottom: parent.bottom
+                        right: parent.right
                     }
-                    font.pixelSize: Theme.fontSizeTiny 
+                    width: Theme.iconSizeMedium
+                    height: width
+                    source: optionItem.menuOpen ? 
+                                "../graphics/action_collapse.png" : 
+                                "../graphics/action_open.png"
+                }
+                onMenuStateChanged: {
+//                    console.log("====== option Item " + menuOpen);
                 }
             }
         }
@@ -147,20 +140,27 @@ Item {
             id: labelWeibo
             width: parent.width
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            //color: Theme.primaryColor 
             textFormat: Text.StyledText
             text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
             font.pixelSize: Theme.fontSizeMedium
             onLinkActivated: {
                 Qt.openUrlExternally(link)
             }
+            
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    //usWeiboContent.clicked()
+                    usWeiboContent.usWeiboClicked();
+                    //            var tmp = model.pic_urls
+                    //            console.log("model.pic_urls: ", JSON.stringify(tmp), gridWeiboPics.height, itemRetweetContainer.height)
+                }
+            }
         }
         
         Grid {
             id: gridWeiboPics
-            columns: 3; spacing: Theme.paddingSmall//units.gu(0.5); /*visible: model.pic_urls == undefined ? false : model.pic_urls.count != 0*/
-            //width: parent.width; height: childrenRect.height
-            
+            columns: 3; spacing: Theme.paddingSmall
             Repeater {
                 model: ListModel { id: modelImages }
                 delegate: Component {
@@ -191,17 +191,15 @@ Item {
         
         Item {
             id: itemRetweetContainer
-//            anchors {
-//                left: parent.left; right: parent.right
-//                //leftMargin: Theme.paddingSmall//units.gu(1);
-//                //rightMargin: Theme.paddingSmall//units.gu(1)
-//            }
             width: parent.width
-            height: delegateRepostedWeibo.height//childrenRect.height
+            height: delegateRepostedWeibo.height
 
             DelegateRepostedWeibo{
                 id:delegateRepostedWeibo
-                visible: model.retweeted_status != undefined || model.retweeted_status != ""
+                visible: {
+//                    console.log("========================DelegateWeibo  model.retweeted_statu " + model.retweeted_status)
+                    model.retweeted_status != undefined || model.retweeted_status != ""
+                }
                 retweetWeibo: model.retweeted_status
                 
                 onRetweetClicked: {
@@ -212,11 +210,10 @@ Item {
         }
         
         Column {
-            width: parent.width//; height: childrenRect.height
+            width: parent.width
             spacing: Theme.paddingSmall
 
             Row {
-                //width: childrenRect.width; height: childrenRect.height
                 anchors.horizontalCenter: parent.horizontalCenter
                 
                 Item {
@@ -225,65 +222,42 @@ Item {
                     
                     Label {
                         anchors.centerIn: parent
-                        color: Theme.secondaryColor//"black"
+                        color: Theme.secondaryColor
                         font.pixelSize: Theme.fontSizeTiny
                         text: qsTr("repost: ") + model.reposts_count
                     }
-                    
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            //console.log("repost id" + model.id);
-                            toSendPage("repost", {"id": model.id})
-                        }
-                    }
                 }
                 Rectangle {
-                    //y:0.2// units.gu(0.2);
-                    width: 1//units.gu(0.1);
+                    width: 1
                     height: Theme.fontSizeSmall -2
-                    color: Theme.highlightColor//"grey"
+                    color: Theme.highlightColor
                 }
                 Item {
-                    width: columnWContent.width / 3 - Theme.paddingSmall //units.gu(0.5);  
+                    width: columnWContent.width / 3 - Theme.paddingSmall
                     height: Theme.fontSizeSmall
                     
                     Label {
                         anchors.centerIn: parent
-                        color: Theme.secondaryColor//"black"
+                        color: Theme.secondaryColor
                         font.pixelSize: Theme.fontSizeTiny
                         text: qsTr("comment: ") + model.comments_count
                     }
-                    
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            toSendPage("comment", {"id": model.id})
-                        }
-                    }
                 }
                 Rectangle {
-                    //y: 0.2//units.gu(0.2); 
-                    width: 1//units.gu(0.1); 
+                    width: 1
                     height: Theme.fontSizeSmall -2
-                    color: Theme.highlightColor//"grey"
+                    color: Theme.highlightColor
                 }
                 Item {
-                    width: columnWContent.width / 3 - Theme.paddingSmall //units.gu(0.5);  
+                    width: columnWContent.width / 3 - Theme.paddingSmall  
                     height: Theme.fontSizeSmall
                     
                     Label {
                         anchors.centerIn: parent
-                        color: Theme.secondaryColor//"black"
+                        color: Theme.secondaryColor
                         font.pixelSize: Theme.fontSizeTiny
                         text: qsTr("like: ") + model.attitudes_count
                     }
-//                    MouseArea {
-//                        anchors.fill: parent
-//                        onClicked: {
-//                            mainView.toSendPage("comment", {"id": model.id})
-//                        }
-//                    }
                 }
             }
         }
@@ -291,6 +265,10 @@ Item {
         Separator {
             width: parent.width
             color: Theme.highlightColor
+        }
+        Item {
+            width: parent.width
+            height: Theme.paddingSmall
         }
     }
 }

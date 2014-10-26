@@ -14,7 +14,8 @@ SOURCES += SailfishWeibo.cpp \
     ../QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp \
     ../QSinaWeiboApi/weiboAPI/QWeiboMethod.cpp \
     ../QSinaWeiboApi/weiboAPI/QWeiboPut.cpp \
-    ../QSinaWeiboApi/weiboAPI/QWeiboRequest.cpp
+    ../QSinaWeiboApi/weiboAPI/QWeiboRequest.cpp \
+    ../QSinaWeiboApi/weiboAPI/QWeiboObject.cpp
 
 HEADERS += \
     networkhelper.h \
@@ -30,7 +31,8 @@ HEADERS += \
     ../QSinaWeiboApi/weiboAPI/include/QWeiboPut.h \
     ../QSinaWeiboApi/weiboAPI/include/QWeiboRequest.h \
     ../QSinaWeiboApi/weiboAPI/include/QWeiboRequestApiList.h \
-    ../QSinaWeiboApi/weiboAPI/include/version.h
+    ../QSinaWeiboApi/weiboAPI/include/version.h \
+    ../QSinaWeiboApi/weiboAPI/include/QWeiboObject.h
 
 
 #win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QSinaWeiboApi/weiboAPI/ -lQSinaWeiboAPI

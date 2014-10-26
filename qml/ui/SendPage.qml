@@ -22,7 +22,8 @@ Page {
 //    property var commentType: [qsTr("Do not comment original Weibo"), qsTr("Also comment original Weibo")]
     
     property string sendTitle
-    property var info         // include id, cid, etc..
+    property var userInfo         // include id, cid, etc..
+    property string placeHoldText:""
     //property string imgPath: ""
     property var imgPath: ""
     property int optionIndex: 0
@@ -171,13 +172,13 @@ Page {
     function sendWeibo() {
         switch (sendPage.mode) {
         case "repost" :
-            repostStatus(Settings.getAccess_token(), content.text, info.id, optionIndex)
+            repostStatus(Settings.getAccess_token(), content.text, userInfo.id, optionIndex)
             break
         case "comment" :
-            sendComment(Settings.getAccess_token(), content.text, info.id, optionIndex)
+            sendComment(Settings.getAccess_token(), content.text, userInfo.id, optionIndex)
             break
         case "reply" :
-            replyComment(Settings.getAccess_token(), content.text, info.id, optionIndex, info.cid, 0)
+            replyComment(Settings.getAccess_token(), content.text, userInfo.id, optionIndex, userInfo.cid, 0)
             break
         default:
             if (imgPath == "" || imgPath == undefined) {
@@ -321,13 +322,13 @@ Page {
                         // networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
 //                        switch (sendPage.mode) {
 //                        case "repost" :
-//                            repostStatus(Settings.getAccess_token(), content.text, info.id, optionIndex)
+//                            repostStatus(Settings.getAccess_token(), content.text, userInfo.id, optionIndex)
 //                            break
 //                        case "comment" :
-//                            sendComment(Settings.getAccess_token(), content.text, info.id, optionIndex)
+//                            sendComment(Settings.getAccess_token(), content.text, userInfo.id, optionIndex)
 //                            break
 //                        case "reply" :
-//                            replyComment(Settings.getAccess_token(), content.text, info.id, optionIndex, info.cid, 0)
+//                            replyComment(Settings.getAccess_token(), content.text, userInfo.id, optionIndex, userInfo.cid, 0)
 //                            break
 //                        default:
 //                            if (imgPath == "" || imgPath == undefined) {
@@ -387,7 +388,8 @@ Page {
                     height: Math.max(parent.width/2, implicitHeight)
                     focus: true
                     horizontalAlignment: TextInput.AlignLeft
-                    placeholderText: qsTr("Input Weibo content here");
+                    //placeholderText: qsTr("Input Weibo content here");
+                    text: placeHoldText
                     label: "Expanding text area"                   
                 }
                 

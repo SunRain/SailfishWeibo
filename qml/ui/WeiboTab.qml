@@ -55,9 +55,11 @@ Item {
             if (action == WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE) {
                 var json = JSON.parse(replyData);
                 for (var i=0; i<json.statuses.length; i++) {
+//                    console.log("============================ weiboTab append " + JSON.stringify(json.statuses[i]))
                     modelWeibo.append( json.statuses[i] )
                 }
                 stopBusyIndicator();
+                modelWeibo.sync();
             }
         }
         onTokenExpired: {
@@ -101,8 +103,28 @@ Item {
                 toWeiboPage(modelWeibo, index);
             }
             onRepostedWeiboClicked: {
-                //TODO MagicNumber
+                //TODO MagicNumber for showing RepostedWeibo
                 toWeiboPage(modelWeibo.get(index).retweeted_status, "-100");
+            }
+            optionMenu: options
+            ContextMenu {
+                id:options
+                MenuItem {
+                    text: qsTr("Repost")
+                    onClicked: {
+                        toSendPage("repost", {"id": model.id}, 
+                                   (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
+                                       "" :
+                                       "//@"+model.user.name +": " + model.text ,
+                                   true)
+                    }
+                }
+                MenuItem {
+                    text: qsTr("Comment")
+                    onClicked: {
+                        toSendPage("comment", {"id": model.id}, "", true)                        
+                    }
+                }
             }
         }
     }

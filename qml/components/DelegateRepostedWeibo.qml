@@ -5,7 +5,7 @@ import "../js/dateutils.js" as DateUtils
 import Sailfish.Silica 1.0
 
  Item{
-    id: usWeiboContent
+    id: usRepostWeiboContent
     anchors {
         left: parent.left
         right: parent.right
@@ -21,6 +21,7 @@ import Sailfish.Silica 1.0
     signal retweetClicked
 
     Component.onCompleted: {
+//        console.log("=========== usRepostWeiboContent isInvalid  " + isInvalid)
         if ( !isInvalid && retweetWeibo.pic_urls != undefined && retweetWeibo.pic_urls.length > 0) {
             modelImages.clear()
             for (var i=0; i<retweetWeibo.pic_urls.length; i++) {
@@ -32,7 +33,7 @@ import Sailfish.Silica 1.0
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            usWeiboContent.retweetClicked()
+            usRepostWeiboContent.retweetClicked()
             var tmp = retweetWeibo.retweeted_status
            console.log("retweetWeibo.retweeted_status: ", JSON.stringify(tmp))
         }
@@ -41,15 +42,16 @@ import Sailfish.Silica 1.0
     Image {
         id: background
         anchors {
-            top: parent.top
-            topMargin: Theme.paddingSmall// 1//units.gu(1)
-            left: parent.left
-            right: parent.right
-            leftMargin: Theme.paddingSmall//1// units.gu(1)
-            rightMargin:Theme.paddingSmall//1// units.gu(1)
+            top: usRepostWeiboContent.top
+//            topMargin: Theme.paddingSmall/2 // 1//units.gu(1)
+            left: usRepostWeiboContent.left
+            right: usRepostWeiboContent.right
+//            leftMargin: Theme.paddingSmall/2 //1// units.gu(1)
+//            rightMargin:Theme.paddingSmall/2 //1// units.gu(1)
+            bottom: usRepostWeiboContent.bottom
         }
         source: "../graphics/mask_background_reposted.png"
-        fillMode:Image.PreserveAspectCrop
+        fillMode:Image.TileHorizontally
     }
     
     Column {
@@ -82,6 +84,7 @@ import Sailfish.Silica 1.0
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
+                        console.log("=== DelegateReposted Weibo usAvatar clicked");
                         toUserPage(retweetWeibo.user.id)
                     }
                 }

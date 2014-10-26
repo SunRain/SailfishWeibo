@@ -138,16 +138,12 @@ Page {
     Connections {
         target: api
         onWeiboPutSucceed: {
-            console.log("====== FirstPage onWeiboPutSucceed action is "+ action);
+//            console.log("====== FirstPage onWeiboPutSucceed action is "+ action);
         }
         onTokenExpired: {
-            console.log("====== FirstPage onTokenExpired value is "+ tokenExpired);
-            
             if (tokenExpired == true) {
-                console.log("====== onTokenExpired true");
                 startLogin();
             } else {
-                console.log("====== onTokenExpired false set to mainComponent");
                 loader.sourceComponent = loader.Null;
                 loader.sourceComponent = mainComponent;
             }

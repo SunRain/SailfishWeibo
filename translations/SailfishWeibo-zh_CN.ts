@@ -114,7 +114,7 @@
 <context>
     <name>DelegateRepostedWeibo</name>
     <message>
-        <location filename="../qml/components/DelegateRepostedWeibo.qml" line="104"/>
+        <location filename="../qml/components/DelegateRepostedWeibo.qml" line="107"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
@@ -122,22 +122,22 @@
 <context>
     <name>DelegateWeibo</name>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="139"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="108"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="230"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="235"/>
         <source>repost: </source>
         <translation>转发：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="255"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="251"/>
         <source>comment: </source>
         <translation>评论：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="279"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="267"/>
         <source>like: </source>
         <translation>顶：</translation>
     </message>
@@ -355,6 +355,10 @@
 <context>
     <name>SecondPage</name>
     <message>
+        <source>Message</source>
+        <translation type="obsolete">信息</translation>
+    </message>
+    <message>
         <location filename="../qml/pages/SecondPage.qml" line="72"/>
         <source>Sailfish Weibo</source>
         <translation></translation>
@@ -363,122 +367,121 @@
 <context>
     <name>SendPage</name>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="43"/>
-        <location filename="../qml/ui/SendPage.qml" line="73"/>
+        <location filename="../qml/ui/SendPage.qml" line="44"/>
+        <location filename="../qml/ui/SendPage.qml" line="74"/>
         <source>New Weibo sent</source>
         <translation>发送成功</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="49"/>
-        <location filename="../qml/ui/SendPage.qml" line="69"/>
-        <location filename="../qml/ui/SendPage.qml" line="100"/>
-        <location filename="../qml/ui/SendPage.qml" line="128"/>
-        <location filename="../qml/ui/SendPage.qml" line="156"/>
+        <location filename="../qml/ui/SendPage.qml" line="50"/>
+        <location filename="../qml/ui/SendPage.qml" line="70"/>
+        <location filename="../qml/ui/SendPage.qml" line="101"/>
+        <location filename="../qml/ui/SendPage.qml" line="129"/>
+        <location filename="../qml/ui/SendPage.qml" line="157"/>
         <source>Oops.. something wrong</source>
         <translation>出错了。。。</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="94"/>
+        <location filename="../qml/ui/SendPage.qml" line="95"/>
         <source>Repost sent</source>
         <translation>转发成功</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="122"/>
+        <location filename="../qml/ui/SendPage.qml" line="123"/>
         <source>Comment sent</source>
         <translation>评论成功</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="150"/>
+        <location filename="../qml/ui/SendPage.qml" line="151"/>
         <source>Reply sent</source>
         <translation>回复成功</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="187"/>
+        <location filename="../qml/ui/SendPage.qml" line="188"/>
         <source>Uploading, please wait..</source>
         <translation>上传中。。。</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="237"/>
+        <location filename="../qml/ui/SendPage.qml" line="238"/>
         <source>comment option</source>
         <translation>评论选项</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="241"/>
+        <location filename="../qml/ui/SendPage.qml" line="242"/>
         <source>Do not comment original Weibo</source>
         <translation>不评论原微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="245"/>
+        <location filename="../qml/ui/SendPage.qml" line="246"/>
         <source>Also comment original Weibo</source>
         <translation>同时评论原微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="257"/>
+        <location filename="../qml/ui/SendPage.qml" line="258"/>
         <source>repost option</source>
         <translation>转发选项</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="261"/>
+        <location filename="../qml/ui/SendPage.qml" line="262"/>
         <source>No comments</source>
         <translation>没有评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="265"/>
+        <location filename="../qml/ui/SendPage.qml" line="266"/>
         <source>Comment current Weibo</source>
         <translation>评论给当前微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="269"/>
+        <location filename="../qml/ui/SendPage.qml" line="270"/>
         <source>Comment original Weibo</source>
         <translation>评论给原微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="273"/>
+        <location filename="../qml/ui/SendPage.qml" line="274"/>
         <source>Both</source>
         <translation>以上都选</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="310"/>
+        <location filename="../qml/ui/SendPage.qml" line="311"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="349"/>
+        <location filename="../qml/ui/SendPage.qml" line="350"/>
         <source>@SomeOne</source>
         <translation>@</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="359"/>
+        <location filename="../qml/ui/SendPage.qml" line="360"/>
         <source>Add Image</source>
         <translation>添加图片</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="390"/>
         <source>Input Weibo content here</source>
-        <translation>再次输入微博内容</translation>
+        <translation type="obsolete">再次输入微博内容</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="400"/>
+        <location filename="../qml/ui/SendPage.qml" line="402"/>
         <source>Click the inserted image to remove from the uploading queue</source>
         <translation>点击已插入的图片可以将图片移除</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="447"/>
+        <location filename="../qml/ui/SendPage.qml" line="449"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="452"/>
+        <location filename="../qml/ui/SendPage.qml" line="454"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="457"/>
+        <location filename="../qml/ui/SendPage.qml" line="459"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/ui/SendPage.qml" line="463"/>
+        <location filename="../qml/ui/SendPage.qml" line="465"/>
         <source>Send Weibo</source>
         <translation>发送微博</translation>
     </message>
@@ -575,14 +578,37 @@
         <translation type="unfinished">Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="277"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="197"/>
+        <source>Repost</source>
+        <translation type="unfinished">转发</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboPage.qml" line="208"/>
+        <source>Comment</source>
+        <translation type="unfinished">评论</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboPage.qml" line="305"/>
         <source> From </source>
         <translation type="unfinished">来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="300"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="328"/>
         <source>Reply</source>
         <translation type="unfinished">回复</translation>
+    </message>
+</context>
+<context>
+    <name>WeiboTab</name>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="113"/>
+        <source>Repost</source>
+        <translation type="unfinished">转发</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="123"/>
+        <source>Comment</source>
+        <translation type="unfinished">评论</translation>
     </message>
 </context>
 </TS>
