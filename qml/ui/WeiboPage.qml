@@ -54,7 +54,7 @@ Page {
             
             weiboItem = weiboListviewModel.get(currentIndex);//weiboModel.get(currentIndex)
             
-            currentItem.getComments(/*Settings.getAccess_token(),*/ weiboItem.id, 1)
+            currentItem.getComments(/*Settings.getAccess_token(),*/ weiboItem.id/*, 1*/)
             //            console.log("weiboItem: ", JSON.stringify(weiboItem))
             //            commentsWanted(weiboItem.id, currentIndex)
             
@@ -112,9 +112,11 @@ Page {
             contentHeight: innerAreaColumn.height
             
             property int weiboIndex: index
+            property int commentsPage:1
+            property string commentsId
             
             //////////////////////////////////////////////////////////////////         get comments
-            function getComments(/*token, */id, page)
+            function getComments(/*token, */id/*, page*/)
             {
                 //                function observer() {}
                 //                observer.prototype = {
@@ -140,10 +142,17 @@ Page {
                 
                 //WB.weiboGetComments(token, id, page, new observer())
                 //var url = "https://api.weibo.com/2/comments/show.json?access_token=" + token + "&id=" + id + "&page=" + page
+                commentsId = String(id);
                 modelComment.clear();
                 var method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-                api.setWeiboAction(method, {'id':" "+id+" ", 'page':page});
+                api.setWeiboAction(method, {'id':" "+id+" ", 'page':commentsPage});
             }
+            function addMore() {
+                commentsPage++;
+                var method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
+                api.setWeiboAction(method, {'id':" "+commentsId+" ", 'page':commentsPage});
+            }
+
             Connections {
                 target: api
                 onWeiboPutSucceed: {
@@ -228,6 +237,11 @@ Page {
                             id: modelComment 
                         }
                         delegate: delegateComment
+                        footer: FooterLoadMore {
+                            onClicked: {
+                                scrollArea.addMore();
+                            }
+                        }
                     }
                 }
                 
@@ -238,8 +252,6 @@ Page {
                     OptionItem {
                         width: parent.width
                         contentHeight: columnWContent.height + Theme.paddingMedium 
-                        //color: Qt.rgba(255, 255, 255, 0.3)
-                        
                         menu: contextMenu
                         Column {
                             id: columnWContent
@@ -254,61 +266,21 @@ Page {
                             spacing: Theme.paddingMedium
                             
                             ////////用户头像/姓名/评论发送时间
-                            Row {
-                                id: rowUser
-                                anchors { 
-                                    left: parent.left
-                                    leftMargin: Theme.paddingSmall
-                                    right: parent.right
-                                    rightMargin: Theme.paddingSmall
-                                }
-                                spacing:Theme.paddingSmall
-                                height: rowUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height
+                            UserAvatarHeader {
+                                id:commnetAvaterHeader
+                                width: parent.width *7/10
+                                height:Theme.itemSizeExtraSmall 
                                 
-                                Item {
-                                    id: usAvatar
-                                    width: 48
-                                    height: width
-                                    Image {
-                                        width: parent.width
-                                        height: parent.height
-                                        smooth: true
-                                        fillMode: Image.PreserveAspectFit
-                                        source: model.user.profile_image_url
-                                    }
-                                    
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onClicked: {
-                                            console.log("=== weiboPage commnet usAvatar clicked");
-                                            toUserPage(model.user.id)
-                                        }
-                                    }
-                                }
-                                
-                                Column {
-                                    id:rowUserColumn
-                                    spacing: Theme.paddingSmall/2
-                                    
-                                    Label {
-                                        id: labelUserName
-                                        color: Theme.secondaryColor
-                                        text: model.user.screen_name
-                                        font.pixelSize: Theme.fontSizeTiny
-                                    }
-                                    
-                                    Label {
-                                        id: labelCommentTime
-                                        color: Theme.secondaryColor
-                                        text:  {
-                                            return DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
-                                                    + qsTr(" From ") + GetURL.linkToStr(model.source)
-                                        }
-                                        font.pixelSize: Theme.fontSizeTiny
-                                    }
+                                userName: model.user.screen_name
+                                userNameFontSize: Theme.fontSizeTiny
+                                userAvatar: model.user.profile_image_url
+                                weiboTime:  DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
+                                            + qsTr(" From ") + GetURL.linkToStr(model.source)
+                                onUserAvatarClicked: {
+                                    toUserPage(model.user.id)
                                 }
                             }
-                            
+
                             /////////评论/转发内容
                             Label {
                                 id: labelWeibo
@@ -338,7 +310,6 @@ Page {
                         }
                     }
                 }
-                
             }
         } // Flickable
     } // Component

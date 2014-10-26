@@ -21,13 +21,9 @@ Item {
         right: parent.right
     }
     height: columnWContent.height + Theme.paddingMedium 
-    //color: Qt.rgba(255, 255, 255, 0.3)
-    //radius: "medium"
-    //color: Qt.rgba(255, 255, 255, 0.3)
 
     property alias optionMenu: optionItem.menu
-    
-    //signal cicked
+
     signal repostedWeiboClicked
     signal usWeiboClicked
     
@@ -60,61 +56,26 @@ Item {
         spacing: Theme.paddingMedium
         Item {
             width: columnWContent.width
-            height: optionItem.menuOpen ? rowUser.height + optionItem.height : rowUser.height
-            
-            Row {
-                id: rowUser
-                spacing: Theme.paddingMedium
-
-                Item {
-                    id: usAvatar
-                    width: 64
-                    height: width
-                    Image {
-                        width: parent.width
-                        height: parent.height
-                        smooth: true
-                        fillMode: Image.PreserveAspectFit
-                        source: model.user.profile_image_url
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            console.log("=== DelegateWeibo usAvatar clicked");
-                            toUserPage(model.user.id)
-                        }
-                    }
-                }
+            height: optionItem.menuOpen ? avaterHeader.height + optionItem.height : avaterHeader.height
+            UserAvatarHeader {
+                id:avaterHeader
+                width: parent.width *7/10
+                height:Theme.itemSizeSmall
                 
-                Column {
-                    id:rowUserColumn
-                    spacing: Theme.paddingSmall
-                    
-                    Label {
-                        id: labelUserName
-                        color: Theme.primaryColor
-                        text: model.user.screen_name
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                    }
-                    
-                    Label {
-                        id: labelWeiboTime
-                        color: Theme.secondaryColor
-                        text: {
-                            //                        console.log("appData.dateParse(model.created_at): ", appData.dateParse(model.created_at))
-                            //                        var ddd = new Date(appData.dateParse(model.created_at) + "")
-                            //                        console.log("ddd: ", ddd.getTime())
-                            return DateUtils.formatRelativeTime(/*i18n,*/ DateUtils.parseDate(appData.dateParse(model.created_at)))
-                                    + qsTr(" From ") + GetURL.linkToStr(model.source)
-                        }
-                        font.pixelSize: Theme.fontSizeTiny 
-                    }
+                userName: model.user.screen_name
+                userNameFontSize: Theme.fontSizeExtraSmall
+                userAvatar: model.user.profile_image_url
+                weiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
+                                                    + qsTr(" From ") + GetURL.linkToStr(model.source)
+                onUserAvatarClicked: {
+                    console.log("======== UserAvatarHeader onUserAvatarClicked");
+                    toUserPage(model.user.id)
                 }
             }
             OptionItem{
                 id:optionItem
                 anchors{
-                    left: rowUser.right
+                    left: avaterHeader.right
                     right: parent.right
                 }
                 visible: optionMenu != null
@@ -134,6 +95,14 @@ Item {
 //                    console.log("====== option Item " + menuOpen);
                 }
             }
+            
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked: {
+//                    console.log("=== DelegateWeibo usAvatar2222 clicked");
+//                    toUserPage(model.user.id)
+//                }
+//            }
         }
         
         Label {
