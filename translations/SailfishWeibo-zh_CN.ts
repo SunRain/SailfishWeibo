@@ -114,7 +114,7 @@
 <context>
     <name>DelegateRepostedWeibo</name>
     <message>
-        <location filename="../qml/components/DelegateRepostedWeibo.qml" line="76"/>
+        <location filename="../qml/components/DelegateRepostedWeibo.qml" line="77"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
@@ -127,17 +127,17 @@
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="195"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="185"/>
         <source>repost: </source>
         <translation>转发：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="211"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="201"/>
         <source>comment: </source>
         <translation>评论：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="227"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="217"/>
         <source>like: </source>
         <translation>顶：</translation>
     </message>

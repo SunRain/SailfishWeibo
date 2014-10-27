@@ -95,14 +95,6 @@ Item {
 //                    console.log("====== option Item " + menuOpen);
                 }
             }
-            
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked: {
-//                    console.log("=== DelegateWeibo usAvatar2222 clicked");
-//                    toUserPage(model.user.id)
-//                }
-//            }
         }
         
         Label {
@@ -158,22 +150,14 @@ Item {
             }
         }
         
-        Item {
-            id: itemRetweetContainer
-            width: parent.width
-            height: delegateRepostedWeibo.height
-
-            DelegateRepostedWeibo{
-                id:delegateRepostedWeibo
-                isInvalid: {
-                    return model.retweeted_status == undefined || model.retweeted_status == ""
-                }
-                retweetWeibo: model.retweeted_status
-                
-                onRetweetClicked: {
-                    //usWeiboContent.clicked()
-                    usWeiboContent.repostedWeiboClicked();
-                }
+        DelegateRepostedWeibo{
+            id:delegateRepostedWeibo
+            isInvalid: model.retweeted_status == undefined
+            retweetWeibo: model.retweeted_status
+            
+            onRetweetClicked: {
+                //usWeiboContent.clicked()
+                usWeiboContent.repostedWeiboClicked();
             }
         }
         
