@@ -165,9 +165,8 @@ Item {
 
             DelegateRepostedWeibo{
                 id:delegateRepostedWeibo
-                visible: {
-//                    console.log("========================DelegateWeibo  model.retweeted_statu " + model.retweeted_status)
-                    model.retweeted_status != undefined || model.retweeted_status != ""
+                isInvalid: {
+                    return model.retweeted_status == undefined || model.retweeted_status == ""
                 }
                 retweetWeibo: model.retweeted_status
                 

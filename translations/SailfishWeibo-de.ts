@@ -397,13 +397,6 @@
     </message>
 </context>
 <context>
-    <name>UserAvatarHeader</name>
-    <message>
-        <source> From </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>UserPage</name>
     <message>
         <source>Bilateral</source>

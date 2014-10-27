@@ -15,13 +15,12 @@ import Sailfish.Silica 1.0
     //color: Qt.rgba(255, 255, 255, 0.3)
 
     property var retweetWeibo
-    property bool isInvalid: retweetWeibo == undefined
+    property bool isInvalid //: retweetWeibo == undefined
 //    property var itemPic: isInvalid ? { "null": null } : retweetWeibo.pic_urls
 
     signal retweetClicked
 
     Component.onCompleted: {
-//        console.log("=========== usRepostWeiboContent isInvalid  " + isInvalid)
         if ( !isInvalid && retweetWeibo.pic_urls != undefined && retweetWeibo.pic_urls.length > 0) {
             modelImages.clear()
             for (var i=0; i<retweetWeibo.pic_urls.length; i++) {
@@ -33,9 +32,8 @@ import Sailfish.Silica 1.0
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            var tmp = retweetWeibo.retweeted_status
-           console.log("retweetWeibo.retweeted_status: ", JSON.stringify(tmp))
-            
+//            var tmp = retweetWeibo.retweeted_status
+//           console.log("retweetWeibo.retweeted_status: ", JSON.stringify(tmp))
             usRepostWeiboContent.retweetClicked()
         }
     }
@@ -56,11 +54,11 @@ import Sailfish.Silica 1.0
         id: columnWContent
         anchors {
             top: parent.top
-            topMargin: Theme.paddingSmall// 1//units.gu(1)
+            topMargin: Theme.paddingSmall
             left: parent.left
             right: parent.right
-            leftMargin: Theme.paddingSmall//1// units.gu(1)
-            rightMargin:Theme.paddingSmall//1// units.gu(1)
+            leftMargin: Theme.paddingSmall
+            rightMargin:Theme.paddingSmall
         }
         spacing: Theme.paddingSmall
 
@@ -68,7 +66,7 @@ import Sailfish.Silica 1.0
             id:repostAvaterHeader
             width: parent.width *7/10
             height:Theme.itemSizeSmall
-            visible: isInvalid
+            visible: !isInvalid
             
             userName: isInvalid ? "" : retweetWeibo.user.screen_name
             userNameFontSize: Theme.fontSizeExtraSmall
@@ -78,7 +76,6 @@ import Sailfish.Silica 1.0
                                + qsTr(" From ") +GetURL.linkToStr(retweetWeibo.source)
 
             onUserAvatarClicked: {
-                console.log("======== DelegateReposted Weibo usAvatar clicked");
                 toUserPage(retweetWeibo.user.id)
             }
         }
