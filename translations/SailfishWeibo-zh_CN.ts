@@ -114,7 +114,7 @@
 <context>
     <name>DelegateRepostedWeibo</name>
     <message>
-        <location filename="../qml/components/DelegateRepostedWeibo.qml" line="78"/>
+        <location filename="../qml/components/DelegateRepostedWeibo.qml" line="83"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
@@ -489,9 +489,8 @@
 <context>
     <name>UserAvatarHeader</name>
     <message>
-        <location filename="../qml/components/UserAvatarHeader.qml" line="69"/>
         <source> From </source>
-        <translation type="unfinished">来自</translation>
+        <translation type="obsolete">来自</translation>
     </message>
 </context>
 <context>
@@ -609,12 +608,12 @@
 <context>
     <name>WeiboTab</name>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="113"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="115"/>
         <source>Repost</source>
         <translation type="unfinished">转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="123"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="125"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>

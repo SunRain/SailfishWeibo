@@ -53,13 +53,11 @@ Item {
         //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
         onWeiboPutSucceed: {
             if (action == WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE) {
-                var json = JSON.parse(replyData);
-                for (var i=0; i<json.statuses.length; i++) {
-//                    console.log("============================ weiboTab append " + JSON.stringify(json.statuses[i]))
-                    modelWeibo.append( json.statuses[i] )
+                var jsonObj = JSON.parse(replyData);
+                for (var i=0; i<jsonObj.statuses.length; i++) {
+                    modelWeibo.append( jsonObj.statuses[i] )
                 }
                 stopBusyIndicator();
-                modelWeibo.sync();
             }
         }
         onTokenExpired: {
@@ -94,12 +92,7 @@ Item {
         id: delegateWeibo
         
         DelegateWeibo {
-            //            onClicked: {
-            //                console.log("WeiboTab === weibo Detail:" + JSON.stringify(modelWeibo.get(index)))
-            //                toWeiboPage(modelWeibo, index)
-            //            }
             onUsWeiboClicked: {
-                console.log("WeiboTab === onUsWeiboClicked");
                 toWeiboPage(modelWeibo, index);
             }
             onRepostedWeiboClicked: {
