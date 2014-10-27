@@ -238,6 +238,7 @@ Page {
                         }
                         delegate: delegateComment
                         footer: FooterLoadMore {
+                            visible: modelComment.count != 0
                             onClicked: {
                                 scrollArea.addMore();
                             }

@@ -114,7 +114,7 @@
 <context>
     <name>DelegateRepostedWeibo</name>
     <message>
-        <location filename="../qml/components/DelegateRepostedWeibo.qml" line="83"/>
+        <location filename="../qml/components/DelegateRepostedWeibo.qml" line="76"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
@@ -127,17 +127,17 @@
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="196"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="195"/>
         <source>repost: </source>
         <translation>转发：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="212"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="211"/>
         <source>comment: </source>
         <translation>评论：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="228"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="227"/>
         <source>like: </source>
         <translation>顶：</translation>
     </message>
@@ -595,12 +595,12 @@
         <translation type="unfinished">评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="278"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="279"/>
         <source> From </source>
         <translation type="unfinished">来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="300"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="301"/>
         <source>Reply</source>
         <translation type="unfinished">回复</translation>
     </message>
@@ -608,12 +608,12 @@
 <context>
     <name>WeiboTab</name>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="115"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="106"/>
         <source>Repost</source>
         <translation type="unfinished">转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="125"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="116"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>
