@@ -57,6 +57,9 @@ Item {
                 for (var i=0; i<jsonObj.statuses.length; i++) {
                     modelWeibo.append( jsonObj.statuses[i] )
                 }
+                if (lvHomeWeibo.model == undefined) {
+                    lvHomeWeibo.model = modelWeibo;
+                }
                 stopBusyIndicator();
             }
         }
@@ -75,7 +78,7 @@ Item {
         }
         
         cacheBuffer: 999999
-        model: modelWeibo
+       // model: modelWeibo
         footer: modelWeibo.count == 0 ? null : footerComponent
         delegate: delegateWeibo
         
