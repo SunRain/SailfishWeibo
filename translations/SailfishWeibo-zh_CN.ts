@@ -496,75 +496,81 @@
 <context>
     <name>UserPage</name>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="114"/>
+        <location filename="../qml/ui/UserPage.qml" line="137"/>
         <source>About user</source>
-        <translation>用户</translation>
+        <translation type="unfinished">用户</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="174"/>
+        <location filename="../qml/ui/UserPage.qml" line="221"/>
         <source>Bilateral</source>
-        <translation>互相关注</translation>
+        <translation type="unfinished">互相关注</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="177"/>
+        <location filename="../qml/ui/UserPage.qml" line="223"/>
         <source>Following</source>
-        <translation>关注中</translation>
+        <translation type="unfinished">关注中</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="181"/>
+        <location filename="../qml/ui/UserPage.qml" line="227"/>
         <source>Follower</source>
-        <translation>关注我的</translation>
+        <translation type="unfinished">关注我的</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="184"/>
+        <location filename="../qml/ui/UserPage.qml" line="229"/>
+        <location filename="../qml/ui/UserPage.qml" line="255"/>
         <source>Follow</source>
-        <translation>关注</translation>
+        <translation type="unfinished">关注</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="237"/>
+        <location filename="../qml/ui/UserPage.qml" line="253"/>
+        <source>CancelFollowing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserPage.qml" line="338"/>
         <source>Description: </source>
-        <translation>基本信息</translation>
+        <translation type="unfinished">基本信息</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="273"/>
+        <location filename="../qml/ui/UserPage.qml" line="374"/>
         <source>Weibo: </source>
-        <translation>微博</translation>
+        <translation type="unfinished">微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="289"/>
+        <location filename="../qml/ui/UserPage.qml" line="390"/>
         <source>following: </source>
-        <translation>Ta关注的用户</translation>
+        <translation type="unfinished">Ta关注的用户</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="312"/>
+        <location filename="../qml/ui/UserPage.qml" line="413"/>
         <source>follower: </source>
-        <translation>关注Ta的</translation>
+        <translation type="unfinished">关注Ta的</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="383"/>
+        <location filename="../qml/ui/UserPage.qml" line="466"/>
         <source>&apos;s RecentWeibo</source>
-        <translation>的最新微博</translation>
+        <translation type="unfinished">的最新微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="478"/>
+        <location filename="../qml/ui/UserPage.qml" line="564"/>
         <source>repost: </source>
-        <translation>转发：</translation>
+        <translation type="unfinished">转发：</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="501"/>
+        <location filename="../qml/ui/UserPage.qml" line="580"/>
         <source>comment: </source>
-        <translation>回复：</translation>
+        <translation type="unfinished">回复：</translation>
     </message>
     <message>
-        <location filename="../qml/ui/UserPage.qml" line="524"/>
+        <location filename="../qml/ui/UserPage.qml" line="596"/>
         <source>like: </source>
-        <translation>顶：</translation>
+        <translation type="unfinished">顶：</translation>
     </message>
 </context>
 <context>
     <name>UserWeibo</name>
     <message>
-        <location filename="../qml/ui/UserWeibo.qml" line="91"/>
+        <location filename="../qml/ui/UserWeibo.qml" line="90"/>
         <source>&apos;s Weibo</source>
         <translation>的微博</translation>
     </message>
