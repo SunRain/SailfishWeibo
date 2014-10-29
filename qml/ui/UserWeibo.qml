@@ -27,14 +27,18 @@ Page {
 //        isRefresh = true
         //userStatus(Settings.getAccess_token(), pageNum)
         var method = WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE;
-        api.setWeiboAction(method, {'page':pageNum/*,'access_token':Settings.getAccess_token()*/});
+        api.setWeiboAction(method, {'page':pageNum,
+                               'uid':uid
+                               /*,'access_token':Settings.getAccess_token()*/});
     }
 
     function addMore() {
         pageNum++
 //        userStatus(Settings.getAccess_token(), pageNum)
         var method = WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE;
-        api.setWeiboAction(method, {'page':pageNum/*,'access_token':Settings.getAccess_token()*/});
+        api.setWeiboAction(method, {'page':pageNum,
+                               'uid':uid
+                               /*,'access_token':Settings.getAccess_token()*/});
         
     }
 
