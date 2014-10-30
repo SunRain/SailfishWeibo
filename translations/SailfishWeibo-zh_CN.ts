@@ -263,12 +263,28 @@
 <context>
     <name>MessageTab</name>
     <message>
-        <location filename="../qml/ui/MessageTab.qml" line="55"/>
+        <location filename="../qml/ui/MessageTab.qml" line="62"/>
         <source>You have no new message</source>
         <translation>没有新信息</translation>
     </message>
     <message>
-        <location filename="../qml/ui/MessageTab.qml" line="90"/>
+        <location filename="../qml/ui/MessageTab.qml" line="56"/>
+        <location filename="../qml/ui/MessageTab.qml" line="59"/>
+        <source>You have </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/MessageTab.qml" line="56"/>
+        <source> new messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/MessageTab.qml" line="59"/>
+        <source> new message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/MessageTab.qml" line="89"/>
         <source>Message</source>
         <translation>信息</translation>
     </message>
