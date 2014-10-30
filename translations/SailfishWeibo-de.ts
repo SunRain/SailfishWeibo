@@ -222,6 +222,18 @@
         <source>Message</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You have </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> new messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> new message</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
