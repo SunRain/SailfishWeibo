@@ -594,7 +594,7 @@
 <context>
     <name>WeiboMentioned</name>
     <message>
-        <location filename="../qml/ui/WeiboMentioned.qml" line="75"/>
+        <location filename="../qml/ui/WeiboMentioned.qml" line="68"/>
         <source>Weibo mentioned me</source>
         <translation>提到我的</translation>
     </message>

@@ -6,9 +6,10 @@ import "../js/weiboapi.js" as WB
 import "../js/Settings.js" as Settings
 import "../components"
 
+import com.sunrain.sinaweibo 1.0
+
 Page {
     id: weiboMentionedPage
-    //title: qsTr("Weibo mentioned me")
 
     property var uid
     property string userName: ""
@@ -18,55 +19,47 @@ Page {
         modelWeibo.clear()
 
         pageNum = 1
-//        isRefresh = true
-        weiboMentioned(Settings.getAccess_token(), pageNum)
+        weiboMentioned(pageNum)
     }
 
     function addMore() {
         pageNum++
-        weiboMentioned(Settings.getAccess_token(), pageNum)
+        weiboMentioned(pageNum)
     }
 
     //////////////////////////////////////////////////////////////////         user status mentioned me
-    function weiboMentioned(token, page)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-//                        console.log("weibo mentioned: ", JSON.stringify(result))
-                        for (var i=0; i<result.statuses.length; i++) {
-                            modelWeibo.append( result.statuses[i] )
-                        }
-                    }
-                }else{
-                    // TODO  empty result
+    function weiboMentioned(page) {        
+        var method = WeiboMethod.WBOPT_GET_STATUSES_MENTIONS;
+        api.setWeiboAction(method, {'page':pageNum});
+    }
+
+    Connections {
+        target: api
+        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+        onWeiboPutSucceed: {
+            if (action == WeiboMethod.WBOPT_GET_STATUSES_MENTIONS) {
+                var jsonObj = JSON.parse(replyData);
+                for (var i=0; i<jsonObj.statuses.length; i++) {
+                    modelWeibo.append( jsonObj.statuses[i] )
+                }
+                if (lvUserWeibo.model == undefined) {
+                    lvUserWeibo.model = modelWeibo;
                 }
             }
         }
-
-        WB.messageGetWeiboMentioned(token, page, new observer())
     }
-
+    
     Component.onCompleted: {
         weiboMentionedPage.refresh();
     }
 
     ListView{
         id: lvUserWeibo
-        anchors {
-            fill: parent
-            //margins: units.gu(1)
-        }
-        cacheBuffer: 999999/*height * 2*/
-        //spacing: units.gu(1)
-        model: modelWeibo
-        footer: /*footerWeibo*/FooterLoadMore {
+        anchors.fill: parent
+        cacheBuffer: 999999
+//        model: modelWeibo
+        footer: FooterLoadMore {
+            visible: modelWeibo.count != 0
             onClicked: { weiboMentionedPage.addMore();}
         }
         delegate: delegateWeibo
@@ -95,23 +88,6 @@ Page {
             }
         }
     }
-
-//    Component {
-//        id: footerWeibo
-
-//        Item {
-//            width: lvUserWeibo.width
-//            height: Theme.itemSizeMedium
-
-//            Button {
-//                anchors.centerIn: parent
-//                text: qsTr("click here to load more..")
-//                onClicked: {
-//                    weiboMentionedPage.addMore();
-//                }
-//            }
-//        }
-//    }
 
     ListModel {
         id: modelWeibo
