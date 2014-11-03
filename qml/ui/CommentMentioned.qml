@@ -7,6 +7,8 @@ import "../js/Settings.js" as Settings
 import "../js/getURL.js" as GetURL
 import "../components"
 
+import com.sunrain.sinaweibo 1.0
+
 Page{
     id: commentMentionedPage
     //title: qsTr("Comments mentioned me")
@@ -23,39 +25,46 @@ Page{
 
         pageNum = 1
 //        isRefresh = true
-        commentMentioned(Settings.getAccess_token(), pageNum)
+        commentMentioned(pageNum)
     }
 
     function addMore() {
         pageNum++
-        commentMentioned(Settings.getAccess_token(), pageNum)
+        commentMentioned(pageNum)
     }
 
     //////////////////////////////////////////////////////////////////         get all comment mentioned me
-    function commentMentioned(token, page)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-//                        console.log("all comment: ", JSON.stringify(result.comments[0]))
-                        for (var i=0; i<result.comments.length; i++) {
-                            modelComment.append( result.comments[i] )
-                        }
-                    }
-                }else{
-                    // TODO  empty result
+    function commentMentioned(page) {
+//        // 2/comments/mentions: 获取@到我的评论
+//        REQUEST_API_BEGIN(comments_mentions, "2/comments/mentions")
+//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
+//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+//                ("since_id", 0)  //若指定此参数，则返回ID比since_id大的评论（即比since_id时间晚的评论），默认为0。
+//                ("max_id", 0)  //若指定此参数，则返回ID小于或等于max_id的评论，默认为0。
+//                ("count", 50)  //单页返回的记录条数，默认为50。
+//                ("page", 1)  //返回结果的页码，默认为1。
+//                ("filter_by_author", 0)  //作者筛选类型，0：全部、1：我关注的人、2：陌生人，默认为0。
+//                ("filter_by_source", 0)  //来源筛选类型，0：全部、1：来自微博的评论、2：来自微群的评论，默认为0。
+//        REQUEST_API_END()
+        // WBOPT_GET_COMMENTS_MENTIONS,//@到我的评论
+        var method = WeiboMethod.WBOPT_GET_COMMENTS_MENTIONS;
+        api.setWeiboAction(method, {'page':pageNum});
+    }
+    
+    
+    Connections {
+        target: api
+        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+        onWeiboPutSucceed: {
+            if (action == WeiboMethod.WBOPT_GET_COMMENTS_MENTIONS) {
+                var result = JSON.parse(replyData);
+                for (var i=0; i<result.comments.length; i++) {
+                    modelComment.append( result.comments[i] )
                 }
             }
         }
-
-        WB.messageGetCommentMentioned(token, page, new observer())
     }
+    
     Component.onCompleted: {
         commentMentionedPage.refresh();
     }
@@ -94,9 +103,6 @@ Page{
 
     SilicaListView {
         anchors.fill: parent
-        //width: parent.width
-        //height: contentItem.childrenRect.height
-        //spacing: units.gu(1)
         model: ListModel { id: modelComment }
         delegate: delegateComment
         cacheBuffer: 9999
@@ -104,15 +110,19 @@ Page{
             id:pageHeader
             title: qsTr("Comments mentioned me")
         }
+        footer: FooterLoadMore {
+            visible: modelComment.count != 0
+            onClicked: {addMore()}
+        }
     }
 
 
     Component {
         id: delegateComment
 
-        ListItem {
+        OptionItem {
             width: parent.width
-            contentHeight: columnWContent.height + Theme.paddingMedium //childrenRect.height
+            contentHeight: columnWContent.height + Theme.paddingMedium
 
             menu: contextMenu
             
@@ -120,13 +130,11 @@ Page{
                 id: columnWContent
                 anchors {
                     top: parent.top
-                    topMargin: Theme.paddingMedium//units.gu(0.5)
+                    topMargin: Theme.paddingMedium
                     left: parent.left
                     right: parent.right
                 }
-                spacing: Theme.paddingMedium//units.gu(0.5)
-                //height: childrenRect.height
-
+                spacing: Theme.paddingMedium
                 Row {
                     id: rowUser
                     anchors {
@@ -243,7 +251,6 @@ Page{
                             font.pixelSize: Theme.fontSizeSmall
                             text: usWeiboContent.status.text
                         }
-
                     } // column
                 } // user weibo
 

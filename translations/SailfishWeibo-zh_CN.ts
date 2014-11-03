@@ -83,22 +83,22 @@
 <context>
     <name>CommentMentioned</name>
     <message>
-        <location filename="../qml/ui/CommentMentioned.qml" line="105"/>
+        <location filename="../qml/ui/CommentMentioned.qml" line="111"/>
         <source>Comments mentioned me</source>
         <translation>@我的评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentMentioned.qml" line="171"/>
+        <location filename="../qml/ui/CommentMentioned.qml" line="179"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentMentioned.qml" line="269"/>
+        <location filename="../qml/ui/CommentMentioned.qml" line="276"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentMentioned.qml" line="281"/>
+        <location filename="../qml/ui/CommentMentioned.qml" line="288"/>
         <source>View weibo</source>
         <translation>查看微博</translation>
     </message>
