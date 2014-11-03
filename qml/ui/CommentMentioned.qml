@@ -135,51 +135,17 @@ Page{
                     right: parent.right
                 }
                 spacing: Theme.paddingMedium
-                Row {
-                    id: rowUser
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: Theme.paddingSmall 
-                        rightMargin: Theme.paddingSmall 
-                    }
-                    spacing: Theme.paddingSmall 
-                    height: Math.max(rowUserColumn.height,usAvatar.height)//usAvatar.height
-
-                    Item {
-                        id: usAvatar
-                        width: 64
-                        height: width
-                        Image {
-                            width: parent.width
-                            height: parent.height
-                            smooth: true
-                            fillMode: Image.PreserveAspectFit
-                            source: model.user.profile_image_url
-                        }
-                    }
-
-                    Column {
-                        id:rowUserColumn
-                        spacing: Theme.paddingSmall
-
-                        Label {
-                            id: labelUserName
-                            color: Theme.primaryColor
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            text: model.user.screen_name
-                        }
-
-                        Label {
-                            id: labelCommentTime
-                            color: Theme.secondaryColor
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            text: {
-                                return DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
-                                + qsTr(" From ") + GetURL.linkToStr(model.source)
-                            }
-                        }
-                    }
+                
+                UserAvatarHeader {
+                    id:avaterHeader
+                    width: parent.width *7/10
+                    height:Theme.itemSizeSmall
+                    
+                    userName: model.user.screen_name
+                    userNameFontSize: Theme.fontSizeExtraSmall
+                    userAvatar: model.user.profile_image_url
+                    weiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
+                               + qsTr(" From ") + GetURL.linkToStr(model.source)
                 }
 
                 Label {
