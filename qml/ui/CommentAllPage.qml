@@ -7,6 +7,8 @@ import "../js/Settings.js" as Settings
 import "../js/getURL.js" as GetURL
 import "../components"
 
+import com.sunrain.sinaweibo 1.0
+
 Page {
     id: commentAllPage
 
@@ -22,39 +24,45 @@ Page {
 
         pageNum = 1
 //        isRefresh = true
-        commentAll(Settings.getAccess_token(), pageNum)
+        commentAll(pageNum)
     }
 
     function addMore() {
         pageNum++
-        commentAll(Settings.getAccess_token(), pageNum)
+        commentAll(pageNum)
     }
 
     //////////////////////////////////////////////////////////////////         get all comment
-    function commentAll(token, page)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-//                        console.log("all comment: ", JSON.stringify(result))
-                        for (var i=0; i<result.comments.length; i++) {
-                            modelComment.append( result.comments[i] )
-                        }
-                    }
-                }else{
-                    // TODO  empty result
+    function commentAll(/*token, */page) {
+//        // 2/comments/timeline: 获取用户发送及收到的评论列表
+//        REQUEST_API_BEGIN(comments_timeline, "2/comments/timeline")
+//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
+//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+//                ("since_id", 0)  //若指定此参数，则返回ID比since_id大的评论（即比since_id时间晚的评论），默认为0。
+//                ("max_id", 0)  //若指定此参数，则返回ID小于或等于max_id的评论，默认为0。
+//                ("count", 50)  //单页返回的记录条数，默认为50。
+//                ("page", 1)  //返回结果的页码，默认为1。
+//                ("trim_user", 0)  //返回值中user字段开关，0：返回完整user字段、1：user字段仅返回user_id，默认为0。
+//        REQUEST_API_END()
+        //WBOPT_GET_COMMENTS_TIMELINE,//获取当前用户发送及收到的评论列表
+        
+        var method = WeiboMethod.WBOPT_GET_COMMENTS_TIMELINE;
+        api.setWeiboAction(method, {'page':pageNum});
+    }
+    
+    Connections {
+        target: api
+        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+        onWeiboPutSucceed: {
+            if (action == WeiboMethod.WBOPT_GET_COMMENTS_TIMELINE) {
+                var result = JSON.parse(replyData);
+                for (var i=0; i<result.comments.length; i++) {
+                    modelComment.append( result.comments[i] )
                 }
             }
         }
-
-        WB.messageGetAllComment(token, page, new observer())
     }
+    
     Component.onCompleted: {
         refresh();
     }
@@ -68,13 +76,17 @@ Page {
             id:pageHeader
             title: qsTr("All comments")
         }
+        footer: FooterLoadMore {
+            visible: modelComment.count != 0
+            onClicked: {addMore()}
+        }
     }
 
 
     Component {
         id: delegateComment
 
-        ListItem {
+        OptionItem {
             width: parent.width
             contentHeight: columnWContent.height + Theme.paddingMedium 
 
@@ -84,59 +96,23 @@ Page {
                 id: columnWContent
                 anchors {
                     top: parent.top
-                    topMargin: Theme.paddingMedium//0.5//units.gu(0.5)
+                    topMargin: Theme.paddingMedium
                     left: parent.left
                     right: parent.right
                 }
                 spacing: Theme.paddingMedium
 
-                Row {
-                    id: rowUser
-                    anchors { 
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: Theme.paddingSmall 
-                        rightMargin:Theme.paddingSmall 
-                    }
-                    spacing:Theme.paddingSmall 
-                    height: Math.max(rowUserColumn.height,usAvatar.height)//owUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height//usAvatar.height
-
-                    Item{
-                        id: usAvatar
-                        width: 64//units.gu(4.5)
-                        height: width
-                        Image {
-                            width: parent.width
-                            height: parent.height
-                            smooth: true
-                            fillMode: Image.PreserveAspectFit
-                            source: model.user.profile_image_url
-                        }
-                    }
-
-                    Column {
-                        id:rowUserColumn
-                        spacing: Theme.paddingSmall
-
-                        Label {
-                            id: labelUserName
-                            color: Theme.primaryColor
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            text: model.user.screen_name
-                        }
-
-                        Label {
-                            id: labelCommentTime
-                            color: Theme.secondaryColor
-                            font.pixelSize: Theme.fontSizeExtraSmall
-                            text:{
-                                return DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
-                                + qsTr(" From ") + GetURL.linkToStr(model.source)
-                            }
-                        }
-                    }
+                UserAvatarHeader {
+                    id:avaterHeader
+                    width: parent.width *7/10
+                    height:Theme.itemSizeSmall
+                    
+                    userName: model.user.screen_name
+                    userNameFontSize: Theme.fontSizeExtraSmall
+                    userAvatar: model.user.profile_image_url
+                    weiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
+                               + qsTr(" From ") + GetURL.linkToStr(model.source)
                 }
-
                 Label {
                     id: labelComment
                     anchors { 
@@ -183,7 +159,6 @@ Page {
                             rightMargin: Theme.paddingSmall 
                         }
                         spacing:Theme.paddingSmall 
-                        //height: childrenRect.height
 
                         Column {
                             id: colUser

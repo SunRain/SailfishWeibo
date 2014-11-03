@@ -60,22 +60,22 @@
 <context>
     <name>CommentAllPage</name>
     <message>
-        <location filename="../qml/ui/CommentAllPage.qml" line="69"/>
+        <location filename="../qml/ui/CommentAllPage.qml" line="77"/>
         <source>All comments</source>
         <translation>所有评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentAllPage.qml" line="134"/>
+        <location filename="../qml/ui/CommentAllPage.qml" line="114"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentAllPage.qml" line="225"/>
+        <location filename="../qml/ui/CommentAllPage.qml" line="253"/>
         <source>Reply comment</source>
         <translation>回复评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentAllPage.qml" line="237"/>
+        <location filename="../qml/ui/CommentAllPage.qml" line="265"/>
         <source>View weibo</source>
         <translation>查看微博</translation>
     </message>
