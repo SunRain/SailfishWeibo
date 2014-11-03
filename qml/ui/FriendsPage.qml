@@ -6,6 +6,9 @@ import "../js/weiboapi.js" as WB
 import "../js/Settings.js" as Settings
 import "../components"
 
+import com.sunrain.sinaweibo 1.0
+
+
 Page {
     id: friendsPage
     //title: qsTr("Friends")
@@ -28,7 +31,7 @@ Page {
             lvLoader.sourceComponent = lvLoader.Null;
             lvLoader.sourceComponent = lvUsers0Component;
             if (modelFollowing.count == 0) {
-                userGetFollowing(Settings.getAccess_token(), uid, 30, modelFollowing.cursor);
+                userGetFollowing(uid, 30, modelFollowing.cursor);
             } 
             
             break
@@ -39,7 +42,7 @@ Page {
             lvLoader.sourceComponent = lvLoader.Null;
             lvLoader.sourceComponent = lvUsers1Component;
             if (modelFollower.count == 0) {
-                userGetFollower(Settings.getAccess_token(), uid, 30, modelFollower.cursor)
+                userGetFollower(uid, 30, modelFollower.cursor)
             }
             
             break
@@ -50,7 +53,7 @@ Page {
             lvLoader.sourceComponent = lvLoader.Null;
             lvLoader.sourceComponent = lvUsers2Component
             if (modelBilateral.count == 0) {
-                userGetBilateral(Settings.getAccess_token(), uid, 30, modelBilateral.cursor)
+                userGetBilateral(uid, 30, modelBilateral.cursor)
             }
             
             break
@@ -58,108 +61,113 @@ Page {
     }
 
     // get following
-    function userGetFollowing(token, uid, count, cursor)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-                       console.log("cursor: ", result.next_cursor, result.previous_cursor)
-                        modelFollowing.cursor = result.next_cursor
-                        if (result.next_cursor == 0) {
-                            lvUsers0.footerItem.visible = false
-                        }
-                        for (var i=0; i<result.users.length; i++) {
-                            modelFollowing.append(result.users[i])
-                        }
-                    }
-                }else{
-                    // TODO  empty result
+    function userGetFollowing(uid, count, cursor) {
+//        REQUEST_API_BEGIN(friendships_friends, "2/friendships/friends")
+//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
+//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+//                ("uid", 0)  //需要查询的用户UID。
+//                ("screen_name", "")  //需要查询的用户昵称。
+//                ("count", 50)  //单页返回的记录条数，默认为50，最大不超过200。
+//                ("cursor", 0)  //返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
+//                ("trim_status", 0)  //返回值中user字段中的status字段开关，0：返回完整status字段、1：status字段仅返回status_id，默认为1。
+//        REQUEST_API_END()
+        //WBOPT_GET_FRIENDSHIPS_FRIENDS
+        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS;
+        api.setWeiboAction(method, {
+                               'uid':uid,
+                               'count':count,
+                               'cursor':cursor});
+    }
+    Connections {
+        target: api
+        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+        onWeiboPutSucceed: {
+            var result = JSON.parse(replyData);
+            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS) {
+                modelFollowing.cursor = result.next_cursor
+                if (result.next_cursor == 0) {
+                    lvUsers0.footerItem.visible = false
+                }
+                for (var i=0; i<result.users.length; i++) {
+                    modelFollowing.append(result.users[i])
                 }
             }
+            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_FOLLOWERS) {
+                modelFollower.cursor = result.next_cursor
+                if (result.next_cursor == 0) {
+                    lvUsers1.footerItem.visible = false
+                }
+                for (var i=0; i<result.users.length; i++) {
+                    modelFollower.append(result.users[i])
+                }
+            }
+            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS_BILATERAL) {
+                for (var i=0; i<result.users.length; i++) {
+                    modelBilateral.append(result.users[i])
+                }
+                if (modelBilateral.count == result.total_number) {
+                    lvUsers2.footerItem.visible = false
+                }
+            }
+            
         }
-
-        WB.userGetFollowing(token, uid, count, cursor, new observer())
     }
 
     function addMoreFollowing() {
 //        console.log("modelFollowing.cursor: ", modelFollowing.cursor)
-        userGetFollowing(Settings.getAccess_token(), uid, 30, modelFollowing.cursor)
+        userGetFollowing(uid, 30, modelFollowing.cursor)
     }
 
     // get follower
-    function userGetFollower(token, uid, count, cursor)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-                        console.log("cursor: ", result.next_cursor, result.previous_cursor)
-                        modelFollower.cursor = result.next_cursor
-                        if (result.next_cursor == 0) {
-                            lvUsers1.footerItem.visible = false
-                        }
-                        for (var i=0; i<result.users.length; i++) {
-                            modelFollower.append(result.users[i])
-                        }
-                    }
-                }else{
-                    // TODO  empty result
-                }
-            }
-        }
-
-        WB.userGetFollower(token, uid, count, cursor, new observer())
+    function userGetFollower(uid, count, cursor) {
+//        // 2/friendships/followers: 获取用户粉丝列表
+//        REQUEST_API_BEGIN(friendships_followers, "2/friendships/followers")
+//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
+//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+//                ("uid", 0)  //需要查询的用户UID。
+//                ("screen_name", "")  //需要查询的用户昵称。
+//                ("count", 50)  //单页返回的记录条数，默认为50，最大不超过200。
+//                ("cursor", 0)  //返回结果的游标，下一页用返回值里的next_cursor，上一页用previous_cursor，默认为0。
+//                ("trim_status", 0)  //返回值中user字段中的status字段开关，0：返回完整status字段、1：status字段仅返回status_id，默认为1。
+//        REQUEST_API_END()
+        //WBOPT_GET_FRIENDSHIPS_FOLLOWERS
+        
+        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_FOLLOWERS;
+        api.setWeiboAction(method, {
+                               'uid':uid,
+                               'count':count,
+                               'cursor':cursor});
     }
 
     function addMoreFollower() {
 //        console.log("modelFollower.cursor: ", modelFollower.cursor)
-        userGetFollower(Settings.getAccess_token(), uid, 30, modelFollower.cursor)
+        userGetFollower(uid, 30, modelFollower.cursor)
     }
 
     // get bilateral
-    function userGetBilateral(token, uid, count, page)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-//                        modelBilateral.cursor = result.next_cursor
-                        for (var i=0; i<result.users.length; i++) {
-                            modelBilateral.append(result.users[i])
-                        }
-                        if (modelBilateral.count == result.total_number) {
-                            lvUsers2.footerItem.visible = false
-                        }
-                    }
-                }else{
-                    // TODO  empty result
-                }
-            }
-        }
-
-        WB.userGetBilateral(token, uid, count, page, new observer())
+    function userGetBilateral(uid, count, page) {
+//        // 2/friendships/friends/bilateral: 获取双向关注列表
+//        REQUEST_API_BEGIN(friendships_friends_bilateral, "2/friendships/friends/bilateral")
+//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
+//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+//                ("uid", 0)  //需要获取双向关注列表的用户UID。
+//                ("count", 50)  //单页返回的记录条数，默认为50。
+//                ("page", 1)  //返回结果的页码，默认为1。
+//                ("sort", 0)  //排序类型，0：按关注时间最近排序，默认为0。
+//        REQUEST_API_END()
+        //WBOPT_GET_FRIENDSHIPS_FRIENDS_BILATERAL
+        
+        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS_BILATERAL;
+        api.setWeiboAction(method, {
+                               'uid':uid,
+                               'count':count,
+                               'page':page});
     }
 
     function addMoreBilateral() {
         console.log("modelBilateral.cursor: ", modelBilateral.cursor)
         modelBilateral.cursor++
-        userGetBilateral(Settings.getAccess_token(), uid, 30, modelBilateral.cursor)
+        userGetBilateral(uid, 30, modelBilateral.cursor)
     }
 
 
@@ -290,7 +298,7 @@ Page {
                 id: columnWContent
                 anchors {
                     top: parent.top
-                    topMargin: Theme.paddingMedium//0.5//units.gu(0.5)
+                    topMargin: Theme.paddingMedium
                     left: parent.left
                     right: parent.right
                 }
