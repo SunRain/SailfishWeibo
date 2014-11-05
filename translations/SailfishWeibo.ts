@@ -296,6 +296,14 @@
         <source>Sailfish Weibo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cache: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DeleteCache</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SendPage</name>
