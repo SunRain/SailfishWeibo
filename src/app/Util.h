@@ -9,6 +9,7 @@
 class Util : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString getCachePath READ getCachePath)
 public:
     static Util *getInstance();
     virtual ~Util();
@@ -28,6 +29,9 @@ public:
     ///解析图片链接，返回本地缓存/远程链接
     Q_INVOKABLE QString parseImageUrl(const QString &remoteUrl);
     Q_INVOKABLE void saveRemoteImage(const QString &remoteUrl);
+    
+    QString getCachePath() const;
+    Q_INVOKABLE static bool deleteDir(const QString &dirName);
 signals:
     
 public slots:

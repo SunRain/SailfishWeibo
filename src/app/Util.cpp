@@ -2,6 +2,7 @@
 #include <QSettings>
 #include <QGuiApplication>
 #include <QRegExp>
+#include <QDir>
 
 #include <sailfishapp.h>
 
@@ -153,6 +154,42 @@ void Util::saveRemoteImage(const QString &remoteUrl)
         return;
     }
     saveToCache(remoteUrl, cachePath,fileName);
+}
+
+QString Util::getCachePath() const
+{
+    return QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+}
+
+bool Util::deleteDir(const QString &dirName)
+{
+    if (dirName.isEmpty())  return false;
+    
+    QDir dir(dirName);
+    if(!dir.exists()) return false;
+    
+    QFileInfoList files = dir.entryInfoList();
+    if (files.isEmpty()) return false;
+    
+    QString tmpStr;
+    foreach (QFileInfo info, files) {
+        tmpStr = info.fileName();
+        
+        if (tmpStr == "." || tmpStr == "..") continue;
+        
+        if (info.isDir()) {
+            QString d = QString("%1%2%3").arg(dirName).arg(QDir::separator()).arg(tmpStr);
+            deleteDir(d);
+        } else if (info.isFile()) {;
+            dir.remove(QString("%1%2%3").arg(dirName).arg(QDir::separator()).arg(tmpStr));
+        }
+    }
+    if (dir.exists(dirName)) {
+        if(!dir.rmdir(dirName))
+            return false;
+    }
+    
+    return dir.entryInfoList().isEmpty();    
 }
 
 Util::Util(QObject *parent) :

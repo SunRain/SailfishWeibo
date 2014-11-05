@@ -32,7 +32,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "../js/Settings.js" as Settings
-
+import "../components"
 Page {
     id: mainPage
 
@@ -64,39 +64,89 @@ Page {
 //        }
         
     }
-    SilicaListView {
-        id: listView
+    
+    SilicaFlickable {
+        id:silicaFlickable
         anchors.fill: parent
-        model: pagesModel
-        header: PageHeader { 
-            title: qsTr("Sailfish Weibo")
-        }
+        
+        contentHeight: column.height
 
-        delegate: BackgroundItem {
-            width: listView.width
-            Label {
-                text: qsTr(model.title)
-                color: highlighted ? Theme.highlightColor : Theme.primaryColor
-                anchors{
-                    left: parent.left
-                    leftMargin: Theme.paddingMedium
-                    right: parent.right
-                    rightMargin: Theme.paddingMedium
-                    verticalCenter: parent.verticalCenter
+        Column {
+            id:column
+            
+            anchors{
+                left: parent.left
+                leftMargin: Theme.paddingMedium
+                right: parent.right
+                rightMargin: Theme.paddingMedium
+            }
+            
+            PageHeader { 
+                title: qsTr("Sailfish Weibo")
+            }
+            
+            spacing: Theme.paddingSmall
+            
+            Item {
+                width: parent.width
+                height: listView.height
+                
+                SilicaListView {
+                    id: listView
+                    width: parent.width
+                    height: contentItem.childrenRect.height
+                    model: pagesModel
+                    delegate: BackgroundItem {
+                        width: parent.width
+                        Label {
+                            text: qsTr(model.title)
+                            color: highlighted ? Theme.highlightColor : Theme.primaryColor
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        onClicked: {
+                            console.log("click item " + title + "with targe " + page + " arg " + arg);
+                            if (arg == "getUid") {
+                                //pageStack.push(Qt.resolvedUrl(page))
+                                var uid = Settings.getUid();
+                                toUserPage(uid);
+                            } else {
+                                pageStack.push(Qt.resolvedUrl(page))
+                            }
+                        }
+                    }
                 }
             }
-            onClicked: {
-                console.log("click item " + title + "with targe " + page + " arg " + arg);
-                if (arg == "getUid") {
-                    //pageStack.push(Qt.resolvedUrl(page))
-                    var uid = Settings.getUid();
-                    toUserPage(uid);
-                } else {
-                    pageStack.push(Qt.resolvedUrl(page))
+            
+            Separator {
+                width: parent.width
+                color: Theme.highlightColor
+            }
+
+            OptionItem {
+                id:optionItem
+                width: parent.width
+                Label {
+                    width: parent.width
+                    color: Theme.primaryColor
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    text:qsTr("Cache: ") + util.getCachePath
                 }
+
+                menu: contextMenu
+                ContextMenu {
+                    id:contextMenu
+                    MenuItem {
+                        text: qsTr("DeleteCache")
+                        onClicked: {
+                            remorse.execute(/*optionItem, */"Deleting", function() {
+                                util.deleteDir(util.getCachePath)
+                            });
+                        }
+                    }
+                }
+                RemorsePopup { id: remorse }
             }
         }
-        VerticalScrollDecorator {}
     }
 }
 
