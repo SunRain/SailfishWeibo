@@ -29,32 +29,21 @@ Page {
     property int optionIndex: 0
 
     //////////////////////////////////////////////////////////////////         send weibo
-    function sendStatus(token, status)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-                        if (result.id != undefined) {
-                            addNotification(qsTr("New Weibo sent"), 3)
-                            pageStack.pop()
-                        }
-                    }
-                }else{
-                    // TODO  empty result
-                    addNotification(qsTr("Oops.. something wrong"), 3)
-                }
-            }
-        }
-        
-        WB.weiboSendStatus(token, status, new observer())
+    function sendStatus(status)  {
+//        REQUEST_API_BEGIN(statuses_update, "2/statuses/update")
+//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
+//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+//                ("status", "")  //要发布的微博文本内容，必须做URLencode，内容不超过140个汉字。
+//                ("visible", 0)  //微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0。
+//                ("list_id", "")  //微博的保护投递指定分组ID，只有当visible参数为3时生效且必选。
+//                ("lat", 0.0)  //纬度，有效范围：-90.0到+90.0，+表示北纬，默认为0.0。
+//                ("long", 0.0)  //经度，有效范围：-180.0到+180.0，+表示东经，默认为0.0。
+//                ("annotations", "")  //元数据，主要是为了方便第三方应用记录一些适合于自己使用的信息，每条微博可以包含一个或者多个元数据，必须以json字串的形式提交，字串长度不超过512个字符，具体内容可以自定。
+//                ("rip", "")  //开发者上报的操作用户真实IP，形如：211.156.0.1。   
+        var method = WeiboMethod.WBOPT_POST_STATUSES_UPDATE;
+        api.setWeiboAction(method, {'status':status});
     }
-    
+
     NetworkHelper {
         id: networkHelper
     }
@@ -68,8 +57,7 @@ Page {
             var reply = JSON.parse(response)
             if (reply.error) {
                 addNotification(qsTr("Oops.. something wrong"), 3)
-            }
-            else {
+            } else {
                 if (reply.id != undefined) {
                     addNotification(qsTr("New Weibo sent"), 3)
                     pageStack.pop()
@@ -80,114 +68,136 @@ Page {
     
     //////////////////////////////////////////////////////////////////         send repost
     // is_comment 是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
-    function repostStatus(token, status, id, is_comment)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-                        if (result.id != undefined) {
-                            addNotification(qsTr("Repost sent"), 3)
-                            pageStack.pop()
-                        }
-                    }
-                }else{
-                    // TODO  empty result
-                    addNotification(qsTr("Oops.. something wrong"), 3)
-                }
-            }
-        }
+    function repostStatus(status, id, is_comment) {
+//        REQUEST_API_BEGIN(statuses_repost, "2/statuses/repost")
+//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
+//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+//                ("id", 0)  //要转发的微博ID。
+//                ("status", "")  //添加的转发文本，必须做URLencode，内容不超过140个汉字，不填则默认为“转发微博”。
+//                ("is_comment", 0)  //是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
+//                ("rip", "")  //开发者上报的操作用户真实IP，形如：211.156.0.1。
+        //WBOPT_POST_STATUSES_REPOST,
         
-        WB.weiboRepostStatus(token, status, id, is_comment, new observer())
+        
+        var method = WeiboMethod.WBOPT_POST_STATUSES_REPOST;
+        api.setWeiboAction(method, {
+                               'status':status,
+                               'id':" "+id+" ",
+                               'is_comment':is_comment});
     }
     
     //////////////////////////////////////////////////////////////////         send comment
     // id 需要评论的微博ID。  // comment_ori 当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
-    function sendComment(token, comment, id, comment_ori)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-                        if (result.id != undefined) {
-                            addNotification(qsTr("Comment sent"), 3)
-                            pageStack.pop()
-                        }
-                    }
-                }else{
-                    // TODO  empty result
-                    addNotification(qsTr("Oops.. something wrong"), 3)
-                }
-            }
-        }
+    function sendComment(comment, id, comment_ori)  {
+//        REQUEST_API_BEGIN(comments_create, "2/comments/create")
+//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
+//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+//                ("comment", "")  //评论内容，必须做URLencode，内容不超过140个汉字。
+//                ("id", 0)  //需要评论的微博ID。
+//                ("comment_ori", 0)  //当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
+//                ("rip", "")  //开发者上报的操作用户真实IP，形如：211.156.0.1。
+        // WBOPT_POST_COMMENTS_CREATE,//评论一条微博
         
-        WB.weiboSendComment(token, comment, id, comment_ori , new observer())
+        var method = WeiboMethod.WBOPT_POST_COMMENTS_CREATE;
+        api.setWeiboAction(method, {
+                               'comment':comment,
+                               'id':" "+id+" ",
+                               'comment_ori':comment_ori});
     }
     
     //////////////////////////////////////////////////////////////////         reply comment
     // id, comment_ori same above // commentid 需要回复的评论ID。  without_mention 回复中是否自动加入“回复@用户名”，0：是、1：否，默认为0。
-    function replyComment(token, comment, id, comment_ori, commentid, without_mention)
-    {
-        function observer() {}
-        observer.prototype = {
-            update: function(status, result)
-            {
-                if(status != "error"){
-                    if(result.error) {
-                        // TODO  error handler
-                    }else {
-                        // right result
-                        if (result.id != undefined) {
-                            addNotification(qsTr("Reply sent"), 3)
-                            pageStack.pop()
-                        }
-                    }
-                }else{
-                    // TODO  empty result
+    function replyComment(comment, id, comment_ori, commentid, without_mention) {
+//        REQUEST_API_BEGIN(comments_reply, "2/comments/reply")
+//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
+//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
+//                ("cid", 0)  //需要回复的评论ID。
+//                ("id", 0)  //需要评论的微博ID。
+//                ("comment", "")  //回复评论内容，必须做URLencode，内容不超过140个汉字。
+//                ("without_mention", 0)  //回复中是否自动加入“回复@用户名”，0：是、1：否，默认为0。
+//                ("comment_ori", 0)  //当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
+//                ("rip", "")  //开发者上报的操作用户真实IP，形如：211.156.0.1。
+        //WBOPT_POST_COMMENTS_REPLY,//回复一条评论
+        var method = WeiboMethod.WBOPT_POST_COMMENTS_REPLY;
+        api.setWeiboAction(method, {
+                               'comment':comment,
+                               'id':" "+id+" ",
+                               'comment_ori':comment_ori,
+                               'cid':" "+commentid+" ",
+                               'without_mention':without_mention});
+    }
+    
+    Connections {
+        target: api
+        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+        onWeiboPutSucceed: {
+            var result = JSON.parse(replyData);
+            if (result.error) {
+                addNotification(qsTr("Oops.. something wrong"), 3)
+                pageStack.pop();
+                return;
+            }
+
+            if (action == WeiboMethod.WBOPT_POST_STATUSES_UPDATE) { //发送微博
+                if (result.id != undefined) {
+                    addNotification(qsTr("New Weibo sent"), 3)
+                    pageStack.pop()
+                } else {
+                    addNotification(qsTr("Oops.. something wrong"), 3)
+                }
+            }
+            if (action == WeiboMethod.WBOPT_POST_STATUSES_REPOST) { // send repost
+                if (result.id != undefined) {
+                    addNotification(qsTr("Repost sent"), 3)
+                    pageStack.pop()
+                }else {
+                    addNotification(qsTr("Oops.. something wrong"), 3)
+                }
+            }
+            if (action == WeiboMethod.WBOPT_POST_COMMENTS_CREATE) { // send comment
+                if (result.id != undefined) {
+                    addNotification(qsTr("Comment sent"), 3)
+                    pageStack.pop()
+                }else {
+                    addNotification(qsTr("Oops.. something wrong"), 3)
+                }
+            }
+            if (action == WeiboMethod.WBOPT_POST_COMMENTS_REPLY) { //  reply comment
+                if (result.id != undefined) {
+                    addNotification(qsTr("Reply sent"), 3)
+                    pageStack.pop()
+                }else {
                     addNotification(qsTr("Oops.. something wrong"), 3)
                 }
             }
         }
-        
-        WB.weiboReplyComment(token, comment, id, comment_ori, commentid, without_mention , new observer())
     }
     
     //////////////////////////////////////////////////////////////////         set img path
     function setImgPath(filePath) {
         console.log("filePath: ", filePath)
         imgPath = filePath
-        //        mainStack.pop()
     }
     
     function sendWeibo() {
         switch (sendPage.mode) {
         case "repost" :
-            repostStatus(Settings.getAccess_token(), content.text, userInfo.id, optionIndex)
+            repostStatus(content.text, userInfo.id, optionIndex)
             break
         case "comment" :
-            sendComment(Settings.getAccess_token(), content.text, userInfo.id, optionIndex)
+            sendComment(content.text, userInfo.id, optionIndex)
             break
         case "reply" :
-            replyComment(Settings.getAccess_token(), content.text, userInfo.id, optionIndex, userInfo.cid, 0)
+            replyComment(content.text, userInfo.id, optionIndex, userInfo.cid, 0)
             break
         default:
             if (imgPath == "" || imgPath == undefined) {
-                sendStatus(Settings.getAccess_token(), content.text)
+                sendStatus(content.text)
             }
             else {
                 addNotification(qsTr("Uploading, please wait.."), 2)
                 var status = encodeURIComponent(content.text)
-                networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
+                networkHelper.uploadImgStatus(api.accessToken, status, imgPath)
             }
             break
         }
