@@ -22,27 +22,11 @@ Item {
     }
     height: columnWContent.height + Theme.paddingMedium 
 
-    property alias optionMenu: optionItem.menu
+    property alias optionMenu: usWeibo.optionMenu
 
     signal repostedWeiboClicked
     signal usWeiboClicked
-    
-    Component.onCompleted: {
-        //        if (model.retweeted_status) {
-        ////            var compo = Qt.createComponent("./DelegateRepostedWeibo.qml")
-        //            var retweet = parentView.itemRetweet.createObject(itemRetweetContainer, { /*"parentVi
-        //font.family: "Liberation Sans"ew": view, */"retweetWeibo": model.retweeted_status })
-        //        }
-        if (model.pic_urls != undefined && model.pic_urls.count > 0) {
-            modelImages.clear()
-            for (var i=0; i<model.pic_urls.count; i++) {
-                modelImages.append( model.pic_urls.get(i) )
-                //                workerImages.sendMessage( { "model": modelImages, "pic_urls": model.pic_urls.get(i) } )
-            }
-            //            workerImages.sendMessage( { /*model: modelImages, */"pic_urls": pic_urls.get(0) } )
-        }
-    }
-    
+
     Column {
         id: columnWContent
         anchors {
@@ -54,110 +38,86 @@ Item {
             rightMargin: Theme.paddingLarge 
         }
         spacing: Theme.paddingMedium
-        Item {
-            width: columnWContent.width
-            height: optionItem.menuOpen ? avaterHeader.height + optionItem.height : avaterHeader.height
-            UserAvatarHeader {
-                id:avaterHeader
-                width: parent.width *7/10
-                height:Theme.itemSizeSmall
-                
-                userName: model.user.screen_name
-                userNameFontSize: Theme.fontSizeExtraSmall
-                userAvatar: model.user.profile_image_url
-                weiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
-                                                    + qsTr(" From ") + GetURL.linkToStr(model.source)
-                onUserAvatarClicked: {
-                    console.log("======== UserAvatarHeader onUserAvatarClicked");
-                    toUserPage(model.user.id)
-                }
+        WeiboCard {
+            id:usWeibo
+            isInvalid: false
+            avatarHeaderHeight: Theme.itemSizeSmall
+            avaterHeaderFontSize: Theme.fontSizeExtraSmall
+            avaterHeaderUserName: model.user.screen_name
+            avaterHeaderAvaterImage: model.user.profile_image_url
+            avaterHeaderWeiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
+                                   + qsTr(" From ") + GetURL.linkToStr(model.source)
+            
+            labelFontSize: Theme.fontSizeMedium
+            labelContent: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+            picURLs: model.pic_urls
+            
+            onUserAvatarHeaderClicked: {
+                toUserPage(model.user.id);
             }
-            OptionItem{
-                id:optionItem
-                anchors{
-                    left: avaterHeader.right
-                    right: parent.right
-                }
-                visible: optionMenu != null
-                Image {
-                    anchors{
-                        top:parent.top
-                        bottom: parent.bottom
-                        right: parent.right
-                    }
-                    width: Theme.iconSizeMedium
-                    height: width
-                    source: optionItem.menuOpen ? 
-                                "../graphics/action_collapse.png" : 
-                                "../graphics/action_open.png"
-                }
-                onMenuStateChanged: {
-//                    console.log("====== option Item " + menuOpen);
-                }
+            onLabelLinkClicked: {
+                 Qt.openUrlExternally(link);
+            }
+            onWeiboCardClicked: {
+                usWeiboContent.usWeiboClicked();
+            }
+            onLabelImageClicked: {
+                toGalleryPage(modelImages, index);
             }
         }
         
-        Label {
-            id: labelWeibo
+        Loader{
+            id:repostedLoader
             width: parent.width
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            textFormat: Text.StyledText
-            text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-            font.pixelSize: Theme.fontSizeMedium
-            onLinkActivated: {
-                Qt.openUrlExternally(link)
-            }
-            
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    //usWeiboContent.clicked()
-                    usWeiboContent.usWeiboClicked();
-                    //            var tmp = model.pic_urls
-                    //            console.log("model.pic_urls: ", JSON.stringify(tmp), gridWeiboPics.height, itemRetweetContainer.height)
-                }
-            }
+            height: childrenRect.height
+            sourceComponent: model.retweeted_status == undefined 
+                             ? repostedLoader.Null
+                             : repostedWeiboCard
         }
-        
-        Grid {
-            id: gridWeiboPics
-            columns: 3; spacing: Theme.paddingSmall
-            Repeater {
-                model: ListModel { id: modelImages }
-                delegate: Component {
-                    Image {
-                        id:image
-                        fillMode: Image.PreserveAspectCrop;
-                        width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - Theme.paddingSmall
-                        height: modelImages.count == 1 ? implicitHeight : width
-                        source: util.parseImageUrl(model.thumbnail_pic)//model.thumbnail_pic
-                        
-                        //onStatusChanged: playing = (status == AnimatedImage.Ready)
-                        
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                toGalleryPage(modelImages, index)
-                            }
-                        }
-                        onStatusChanged: {
-                            if(image.status == Image.Ready) {
-                                util.saveRemoteImage(model.thumbnail_pic);
-                            }
-                        }
+
+        Component {
+            id:repostedWeiboCard
+            WeiboCard {
+                id:delegateRepostedWeibo
+                isInvalid:  model.retweeted_status == undefined
+                avatarHeaderHeight: Theme.itemSizeSmall
+                avaterHeaderFontSize: Theme.fontSizeExtraSmall
+                avaterHeaderUserName: model.retweeted_status.user.screen_name
+                avaterHeaderAvaterImage: model.retweeted_status.user.profile_image_url
+                avaterHeaderWeiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.retweeted_status.created_at)))
+                                       + qsTr(" From ") + GetURL.linkToStr(model.retweeted_status.source)
+                
+                labelFontSize: Theme.fontSizeMedium
+                labelContent: util.parseWeiboContent(model.retweeted_status.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+                picURLs: {
+                    console.log(" Delegate Weibo repost pics " + JSON.stringify(model.retweeted_status.pic_urls))
+                    return JSON.parse(JSON.stringify(model.retweeted_status.pic_urls))
+                }
+
+                onUserAvatarHeaderClicked: {
+                    toUserPage(model.retweeted_status.user.id);
+                }
+                onLabelLinkClicked: {
+                    Qt.openUrlExternally(link);
+                }
+                onWeiboCardClicked: {
+                    usWeiboContent.repostedWeiboClicked();
+                }
+                onLabelImageClicked: {
+                    toGalleryPage(modelImages, index);
+                }
+                
+                Image {
+                    id: background
+                    anchors {
+                        top: delegateRepostedWeibo.top
+                        left: delegateRepostedWeibo.left
+                        right: delegateRepostedWeibo.right
+                        bottom: delegateRepostedWeibo.bottom
                     }
+                    source: "../graphics/mask_background_reposted.png"
+                    fillMode:Image.TileHorizontally
                 }
-            }
-        }
-        
-        DelegateRepostedWeibo{
-            id:delegateRepostedWeibo
-            isInvalid: model.retweeted_status == undefined
-            retweetWeibo: model.retweeted_status
-            
-            onRetweetClicked: {
-                //usWeiboContent.clicked()
-                usWeiboContent.repostedWeiboClicked();
             }
         }
         

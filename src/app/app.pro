@@ -45,3 +45,4 @@ DEPENDPATH += $$PWD/../QSinaWeiboApi/weiboAPI
 #OTHER_FILES += \
 #    ../QSinaWeiboApi/weiboAPI/SailfishWeiboAPI.pro \
 #    ../QSinaWeiboApi/weiboAPI/weiboAPI.pro
+
