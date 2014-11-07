@@ -38,7 +38,7 @@ Item {
             rightMargin: Theme.paddingLarge 
         }
         spacing: Theme.paddingMedium
-        WeiboCard {
+        BaseWeiboCard {
             id:usWeibo
             isInvalid: false
             avatarHeaderHeight: Theme.itemSizeSmall
@@ -58,7 +58,7 @@ Item {
             onLabelLinkClicked: {
                  Qt.openUrlExternally(link);
             }
-            onWeiboCardClicked: {
+            onBaseWeiboCardClicked: {
                 usWeiboContent.usWeiboClicked();
             }
             onLabelImageClicked: {
@@ -72,12 +72,12 @@ Item {
             height: childrenRect.height
             sourceComponent: model.retweeted_status == undefined 
                              ? repostedLoader.Null
-                             : repostedWeiboCard
+                             : repostedBaseWeiboCard
         }
 
         Component {
-            id:repostedWeiboCard
-            WeiboCard {
+            id:repostedBaseWeiboCard
+            BaseWeiboCard {
                 id:delegateRepostedWeibo
                 isInvalid:  model.retweeted_status == undefined
                 avatarHeaderHeight: Theme.itemSizeSmall
@@ -100,7 +100,7 @@ Item {
                 onLabelLinkClicked: {
                     Qt.openUrlExternally(link);
                 }
-                onWeiboCardClicked: {
+                onBaseWeiboCardClicked: {
                     usWeiboContent.repostedWeiboClicked();
                 }
                 onLabelImageClicked: {

@@ -5,7 +5,7 @@ import "../js/dateutils.js" as DateUtils
 import "../js/getURL.js" as GetURL
 
 Item {
-    id:weiboCard
+    id:baseWeiboCard
     anchors { left: parent.left; right: parent.right }
     height: isInvalid ? 0 : columnWContent.height + Theme.paddingMedium
 
@@ -24,7 +24,7 @@ Item {
     
     property alias optionMenu: optionItem.menu
     
-    signal weiboCardClicked
+    signal baseWeiboCardClicked
     signal userAvatarHeaderClicked
     signal labelLinkClicked(string link)
     signal labelImageClicked(var modelImages, string index)
@@ -41,7 +41,7 @@ Item {
     
     MouseArea {
         anchors.fill: parent
-        onClicked: { weiboCard.weiboCardClicked(); }
+        onClicked: { baseWeiboCard.baseWeiboCardClicked(); }
     }
     
     Column {
@@ -64,7 +64,7 @@ Item {
                 id: userAvatarHeader
                 width: parent.width *7/10
                 onUserAvatarClicked: {
-                    weiboCard.userAvatarHeaderClicked();
+                    baseWeiboCard.userAvatarHeaderClicked();
                 }
             }
             OptionItem{
@@ -95,7 +95,7 @@ Item {
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             textFormat: Text.StyledText
             onLinkActivated: {
-                weiboCard.labelLinkClicked(link);
+                baseWeiboCard.labelLinkClicked(link);
             }
         }
 
@@ -117,7 +117,7 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                weiboCard.labelImageClicked(modelImages, index);
+                                baseWeiboCard.labelImageClicked(modelImages, index);
                             }
                         }
                         
