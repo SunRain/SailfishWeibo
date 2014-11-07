@@ -11,307 +11,195 @@ import com.sunrain.sinaweibo 1.0
 
 Page {
     id: weiboPage
-    property string weiboTitle: ""
-    property var weiboModel
-    property var newIndex
-    property var weiboItem: null
-    property bool preventIndexChangeHandler: false
-    
-    property var commentInfo
-    
-    
-    SilicaListView {
-        id: weiboListview
-        anchors.fill: parent
-        
-        header: PageHeader {
-            id:pageHeader
-            title: qsTr("Sailfish Weibo")
-        }
-        
-        model: weiboListviewModel
-        delegate: xmlDelegate
-        clip: true
-        onCurrentIndexChanged: {
-            //                    console.log("ListView onCurrentIndexChanged", currentIndex, preventIndexChangeHandler)
-            //                    console.log("listView weiboListviewModel count is " + /*weiboModel.count*/weiboListviewModel.count);
-            
-            if (preventIndexChangeHandler) {
-                preventIndexChangeHandler = false
-                return
-            }
-            
-            /*if (weiboModel.count == 0)*/ // It is normal bevaviour.
-            if (weiboListviewModel.count == 0)
-                return
-            
-            //            if (weiboModel == null || weiboModel.get == undefined) {
-            if (weiboListviewModel == null || weiboListviewModel.get == undefined) {
-                console.log("---- Stange behavior ----")
-                console.trace()
-                return
-            }
-            
-            weiboItem = weiboListviewModel.get(currentIndex);//weiboModel.get(currentIndex)
-            
-            currentItem.getComments(/*Settings.getAccess_token(),*/ weiboItem.id/*, 1*/)
-            //            console.log("weiboItem: ", JSON.stringify(weiboItem))
-            //            commentsWanted(weiboItem.id, currentIndex)
-            
-            //            weiboTitle = weiboItem.feed_name
-            
-            //            if (weiboItem.status != "1") {
-            //                var dbResult = DB.updateArticleStatus(weiboItem.id, "1")
-            //                if (dbResult.rowsAffected == 1) {
-            //                    articleStatusChanged(weiboItem.tagId, weiboItem.id, "1")
-            //                }
-            //            }
-        }
-        
-        Component.onCompleted: {
-            //                    console.log("== weiboPageSilicaFlickable onCompleted");
-            //                    console.log("== listview heigt is " + weiboListview.height);
-            //                    console.log("== weiboPageSilicaFlickable heigt is " + mainFlickableView.height);
-            
-            weiboListviewModel.clear();
-            //TODO MagicNumber
-            if (newIndex == "-100") {
-                console.log("WeiboPage === use MagicNubmer");
-                weiboListviewModel.append(weiboModel)
-            } else {
-                weiboListviewModel.append(weiboModel.get(newIndex));
-            }
-            weiboListview.currentIndex = 0//newIndex;
-            weiboListview.positionViewAtIndex(weiboListview.currentIndex, ListView.Center);
-            
-        }
-        
-        VerticalScrollDecorator { flickable: weiboListview }
-    }
-    //        }
-    //    }
-    
-    ListModel {
-        id:weiboListviewModel
-    }
-    
-    //////////////////////////////////////////////      delegate for ListView
-    Component {
-        id: xmlDelegate
-        
-        SilicaFlickable {
-            id: scrollArea
-            
-            //            clip: true
-            boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
-            
-            width: weiboListview.width
-            height: weiboListview.height
-            
-            contentWidth: width
-            contentHeight: innerAreaColumn.height
-            
-            property int weiboIndex: index
-            property int commentsPage:1
-            property string commentsId
-            
-            //////////////////////////////////////////////////////////////////         get comments
-            function getComments(/*token, */id/*, page*/)
-            {
-                //                function observer() {}
-                //                observer.prototype = {
-                //                    update: function(status, result)
-                //                    {
-                //                        if(status != "error"){
-                //                            if(result.error) {
-                //                                // TODO  error handler
-                //                            }else {
-                //                                // right result
-                //                                //                                console.log("comments length: ", result.comments.length)
-                //                                //                                console.log("comments : ", JSON.stringify(result))
-                //                                modelComment.clear()
-                //                                for (var i=0; i<result.comments.length; i++) {
-                //                                    modelComment.append(result.comments[i])
-                //                                }
-                //                            }
-                //                        }else{
-                //                            // TODO  empty result
-                //                        }
-                //                    }
-                //                }
-                
-                //WB.weiboGetComments(token, id, page, new observer())
-                //var url = "https://api.weibo.com/2/comments/show.json?access_token=" + token + "&id=" + id + "&page=" + page
-                commentsId = String(id);
-                modelComment.clear();
-                var method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-                api.setWeiboAction(method, {'id':" "+id+" ", 'page':commentsPage});
-            }
-            function addMore() {
-                commentsPage++;
-                var method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-                api.setWeiboAction(method, {'id':" "+commentsId+" ", 'page':commentsPage});
-            }
 
-            Connections {
-                target: api
-                onWeiboPutSucceed: {
-                    if (action == WeiboMethod.WBOPT_GET_COMMENTS_SHOW) {
-                        var json = JSON.parse(replyData);
-                        for (var i=0; i<json.comments.length; i++) {
-                            modelComment.append(json.comments[i])
-                        }
-                    }
-                }
-            }
+    property var userWeiboJSONContent
+    
+    SilicaFlickable {
+        id: main
+        anchors.fill: parent
+
+        boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
+        contentHeight: column.height
+        
+        property int commentsPage:1
+        property string commentsId
+
+        Column {
+            id:column
             
-            Column {
-                id: innerAreaColumn
+            anchors{left:parent.left; right:parent.right }
+            spacing: Theme.paddingMedium
+            
+            PageHeader {
+                id:pageHeader
+                title: qsTr("Sailfish Weibo")
+            }
                 
-                spacing: Theme.paddingSmall
-                anchors {
-                    left: parent.left; right: parent.right
-                    leftMargin: Theme.paddingSmall
-                    rightMargin: Theme.paddingSmall
-                }
-                
-                DelegateWeibo {
-                    //                    onClicked: {
-                    //                        //TODO:添加相关功能的具体实现
-                    //                        console.log("WeiboPage ==== DelegateWeibo item clicked");
-                    ////                        console.log("model.pic_urls: ", JSON.stringify(pic_urls))
-                    ////                        var tmp = []
-                    ////                        if (model.pic_urls != undefined && model.pic_urls.count > 0) {
-                    ////                            for (var i=0; i<model.pic_urls.count; i++) {
-                    ////                                tmp.push(model.pic_urls.get(i))
-                    ////                            }
-                    ////                            mainView.toGalleryPage(tmp, 1)
-                    ////                        }
-                    //                        //controlPanel.open = !controlPanel.open
-                    //                        //actionPanel.open = !actionPanel.open;
-                    //                    }
-                    onUsWeiboClicked: {
-                        console.log("WeiboPage ==== onUsWeiboClicked item clicked");
-                    }
-                    onRepostedWeiboClicked: {
-                        //toWeiboPage(weiboListviewModel.get(0).retweeted_status, "-100");
-                        pageStack.replace(Qt.resolvedUrl("WeiboPage.qml"),
-                                          {"weiboModel":weiboListviewModel.get(0).retweeted_status,
-                                              "newIndex":"-100"})
-                    }
+            Item {
+                anchors{left:parent.left; right:parent.right; }
+                height: childrenRect.height
+                WeiboCard {
+                    id:weiboCard
+                    weiboJSONContent: userWeiboJSONContent
                     optionMenu: options
+                    onRepostedWeiboClicked: {
+                        //toWeiboPage(userWeiboJSONContent.retweeted_status);
+                        pageStack.replace(Qt.resolvedUrl("WeiboPage.qml"),
+                                          {"userWeiboJSONContent":userWeiboJSONContent.retweeted_status})
+                    }
+                    onAvatarHeaderClicked: {
+                        toUserPage(userId);
+                    }
+                    onLabelLinkClicked: {
+                        Qt.openUrlExternally(link);
+                    }
+                    onLabelImageClicked: {
+                        toGalleryPage(modelImages, index);
+                    }
                     ContextMenu {
                         id:options
                         MenuItem {
                             text: qsTr("Repost")
                             onClicked: {
-                                toSendPage("repost", 
-                                           {"id": model.id}, 
-                                           (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
+                                toSendPage("repost", {"id": userWeiboJSONContent.id}, 
+                                           (userWeiboJSONContent.retweeted_status == undefined || userWeiboJSONContent.retweeted_status == "") == true ?
                                                "" :
-                                               "//@"+model.user.name +": " + model.text ,
-                                               false)
+                                               "//@"+userWeiboJSONContent.user.name +": " + userWeiboJSONContent.text ,
+                                               true)
                             }
                         }
                         MenuItem {
                             text: qsTr("Comment")
                             onClicked: {
-                                toSendPage("comment", {"id": model.id}, "", false)                        
-                            }
-                        }
-                    }
-                }
-                
-                //////////////微博下面评论/转发的内容（listView展示）
-                Item {
-                    width: parent.width
-                    height: childrenRect.height
-                    
-                    SilicaListView {
-                        width: parent.width
-                        height: contentItem.childrenRect.height
-                        interactive: false
-                        clip: true
-                        spacing:Theme.paddingSmall
-                        model: ListModel { 
-                            id: modelComment 
-                        }
-                        delegate: delegateComment
-                        footer: FooterLoadMore {
-                            visible: modelComment.count != 0
-                            onClicked: {
-                                scrollArea.addMore();
-                            }
-                        }
-                    }
-                }
-                
-                //////////////微博下面评论/转发的内容（listView的代理）
-                Component {
-                    id: delegateComment
-                    
-                    OptionItem {
-                        width: parent.width
-                        contentHeight: columnWContent.height + Theme.paddingMedium 
-                        menu: contextMenu
-                        Column {
-                            id: columnWContent
-                            anchors {
-                                top: parent.top
-                                topMargin: Theme.paddingSmall
-                                left: parent.left
-                                right: parent.right
-                                leftMargin: Theme.paddingSmall
-                                rightMargin: Theme.paddingSmall
-                            }
-                            spacing: Theme.paddingMedium
-                            
-                            ////////用户头像/姓名/评论发送时间
-                            UserAvatarHeader {
-                                id:commnetAvaterHeader
-                                width: parent.width *7/10
-                                height:Theme.itemSizeExtraSmall 
-                                
-                                userName: model.user.screen_name
-                                userNameFontSize: Theme.fontSizeTiny
-                                userAvatar: model.user.profile_image_url
-                                weiboTime:  DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
-                                            + qsTr(" From ") + GetURL.linkToStr(model.source)
-                                onUserAvatarClicked: {
-                                    toUserPage(model.user.id)
-                                }
-                            }
-
-                            /////////评论/转发内容
-                            Label {
-                                id: labelWeibo
-                                width: parent.width
-                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                                //color: Theme.primaryColor
-                                textFormat: Text.StyledText
-                                font.pixelSize: Theme.fontSizeExtraSmall
-                                text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-                            }
-                        }
-                        
-                        Component {
-                            id: contextMenu
-                            ContextMenu {
-                                MenuItem {
-                                    text: qsTr("Reply")
-                                    onClicked: {
-                                        //console.log("weiboPage ==== delegateComment click, weiboIndex is " + weiboIndex);
-                                        weiboPage.commentInfo = { "id": weiboListviewModel.get(weiboIndex).id, "cid": model.id}
-                                        pageStack.push(Qt.resolvedUrl("../ui/SendPage.qml"),
-                                                       {"mode":"reply",
-                                                           "info":weiboPage.commentInfo})
-                                    }
-                                }
+                                toSendPage("comment", {"id": userWeiboJSONContent.id}, "", true)                        
                             }
                         }
                     }
                 }
             }
-        } // Flickable
-    } // Component
+            
+            Separator {
+                width: parent.width
+                color: Theme.highlightColor
+            }            
+            //////////////微博下面评论/转发的内容（listView展示）
+            Item {
+                width: parent.width
+                height: childrenRect.height
+                
+                SilicaListView {
+                    id:commentListView
+                    width: parent.width
+                    height: contentItem.childrenRect.height
+                    interactive: false
+                    clip: true
+                    spacing:Theme.paddingSmall
+                    model: ListModel { 
+                        id: modelComment 
+                    }
+                    delegate: delegateComment
+                    footer: FooterLoadMore {
+                        visible: modelComment.count != 0
+                        onClicked: {
+                            main.addMore();
+                        }
+                    }
+                    VerticalScrollDecorator { flickable: commentListView }
+                }
+            }
+        }
+        Component.onCompleted: {
+            getComments(userWeiboJSONContent.id)
+        }
+
+        function getComments(id) {
+            commentsId = String(id);
+            modelComment.clear();
+            var method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
+            api.setWeiboAction(method, {'id':" "+id+" ", 'page':commentsPage});
+        }
+        function addMore() {
+            commentsPage++;
+            var method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
+            api.setWeiboAction(method, {'id':" "+commentsId+" ", 'page':commentsPage});
+        }
+        
+        Connections {
+            target: api
+            onWeiboPutSucceed: {
+                if (action == WeiboMethod.WBOPT_GET_COMMENTS_SHOW) {
+                    var json = JSON.parse(replyData);
+                    for (var i=0; i<json.comments.length; i++) {
+                        modelComment.append(json.comments[i])
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    Component {
+        id: delegateComment
+        
+        OptionItem {
+            width: parent.width
+            contentHeight: columnWContent.height // + Theme.paddingMedium 
+            menu: contextMenu
+            Column {
+                id: columnWContent
+                anchors {
+                    top: parent.top
+//                    topMargin: Theme.paddingSmall
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Theme.paddingSmall
+                    rightMargin: Theme.paddingSmall
+                }
+                spacing: Theme.paddingMedium
+                
+                ////////用户头像/姓名/评论发送时间
+                UserAvatarHeader {
+                    id:commnetAvaterHeader
+                    width: parent.width
+                    height:Theme.itemSizeExtraSmall 
+                    
+                    userName: model.user.screen_name
+                    userNameFontSize: Theme.fontSizeTiny
+                    userAvatar: model.user.profile_image_url
+                    weiboTime:  DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
+                                + qsTr(" From ") + GetURL.linkToStr(model.source)
+                    onUserAvatarClicked: {
+                        toUserPage(model.user.id)
+                    }
+                }
+                
+                /////////评论/转发内容
+                Label {
+                    id: labelWeibo
+                    width: parent.width
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    //color: Theme.primaryColor
+                    textFormat: Text.StyledText
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+                }
+            }
+            
+            Component {
+                id: contextMenu
+                ContextMenu {
+                    MenuItem {
+                        text: qsTr("Reply")
+                        onClicked: {
+                            var commentInfo = { "id": userWeiboJSONContent.id, "cid": model.id}
+                            pageStack.push(Qt.resolvedUrl("../ui/SendPage.qml"),
+                                           {"mode":"reply",
+                                               "userInfo":commentInfo})
+                        }
+                    }
+                }
+            }
+        }
+    
+    }
 }

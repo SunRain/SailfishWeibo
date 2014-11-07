@@ -1,31 +1,26 @@
 import QtQuick 2.0
-//import Ubuntu.Components 0.1
-//import Ubuntu.Components.ListItems 0.1 as ListItem
-import "../js/dateutils.js" as DateUtils
-import "../js/getURL.js" as GetURL
 import Sailfish.Silica 1.0
 
-/**********************************************
- *  微博内容展示框
- *  包含
- *  - 用户头像/用户名/微博发送时间
- *  - 微博文字内容
- *  - 转发微博时候相关的转发信息（使用另一个代理）
- *  - 下部的转发/评论/顶的按钮
- *  
-************************************************/
+import "../js/dateutils.js" as DateUtils
+import "../js/getURL.js" as GetURL
 Item {
-    id: usWeiboContent
+    id:weiboCard
+    
     anchors {
         left: parent.left
         right: parent.right
     }
-    height: columnWContent.height + Theme.paddingMedium 
+    height: columnWContent.height
 
+    property var weiboJSONContent
     property alias optionMenu: usWeibo.optionMenu
 
     signal repostedWeiboClicked
     signal usWeiboClicked
+    signal avatarHeaderClicked(string userId)
+    signal labelLinkClicked(string link)
+    signal labelImageClicked(var modelImages, string index)
+    
 
     Column {
         id: columnWContent
@@ -43,26 +38,29 @@ Item {
             isInvalid: false
             avatarHeaderHeight: Theme.itemSizeSmall
             avaterHeaderFontSize: Theme.fontSizeExtraSmall
-            avaterHeaderUserName: model.user.screen_name
-            avaterHeaderAvaterImage: model.user.profile_image_url
-            avaterHeaderWeiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
-                                   + qsTr(" From ") + GetURL.linkToStr(model.source)
+            avaterHeaderUserName: weiboJSONContent.user.screen_name
+            avaterHeaderAvaterImage: weiboJSONContent.user.profile_image_url
+            avaterHeaderWeiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(weiboJSONContent.created_at)))
+                                   + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.source)
             
             labelFontSize: Theme.fontSizeMedium
-            labelContent: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-            picURLs: model.pic_urls
+            labelContent: util.parseWeiboContent(weiboJSONContent.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+            picURLs: weiboJSONContent.pic_urls
             
             onUserAvatarHeaderClicked: {
-                toUserPage(model.user.id);
+                //toUserPage(weiboJSONContent.user.id);
+                weiboCard.avatarHeaderClicked(weiboJSONContent.user.id);
             }
             onLabelLinkClicked: {
-                 Qt.openUrlExternally(link);
+                 //Qt.openUrlExternally(link);
+                weiboCard.labelLinkClicked(link);
             }
             onBaseWeiboCardClicked: {
-                usWeiboContent.usWeiboClicked();
+                weiboCard.usWeiboClicked();
             }
             onLabelImageClicked: {
-                toGalleryPage(modelImages, index);
+                //toGalleryPage(modelImages, index);
+                weiboCard.labelImageClicked(modelImages, index);
             }
         }
         
@@ -70,7 +68,7 @@ Item {
             id:repostedLoader
             width: parent.width
             height: childrenRect.height
-            sourceComponent: model.retweeted_status == undefined 
+            sourceComponent: weiboJSONContent.retweeted_status == undefined 
                              ? repostedLoader.Null
                              : repostedBaseWeiboCard
         }
@@ -78,42 +76,42 @@ Item {
         Component {
             id:repostedBaseWeiboCard
             BaseWeiboCard {
-                id:delegateRepostedWeibo
-                isInvalid:  model.retweeted_status == undefined
+                id:repostedWeibo
+                isInvalid:  weiboJSONContent.retweeted_status == undefined
                 avatarHeaderHeight: Theme.itemSizeSmall
                 avaterHeaderFontSize: Theme.fontSizeExtraSmall
-                avaterHeaderUserName: model.retweeted_status.user.screen_name
-                avaterHeaderAvaterImage: model.retweeted_status.user.profile_image_url
-                avaterHeaderWeiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.retweeted_status.created_at)))
-                                       + qsTr(" From ") + GetURL.linkToStr(model.retweeted_status.source)
+                avaterHeaderUserName: weiboJSONContent.retweeted_status.user.screen_name
+                avaterHeaderAvaterImage: weiboJSONContent.retweeted_status.user.profile_image_url
+                avaterHeaderWeiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(weiboJSONContent.retweeted_status.created_at)))
+                                       + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.retweeted_status.source)
                 
                 labelFontSize: Theme.fontSizeMedium
-                labelContent: util.parseWeiboContent(model.retweeted_status.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-                picURLs: {
-                    console.log(" Delegate Weibo repost pics " + JSON.stringify(model.retweeted_status.pic_urls))
-                    return JSON.parse(JSON.stringify(model.retweeted_status.pic_urls))
-                }
+                labelContent: util.parseWeiboContent(weiboJSONContent.retweeted_status.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+                picURLs: weiboJSONContent.retweeted_status.pic_urls
 
                 onUserAvatarHeaderClicked: {
-                    toUserPage(model.retweeted_status.user.id);
+                    //toUserPage(weiboJSONContent.retweeted_status.user.id);
+                    weiboCard.avatarHeaderClicked(weiboJSONContent.retweeted_status.user.id);
                 }
                 onLabelLinkClicked: {
-                    Qt.openUrlExternally(link);
+                    //Qt.openUrlExternally(link);
+                    weiboCard.labelLinkClicked(link);
                 }
                 onBaseWeiboCardClicked: {
-                    usWeiboContent.repostedWeiboClicked();
+                    weiboCard.repostedWeiboClicked();
                 }
                 onLabelImageClicked: {
-                    toGalleryPage(modelImages, index);
+                    //toGalleryPage(modelImages, index);
+                    weiboCard.labelImageClicked(modelImages, index);
                 }
                 
                 Image {
                     id: background
                     anchors {
-                        top: delegateRepostedWeibo.top
-                        left: delegateRepostedWeibo.left
-                        right: delegateRepostedWeibo.right
-                        bottom: delegateRepostedWeibo.bottom
+                        top: repostedWeibo.top
+                        left: repostedWeibo.left
+                        right: repostedWeibo.right
+                        bottom: repostedWeibo.bottom
                     }
                     source: "../graphics/mask_background_reposted.png"
                     fillMode:Image.TileHorizontally
@@ -136,7 +134,7 @@ Item {
                         anchors.centerIn: parent
                         color: Theme.secondaryColor
                         font.pixelSize: Theme.fontSizeTiny
-                        text: qsTr("repost: ") + model.reposts_count
+                        text: qsTr("repost: ") + weiboJSONContent.reposts_count
                     }
                 }
                 Rectangle {
@@ -152,7 +150,7 @@ Item {
                         anchors.centerIn: parent
                         color: Theme.secondaryColor
                         font.pixelSize: Theme.fontSizeTiny
-                        text: qsTr("comment: ") + model.comments_count
+                        text: qsTr("comment: ") + weiboJSONContent.comments_count
                     }
                 }
                 Rectangle {
@@ -168,19 +166,10 @@ Item {
                         anchors.centerIn: parent
                         color: Theme.secondaryColor
                         font.pixelSize: Theme.fontSizeTiny
-                        text: qsTr("like: ") + model.attitudes_count
+                        text: qsTr("like: ") + weiboJSONContent.attitudes_count
                     }
                 }
             }
-        }
-        
-        Separator {
-            width: parent.width
-            color: Theme.highlightColor
-        }
-        Item {
-            width: parent.width
-            height: Theme.paddingSmall
         }
     }
 }

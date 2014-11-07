@@ -36,7 +36,7 @@ Item {
             for (var i=0; i<picURLs.length; i++) {
                 modelImages.append( picURLs[i] )
             }
-        }
+        } 
     }
     
     MouseArea {

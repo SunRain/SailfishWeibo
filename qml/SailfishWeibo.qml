@@ -111,12 +111,11 @@ ApplicationWindow
     }
     
     //////////////////////////////////////////////////////////////////         go to weibo page
-    function toWeiboPage(model, index) {
+    function toWeiboPage(jsonContent) {
         //console.log("toWeiboPage  index " + index + " model " + model);
         popAttachedPages();
         pageStack.push(Qt.resolvedUrl("ui/WeiboPage.qml"),
-                        {"weiboModel":model,
-                           "newIndex":index})
+                        {"userWeiboJSONContent":jsonContent})
     }
     
     //////////////////////////////////////////////////////////////////         go to send page
