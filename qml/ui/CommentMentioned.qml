@@ -247,22 +247,21 @@ Page{
                             //toSendPage("reply", commentMentionedPage.commentInfo)
                             pageStack.push(Qt.resolvedUrl("SendPage.qml"),
                                            {"mode":"reply",
-                                               "info":commentMentionedPage.commentInfo})
+                                               "userInfo":commentMentionedPage.commentInfo})
                         }
                     }
                     MenuItem {
                         text: qsTr("View weibo")
                         onClicked: {
                             /////////// Ugly code
-                            commentMentionedPage.commentInfo = { "id": model.status.id, "cid": model.id}
-                            commentMentionedPage.weiboTmp = model.status
+//                            commentMentionedPage.commentInfo = { "id": model.status.id, "cid": model.id}
+//                            commentMentionedPage.weiboTmp = model.status
                             
-                            modelWeiboTemp.clear()
-                            modelWeiboTemp.append(weiboTmp)
-                            //toWeiboPage(modelWeiboTemp, 0)
+//                            modelWeiboTemp.clear()
+//                            modelWeiboTemp.append(weiboTmp)
+//                            //toWeiboPage(modelWeiboTemp, 0)
                             pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                           {"weiboModel":modelWeiboTemp,
-                                               "newIndex":"0"})
+                                           {"userWeiboJSONContent":model.status})
                         }
                     }
                 }

@@ -72,19 +72,62 @@ Page {
 
     Component {
         id: delegateWeibo
-
-        DelegateWeibo {
-            onUsWeiboClicked: {
-                //                        console.log("weibo Detail:", JSON.stringify(modelWeibo.get(index)))
-                //toWeiboPage(modelWeibo, index)
-                pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                {"weiboModel":modelWeibo,
-                                   "newIndex":index})
+        Column {
+            anchors{left:parent.left; right:parent.right }
+            spacing: Theme.paddingMedium
+            
+            Item {
+                anchors{left:parent.left; right:parent.right; }
+                height: childrenRect.height
+                WeiboCard {
+                    id:weiboCard
+                    weiboJSONContent: modelWeibo.get(index)
+                    optionMenu: options
+                    onRepostedWeiboClicked: {
+                        pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+                                       {"userWeiboJSONContent":modelWeibo.get(index).retweeted_status})
+                    }
+                    onUsWeiboClicked: {
+                        pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+                                       {"userWeiboJSONContent":modelWeibo.get(index)})
+                    }
+                    onAvatarHeaderClicked: {
+                        toUserPage(userId);
+                    }
+                    onLabelLinkClicked: {
+                        Qt.openUrlExternally(link);
+                    }
+                    onLabelImageClicked: {
+                        toGalleryPage(modelImages, index);
+                    }
+                    ContextMenu {
+                        id:options
+                        MenuItem {
+                            text: qsTr("Repost")
+                            onClicked: {
+                                toSendPage("repost", {"id": model.id}, 
+                                           (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
+                                               "" :
+                                               "//@"+model.user.name +": " + model.text ,
+                                               false)
+                            }
+                        }
+                        MenuItem {
+                            text: qsTr("Comment")
+                            onClicked: {
+                                toSendPage("comment", {"id": model.id}, "", false)                        
+                            }
+                        }
+                    }
+                }
             }
-            onRepostedWeiboClicked: {
-                pageStack.replace(Qt.resolvedUrl("WeiboPage.qml"),
-                                {"weiboModel":modelWeibo.get(index).retweeted_status,
-                                   "newIndex":"-100"})
+            Separator {
+                width: parent.width
+                color: Theme.highlightColor
+            }
+            Item {
+                width: parent.width
+                height: Theme.paddingSmall
             }
         }
     }

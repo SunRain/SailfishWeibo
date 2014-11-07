@@ -483,9 +483,36 @@
     </message>
 </context>
 <context>
+    <name>WeiboCard</name>
+    <message>
+        <source> From </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>repost: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>comment: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>like: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WeiboMentioned</name>
     <message>
         <source>Weibo mentioned me</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
