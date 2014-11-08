@@ -93,32 +93,6 @@
     </message>
 </context>
 <context>
-    <name>DelegateRepostedWeibo</name>
-    <message>
-        <source> From </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DelegateWeibo</name>
-    <message>
-        <source>repost: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>comment: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>like: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> From </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FirstPage</name>
     <message>
         <source>Show Page 2</source>
@@ -486,18 +460,6 @@
     <name>WeiboCard</name>
     <message>
         <source> From </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>repost: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>comment: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>like: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
