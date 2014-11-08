@@ -169,7 +169,7 @@ Page {
                     footer: FooterLoadMore {
                         visible: modelInfo.count != 0
                         onClicked: {
-                            main._addMore();
+                            _addMore();
                         }
                     }
                     VerticalScrollDecorator { flickable: commentListView }

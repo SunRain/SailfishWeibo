@@ -635,27 +635,27 @@
 <context>
     <name>WeiboPage</name>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="100"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="87"/>
         <source>Sailfish Weibo</source>
         <translation type="unfinished">Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="143"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="130"/>
         <source>Repost</source>
         <translation type="unfinished">转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="153"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="140"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="226"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="213"/>
         <source> From </source>
         <translation type="unfinished">来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="248"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="235"/>
         <source>Reply</source>
         <translation type="unfinished">回复</translation>
     </message>
