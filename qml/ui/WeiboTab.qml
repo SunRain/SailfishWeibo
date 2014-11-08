@@ -4,6 +4,7 @@ import "../components"
 import "../js/weiboapi.js" as WB
 import "../js/Settings.js" as Settings
 import Sailfish.Silica 1.0
+import com.sunrain.sinaweibo 1.0
 
 /*************************************************
   微博程序的首页以及微博条目展示列表
@@ -16,6 +17,7 @@ Item {
     //clip : true
     
     property int pageNum: 1
+    property int actionMethod
     property bool isRefresh: false
 
     property alias menus: lvHomeWeiboPullDownMenu._content
@@ -34,8 +36,10 @@ Item {
         pageNum = 1
         isRefresh = true
         //homeStatus(Settings.getAccess_token(), pageNum)
-        var method = weibomethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
-        
+        //actionMethod = weibomethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
+        var method = WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
+                //weiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
+
         console.log(" for method "+ method);
         
         api.setWeiboAction(method, {'page':pageNum});

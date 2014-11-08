@@ -32,6 +32,7 @@
 #include <QtQuick>
 #endif
 
+#include <QtQml>
 #include <QUrl>
 #include <sailfishapp.h>
 
@@ -56,7 +57,8 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<MyType>("com.sunrain.sinaweibo", 1, 0, "MyType");
     qmlRegisterType<NetworkHelper>("com.sunrain.sinaweibo", 1, 0, "NetworkHelper");
-    
+    //qmlRegisterType<QSinaWeiboAPI::QWeiboMethod>("com.sunrain.sinaweibo", 1, 0, "WeiboMethod");
+    qmlRegisterUncreatableType<QSinaWeiboAPI::QWeiboMethod>("com.sunrain.sinaweibo", 1, 0, "WeiboMethod", "");
     //return SailfishApp::main(argc, argv);
     QScopedPointer<QGuiApplication> app (SailfishApp::application(argc, argv));
     app.data()->setOrganizationName("SunRain");
@@ -74,9 +76,9 @@ int main(int argc, char *argv[])
     QSinaWeiboAPI::QSinaWeibo api;
     view->rootContext()->setContextProperty("api", &api);
     
-    QSinaWeiboAPI::QWeiboMethod weiboMethod;
-    view->rootContext()->setContextProperty("weibomethod", &weiboMethod);
-    
+//    QSinaWeiboAPI::QWeiboMethod weiboMethod;
+//    view->rootContext()->setContextProperty("weibomethod", &weiboMethod);
+
     view->setSource(SailfishApp::pathTo("qml/SailfishWeibo.qml"));
     view->show();
     
