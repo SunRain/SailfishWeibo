@@ -14,7 +14,11 @@ Item {
 
     property var weiboJSONContent
     property alias optionMenu: usWeibo.optionMenu
-
+    
+    property var repostButtonColor
+    property var commentButtonColor
+    property var likeButtonColor
+    
     signal repostedWeiboClicked
     signal usWeiboClicked
     signal avatarHeaderClicked(string userId)
@@ -132,10 +136,11 @@ Item {
                     width: columnWContent.width / 3 -Theme.paddingSmall 
                     height: Theme.fontSizeSmall
                     HorizontalIconTextButton {
+                        id:repostButton
                         anchors.centerIn: parent
                         source: "../graphics/repost.png"
                         text: weiboJSONContent.reposts_count
-                        color: Theme.secondaryColor
+                        color: repostButtonColor == undefined ? Theme.secondaryColor : repostButtonColor
                         onClicked: {
                             weiboCard.repostButtonClicked();
                         }
@@ -150,10 +155,11 @@ Item {
                     width: columnWContent.width / 3 - Theme.paddingSmall
                     height: Theme.fontSizeSmall
                     HorizontalIconTextButton {
+                        id:commentButton
                         anchors.centerIn: parent
                         source: "../graphics/comment.png"
                         text: weiboJSONContent.comments_count
-                        color: Theme.secondaryColor
+                        color: commentButtonColor == undefined ? Theme.secondaryColor : commentButtonColor
                         onClicked: {
                             weiboCard.commentButtonClicked();
                         }
@@ -168,10 +174,11 @@ Item {
                     width: columnWContent.width / 3 - Theme.paddingSmall  
                     height: Theme.fontSizeSmall
                     HorizontalIconTextButton {
+                        id:likeButton
                         anchors.centerIn: parent
                         source: "../graphics/like.png"
                         text: weiboJSONContent.attitudes_count
-                        color: Theme.secondaryColor
+                        color: likeButtonColor == undefined ? Theme.secondaryColor : likeButtonColor
                         onClicked: {
                             weiboCard.likeButtonClicked();
                         }

@@ -14,15 +14,67 @@ Page {
 
     property var userWeiboJSONContent
     
+    property int footInfoBarIndex: 0
+    property int commentsPage:1
+    property int repostPage: 1
+    
+    property string weiboId
+
+    function _getInfo(id) {
+        weiboId = String(id);
+        modelInfo.clear();
+        var method;
+        if (footInfoBarIndex == 0) {
+            method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
+            api.setWeiboAction(method, {'id':" "+id+" ", 'page':repostPage});
+        }
+        
+        if (footInfoBarIndex == 1) {
+            method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
+            api.setWeiboAction(method, {'id':" "+id+" ", 'page':commentsPage});
+        }
+
+    }
+    function _addMore() {
+        var method
+        if (footInfoBarIndex == 0) {
+            repostPage++;
+            method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
+            api.setWeiboAction(method, {'id':" "+weiboId+" ", 'page':repostPage});
+        }
+        
+        if (footInfoBarIndex == 1) {
+            commentsPage++;
+            method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
+            api.setWeiboAction(method, {'id':" "+weiboId+" ", 'page':commentsPage});
+        }
+
+    }
+    
+    Connections {
+        target: api
+        onWeiboPutSucceed: {
+            if (action == WeiboMethod.WBOPT_GET_COMMENTS_SHOW) {
+                var json = JSON.parse(replyData);
+                for (var i=0; i<json.comments.length; i++) {
+                    modelInfo.append(json.comments[i])
+                }
+            }
+            if (action == WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE) {
+                json = JSON.parse(replyData);
+                for (i=0; i<json.reposts.length; i++) {
+                    modelInfo.append(json.reposts[i])
+                }
+            }
+        }
+    }
+    
     SilicaFlickable {
         id: main
         anchors.fill: parent
 
         boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
         contentHeight: column.height
-        
-        property int commentsPage:1
-        property string commentsId
 
         Column {
             id:column
@@ -42,6 +94,10 @@ Page {
                     id:weiboCard
                     weiboJSONContent: userWeiboJSONContent
                     optionMenu: options
+                    repostButtonColor: footInfoBarIndex == 0 ? Theme.secondaryHighlightColor : undefined
+                    commentButtonColor: footInfoBarIndex == 1 ? Theme.secondaryHighlightColor : undefined
+                    likeButtonColor: footInfoBarIndex == 2 ? Theme.secondaryHighlightColor : undefined
+                    
                     onRepostedWeiboClicked: {
                         //toWeiboPage(userWeiboJSONContent.retweeted_status);
                         pageStack.replace(Qt.resolvedUrl("WeiboPage.qml"),
@@ -56,6 +112,18 @@ Page {
                     onLabelImageClicked: {
                         toGalleryPage(modelImages, index);
                     }
+                    onRepostButtonClicked: {
+                        footInfoBarIndex = 0;
+                        _getInfo(userWeiboJSONContent.id);
+                    }
+                    onCommentButtonClicked: {
+                        footInfoBarIndex = 1;
+                        _getInfo(userWeiboJSONContent.id);
+                    }
+                    onLikeButtonClicked: {
+//                        footInfoBarIndex = 2;
+                    }
+
                     ContextMenu {
                         id:options
                         MenuItem {
@@ -95,13 +163,13 @@ Page {
                     clip: true
                     spacing:Theme.paddingSmall
                     model: ListModel { 
-                        id: modelComment 
+                        id: modelInfo 
                     }
                     delegate: delegateComment
                     footer: FooterLoadMore {
-                        visible: modelComment.count != 0
+                        visible: modelInfo.count != 0
                         onClicked: {
-                            main.addMore();
+                            main._addMore();
                         }
                     }
                     VerticalScrollDecorator { flickable: commentListView }
@@ -109,33 +177,8 @@ Page {
             }
         }
         Component.onCompleted: {
-            getComments(userWeiboJSONContent.id)
+            _getInfo(userWeiboJSONContent.id)
         }
-
-        function getComments(id) {
-            commentsId = String(id);
-            modelComment.clear();
-            var method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-            api.setWeiboAction(method, {'id':" "+id+" ", 'page':commentsPage});
-        }
-        function addMore() {
-            commentsPage++;
-            var method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-            api.setWeiboAction(method, {'id':" "+commentsId+" ", 'page':commentsPage});
-        }
-        
-        Connections {
-            target: api
-            onWeiboPutSucceed: {
-                if (action == WeiboMethod.WBOPT_GET_COMMENTS_SHOW) {
-                    var json = JSON.parse(replyData);
-                    for (var i=0; i<json.comments.length; i++) {
-                        modelComment.append(json.comments[i])
-                    }
-                }
-            }
-        }
-        
     }
     
     Component {
