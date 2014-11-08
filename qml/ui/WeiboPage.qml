@@ -159,11 +159,11 @@ Page {
             Column {
                 id: innerAreaColumn
                 
-                spacing: Theme.paddingSmall//units.gu(2)
+                spacing: Theme.paddingSmall
                 anchors {
                     left: parent.left; right: parent.right
-                    leftMargin: Theme.paddingSmall//units.gu(1)
-                    rightMargin: Theme.paddingSmall//units.gu(1)
+                    leftMargin: Theme.paddingSmall
+                    rightMargin: Theme.paddingSmall
                 }
                 
                 DelegateWeibo {
@@ -190,6 +190,27 @@ Page {
                                           {"weiboModel":weiboListviewModel.get(0).retweeted_status,
                                               "newIndex":"-100"})
                     }
+                    optionMenu: options
+                    ContextMenu {
+                        id:options
+                        MenuItem {
+                            text: qsTr("Repost")
+                            onClicked: {
+                                toSendPage("repost", 
+                                           {"id": model.id}, 
+                                           (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
+                                               "" :
+                                               "//@"+model.user.name +": " + model.text ,
+                                               false)
+                            }
+                        }
+                        MenuItem {
+                            text: qsTr("Comment")
+                            onClicked: {
+                                toSendPage("comment", {"id": model.id}, "", false)                        
+                            }
+                        }
+                    }
                 }
                 
                 //////////////微博下面评论/转发的内容（listView展示）
@@ -214,7 +235,7 @@ Page {
                 Component {
                     id: delegateComment
                     
-                    ListItem {
+                    OptionItem {
                         width: parent.width
                         contentHeight: columnWContent.height + Theme.paddingMedium 
                         //color: Qt.rgba(255, 255, 255, 0.3)
@@ -224,13 +245,13 @@ Page {
                             id: columnWContent
                             anchors {
                                 top: parent.top
-                                topMargin: Theme.paddingSmall //units.gu(1)
+                                topMargin: Theme.paddingSmall
                                 left: parent.left
                                 right: parent.right
-                                leftMargin: Theme.paddingSmall //units.gu(1)
-                                rightMargin: Theme.paddingSmall //units.gu(1)
+                                leftMargin: Theme.paddingSmall
+                                rightMargin: Theme.paddingSmall
                             }
-                            spacing: Theme.paddingMedium //units.gu(1)
+                            spacing: Theme.paddingMedium
                             
                             ////////用户头像/姓名/评论发送时间
                             Row {
@@ -242,7 +263,6 @@ Page {
                                     rightMargin: Theme.paddingSmall
                                 }
                                 spacing:Theme.paddingSmall
-                                //height: usAvatar.height
                                 height: rowUserColumn.height > 64 ? rowUserColumn.height : usAvatar.height
                                 
                                 Item {
@@ -256,6 +276,14 @@ Page {
                                         fillMode: Image.PreserveAspectFit
                                         source: model.user.profile_image_url
                                     }
+                                    
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: {
+                                            console.log("=== weiboPage commnet usAvatar clicked");
+                                            toUserPage(model.user.id)
+                                        }
+                                    }
                                 }
                                 
                                 Column {
@@ -264,14 +292,14 @@ Page {
                                     
                                     Label {
                                         id: labelUserName
-                                        color: Theme.secondaryColor //"black"
+                                        color: Theme.secondaryColor
                                         text: model.user.screen_name
                                         font.pixelSize: Theme.fontSizeTiny
                                     }
                                     
                                     Label {
                                         id: labelCommentTime
-                                        color: Theme.secondaryColor // "grey"
+                                        color: Theme.secondaryColor
                                         text:  {
                                             return DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
                                                     + qsTr(" From ") + GetURL.linkToStr(model.source)

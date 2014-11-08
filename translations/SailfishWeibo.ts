@@ -368,10 +368,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Input Weibo content here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Uploading, please wait..</source>
         <translation type="unfinished"></translation>
     </message>
@@ -461,6 +457,25 @@
     </message>
     <message>
         <source>Reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WeiboTab</name>
+    <message>
+        <source>Repost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
