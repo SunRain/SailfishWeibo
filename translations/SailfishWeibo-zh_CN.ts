@@ -205,28 +205,28 @@
     <message>
         <location filename="../qml/components/LoginComponent.qml" line="57"/>
         <source>UserName</source>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <location filename="../qml/components/LoginComponent.qml" line="65"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>密码</translation>
     </message>
     <message>
         <location filename="../qml/components/LoginComponent.qml" line="112"/>
         <source>Login fail</source>
-        <translation type="unfinished"></translation>
+        <translation>登录失败</translation>
     </message>
     <message>
         <location filename="../qml/components/LoginComponent.qml" line="112"/>
         <source>Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>请重试</translation>
     </message>
     <message>
         <location filename="../qml/components/LoginComponent.qml" line="32"/>
         <location filename="../qml/components/LoginComponent.qml" line="71"/>
         <source>Login</source>
-        <translation type="unfinished">登入</translation>
+        <translation>登入</translation>
     </message>
 </context>
 <context>
@@ -252,7 +252,7 @@
     <message>
         <location filename="../src/QSinaWeiboApi/examples/mainwindow.ui" line="13"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -266,17 +266,17 @@
         <location filename="../qml/ui/MessageTab.qml" line="56"/>
         <location filename="../qml/ui/MessageTab.qml" line="59"/>
         <source>You have </source>
-        <translation type="unfinished"></translation>
+        <translation>你有</translation>
     </message>
     <message>
         <location filename="../qml/ui/MessageTab.qml" line="56"/>
         <source> new messages</source>
-        <translation type="unfinished"></translation>
+        <translation>条新信息</translation>
     </message>
     <message>
         <location filename="../qml/ui/MessageTab.qml" line="59"/>
         <source> new message</source>
-        <translation type="unfinished"></translation>
+        <translation>条新信息</translation>
     </message>
     <message>
         <location filename="../qml/ui/MessageTab.qml" line="89"/>
@@ -290,19 +290,19 @@
         <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="51"/>
         <source>Qt wrapper for sina weibo api.
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="52"/>
         <source>Distributed under the terms of LGPLv2.1 or later.
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="54"/>
         <source>Shanghai University, Shanghai, China
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -377,12 +377,12 @@
     <message>
         <location filename="../qml/pages/SecondPage.qml" line="132"/>
         <source>Cache: </source>
-        <translation type="unfinished"></translation>
+        <translation>缓存：</translation>
     </message>
     <message>
         <location filename="../qml/pages/SecondPage.qml" line="139"/>
         <source>DeleteCache</source>
-        <translation type="unfinished"></translation>
+        <translation>删除缓存</translation>
     </message>
 </context>
 <context>
@@ -520,73 +520,73 @@
     <message>
         <location filename="../qml/ui/UserPage.qml" line="137"/>
         <source>About user</source>
-        <translation type="unfinished">用户</translation>
+        <translation>关于用户</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="210"/>
         <source>Bilateral</source>
-        <translation type="unfinished">互相关注</translation>
+        <translation>互相关注</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="212"/>
         <source>Following</source>
-        <translation type="unfinished">关注中</translation>
+        <translation>关注中</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="216"/>
         <source>Follower</source>
-        <translation type="unfinished">关注我的</translation>
+        <translation>关注我的</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="218"/>
         <location filename="../qml/ui/UserPage.qml" line="244"/>
         <source>Follow</source>
-        <translation type="unfinished">关注</translation>
+        <translation>关注</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="242"/>
         <source>CancelFollowing</source>
-        <translation type="unfinished"></translation>
+        <translation>取消关注</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="285"/>
         <source>Description: </source>
-        <translation type="unfinished">基本信息</translation>
+        <translation>基本信息</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="321"/>
         <source>Weibo: </source>
-        <translation type="unfinished">微博</translation>
+        <translation>微博：</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="337"/>
         <source>following: </source>
-        <translation type="unfinished">Ta关注的用户</translation>
+        <translation>Ta关注的用户：</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="360"/>
         <source>follower: </source>
-        <translation type="unfinished">关注Ta的</translation>
+        <translation>关注Ta的：</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="413"/>
         <source>&apos;s RecentWeibo</source>
-        <translation type="unfinished">的最新微博</translation>
+        <translation>的最新微博</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="511"/>
         <source>repost: </source>
-        <translation type="unfinished">转发：</translation>
+        <translation>转发：</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="527"/>
         <source>comment: </source>
-        <translation type="unfinished">回复：</translation>
+        <translation>回复：</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserPage.qml" line="543"/>
         <source>like: </source>
-        <translation type="unfinished">顶：</translation>
+        <translation>顶：</translation>
     </message>
 </context>
 <context>
@@ -603,7 +603,7 @@
         <location filename="../qml/components/WeiboCard.qml" line="50"/>
         <location filename="../qml/components/WeiboCard.qml" line="92"/>
         <source> From </source>
-        <translation type="unfinished">来自</translation>
+        <translation>来自</translation>
     </message>
     <message>
         <source>repost: </source>
@@ -624,12 +624,12 @@
     <message>
         <location filename="../qml/ui/WeiboMentioned.qml" line="106"/>
         <source>Repost</source>
-        <translation type="unfinished">转发</translation>
+        <translation>转发</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboMentioned.qml" line="116"/>
         <source>Comment</source>
-        <translation type="unfinished">评论</translation>
+        <translation>评论</translation>
     </message>
 </context>
 <context>
@@ -637,27 +637,27 @@
     <message>
         <location filename="../qml/ui/WeiboPage.qml" line="87"/>
         <source>Sailfish Weibo</source>
-        <translation type="unfinished">Sailfish Weibo</translation>
+        <translation>Sailfish Weibo</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboPage.qml" line="130"/>
         <source>Repost</source>
-        <translation type="unfinished">转发</translation>
+        <translation>转发</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboPage.qml" line="140"/>
         <source>Comment</source>
-        <translation type="unfinished">评论</translation>
+        <translation>评论</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboPage.qml" line="213"/>
         <source> From </source>
-        <translation type="unfinished">来自</translation>
+        <translation>来自</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboPage.qml" line="235"/>
         <source>Reply</source>
-        <translation type="unfinished">回复</translation>
+        <translation>回复</translation>
     </message>
 </context>
 <context>
@@ -665,12 +665,12 @@
     <message>
         <location filename="../qml/ui/WeiboTab.qml" line="125"/>
         <source>Repost</source>
-        <translation type="unfinished">转发</translation>
+        <translation>转发</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboTab.qml" line="135"/>
         <source>Comment</source>
-        <translation type="unfinished">评论</translation>
+        <translation>评论</translation>
     </message>
 </context>
 </TS>
