@@ -20,7 +20,9 @@ Item {
     signal avatarHeaderClicked(string userId)
     signal labelLinkClicked(string link)
     signal labelImageClicked(var modelImages, string index)
-    
+    signal commentButtonClicked
+    signal repostButtonClicked
+    signal likeButtonClicked
 
     Column {
         id: columnWContent
@@ -129,12 +131,14 @@ Item {
                 Item {
                     width: columnWContent.width / 3 -Theme.paddingSmall 
                     height: Theme.fontSizeSmall
-                    
-                    Label {
+                    HorizontalIconTextButton {
                         anchors.centerIn: parent
+                        source: "../graphics/repost.png"
+                        text: weiboJSONContent.reposts_count
                         color: Theme.secondaryColor
-                        font.pixelSize: Theme.fontSizeTiny
-                        text: qsTr("repost: ") + weiboJSONContent.reposts_count
+                        onClicked: {
+                            weiboCard.repostButtonClicked();
+                        }
                     }
                 }
                 Rectangle {
@@ -145,12 +149,14 @@ Item {
                 Item {
                     width: columnWContent.width / 3 - Theme.paddingSmall
                     height: Theme.fontSizeSmall
-                    
-                    Label {
+                    HorizontalIconTextButton {
                         anchors.centerIn: parent
+                        source: "../graphics/comment.png"
+                        text: weiboJSONContent.comments_count
                         color: Theme.secondaryColor
-                        font.pixelSize: Theme.fontSizeTiny
-                        text: qsTr("comment: ") + weiboJSONContent.comments_count
+                        onClicked: {
+                            weiboCard.commentButtonClicked();
+                        }
                     }
                 }
                 Rectangle {
@@ -161,12 +167,14 @@ Item {
                 Item {
                     width: columnWContent.width / 3 - Theme.paddingSmall  
                     height: Theme.fontSizeSmall
-                    
-                    Label {
+                    HorizontalIconTextButton {
                         anchors.centerIn: parent
+                        source: "../graphics/like.png"
+                        text: weiboJSONContent.attitudes_count
                         color: Theme.secondaryColor
-                        font.pixelSize: Theme.fontSizeTiny
-                        text: qsTr("like: ") + weiboJSONContent.attitudes_count
+                        onClicked: {
+                            weiboCard.likeButtonClicked();
+                        }
                     }
                 }
             }

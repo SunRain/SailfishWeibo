@@ -114,33 +114,27 @@
 <context>
     <name>DelegateRepostedWeibo</name>
     <message>
-        <location filename="../qml/components/DelegateRepostedWeibo.qml" line="76"/>
         <source> From </source>
-        <translation>来自</translation>
+        <translation type="obsolete">来自</translation>
     </message>
 </context>
 <context>
     <name>DelegateWeibo</name>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="49"/>
-        <location filename="../qml/components/DelegateWeibo.qml" line="88"/>
         <source> From </source>
-        <translation type="unfinished">来自</translation>
+        <translation type="obsolete">来自</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="136"/>
         <source>repost: </source>
-        <translation>转发：</translation>
+        <translation type="obsolete">转发：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="152"/>
         <source>comment: </source>
-        <translation>评论：</translation>
+        <translation type="obsolete">评论：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="168"/>
         <source>like: </source>
-        <translation>顶：</translation>
+        <translation type="obsolete">顶：</translation>
     </message>
 </context>
 <context>
@@ -612,19 +606,12 @@
         <translation type="unfinished">来自</translation>
     </message>
     <message>
-        <location filename="../qml/components/WeiboCard.qml" line="137"/>
         <source>repost: </source>
-        <translation type="unfinished">转发：</translation>
+        <translation type="obsolete">转发：</translation>
     </message>
     <message>
-        <location filename="../qml/components/WeiboCard.qml" line="153"/>
-        <source>comment: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/components/WeiboCard.qml" line="169"/>
         <source>like: </source>
-        <translation type="unfinished">顶：</translation>
+        <translation type="obsolete">顶：</translation>
     </message>
 </context>
 <context>
