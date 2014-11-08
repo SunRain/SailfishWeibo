@@ -122,22 +122,23 @@
 <context>
     <name>DelegateWeibo</name>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="69"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="49"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="88"/>
         <source> From </source>
-        <translation>来自</translation>
+        <translation type="unfinished">来自</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="179"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="139"/>
         <source>repost: </source>
         <translation>转发：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="195"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="155"/>
         <source>comment: </source>
         <translation>评论：</translation>
     </message>
     <message>
-        <location filename="../qml/components/DelegateWeibo.qml" line="211"/>
+        <location filename="../qml/components/DelegateWeibo.qml" line="171"/>
         <source>like: </source>
         <translation>顶：</translation>
     </message>
@@ -600,6 +601,13 @@
         <location filename="../qml/ui/UserWeibo.qml" line="94"/>
         <source>&apos;s Weibo</source>
         <translation>的微博</translation>
+    </message>
+</context>
+<context>
+    <name>WeiboCard</name>
+    <message>
+        <source> From </source>
+        <translation type="obsolete">来自</translation>
     </message>
 </context>
 <context>
