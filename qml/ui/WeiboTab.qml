@@ -19,8 +19,8 @@ Item {
     //property int actionMethod
     property bool isRefresh: false
     
-    property alias menus: lvHomeWeiboPullDownMenu._content
-    property alias header: lvHomeWeibo.header
+//    property alias menus:lvHomeWeibo.pullDownMenu //lvHomeWeiboPullDownMenu //._content
+//    property alias header: lvHomeWeibo.header
     
     signal sendNewWeibo
     
@@ -67,14 +67,39 @@ Item {
 //            console.log("====== WeiboTab onTokenExpired value is "+ tokenExpired);
         }
     }
-    
+
     SilicaListView{
         id: lvHomeWeibo
         width: weiboTab.width 
         height: weiboTab.height
         
+        header: PageHeader {
+            id:pageHeader
+            title: qsTr("Sailfish Weibo")
+        }
+
         PullDownMenu {
             id:lvHomeWeiboPullDownMenu
+            MenuItem {
+                text: qsTr("Logout")
+                onClicked: {
+                    weiboLogout();
+                    pageStack.popAttached(undefined, PageStackAction.Animated);
+                    reset();
+                }
+            }
+            MenuItem {
+                text: qsTr("Refresh")
+                onClicked: {
+                    weiboTab.refresh();
+                }
+            }
+            MenuItem {
+                text: qsTr("New")
+                onClicked: {
+                    weiboTab.gotoSendNewWeibo();
+                }
+            }
         }
         
         cacheBuffer: 999999

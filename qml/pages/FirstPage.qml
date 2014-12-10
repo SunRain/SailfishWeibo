@@ -68,7 +68,7 @@ Page {
 
     Component{
         id:mainComponent
-        
+
         WeiboTab {
             id: weiboTab
             anchors{
@@ -78,32 +78,32 @@ Page {
                 right: parent.right
             }
 
-            header: PageHeader {
-                id:pageHeader
-                title: qsTr("Sailfish Weibo")
-            }
-            menus {
-                MenuItem {
-                    text: qsTr("Logout")
-                    onClicked: {
-                        weiboLogout();
-                        pageStack.popAttached(undefined, PageStackAction.Animated);
-                        reset();
-                    }
-                }
-                MenuItem {
-                    text: qsTr("Refresh")
-                    onClicked: {
-                        weiboTab.refresh();
-                    }
-                }
-                MenuItem {
-                    text: qsTr("New")
-                    onClicked: {
-                        weiboTab.gotoSendNewWeibo();
-                    }
-                }
-            }
+//            header: PageHeader {
+//                id:pageHeader
+//                title: qsTr("Sailfish Weibo")
+//            }
+//            menus {
+//                MenuItem {
+//                    text: qsTr("Logout")
+//                    onClicked: {
+//                        weiboLogout();
+//                        pageStack.popAttached(undefined, PageStackAction.Animated);
+//                        reset();
+//                    }
+//                }
+//                MenuItem {
+//                    text: qsTr("Refresh")
+//                    onClicked: {
+//                        weiboTab.refresh();
+//                    }
+//                }
+//                MenuItem {
+//                    text: qsTr("New")
+//                    onClicked: {
+//                        weiboTab.gotoSendNewWeibo();
+//                    }
+//                }
+//            }
             
             onSendNewWeibo: {
                 //TODO 添加相关功能//代码太复杂，需要重构

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AboutPage</name>
     <message>
@@ -140,24 +140,20 @@
 <context>
     <name>FirstPage</name>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="83"/>
         <source>Sailfish Weibo</source>
-        <translation></translation>
+        <translation type="obsolete">Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="87"/>
         <source>Logout</source>
-        <translation>注销</translation>
+        <translation type="vanished">注销</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="95"/>
         <source>Refresh</source>
-        <translation>刷新</translation>
+        <translation type="vanished">刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="101"/>
         <source>New</source>
-        <translation>写微博</translation>
+        <translation type="vanished">写微博</translation>
     </message>
     <message>
         <source>Login</source>
@@ -663,12 +659,32 @@
 <context>
     <name>WeiboTab</name>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="125"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="78"/>
+        <source>Sailfish Weibo</source>
+        <translation type="unfinished">Sailfish Weibo</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="84"/>
+        <source>Logout</source>
+        <translation type="unfinished">注销</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="92"/>
+        <source>Refresh</source>
+        <translation type="unfinished">刷新</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="98"/>
+        <source>New</source>
+        <translation type="unfinished">写微博</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="150"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="135"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="160"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
