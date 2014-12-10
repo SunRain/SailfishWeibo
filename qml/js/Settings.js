@@ -17,7 +17,11 @@ var dBValues = {
 }*/
 
 function get(key) {
-    return LocalStore.get(key);
+    var value = LocalStore.get(key);
+    if (value == "" || value == undefined) {
+        return "";
+    }
+    return value
 }
 
 function getBoolean(key) {
