@@ -13,7 +13,7 @@ SilicaFlickable {
     //anchors.centerIn: parent
 //    anchors.fill: parent
     //property bool menuOpen: false
-    property bool enableZoom: !menuOpen
+    property bool enableZoom: true//!menuOpen
     property bool scaled: false
 
     // maximumWidth maximumHeight用于设置FlickableView支持的最大窗口
