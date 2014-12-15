@@ -19,11 +19,13 @@ Page {
     property bool firstUiLaunchTime: true
     property int runningBusyIndicator: 1
     
+    property alias contentItem: loader
+
     Loader{
         id:loader
         anchors.fill: parent
     }
-    
+
     onStatusChanged: {
         if (mainView.status === PageStatus.Active) {
             console.log("FirstPage === PageStatus.Active");
@@ -35,9 +37,9 @@ Page {
             if (firstUiLaunchTime) {
                 reset();
                 firstUiLaunchTime = false;
-            } else {
+            } /*else {
                 attachSecondPage();
-            }
+            }*/
 
             //addNotification("hello", 3);
             console.log("====================== page depth is "+ pageStack.depth);
@@ -113,7 +115,7 @@ Page {
             
             Component.onCompleted: {
                 weiboTab.refresh();
-                attachSecondPage();
+//                attachSecondPage();
             }
         }
     }

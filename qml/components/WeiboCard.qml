@@ -124,64 +124,59 @@ Item {
                 }
             }
         }
-        
-        Column {
-            width: parent.width
-            spacing: Theme.paddingSmall
+        Row {
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: childrenRect.height
 
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                
-                Item {
-                    width: columnWContent.width / 3 -Theme.paddingSmall 
-                    height: Theme.fontSizeSmall
-                    HorizontalIconTextButton {
-                        id:repostButton
-                        anchors.centerIn: parent
-                        source: "../graphics/repost.png"
-                        text: weiboJSONContent.reposts_count
-                        color: repostButtonColor == undefined ? Theme.secondaryColor : repostButtonColor
-                        onClicked: {
-                            weiboCard.repostButtonClicked();
-                        }
+            Item {
+                width: columnWContent.width / 3 -Theme.paddingSmall
+                height: Theme.fontSizeSmall
+                HorizontalIconTextButton {
+                    id:repostButton
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    icon: "../graphics/repost.png"
+                    text: weiboJSONContent.reposts_count
+                    color: repostButtonColor == undefined ? Theme.secondaryColor : repostButtonColor
+                    onClicked: {
+                        weiboCard.repostButtonClicked();
                     }
                 }
-                Rectangle {
-                    width: 1
-                    height: Theme.fontSizeSmall -2
-                    color: Theme.highlightColor
-                }
-                Item {
-                    width: columnWContent.width / 3 - Theme.paddingSmall
-                    height: Theme.fontSizeSmall
-                    HorizontalIconTextButton {
-                        id:commentButton
-                        anchors.centerIn: parent
-                        source: "../graphics/comment.png"
-                        text: weiboJSONContent.comments_count
-                        color: commentButtonColor == undefined ? Theme.secondaryColor : commentButtonColor
-                        onClicked: {
-                            weiboCard.commentButtonClicked();
-                        }
+            }
+            Rectangle {
+                width: 1
+                height: Theme.fontSizeSmall -2
+                color: Theme.highlightColor
+            }
+            Item {
+                width: columnWContent.width / 3 - Theme.paddingSmall
+                height: Theme.fontSizeSmall
+                HorizontalIconTextButton {
+                    id:commentButton
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    icon: "../graphics/comment.png"
+                    text: weiboJSONContent.comments_count
+                    color: commentButtonColor == undefined ? Theme.secondaryColor : commentButtonColor
+                    onClicked: {
+                        weiboCard.commentButtonClicked();
                     }
                 }
-                Rectangle {
-                    width: 1
-                    height: Theme.fontSizeSmall -2
-                    color: Theme.highlightColor
-                }
-                Item {
-                    width: columnWContent.width / 3 - Theme.paddingSmall  
-                    height: Theme.fontSizeSmall
-                    HorizontalIconTextButton {
-                        id:likeButton
-                        anchors.centerIn: parent
-                        source: "../graphics/like.png"
-                        text: weiboJSONContent.attitudes_count
-                        color: likeButtonColor == undefined ? Theme.secondaryColor : likeButtonColor
-                        onClicked: {
-                            weiboCard.likeButtonClicked();
-                        }
+            }
+            Rectangle {
+                width: 1
+                height: Theme.fontSizeSmall -2
+                color: Theme.highlightColor
+            }
+            Item {
+                width: columnWContent.width / 3 - Theme.paddingSmall
+                height: Theme.fontSizeSmall
+                HorizontalIconTextButton {
+                    id:likeButton
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    icon: "../graphics/like.png"
+                    text: weiboJSONContent.attitudes_count
+                    color: likeButtonColor == undefined ? Theme.secondaryColor : likeButtonColor
+                    onClicked: {
+                        weiboCard.likeButtonClicked();
                     }
                 }
             }

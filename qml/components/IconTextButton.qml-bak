@@ -2,17 +2,16 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 MouseArea {
-    id:horizontalIconTextButton
+    id: iconTextButton
 
     property bool down: pressed && containsMouse
     property alias text: buttonText.text
     property bool _showPress: down || pressTimer.running
     property color color: Theme.primaryColor
     property color highlightColor: Theme.highlightColor
-    property int spacing: Theme.paddingSmall
+    property alias spacing: row.spacing
     property alias icon: image.source
-    property real iconSize: Theme.iconSizeSmall
-    //property alias source: image.source
+    property alias iconSize: image.width
 
     onPressedChanged: {
         if (pressed) {
@@ -21,6 +20,8 @@ MouseArea {
     }
     onCanceled: pressTimer.stop()
 
+//    height: Theme.itemSizeSmall
+//    width: Math.max(buttonText.width, 214/480*Screen.width)
     width: row.width
     height: row.height
 
@@ -28,25 +29,25 @@ MouseArea {
         id: pressTimer
         interval: 50
     }
+
     Row {
         id: row
         anchors {
-            left: horizontalIconTextButton.left
-            top: horizontalIconTextButton.top
-            bottom: horizontalIconTextButton.bottom
+            left: iconTextButton.left
+            top: iconTextButton.top
+            bottom: iconTextButton.bottom
         }
-        spacing: spacing
+
         Image {
-            id:image
+            id: image
             fillMode: Image.PreserveAspectFit
-            width: iconSize
             height: image.width
         }
         Label {
-            id:buttonText
+            id: buttonText
             anchors.verticalCenter: image.verticalCenter
-            color: _showPress ? horizontalIconTextButton.highlightColor : horizontalIconTextButton.color
-            font.pixelSize: Math.min(image.width, image.height)
+            color: _showPress ? iconTextButton.highlightColor : iconTextButton.color
+
         }
     }
 }

@@ -31,6 +31,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
+import "components"
+import "ui"
 
 import "js/Settings.js" as Settings
 
@@ -38,8 +40,22 @@ import com.sunrain.sinaweibo 1.0
 
 ApplicationWindow
 {
-    initialPage: /*Qt.resolvedUrl("pages/FirstPage.qml")*/Component { FirstPage { } }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    initialPage: /*Qt.resolvedUrl("pages/FirstPage.qml")*/Component {
+        FirstPage {
+            id: firstPage
+            property bool _isFirstPage: true
+            Binding {
+                target: firstPage.contentItem
+                property: "parent"
+                value: firstPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : firstPage)
+                       : firstPage
+            }
+        }
+    }
+    //cover: Qt.resolvedUrl("cover/CoverPage.qml")
+
+    property Page currentPage: pageStack.currentPage
 
     Item{
         id:notiItem
@@ -64,22 +80,59 @@ ApplicationWindow
         }
     }
 
-    Item{
-        id:busyIndicatorItem
-        width: Screen.width
-        height:Screen.height
-        z: 10
-        BusyIndicator {
-            id:busyIndicator
-            size: BusyIndicatorSize.Large
-            anchors.centerIn: parent
+//    Item{
+//        id:busyIndicatorItem
+//        width: Screen.width
+//        height:Screen.height
+//        z: 10
+//        BusyIndicator {
+//            id:busyIndicator
+//            size: BusyIndicatorSize.Large
+//            anchors.centerIn: parent
+//        }
+//    }
+
+    PanelView {
+        id: panelView
+        // a workaround to avoid TextAutoScroller picking up PanelView as an "outer"
+        // flickable and doing undesired contentX adjustments (the right side panel
+        // slides partially in) meanwhile typing/scrolling long TextEntry content
+        property bool maximumFlickVelocity: false
+
+        width: pageStack.currentPage.width
+        panelWidth: Screen.width / 3 * 2
+        panelHeight: pageStack.currentPage.height
+        height: currentPage && currentPage.contentHeight || pageStack.currentPage.height
+        visible:  (!!currentPage && !!currentPage._isFirstPage) || !panelView.closed
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset:  -(panelHeight - height) / 2
+
+        anchors.horizontalCenterOffset:  0
+
+        Connections {
+            target: pageStack
+            onCurrentPageChanged: panelView.hidePanel()
+        }
+
+        leftPanel: MainIndexNavigationPanel {
+            id: leftPanel
+            busy: false //panelView.closed /*&& !!BufferModel.connections && BufferModel.connections.some(function (c) { return c.active && !c.connected })*/
+//            highlighted: MessageStorage.activeHighlights > 0
+            onClicked: {
+                panelView.hidePanel()
+            }
+            Component.onCompleted: {
+                panelView.hidePanel();
+            }
         }
     }
+
+
     function showBusyIndicator() {
-        busyIndicator.running = true;
+        //busyIndicator.running = true;
     }
     function stopBusyIndicator() {
-        busyIndicator.running = false;
+        //busyIndicator.running = false;
     }
     
     function addNotification(inText, inTime) {
