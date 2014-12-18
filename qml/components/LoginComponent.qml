@@ -14,6 +14,8 @@ Item {
         
         BusyIndicator {
             id:busyIndicator
+            parent: loginComponent
+            anchors.centerIn: parent
             size: BusyIndicatorSize.Large
         }
         

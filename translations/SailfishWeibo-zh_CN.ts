@@ -199,28 +199,28 @@
         <translation type="obsolete">如果页面的登入按钮点击无效，请尝试点击软键盘的回车键来登入</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="56"/>
+        <location filename="../qml/components/LoginComponent.qml" line="58"/>
         <source>UserName</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="64"/>
+        <location filename="../qml/components/LoginComponent.qml" line="66"/>
         <source>Password</source>
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="111"/>
+        <location filename="../qml/components/LoginComponent.qml" line="113"/>
         <source>Login fail</source>
         <translation>登录失败</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="111"/>
+        <location filename="../qml/components/LoginComponent.qml" line="113"/>
         <source>Please try again.</source>
         <translation>请重试</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="31"/>
-        <location filename="../qml/components/LoginComponent.qml" line="70"/>
+        <location filename="../qml/components/LoginComponent.qml" line="33"/>
+        <location filename="../qml/components/LoginComponent.qml" line="72"/>
         <source>Login</source>
         <translation>登入</translation>
     </message>
