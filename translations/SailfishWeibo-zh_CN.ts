@@ -281,6 +281,39 @@
     </message>
 </context>
 <context>
+    <name>NavigationPanel</name>
+    <message>
+        <location filename="../qml/ui/NavigationPanel.qml" line="117"/>
+        <source>Home</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/NavigationPanel.qml" line="138"/>
+        <source>AtMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/NavigationPanel.qml" line="159"/>
+        <source>Comment</source>
+        <translation type="unfinished">评论</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/NavigationPanel.qml" line="180"/>
+        <source>PM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/NavigationPanel.qml" line="201"/>
+        <source>Favourite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/NavigationPanel.qml" line="222"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="51"/>

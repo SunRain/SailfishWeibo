@@ -84,6 +84,7 @@ ApplicationWindow
                     } else {
                         if (!_dataInitialized) {
                             firstPage.refresh();
+                            panelView.initUserAvatar();
                             _dataInitialized = true;
                         }
                     }
@@ -161,7 +162,7 @@ ApplicationWindow
         height: currentPage && currentPage.contentHeight || pageStack.currentPage.height
         visible:  (!!currentPage && !!currentPage._isFirstPage) || !panelView.closed
         anchors.centerIn: parent
-        anchors.verticalCenterOffset:  -(panelHeight - height) / 2
+        //anchors.verticalCenterOffset:  -(panelHeight - height) / 2
 
         anchors.horizontalCenterOffset:  0
 
@@ -170,7 +171,11 @@ ApplicationWindow
             onCurrentPageChanged: panelView.hidePanel()
         }
 
-        leftPanel: MainIndexNavigationPanel {
+        function initUserAvatar() {
+            leftPanel.initUserAvatar();
+        }
+
+        leftPanel: NavigationPanel {
             id: leftPanel
             busy: false //panelView.closed /*&& !!BufferModel.connections && BufferModel.connections.some(function (c) { return c.active && !c.connected })*/
 //            highlighted: MessageStorage.activeHighlights > 0

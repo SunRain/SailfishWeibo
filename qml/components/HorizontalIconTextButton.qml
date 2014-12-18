@@ -40,7 +40,7 @@ MouseArea {
         Image {
             id:image
             fillMode: Image.PreserveAspectFit
-            width: iconSize
+            width: horizontalIconTextButton.iconSize
             height: image.width
         }
         Label {
