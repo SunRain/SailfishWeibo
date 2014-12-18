@@ -40,10 +40,20 @@ import com.sunrain.sinaweibo 1.0
 
 ApplicationWindow
 {
-    initialPage: /*Qt.resolvedUrl("pages/FirstPage.qml")*/Component {
+    id:applicationWindow
+    allowedOrientations: Orientation.Portrait
+    property Page currentPage: pageStack.currentPage
+
+    property bool tokenValid: false
+//    property /*Dialog*/var _loginDialog
+
+    //cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    initialPage: Component {
         FirstPage {
             id: firstPage
             property bool _isFirstPage: true
+            property bool _settingsInitialized: false
+            property bool _dataInitialized: false
             Binding {
                 target: firstPage.contentItem
                 property: "parent"
@@ -51,11 +61,61 @@ ApplicationWindow
                        ? (panelView .closed ? panelView : firstPage)
                        : firstPage
             }
+            Component.onCompleted: {
+                if (!_settingsInitialized) {
+                    Settings.initialize();
+                    _settingsInitialized = true;
+                }
+            }
+            onStatusChanged: {
+//                if (firstPage.status === PageStatus.Activating) {
+////                    if (!_settingsInitialized) {
+////                        Settings.initialize();
+////                        _settingsInitialized = true;
+////                    }
+////                    if (_firstUiLaunchTime) {
+////                        reset();
+////                        _firstUiLaunchTime = false;
+////                    }
+//                }
+                if (firstPage.status === PageStatus.Active) {
+                    if (!tokenValid) {
+                        startLogin();
+                    } else {
+                        if (!_dataInitialized) {
+                            firstPage.refresh();
+                            _dataInitialized = true;
+                        }
+                    }
+                }
+            }
         }
     }
-    //cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
-    property Page currentPage: pageStack.currentPage
+    //Dirty hack
+    //Use a Timer to fix Warning: cannot pop while transition is in progress
+    function startLogin() {
+        pageStack.completeAnimation();
+        loginDelay.restart();
+    }
+    Timer {
+        id: loginDelay
+        interval: 500
+        onTriggered: {
+            _startLogin();
+        }
+    }
+
+    function _startLogin() {
+        var dialog = pageStack.push(Qt.resolvedUrl("ui/LoginDialog.qml"),{ token: Settings.getAccess_token()});
+        dialog.accepted.connect(function() {
+            tokenValid = true;
+
+        })
+        dialog.rejected.connect(function() {
+            startLogin();
+        })
+    }
 
     Item{
         id:notiItem
@@ -70,27 +130,23 @@ ApplicationWindow
                 right: parent.right
                 bottom: parent.bottom
                 margins:Theme.paddingMedium
-                // bottomMargin: Theme.paddingMedium
-                //verticalCenter: parent.verticalCenter
             }
-
             spacing: Theme.paddingMedium
-
             move: Transition { NumberAnimation { properties: "y" } }
         }
     }
 
-//    Item{
-//        id:busyIndicatorItem
-//        width: Screen.width
-//        height:Screen.height
-//        z: 10
-//        BusyIndicator {
-//            id:busyIndicator
-//            size: BusyIndicatorSize.Large
-//            anchors.centerIn: parent
-//        }
-//    }
+    BusyIndicator {
+        id:busyIndicator
+        property bool runningBusyIndicator: false
+
+        parent: applicationWindow.currentPage
+        anchors.centerIn: parent
+        z: 10
+        size: BusyIndicatorSize.Large
+        running: runningBusyIndicator
+        opacity: busyIndicator.running ? 1: 0
+    }
 
     PanelView {
         id: panelView
@@ -129,10 +185,10 @@ ApplicationWindow
 
 
     function showBusyIndicator() {
-        //busyIndicator.running = true;
+        busyIndicator.runningBusyIndicator = true
     }
     function stopBusyIndicator() {
-        //busyIndicator.running = false;
+        busyIndicator.runningBusyIndicator = false
     }
     
     function addNotification(inText, inTime) {

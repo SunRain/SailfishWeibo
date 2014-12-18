@@ -14,7 +14,6 @@ Item {
         
         BusyIndicator {
             id:busyIndicator
-            anchors.centerIn: parent
             size: BusyIndicatorSize.Large
         }
         
