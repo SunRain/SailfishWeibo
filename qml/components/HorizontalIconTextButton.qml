@@ -6,6 +6,7 @@ MouseArea {
 
     property bool down: pressed && containsMouse
     property alias text: buttonText.text
+    property int fontSize: Math.min(image.width, image.height)
     property bool _showPress: down || pressTimer.running
     property color color: Theme.primaryColor
     property color highlightColor: Theme.highlightColor
@@ -46,7 +47,7 @@ MouseArea {
             id:buttonText
             anchors.verticalCenter: image.verticalCenter
             color: _showPress ? horizontalIconTextButton.highlightColor : horizontalIconTextButton.color
-            font.pixelSize: Math.min(image.width, image.height)
+            font.pixelSize: horizontalIconTextButton.fontSize
         }
     }
 }
