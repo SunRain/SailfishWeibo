@@ -283,32 +283,32 @@
 <context>
     <name>NavigationPanel</name>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="117"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="116"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="138"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="136"/>
         <source>AtMe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="159"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="156"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="180"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="176"/>
         <source>PM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="201"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="196"/>
         <source>Favourite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="222"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="216"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -664,27 +664,30 @@
 <context>
     <name>WeiboPage</name>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="87"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="95"/>
         <source>Sailfish Weibo</source>
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="132"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="135"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="177"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="180"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="142"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="145"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="179"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="215"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="231"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="237"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="253"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>

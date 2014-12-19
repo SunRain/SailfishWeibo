@@ -14,46 +14,54 @@ Page {
 
     property var userWeiboJSONContent
     
-    property int footInfoBarIndex: 0
-    property int commentsPage:1
-    property int repostPage: 1
-    
-    property string weiboId
+    property int _footInfoBarIndex: 0
+    property int _commentsPageNum:1
+    property int _repostPageNum: 1
+    property bool _gettingInfo: false
+    property string _weiboId
 
     function _getInfo(id) {
-        weiboId = String(id);
+        weiboPage._gettingInfo = true;
+        _weiboId = String(id);
         modelInfo.clear();
         var method;
-        if (footInfoBarIndex == 0) {
+        if (_footInfoBarIndex == 0) {
             method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
-            api.setWeiboAction(method, {'id':" "+id+" ", 'page':repostPage});
+            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_repostPageNum});
         }
         
-        if (footInfoBarIndex == 1) {
+        if (_footInfoBarIndex == 1) {
             method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-            api.setWeiboAction(method, {'id':" "+id+" ", 'page':commentsPage});
+            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_commentsPageNum});
         }
 
     }
     function _addMore() {
+        weiboPage._gettingInfo = true;
         var method
-        if (footInfoBarIndex == 0) {
-            repostPage++;
+        if (_footInfoBarIndex == 0) {
+            _repostPageNum++;
             method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
-            api.setWeiboAction(method, {'id':" "+weiboId+" ", 'page':repostPage});
+            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_repostPageNum});
         }
         
-        if (footInfoBarIndex == 1) {
-            commentsPage++;
+        if (_footInfoBarIndex == 1) {
+            _commentsPageNum++;
             method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-            api.setWeiboAction(method, {'id':" "+weiboId+" ", 'page':commentsPage});
+            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_commentsPageNum});
         }
 
+    }
+    onStatusChanged: {
+        if (weiboPage.status == PageStatus.Active) {
+            _getInfo(userWeiboJSONContent.id);
+        }
     }
     
     Connections {
         target: api
         onWeiboPutSucceed: {
+            weiboPage._gettingInfo = false
             if (action == WeiboMethod.WBOPT_GET_COMMENTS_SHOW) {
                 var json = JSON.parse(replyData);
                 for (var i=0; i<json.comments.length; i++) {
@@ -87,60 +95,56 @@ Page {
                 title: qsTr("Sailfish Weibo")
             }
                 
-            Item {
-                anchors{left:parent.left; right:parent.right; }
-                height: childrenRect.height
-                WeiboCard {
-                    id:weiboCard
-                    weiboJSONContent: userWeiboJSONContent
-                    optionMenu: options
-                    repostButtonColor: footInfoBarIndex == 0 ? Theme.secondaryHighlightColor : undefined
-                    commentButtonColor: footInfoBarIndex == 1 ? Theme.secondaryHighlightColor : undefined
-                    likeButtonColor: footInfoBarIndex == 2 ? Theme.secondaryHighlightColor : undefined
-                    
-                    onRepostedWeiboClicked: {
-                        //toWeiboPage(userWeiboJSONContent.retweeted_status);
-                        pageStack.replace(Qt.resolvedUrl("WeiboPage.qml"),
-                                          {"userWeiboJSONContent":userWeiboJSONContent.retweeted_status})
-                    }
-                    onAvatarHeaderClicked: {
-                        toUserPage(userId);
-                    }
-                    onLabelLinkClicked: {
-                        Qt.openUrlExternally(link);
-                    }
-                    onLabelImageClicked: {
-                        toGalleryPage(modelImages, index);
-                    }
-                    onRepostButtonClicked: {
-                        footInfoBarIndex = 0;
-                        _getInfo(userWeiboJSONContent.id);
-                    }
-                    onCommentButtonClicked: {
-                        footInfoBarIndex = 1;
-                        _getInfo(userWeiboJSONContent.id);
-                    }
-                    onLikeButtonClicked: {
-//                        footInfoBarIndex = 2;
-                    }
+            WeiboCard {
+                id:weiboCard
+                parent: column
+                weiboJSONContent: userWeiboJSONContent
+                optionMenu: options
+                repostButtonColor: _footInfoBarIndex == 0 ? Theme.secondaryHighlightColor : undefined
+                commentButtonColor: _footInfoBarIndex == 1 ? Theme.secondaryHighlightColor : undefined
+                likeButtonColor: _footInfoBarIndex == 2 ? Theme.secondaryHighlightColor : undefined
 
-                    ContextMenu {
-                        id:options
-                        MenuItem {
-                            text: qsTr("Repost")
-                            onClicked: {
-                                toSendPage("repost", {"id": userWeiboJSONContent.id}, 
-                                           (userWeiboJSONContent.retweeted_status == undefined || userWeiboJSONContent.retweeted_status == "") == true ?
-                                               "" :
-                                               "//@"+userWeiboJSONContent.user.name +": " + userWeiboJSONContent.text ,
-                                               true)
-                            }
+                onRepostedWeiboClicked: {
+                    pageStack.replace(Qt.resolvedUrl("WeiboPage.qml"),
+                                      {"userWeiboJSONContent":userWeiboJSONContent.retweeted_status})
+                }
+                onAvatarHeaderClicked: {
+                    toUserPage(userId);
+                }
+                onLabelLinkClicked: {
+                    Qt.openUrlExternally(link);
+                }
+                onLabelImageClicked: {
+                    toGalleryPage(modelImages, index);
+                }
+                onRepostButtonClicked: {
+                    _footInfoBarIndex = 0;
+                    _getInfo(userWeiboJSONContent.id);
+                }
+                onCommentButtonClicked: {
+                    _footInfoBarIndex = 1;
+                    _getInfo(userWeiboJSONContent.id);
+                }
+                onLikeButtonClicked: {
+                    //                        footInfoBarIndex = 2;
+                }
+
+                ContextMenu {
+                    id:options
+                    MenuItem {
+                        text: qsTr("Repost")
+                        onClicked: {
+                            toSendPage("repost", {"id": userWeiboJSONContent.id},
+                                       (userWeiboJSONContent.retweeted_status == undefined || userWeiboJSONContent.retweeted_status == "") == true ?
+                                           "" :
+                                           "//@"+userWeiboJSONContent.user.name +": " + userWeiboJSONContent.text ,
+                                           true)
                         }
-                        MenuItem {
-                            text: qsTr("Comment")
-                            onClicked: {
-                                toSendPage("comment", {"id": userWeiboJSONContent.id}, "", true)                        
-                            }
+                    }
+                    MenuItem {
+                        text: qsTr("Comment")
+                        onClicked: {
+                            toSendPage("comment", {"id": userWeiboJSONContent.id}, "", true)
                         }
                     }
                 }
@@ -152,18 +156,35 @@ Page {
             }            
             //////////////微博下面评论/转发的内容（listView展示）
             Item {
+                id: commentItem
                 width: parent.width
                 height: childrenRect.height
-                
+                BusyIndicator {
+                    id: commentLoading
+                    anchors.centerIn: parent
+                    parent: commentItem
+                    size: BusyIndicatorSize.Medium
+                    opacity: commentLoading.running ? 1 : 0
+                    running: weiboPage._gettingInfo ? (modelInfo.count == 0 ? true : false) : false
+                }
                 SilicaListView {
                     id:commentListView
                     width: parent.width
-                    height: contentItem.childrenRect.height
+                    height: modelInfo.count ==0 ? 0 : contentItem.childrenRect.height
+                    opacity: modelInfo.count ==0 ? 0 : 1
+                    header: PageHeader {
+                        title: _footInfoBarIndex == 0
+                               ? qsTr("Repost")
+                               : _footInfoBarIndex == 1
+                               ? qsTr("Comment")
+                               : qsTr("Repost") //fallback
+                    }
+
                     interactive: false
                     clip: true
                     spacing:Theme.paddingSmall
-                    model: ListModel { 
-                        id: modelInfo 
+                    model: ListModel {
+                        id: modelInfo
                     }
                     delegate: delegateComment
                     footer: FooterLoadMore {
@@ -172,12 +193,10 @@ Page {
                             _addMore();
                         }
                     }
-                    VerticalScrollDecorator { flickable: commentListView }
+                    VerticalScrollDecorator { /*flickable: commentListView*/ }
+                    Behavior on opacity { FadeAnimation{} }
                 }
             }
-        }
-        Component.onCompleted: {
-            _getInfo(userWeiboJSONContent.id)
         }
     }
     
@@ -186,13 +205,12 @@ Page {
         
         OptionItem {
             width: parent.width
-            contentHeight: columnWContent.height // + Theme.paddingMedium 
+            contentHeight: columnWContent.height
             menu: contextMenu
             Column {
                 id: columnWContent
                 anchors {
                     top: parent.top
-//                    topMargin: Theme.paddingSmall
                     left: parent.left
                     right: parent.right
                     leftMargin: Theme.paddingSmall
