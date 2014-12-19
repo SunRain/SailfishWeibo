@@ -45,21 +45,23 @@ ApplicationWindow
     property Page currentPage: pageStack.currentPage
 
     property bool tokenValid: false
+    property bool reminderRefreshed: false
 //    property /*Dialog*/var _loginDialog
 
     //cover: Qt.resolvedUrl("cover/CoverPage.qml")
     initialPage: Component {
+        id: indexPageComponent
         FirstPage {
-            id: firstPage
-            property bool _isFirstPage: true
+            id: indexPage
+            property bool withPanelView: true
             property bool _settingsInitialized: false
             property bool _dataInitialized: false
             Binding {
-                target: firstPage.contentItem
+                target: indexPage.contentItem
                 property: "parent"
-                value: firstPage.status === PageStatus.Active
-                       ? (panelView .closed ? panelView : firstPage)
-                       : firstPage
+                value: indexPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : indexPage)
+                       : indexPage
             }
             Component.onCompleted: {
                 if (!_settingsInitialized) {
@@ -68,7 +70,7 @@ ApplicationWindow
                 }
             }
             onStatusChanged: {
-//                if (firstPage.status === PageStatus.Activating) {
+//                if (indexPage.status === PageStatus.Activating) {
 ////                    if (!_settingsInitialized) {
 ////                        Settings.initialize();
 ////                        _settingsInitialized = true;
@@ -78,12 +80,12 @@ ApplicationWindow
 ////                        _firstUiLaunchTime = false;
 ////                    }
 //                }
-                if (firstPage.status === PageStatus.Active) {
+                if (indexPage.status === PageStatus.Active) {
                     if (!tokenValid) {
                         startLogin();
                     } else {
                         if (!_dataInitialized) {
-                            firstPage.refresh();
+                            indexPage.refresh();
                             panelView.initUserAvatar();
                             _dataInitialized = true;
                         }
@@ -160,7 +162,7 @@ ApplicationWindow
         panelWidth: Screen.width / 3 * 2
         panelHeight: pageStack.currentPage.height
         height: currentPage && currentPage.contentHeight || pageStack.currentPage.height
-        visible:  (!!currentPage && !!currentPage._isFirstPage) || !panelView.closed
+        visible:  (!!currentPage && !!currentPage.withPanelView) || !panelView.closed
         anchors.centerIn: parent
         //anchors.verticalCenterOffset:  -(panelHeight - height) / 2
 
@@ -224,6 +226,11 @@ ApplicationWindow
         pageStack.pop(firstPage);
     }
     
+    function toIndexPage() {
+        popAttachedPages();
+        pageStack.replace(indexPageComponent)
+    }
+
     //////////////////////////////////////////////////////////////////         go to weibo page
     function toWeiboPage(jsonContent) {
         //console.log("toWeiboPage  index " + index + " model " + model);

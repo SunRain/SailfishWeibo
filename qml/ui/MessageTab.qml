@@ -11,8 +11,14 @@ import com.sunrain.sinaweibo 1.0
 Page {
     id: messageTab
 
-    property var remind: {"status":0,"follower":0,"cmt":0,"dm":0,"mention_status":0,"mention_cmt":0,"group":0,"notice":0,"invite":0,"badge":0,"photo":0}
-    
+    property alias contentItem: innerAreaColumn
+    property bool withPanelView: true
+
+    //property var remind: {"status":0,"follower":0,"cmt":0,"dm":0,"mention_status":0,"mention_cmt":0,"group":0,"notice":0,"invite":0,"badge":0,"photo":0}
+    RemindObject {
+        id: remindObject
+    }
+
     function refresh() {
         showBusyIndicator();
         messageGetRemind()
@@ -50,7 +56,8 @@ Page {
                 //                        mention_status	int	新提及我的微博数
                 //                        mention_cmt	int	新提及我的评论数
                 
-                remind = result
+                //remind = result
+                remindObject.remind = result
                 var mCount = result.follower + result.cmt + result.mention_status + result.mention_cmt
                 if (mCount > 1) {
                     addNotification(qsTr("You have ") + mCount + qsTr(" new messages"), 3)
@@ -62,10 +69,10 @@ Page {
                     addNotification(qsTr("You have no new message"), 3)
                 }
                 
-                listModel.append({"title":"New comment", "text":remind.cmt, "page":"CommentAllPage.qml", "toFunction":"0"});
-                listModel.append({"title":"New mentioned comment", "text":remind.mention_cmt, "page":"CommentMentioned.qml","toFunction":"0"});
-                listModel.append({"title":"New mentioned weibo", "text":remind.mention_status, "page":"WeiboMentioned.qml", "toFunction":"0"});
-                listModel.append({"title":"New follower", "text":remind.follower, "page":"follower", "toFunction":"1"});
+                listModel.append({"title":"New comment", "text":remindObject.remind.cmt, "page":"CommentAllPage.qml", "toFunction":"0"});
+                listModel.append({"title":"New mentioned comment", "text":remindObject.remind.mention_cmt, "page":"CommentMentioned.qml","toFunction":"0"});
+                listModel.append({"title":"New mentioned weibo", "text":remindObject.remind.mention_status, "page":"WeiboMentioned.qml", "toFunction":"0"});
+                listModel.append({"title":"New follower", "text":remindObject.remind.follower, "page":"follower", "toFunction":"1"});
                 
                 if (innerAreaColumn.model == undefined) {
                     innerAreaColumn.model = listModel;

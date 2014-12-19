@@ -107,8 +107,6 @@ Panel {
             width: column.width
             height: Theme.itemSizeExtraSmall
             HorizontalIconTextButton {
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                anchors.horizontalCenterOffset:-column.width/5
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
@@ -119,7 +117,7 @@ Panel {
                 icon: "../graphics/panel_home.png"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-
+                    toIndexPage();
                 }
             }
         }
@@ -127,8 +125,6 @@ Panel {
             width: column.width
             height: Theme.itemSizeExtraSmall
             HorizontalIconTextButton {
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                anchors.horizontalCenterOffset: -column.width/5
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
@@ -139,7 +135,7 @@ Panel {
                 icon: "../graphics/panel_at.png"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-
+                    pageStack.push(Qt.resolvedUrl("MessageTab.qml"))
                 }
             }
         }

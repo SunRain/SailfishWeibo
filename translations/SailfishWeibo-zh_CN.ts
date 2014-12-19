@@ -254,28 +254,28 @@
 <context>
     <name>MessageTab</name>
     <message>
-        <location filename="../qml/ui/MessageTab.qml" line="62"/>
+        <location filename="../qml/ui/MessageTab.qml" line="69"/>
         <source>You have no new message</source>
         <translation>没有新信息</translation>
     </message>
     <message>
-        <location filename="../qml/ui/MessageTab.qml" line="56"/>
-        <location filename="../qml/ui/MessageTab.qml" line="59"/>
+        <location filename="../qml/ui/MessageTab.qml" line="63"/>
+        <location filename="../qml/ui/MessageTab.qml" line="66"/>
         <source>You have </source>
         <translation>你有</translation>
     </message>
     <message>
-        <location filename="../qml/ui/MessageTab.qml" line="56"/>
+        <location filename="../qml/ui/MessageTab.qml" line="63"/>
         <source> new messages</source>
         <translation>条新信息</translation>
     </message>
     <message>
-        <location filename="../qml/ui/MessageTab.qml" line="59"/>
+        <location filename="../qml/ui/MessageTab.qml" line="66"/>
         <source> new message</source>
         <translation>条新信息</translation>
     </message>
     <message>
-        <location filename="../qml/ui/MessageTab.qml" line="89"/>
+        <location filename="../qml/ui/MessageTab.qml" line="96"/>
         <source>Message</source>
         <translation>信息</translation>
     </message>
@@ -283,32 +283,32 @@
 <context>
     <name>NavigationPanel</name>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="116"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="114"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="136"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="132"/>
         <source>AtMe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="156"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="152"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="176"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="172"/>
         <source>PM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="196"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="192"/>
         <source>Favourite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="216"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="212"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
