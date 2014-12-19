@@ -669,22 +669,22 @@
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="130"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="132"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="140"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="142"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="213"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="215"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboPage.qml" line="235"/>
+        <location filename="../qml/ui/WeiboPage.qml" line="237"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>

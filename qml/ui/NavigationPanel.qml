@@ -112,7 +112,6 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
-                    verticalCenter: parent.verticalCenter
                 }
                 text: qsTr("Home")
                 color: Theme.secondaryColor
@@ -133,7 +132,6 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
-                    verticalCenter: parent.verticalCenter
                 }
                 text: qsTr("AtMe")
                 color: Theme.secondaryColor
@@ -154,7 +152,6 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
-                    verticalCenter: parent.verticalCenter
                 }
                 text: qsTr("Comment")
                 color: Theme.secondaryColor
@@ -175,7 +172,6 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
-                    verticalCenter: parent.verticalCenter
                 }
                 text: qsTr("PM")
                 color: Theme.secondaryColor
@@ -196,7 +192,6 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
-                    verticalCenter: parent.verticalCenter
                 }
                 text: qsTr("Favourite")
                 color: Theme.secondaryColor
@@ -217,7 +212,6 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
-                    verticalCenter: parent.verticalCenter
                 }
                 text: qsTr("Settings")
                 color: Theme.secondaryColor
