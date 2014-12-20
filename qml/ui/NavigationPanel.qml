@@ -8,9 +8,12 @@ import "../js/Settings.js" as Settings
 Panel {
     id: panel
 
-    property var _usrInfo: {"id":-1,"idstr":"","class":1,"screen_name":"","name":"","province":"","city":"","location":"","description":"","url":"","cover_image_phone":"","profile_image_url":"","profile_url":"","domain":"","weihao":"","gender":"","followers_count":0,"friends_count":0,"statuses_count":0,"favourites_count":0,"created_at":"Sun Jan 22 13:32:37 +0800 1999","following":false,"allow_all_act_msg":false,"geo_enabled":true,"verified":false,"verified_type":-1,"remark":"","status":{"text": "", "reposts_count": 0, "comments_count": 0, "attitudes_count": 0},"ptype":0,"allow_all_comment":true,"avatar_large":"","avatar_hd":"","verified_reason":"","follow_me":false,"online_status":0,"bi_followers_count":0,"lang":"zh-cn","star":0,"mbtype":0,"mbrank":0,"block_word":0}
+//    property var _usrInfo: {"id":-1,"idstr":"","class":1,"screen_name":"","name":"","province":"","city":"","location":"","description":"","url":"","cover_image_phone":"","profile_image_url":"","profile_url":"","domain":"","weihao":"","gender":"","followers_count":0,"friends_count":0,"statuses_count":0,"favourites_count":0,"created_at":"Sun Jan 22 13:32:37 +0800 1999","following":false,"allow_all_act_msg":false,"geo_enabled":true,"verified":false,"verified_type":-1,"remark":"","status":{"text": "", "reposts_count": 0, "comments_count": 0, "attitudes_count": 0},"ptype":0,"allow_all_comment":true,"avatar_large":"","avatar_hd":"","verified_reason":"","follow_me":false,"online_status":0,"bi_followers_count":0,"lang":"zh-cn","star":0,"mbtype":0,"mbrank":0,"block_word":0}
+
+    property bool _userAvatarLock: false
 
     signal clicked
+    signal userAvatarClicked
 
     function initUserAvatar() {
         //userGetInfo(Settings.getAccess_token())
@@ -26,13 +29,19 @@ Panel {
     RemindObject {
         id: remindObject
     }
+    UserInfoObject {
+        id: userInfoObject
+    }
 
     Connections {
         target: api
         //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
         onWeiboPutSucceed: {
             if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
-                _usrInfo = JSON.parse(replyData)
+                if (!panel._userAvatarLock) {
+                    userInfoObject.usrInfo = JSON.parse(replyData)
+                    panel._userAvatarLock = !panel._userAvatarLock;
+                }
             }
             if (action == WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT) {
                 remindObject.remind = JSON.parse(replyData);
@@ -67,10 +76,10 @@ Panel {
                 height: cover.width *2/3
                 fillMode: Image.PreserveAspectCrop
                 asynchronous: true
-                source: util.parseImageUrl(_usrInfo.cover_image_phone)
+                source: util.parseImageUrl(userInfoObject.usrInfo.cover_image_phone)
                 onStatusChanged: {
                     if (cover.status == Image.Ready) {
-                        util.saveRemoteImage(_usrInfo.cover_image_phone)
+                        util.saveRemoteImage(userInfoObject.usrInfo.cover_image_phone)
                     }
                 }
             }
@@ -80,16 +89,22 @@ Panel {
                 height: width
                 anchors.centerIn: cover
                 asynchronous: true
-                source: util.parseImageUrl(_usrInfo.profile_image_url)
+                source: util.parseImageUrl(userInfoObject.usrInfo.profile_image_url)
                 onStatusChanged: {
                     if (profile.status == Image.Ready) {
-                        util.saveRemoteImage(_usrInfo.profile_image_url)
+                        util.saveRemoteImage(userInfoObject.usrInfo.profile_image_url)
+                    }
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        userAvatarClicked();
                     }
                 }
             }
             Label {
                 id: screenName
-                text: _usrInfo.screen_name
+                text: userInfoObject.usrInfo.screen_name
                 anchors {
                     top: profile.bottom
                     topMargin: Theme.paddingSmall

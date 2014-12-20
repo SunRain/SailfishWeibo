@@ -186,8 +186,12 @@ ApplicationWindow
             busy: false //panelView.closed /*&& !!BufferModel.connections && BufferModel.connections.some(function (c) { return c.active && !c.connected })*/
 //            highlighted: MessageStorage.activeHighlights > 0
             onClicked: {
-                panelView.hidePanel()
+                panelView.hidePanel();
             }
+            onUserAvatarClicked: {
+                toUserPage(Settings.getUid());
+            }
+
             Component.onCompleted: {
                 panelView.hidePanel();
             }

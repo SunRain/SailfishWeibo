@@ -12,9 +12,13 @@ Page {
     id: userPage
     
     property var uid
-    property var userInfo: {"id":-1,"idstr":"","class":1,"screen_name":"","name":"","province":"","city":"","location":"","description":"","url":"","profile_image_url":"","profile_url":"","domain":"","weihao":"","gender":"","followers_count":0,"friends_count":0,"statuses_count":0,"favourites_count":0,"created_at":"Sun Jan 22 13:32:37 +0800 1999","following":false,"allow_all_act_msg":false,"geo_enabled":true,"verified":false,"verified_type":-1,"remark":"","status":{"text": "", "reposts_count": 0, "comments_count": 0, "attitudes_count": 0},"ptype":0,"allow_all_comment":true,"avatar_large":"","avatar_hd":"","verified_reason":"","follow_me":false,"online_status":0,"bi_followers_count":0,"lang":"zh-cn","star":0,"mbtype":0,"mbrank":0,"block_word":0}
+//    property var userInfo: {"id":-1,"idstr":"","class":1,"screen_name":"","name":"","province":"","city":"","location":"","description":"","url":"","profile_image_url":"","profile_url":"","domain":"","weihao":"","gender":"","followers_count":0,"friends_count":0,"statuses_count":0,"favourites_count":0,"created_at":"Sun Jan 22 13:32:37 +0800 1999","following":false,"allow_all_act_msg":false,"geo_enabled":true,"verified":false,"verified_type":-1,"remark":"","status":{"text": "", "reposts_count": 0, "comments_count": 0, "attitudes_count": 0},"ptype":0,"allow_all_comment":true,"avatar_large":"","avatar_hd":"","verified_reason":"","follow_me":false,"online_status":0,"bi_followers_count":0,"lang":"zh-cn","star":0,"mbtype":0,"mbrank":0,"block_word":0}
     property bool isFollowing: false
-    
+
+    UserInfoObject {
+        id: userInfoObject
+    }
+
     Component.onCompleted: {
         //userGetInfo(Settings.getAccess_token())
         var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
@@ -49,8 +53,8 @@ Page {
         //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
         onWeiboPutSucceed: {
             if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
-                userInfo = JSON.parse(replyData);
-                isFollowing = userInfo.following;
+                userInfoObject.usrInfo = JSON.parse(replyData);
+                isFollowing = userInfoObject.usrInfo.following;
             }
             if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_CREATE) {
                 isFollowing = true;
@@ -73,7 +77,7 @@ Page {
         //                    }else {
         //                        // right result
         ////                        userInfo = result
-        ////                        userInfo.following = true
+        ////                        userInfoObject.usrInfo.following = true
         //                        isFollowing = true
         //                    }
         //                }else{
@@ -100,7 +104,7 @@ Page {
         //                    }else {
         //                        // right result
         ////                        userInfo = result
-        ////                        userInfo.following = false
+        ////                        userInfoObject.usrInfo.following = false
         //                        isFollowing = false
         //                    }
         //                }else{
@@ -158,7 +162,7 @@ Page {
                         anchors.verticalCenter: rowUserColumn.verticalCenter
                         smooth: true
                         fillMode: Image.PreserveAspectFit
-                        source: userInfo.avatar_hd
+                        source: userInfoObject.usrInfo.avatar_hd
                     }
 
                     Column {
@@ -171,7 +175,7 @@ Page {
                             font.pixelSize: Theme.fontSizeMedium
                             width:rowUser.width - usAvatar.width - Theme.paddingMedium// parent.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                            text: userInfo.screen_name
+                            text: userInfoObject.usrInfo.screen_name
                         }
                         
                         Label {
@@ -180,7 +184,7 @@ Page {
                             font.pixelSize: Theme.fontSizeSmall 
                             width: labelUserName.width 
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                            text: userInfo.location
+                            text: userInfoObject.usrInfo.location
                         }                            
                         OptionItem {
                             id:optionItem
@@ -189,7 +193,7 @@ Page {
                                 left: parent.left
                                 right: parent.right
                             }
-                            visible: userInfo.id != Settings.getUid()
+                            visible: userInfoObject.usrInfo.id != Settings.getUid()
                             Rectangle {
                                 width: parent.width
                                 height: parent.height
@@ -206,13 +210,13 @@ Page {
                                     font.pixelSize: Theme.fontSizeMedium
                                     text: {
                                         if (isFollowing == true) {
-                                            if (userInfo.follow_me == true) {
+                                            if (userInfoObject.usrInfo.follow_me == true) {
                                                 return qsTr("Bilateral")
                                             } else {
                                                 return qsTr("Following")
                                             }
                                         } else {
-                                            if (userInfo.follow_me == true) {
+                                            if (userInfoObject.usrInfo.follow_me == true) {
                                                 return qsTr("Follower")
                                             } else {
                                                 return qsTr("Follow")
@@ -291,7 +295,7 @@ Page {
                         width: parent.width
                         font.pixelSize: Theme.fontSizeMedium
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        text: userInfo.description
+                        text: userInfoObject.usrInfo.description
                     }
                 }
                 
@@ -318,7 +322,7 @@ Page {
                             anchors.centerIn: parent
                             color: Theme.secondaryColor
                             font.pixelSize: Theme.fontSizeTiny 
-                            text: qsTr("Weibo: ") + userInfo.statuses_count
+                            text: qsTr("Weibo: ") + userInfoObject.usrInfo.statuses_count
                         }
                     }
                     Rectangle {
@@ -334,13 +338,13 @@ Page {
                             anchors.centerIn: parent
                             color: Theme.secondaryColor
                             font.pixelSize:Theme.fontSizeTiny
-                            text: qsTr("following: ") + userInfo.friends_count
+                            text: qsTr("following: ") + userInfoObject.usrInfo.friends_count
                         }
                         //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfo.id })
+                                pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfoObject.usrInfo.id })
                             }
                         }
                     }
@@ -357,13 +361,13 @@ Page {
                             anchors.centerIn: parent
                             color: Theme.secondaryColor
                             font.pixelSize: Theme.fontSizeTiny
-                            text: qsTr("follower: ") + userInfo.followers_count
+                            text: qsTr("follower: ") + userInfoObject.usrInfo.followers_count
                         }
                         //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: userInfo.id })
+                                pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: userInfoObject.usrInfo.id })
                             }
                         }
                     }
@@ -385,7 +389,7 @@ Page {
                 }
                 height: childrenRect.height //columnWContent.height + Theme.paddingMedium
                 
-                property var status: userInfo.status
+                property var status: userInfoObject.usrInfo.status
                 
                 signal clicked
                 
@@ -401,7 +405,7 @@ Page {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        toUserWeibo(userInfo.id, userInfo.screen_name)
+                        toUserWeibo(userInfoObject.usrInfo.id, userInfoObject.usrInfo.screen_name)
                     }
                 }
                 
@@ -410,7 +414,7 @@ Page {
                     anchors.horizontalCenter: usWeiboContent.horizontalCenter
                     color: Theme.highlightColor
                     font.pixelSize: Theme.fontSizeMedium
-                    text: userInfo.screen_name + qsTr("'s RecentWeibo")
+                    text: userInfoObject.usrInfo.screen_name + qsTr("'s RecentWeibo")
                 }
                 
                 Image {
@@ -557,7 +561,7 @@ Page {
             //                text: qsTr("view user's photo album")
             
             //                onClicked: {
-            //                    mainView.toUserPhoto(userInfo.id)
+            //                    mainView.toUserPhoto(userInfoObject.usrInfo.id)
             //                }
             //            }
             
