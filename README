@@ -1,16 +1,11 @@
 这是Sailfish OS的新浪微博应用
 
-移植于Ubuntu Touch的新浪微博应用（http://bbs.qter.org/forum.php?mod=viewthread&tid=1035&extra=page%3D1）
+初始版本基于Ubuntu Touch的新浪微博应用（http://bbs.qter.org/forum.php?mod=viewthread&tid=1035&extra=page%3D1）
+目前经过了大量的代码重写/重构，功能添加等，已与原始版本相差甚远
 
 
 TODO: 
-
-添加回复某条微博的评论的时候，同时转发到我的微博的功能（未完成）
-
-转发/回复某一条好友转发的微博的同时，保留好友评论的内容
-
-第三方客户端似乎无法查看除自身以外的其他用户的follower/following数据
-
+优化Gallery页面显示大图功能
 Emoji显示问题（似乎由Sailfish OS本身的问题所引起，暂时等待上游更新）
 
 下载依赖库
