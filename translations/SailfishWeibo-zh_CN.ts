@@ -67,7 +67,7 @@
     <message>
         <location filename="../qml/pages/CommentAllPage.qml" line="89"/>
         <source>Refresh</source>
-        <translation type="unfinished">刷新</translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../qml/pages/CommentAllPage.qml" line="126"/>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../qml/pages/CommentMentioned.qml" line="124"/>
         <source>Refresh</source>
-        <translation type="unfinished">刷新</translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../qml/pages/CommentMentioned.qml" line="161"/>
@@ -152,7 +152,7 @@
     <message>
         <location filename="../qml/pages/Dummy.qml" line="13"/>
         <source>Comming Soon</source>
-        <translation type="unfinished"></translation>
+        <translation>未完成</translation>
     </message>
 </context>
 <context>
@@ -303,37 +303,37 @@
     <message>
         <location filename="../qml/ui/NavigationPanel.qml" line="110"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/ui/NavigationPanel.qml" line="129"/>
         <source>AtMeWeibo</source>
-        <translation type="unfinished"></translation>
+        <translation>微博</translation>
     </message>
     <message>
         <location filename="../qml/ui/NavigationPanel.qml" line="160"/>
         <source>AtMeComment</source>
-        <translation type="unfinished"></translation>
+        <translation>评论</translation>
     </message>
     <message>
         <location filename="../qml/ui/NavigationPanel.qml" line="191"/>
         <source>Comment</source>
-        <translation type="unfinished">评论</translation>
+        <translation>评论</translation>
     </message>
     <message>
         <location filename="../qml/ui/NavigationPanel.qml" line="222"/>
         <source>PM</source>
-        <translation type="unfinished"></translation>
+        <translation>私信</translation>
     </message>
     <message>
         <location filename="../qml/ui/NavigationPanel.qml" line="252"/>
         <source>Favourite</source>
-        <translation type="unfinished"></translation>
+        <translation>收藏</translation>
     </message>
     <message>
         <location filename="../qml/ui/NavigationPanel.qml" line="270"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
 </context>
 <context>
@@ -676,7 +676,7 @@
     <message>
         <location filename="../qml/pages/WeiboMentioned.qml" line="77"/>
         <source>Refresh</source>
-        <translation type="unfinished">刷新</translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../qml/pages/WeiboMentioned.qml" line="118"/>
@@ -725,22 +725,22 @@
     <message>
         <location filename="../qml/ui/WeiboTab.qml" line="78"/>
         <source>Sailfish Weibo</source>
-        <translation type="unfinished">Sailfish Weibo</translation>
+        <translation>Sailfish Weibo</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboTab.qml" line="84"/>
         <source>Logout</source>
-        <translation type="unfinished">注销</translation>
+        <translation>注销</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboTab.qml" line="92"/>
         <source>Refresh</source>
-        <translation type="unfinished">刷新</translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboTab.qml" line="98"/>
         <source>New</source>
-        <translation type="unfinished">写微博</translation>
+        <translation>写微博</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboTab.qml" line="150"/>
