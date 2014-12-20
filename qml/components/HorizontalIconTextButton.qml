@@ -22,8 +22,8 @@ MouseArea {
     }
     onCanceled: pressTimer.stop()
 
-    width: image.width + buttonText.width + horizontalIconTextButton.spacing //row.width
-    height: Math.max(image.height, buttonText.height)//row.height
+    width: image.width + buttonText.width + horizontalIconTextButton.spacing
+    height: Math.max(image.height, buttonText.height)
 
     Timer {
         id: pressTimer
@@ -31,7 +31,7 @@ MouseArea {
     }
     Row {
         id: row
-        spacing: spacing
+        spacing: horizontalIconTextButton.spacing
         Image {
             id:image
             fillMode: Image.PreserveAspectFit

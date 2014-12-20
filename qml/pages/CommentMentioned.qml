@@ -15,26 +15,29 @@ Page{
 
     property var uid
     property string userName: ""
-    property int pageNum: 1
+    property int _pageNum: 1
 
-    property var commentInfo
-    property var weiboTmp
+    property var _commentInfo
+    property var _weiboTmp
+
+    property alias contentItem: commentMentionedListView
 
     function refresh() {
         modelComment.clear()
 
-        pageNum = 1
+        _pageNum = 1
 //        isRefresh = true
-        commentMentioned(pageNum)
+        _commentMentioned(_pageNum)
     }
 
-    function addMore() {
-        pageNum++
-        commentMentioned(pageNum)
+    function _addMore() {
+        _pageNum++
+        _commentMentioned(_pageNum)
     }
 
     //////////////////////////////////////////////////////////////////         get all comment mentioned me
-    function commentMentioned(page) {
+    function _commentMentioned(page) {
+        showBusyIndicator();
 //        // 2/comments/mentions: 获取@到我的评论
 //        REQUEST_API_BEGIN(comments_mentions, "2/comments/mentions")
 //                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
@@ -48,7 +51,7 @@ Page{
 //        REQUEST_API_END()
         // WBOPT_GET_COMMENTS_MENTIONS,//@到我的评论
         var method = WeiboMethod.WBOPT_GET_COMMENTS_MENTIONS;
-        api.setWeiboAction(method, {'page':pageNum});
+        api.setWeiboAction(method, {'page':_pageNum});
     }
     
     
@@ -61,13 +64,14 @@ Page{
                 for (var i=0; i<result.comments.length; i++) {
                     modelComment.append( result.comments[i] )
                 }
+                stopBusyIndicator();
             }
         }
     }
     
-    Component.onCompleted: {
-        commentMentionedPage.refresh();
-    }
+//    Component.onCompleted: {
+//        commentMentionedPage.refresh();
+//    }
 
 //    Component {
 //        id: dialog
@@ -102,6 +106,7 @@ Page{
 //    }
 
     SilicaListView {
+        id: commentMentionedListView
         anchors.fill: parent
         model: ListModel { id: modelComment }
         delegate: delegateComment
@@ -112,7 +117,15 @@ Page{
         }
         footer: FooterLoadMore {
             visible: modelComment.count != 0
-            onClicked: {addMore()}
+            onClicked: {_addMore()}
+        }
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Refresh")
+                onClicked: {
+                    commentMentionedPage.refresh();
+                }
+            }
         }
     }
 
@@ -159,7 +172,8 @@ Page{
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     color: Theme.primaryColor
                     font.pixelSize: Theme.fontSizeMedium
-                    text: model.text
+                    text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+                    //model.text
                 }
 
                 // user weibo
@@ -174,7 +188,7 @@ Page{
                     height: colWeibo.height + Theme.paddingSmall 
                     
                     // use reply_comment if reply_comment exist
-                    property var status: model.status
+                    property var _status: model.status
 
                     signal clicked
 
@@ -205,7 +219,7 @@ Page{
                                 id: labelWeiboUserName
                                 color: Theme.secondaryHighlightColor
                                 font.pixelSize: Theme.fontSizeExtraSmall
-                                text: usWeiboContent.status.user.screen_name
+                                text: usWeiboContent._status.user.screen_name
                             }
                         }
 
@@ -215,7 +229,8 @@ Page{
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             color: Theme.secondaryColor
                             font.pixelSize: Theme.fontSizeSmall
-                            text: usWeiboContent.status.text
+                            text: util.parseWeiboContent(usWeiboContent._status.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+                            //usWeiboContent.status.text
                         }
                     } // column
                 } // user weibo
@@ -242,12 +257,12 @@ Page{
                         text:  qsTr("Reply")
                         onClicked: {
                             /////////// Ugly code
-                            commentMentionedPage.commentInfo = { "id": model.status.id, "cid": model.id}
-                            commentMentionedPage.weiboTmp = model.status
+                            commentMentionedPage._commentInfo = { "id": model.status.id, "cid": model.id}
+                            commentMentionedPage._weiboTmp = model.status
                             //toSendPage("reply", commentMentionedPage.commentInfo)
                             pageStack.push(Qt.resolvedUrl("SendPage.qml"),
                                            {"mode":"reply",
-                                               "userInfo":commentMentionedPage.commentInfo})
+                                               "userInfo":commentMentionedPage._commentInfo})
                         }
                     }
                     MenuItem {

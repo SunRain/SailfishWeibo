@@ -18,11 +18,14 @@ Panel {
         api.setWeiboAction(method, {'uid':Settings.getUid()});
     }
 
-//    Component.onCompleted: {
-//        //userGetInfo(Settings.getAccess_token())
-//        var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
-//        api.setWeiboAction(method, {'uid':Settings.getUid()});
-//    }
+    function messageGetRemind() {
+        var method = WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT;
+        api.setWeiboAction(method, "");
+    }
+
+    RemindObject {
+        id: remindObject
+    }
 
     Connections {
         target: api
@@ -30,6 +33,9 @@ Panel {
         onWeiboPutSucceed: {
             if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
                 _usrInfo = JSON.parse(replyData)
+            }
+            if (action == WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT) {
+                remindObject.remind = JSON.parse(replyData);
             }
         }
     }
@@ -45,18 +51,8 @@ Panel {
 
         Item {
             id: userAvatar
-//            color: "#c41782"
-//            border.color: "#d11313"
-//            anchors {
-//                left: parent.left
-//                right: parent.right
-//                //top: cover.top
-//                //topMargin: 10
-//                bottom: cover.bottom
-//                //bottomMargin: 10
-//            }
             width: column.width
-            height: cover.height //Theme.itemSizeExtraSmall +10
+            height: cover.height
             BusyIndicator {
                 id: avatarLoading
                 anchors.centerIn: parent
@@ -113,7 +109,7 @@ Panel {
                 }
                 text: qsTr("Home")
                 color: Theme.secondaryColor
-                spacing: Theme.paddingLarge *2
+                spacing: Theme.paddingMedium
                 icon: "../graphics/panel_home.png"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
@@ -125,77 +121,141 @@ Panel {
             width: column.width
             height: Theme.itemSizeExtraSmall
             HorizontalIconTextButton {
+                id: atMeWeibo
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
-                text: qsTr("AtMe")
+                text: qsTr("AtMeWeibo")
                 color: Theme.secondaryColor
-                spacing: Theme.paddingLarge*2
+                spacing: Theme.paddingMedium
                 icon: "../graphics/panel_at.png"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("MessageTab.qml"))
+                    toWeiboMentionedPage();
                 }
+            }
+            Label {
+                anchors {
+                    left: atMeWeibo.left
+                    leftMargin: atMeWeibo.iconSize -2
+                    top: atMeWeibo.top
+                    topMargin: -3
+                }
+                opacity: remindObject.remind.mention_status == "0" ? 0 : 1
+                text: remindObject.remind.mention_status
+                font.pixelSize: atMeWeibo.iconSize/2
+                color: Theme.secondaryHighlightColor
             }
         }
         Item {
             width: column.width
             height: Theme.itemSizeExtraSmall
             HorizontalIconTextButton {
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                anchors.horizontalCenterOffset: -column.width/5
+                id: atMeComment
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingLarge
+                }
+                text: qsTr("AtMeComment")
+                color: Theme.secondaryColor
+                spacing: Theme.paddingMedium
+                icon: "../graphics/panel_at.png"
+                iconSize: Theme.itemSizeExtraSmall *2/3
+                onClicked: {
+                    toCommentMentionedPage();
+                }
+            }
+            Label {
+                anchors {
+                    left: atMeComment.left
+                    leftMargin: atMeComment.iconSize -2
+                    top: atMeComment.top
+                    topMargin: -3
+                }
+                opacity: remindObject.remind.mention_cmt == "0" ? 0 : 1
+                text: remindObject.remind.mention_cmt
+                font.pixelSize: atMeComment.iconSize/2
+                color: Theme.secondaryHighlightColor
+            }
+        }
+        Item {
+            width: column.width
+            height: Theme.itemSizeExtraSmall
+            HorizontalIconTextButton {
+                id: comment
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
                 text: qsTr("Comment")
                 color: Theme.secondaryColor
-                spacing: Theme.paddingLarge*2
+                spacing: Theme.paddingMedium
                 icon: "../graphics/panel_comment.png"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-
+                    toCommentAllPage();
                 }
+            }
+            Label {
+                anchors {
+                    left: comment.left
+                    leftMargin: comment.iconSize -2
+                    top: comment.top
+                    topMargin: -3
+                }
+                opacity: remindObject.remind.cmt == "0" ? 0 : 1
+                text: remindObject.remind.cmt
+                font.pixelSize: comment.iconSize/2
+                color: Theme.secondaryHighlightColor
             }
         }
         Item {
             width: column.width
             height: Theme.itemSizeExtraSmall
             HorizontalIconTextButton {
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                anchors.horizontalCenterOffset: -column.width/5
+                id: pm
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
                 text: qsTr("PM")
                 color: Theme.secondaryColor
-                spacing: Theme.paddingLarge*2
+                spacing: Theme.paddingMedium
                 icon: "../graphics/panel_pm.png"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-
+                    toDummyDialog();
                 }
             }
+//            Label {
+//                anchors {
+//                    left: pm.left
+//                    leftMargin: pm.iconSize -2
+//                    top: pm.top
+//                    topMargin: -3
+//                }
+//                opacity: remindObject.remind.cmt == "0" ? 0 : 1
+//                text: remindObject.remind.cmt
+//                font.pixelSize: comment.iconSize/2
+//                color: Theme.secondaryHighlightColor
+//            }
         }
         Item {
             width: column.width
             height: Theme.itemSizeExtraSmall
             HorizontalIconTextButton {
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                anchors.horizontalCenterOffset: -column.width/5
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
                 text: qsTr("Favourite")
                 color: Theme.secondaryColor
-                spacing: Theme.paddingLarge*2
+                spacing: Theme.paddingMedium
                 icon: "../graphics/panel_fav.png"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-
+                    toDummyDialog();
                 }
             }
         }
@@ -203,19 +263,17 @@ Panel {
             width: column.width
             height: Theme.itemSizeExtraSmall
             HorizontalIconTextButton {
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                anchors.horizontalCenterOffset: -column.width/5
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
                 text: qsTr("Settings")
                 color: Theme.secondaryColor
-                spacing: Theme.paddingLarge*2
+                spacing: Theme.paddingMedium
                 icon: "../graphics/panel_set.png"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-
+                    toSettingsPage();
                 }
             }
         }

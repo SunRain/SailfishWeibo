@@ -13,24 +13,28 @@ Page {
 
     property var uid
     property string userName: ""
-    property int pageNum: 1
+    property int _pageNum: 1
+
+    property alias contentItem: lvUserWeibo
 
     function refresh() {
         modelWeibo.clear()
 
-        pageNum = 1
-        weiboMentioned(pageNum)
+        _pageNum = 1
+        _weiboMentioned(_pageNum)
     }
 
-    function addMore() {
-        pageNum++
-        weiboMentioned(pageNum)
+    function _addMore() {
+        _pageNum++
+        _weiboMentioned(_pageNum)
     }
 
     //////////////////////////////////////////////////////////////////         user status mentioned me
-    function weiboMentioned(page) {        
+    function _weiboMentioned(page) {
+        showBusyIndicator();
+
         var method = WeiboMethod.WBOPT_GET_STATUSES_MENTIONS;
-        api.setWeiboAction(method, {'page':pageNum});
+        api.setWeiboAction(method, {'page':_pageNum});
     }
 
     Connections {
@@ -45,13 +49,14 @@ Page {
                 if (lvUserWeibo.model == undefined) {
                     lvUserWeibo.model = modelWeibo;
                 }
+                stopBusyIndicator();
             }
         }
     }
     
-    Component.onCompleted: {
-        weiboMentionedPage.refresh();
-    }
+//    Component.onCompleted: {
+//        weiboMentionedPage.refresh();
+//    }
 
     ListView{
         id: lvUserWeibo
@@ -60,14 +65,21 @@ Page {
 //        model: modelWeibo
         footer: FooterLoadMore {
             visible: modelWeibo.count != 0
-            onClicked: { weiboMentionedPage.addMore();}
+            onClicked: { weiboMentionedPage._addMore();}
         }
         delegate: delegateWeibo
         header:PageHeader {
             id:pageHeader
             title: qsTr("Weibo mentioned me")
         }
-
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Refresh")
+                onClicked: {
+                    weiboMentionedPage.refresh();
+                }
+            }
+        }
     }
 
     Component {

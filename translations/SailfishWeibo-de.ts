@@ -65,6 +65,10 @@
         <source> From </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CommentMentioned</name>
@@ -84,12 +88,23 @@
         <source> From </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
     <message>
         <source>My Cover</source>
         <translation>Mein Cover</translation>
+    </message>
+</context>
+<context>
+    <name>Dummy</name>
+    <message>
+        <source>Comming Soon</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -200,10 +215,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AtMe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -217,6 +228,14 @@
     </message>
     <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AtMeWeibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AtMeComment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -486,6 +505,10 @@
     </message>
     <message>
         <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -60,22 +60,27 @@
 <context>
     <name>CommentAllPage</name>
     <message>
-        <location filename="../qml/ui/CommentAllPage.qml" line="77"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="81"/>
         <source>All comments</source>
         <translation>所有评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentAllPage.qml" line="114"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="89"/>
+        <source>Refresh</source>
+        <translation type="unfinished">刷新</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CommentAllPage.qml" line="126"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentAllPage.qml" line="200"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="213"/>
         <source>Reply comment</source>
         <translation>回复评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentAllPage.qml" line="212"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="225"/>
         <source>View weibo</source>
         <translation>查看微博</translation>
     </message>
@@ -83,22 +88,27 @@
 <context>
     <name>CommentMentioned</name>
     <message>
-        <location filename="../qml/ui/CommentMentioned.qml" line="111"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="116"/>
         <source>Comments mentioned me</source>
         <translation>@我的评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentMentioned.qml" line="148"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="124"/>
+        <source>Refresh</source>
+        <translation type="unfinished">刷新</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CommentMentioned.qml" line="161"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentMentioned.qml" line="242"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="257"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/ui/CommentMentioned.qml" line="254"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="269"/>
         <source>View weibo</source>
         <translation>查看微博</translation>
     </message>
@@ -135,6 +145,14 @@
     <message>
         <source>like: </source>
         <translation type="obsolete">顶：</translation>
+    </message>
+</context>
+<context>
+    <name>Dummy</name>
+    <message>
+        <location filename="../qml/pages/Dummy.qml" line="13"/>
+        <source>Comming Soon</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -283,32 +301,37 @@
 <context>
     <name>NavigationPanel</name>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="114"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="110"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="132"/>
-        <source>AtMe</source>
+        <location filename="../qml/ui/NavigationPanel.qml" line="129"/>
+        <source>AtMeWeibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="152"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="160"/>
+        <source>AtMeComment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/NavigationPanel.qml" line="191"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="172"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="222"/>
         <source>PM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="192"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="252"/>
         <source>Favourite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="212"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="270"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -646,17 +669,22 @@
 <context>
     <name>WeiboMentioned</name>
     <message>
-        <location filename="../qml/ui/WeiboMentioned.qml" line="68"/>
+        <location filename="../qml/pages/WeiboMentioned.qml" line="73"/>
         <source>Weibo mentioned me</source>
         <translation>提到我的</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboMentioned.qml" line="106"/>
+        <location filename="../qml/pages/WeiboMentioned.qml" line="77"/>
+        <source>Refresh</source>
+        <translation type="unfinished">刷新</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/WeiboMentioned.qml" line="118"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboMentioned.qml" line="116"/>
+        <location filename="../qml/pages/WeiboMentioned.qml" line="128"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>

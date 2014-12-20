@@ -53,9 +53,9 @@ ApplicationWindow
         id: indexPageComponent
         FirstPage {
             id: indexPage
-            property bool withPanelView: true
             property bool _settingsInitialized: false
             property bool _dataInitialized: false
+            property bool withPanelView: true
             Binding {
                 target: indexPage.contentItem
                 property: "parent"
@@ -87,6 +87,7 @@ ApplicationWindow
                         if (!_dataInitialized) {
                             indexPage.refresh();
                             panelView.initUserAvatar();
+                            panelView.initRemind();
                             _dataInitialized = true;
                         }
                     }
@@ -176,6 +177,9 @@ ApplicationWindow
         function initUserAvatar() {
             leftPanel.initUserAvatar();
         }
+        function initRemind() {
+            leftPanel.messageGetRemind();
+        }
 
         leftPanel: NavigationPanel {
             id: leftPanel
@@ -190,6 +194,77 @@ ApplicationWindow
         }
     }
 
+    Component {
+        id: commentAllComponent
+        CommentAllPage {
+            id: commentAllPage
+            property bool withPanelView: true
+            property bool _refreshed: false
+            Binding {
+                target: commentAllPage.contentItem
+                property: "parent"
+                value: commentAllPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : commentAllPage)
+                       : commentAllPage
+            }
+            onStatusChanged: {
+                if (commentAllPage.status == PageStatus.Active) {
+                    if (!commentAllPage._refreshed) {
+                        commentAllPage.refresh();
+                        commentAllPage._refreshed = true;
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: commentMentionedComponent
+        CommentMentioned {
+            id: commentMentionedPage
+            property bool withPanelView: true
+            property bool _refreshed: false
+            Binding {
+                target: commentMentionedPage.contentItem
+                property: "parent"
+                value: commentMentionedPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : commentMentionedPage)
+                       : commentMentionedPage
+            }
+            onStatusChanged: {
+                if (commentMentionedPage.status == PageStatus.Active) {
+                    if (!commentMentionedPage._refreshed) {
+                        commentMentionedPage.refresh();
+                        commentMentionedPage._refreshed = true;
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: weiboMentionedComponent
+        WeiboMentioned {
+            id: weiboMentionedPage
+            property bool withPanelView: true
+            property bool _refreshed: false
+            Binding {
+                target: weiboMentionedPage.contentItem
+                property: "parent"
+                value: weiboMentionedPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : weiboMentionedPage)
+                       : weiboMentionedPage
+            }
+            onStatusChanged: {
+                if (weiboMentionedPage.status == PageStatus.Active) {
+                    if (!weiboMentionedPage._refreshed) {
+                        weiboMentionedPage.refresh();
+                        weiboMentionedPage._refreshed = true;
+                    }
+                }
+            }
+        }
+    }
 
     function showBusyIndicator() {
         busyIndicator.runningBusyIndicator = true
@@ -266,11 +341,34 @@ ApplicationWindow
     }
     
     function toGalleryPage(model, index) {
-        pageStack.push(Qt.resolvedUrl("ui/Gallery.qml"), { "modelGallery": model, "index": index })
+        pageStack.push(Qt.resolvedUrl("pages/Gallery.qml"), { "modelGallery": model, "index": index })
     }
     
     function weiboLogout() {
         Settings.setAccess_token("");
+    }
+
+    function toCommentAllPage() {
+        popAttachedPages();
+        pageStack.replace(commentAllComponent);
+    }
+
+    function toCommentMentionedPage() {
+        popAttachedPages();
+        pageStack.replace(commentMentionedComponent);
+    }
+
+    function toWeiboMentionedPage() {
+        popAttachedPages();
+        pageStack.replace(weiboMentionedComponent);
+    }
+
+    function toSettingsPage() {
+        pageStack.push(Qt.resolvedUrl("pages/AboutPage.qml"));
+    }
+
+    function toDummyDialog() {
+        pageStack.push(Qt.resolvedUrl("pages/Dummy.qml"));
     }
 
     MyType {
