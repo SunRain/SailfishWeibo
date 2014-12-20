@@ -5,6 +5,7 @@ import "../js/dateutils.js" as DateUtils
 import "../js/weiboapi.js" as WB
 import "../js/Settings.js" as Settings
 import "../components"
+import "../pages"
 
 import com.sunrain.sinaweibo 1.0
 
@@ -155,7 +156,7 @@ Page {
                 anchors.fill: parent
                 onClicked: {
                     if (model.toFunction === "1") {
-                        pageStack.push(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: Settings.getUid() })
+                        pageStack.push(Qt.resolvedUrl("../pages/FriendsPage.qml"), { mode: "follower", uid: Settings.getUid() })
                     } else {
                         //page
                         pageStack.push(Qt.resolvedUrl(model.page));

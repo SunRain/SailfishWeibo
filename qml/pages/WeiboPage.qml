@@ -253,7 +253,7 @@ Page {
                         text: qsTr("Reply")
                         onClicked: {
                             var commentInfo = { "id": userWeiboJSONContent.id, "cid": model.id}
-                            pageStack.push(Qt.resolvedUrl("../ui/SendPage.qml"),
+                            pageStack.push(Qt.resolvedUrl("SendPage.qml"),
                                            {"mode":"reply",
                                                "userInfo":commentInfo})
                         }

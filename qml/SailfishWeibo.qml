@@ -310,7 +310,7 @@ ApplicationWindow
     function toWeiboPage(jsonContent) {
         //console.log("toWeiboPage  index " + index + " model " + model);
         popAttachedPages();
-        pageStack.push(Qt.resolvedUrl("ui/WeiboPage.qml"),
+        pageStack.push(Qt.resolvedUrl("pages/WeiboPage.qml"),
                         {"userWeiboJSONContent":jsonContent})
     }
     
@@ -321,18 +321,18 @@ ApplicationWindow
         if(shouldPopAttachedPages == true)
             popAttachedPages();
 
-        pageStack.push(Qt.resolvedUrl("ui/SendPage.qml"),
+        pageStack.push(Qt.resolvedUrl("pages/SendPage.qml"),
                         {"mode":mode,
                            "placeHoldText":placeHoldText,
                            "userInfo":userInfo})
     }
     
     function toUserPage(uid) {
-        pageStack.push(Qt.resolvedUrl("ui/UserPage.qml"), { uid: uid/*, title: qsTr("About user")*/ })
+        pageStack.push(Qt.resolvedUrl("pages/UserPage.qml"), { uid: uid/*, title: qsTr("About user")*/ })
     }
     
     function toFriendsPage(mode, uid) {
-        pageStack.push(Qt.resolvedUrl("ui/FriendsPage.qml"), { mode: mode, uid: uid })
+        pageStack.push(Qt.resolvedUrl("pages/FriendsPage.qml"), { mode: mode, uid: uid })
     }
     
     function toUserWeibo(uid, name) {
