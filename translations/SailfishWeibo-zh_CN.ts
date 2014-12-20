@@ -303,7 +303,7 @@
     <message>
         <location filename="../qml/ui/NavigationPanel.qml" line="110"/>
         <source>Home</source>
-        <translation></translation>
+        <translation>首页</translation>
     </message>
     <message>
         <location filename="../qml/ui/NavigationPanel.qml" line="129"/>
@@ -424,7 +424,7 @@
     <message>
         <location filename="../qml/pages/SecondPage.qml" line="85"/>
         <source>Sailfish Weibo</source>
-        <translation></translation>
+        <translation>Sailfish微博</translation>
     </message>
     <message>
         <location filename="../qml/pages/SecondPage.qml" line="132"/>

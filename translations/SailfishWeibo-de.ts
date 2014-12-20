@@ -50,15 +50,11 @@
 <context>
     <name>CommentAllPage</name>
     <message>
-        <source>View weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>All comments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reply comment</source>
+        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -66,7 +62,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Refresh</source>
+        <source>Reply comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View weibo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -77,11 +77,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View weibo</source>
+        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -89,7 +85,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Refresh</source>
+        <source>Reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View weibo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -143,15 +143,15 @@
 <context>
     <name>LoginComponent</name>
     <message>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>UserName</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -188,14 +188,6 @@
 <context>
     <name>MessageTab</name>
     <message>
-        <source>You have no new message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You have </source>
         <translation type="unfinished"></translation>
     </message>
@@ -207,11 +199,27 @@
         <source> new message</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You have no new message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NavigationPanel</name>
     <message>
         <source>Home</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AtMeWeibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AtMeComment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -228,14 +236,6 @@
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AtMeWeibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AtMeComment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -263,6 +263,10 @@
         <source></source>
         <comment>this is a time formatting string,</comment>
         <translation></translation>
+    </message>
+    <message>
+        <source>MMMM d</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Yesterday at %1</source>
@@ -301,10 +305,6 @@
             <numerusform></numerusform>
         </translation>
     </message>
-    <message>
-        <source>MMMM d</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SecondPage</name>
@@ -332,6 +332,46 @@
 <context>
     <name>SendPage</name>
     <message>
+        <source>Oops.. something wrong</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Weibo sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repost sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reply sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploading, please wait..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>comment option</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not comment original Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Also comment original Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>repost option</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>No comments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -348,31 +388,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do not comment original Weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Also comment original Weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Weibo sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Oops.. something wrong</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repost sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reply sent</source>
+        <source>Send</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -384,15 +400,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Send</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>comment option</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>repost option</source>
+        <source>Click the inserted image to remove from the uploading queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -409,14 +417,6 @@
     </message>
     <message>
         <source>Send Weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploading, please wait..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click the inserted image to remove from the uploading queue</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -500,15 +500,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Repost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -523,19 +523,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> From </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Repost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> From </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -544,14 +544,6 @@
     <message>
         <source>Show Page 2</source>
         <translation type="obsolete">Zur Seite 2</translation>
-    </message>
-    <message>
-        <source>Repost</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sailfish Weibo</source>
@@ -567,6 +559,14 @@
     </message>
     <message>
         <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

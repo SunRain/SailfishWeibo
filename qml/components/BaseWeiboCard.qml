@@ -57,11 +57,13 @@ Item {
         spacing: Theme.paddingSmall
         
         Item {
+            id: avatarBar
             width: columnWContent.width
             height: optionItem.menuOpen ? userAvatarHeader.height + optionItem.height : userAvatarHeader.height
             
             UserAvatarHeader {
                 id: userAvatarHeader
+
                 width: parent.width *7/10
                 onUserAvatarClicked: {
                     baseWeiboCard.userAvatarHeaderClicked();
@@ -69,7 +71,12 @@ Item {
             }
             OptionItem{
                 id:optionItem
-                anchors{ left: userAvatarHeader.right; right: parent.right; }
+                //FIXME: Dirty hack to fix the OptionItem align
+                anchors {
+                    left: optionItem.menuOpen ? avatarBar.left : userAvatarHeader.right
+                    leftMargin: -(Screen.width - avatarBar.width)/2
+                    right: avatarBar.right
+                }
                 visible: optionMenu != null
                 Image {
                     anchors{
