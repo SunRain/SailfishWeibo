@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtQuick 2.2
+//import QtQuick 2.2
 import Sailfish.Silica 1.0
 
 import "../js/dateutils.js" as DateUtils
@@ -181,19 +181,21 @@ Page {
                     }
                     width: implicitWidth
                     height: implicitHeight
-                    source: "../graphics/action_collapse.png"
-                    RotationAnimator on rotation {
-                        id: animation
-                        from: userPage._showUserWeibo ? 0 : 180
-                        to: userPage._showUserWeibo ? 180 : 360
-                    }
+                    source: userPage._showUserWeibo
+                            ? "../graphics/action_collapse.png"
+                            : "../graphics/action_open.png"
+//                    RotationAnimator on rotation {
+//                        id: animation
+//                        from: userPage._showUserWeibo ? 0 : 180
+//                        to: userPage._showUserWeibo ? 180 : 360
+//                    }
 
                 }
                 MouseArea {
                     id: mouseArea
                     anchors.fill: parent
                     onClicked: {
-                        animation.running = true;
+//                        animation.running = true;
                         userPage._showUserWeibo = !userPage._showUserWeibo;
                         if(userPage._showUserWeibo) {
                             userPage.showUserWeibo();

@@ -575,63 +575,63 @@
         <translation>关于用户</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="296"/>
+        <location filename="../qml/pages/UserPage.qml" line="298"/>
         <source>Bilateral</source>
         <translation>互相关注</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="298"/>
+        <location filename="../qml/pages/UserPage.qml" line="300"/>
         <source>Following</source>
         <translation>关注中</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="302"/>
+        <location filename="../qml/pages/UserPage.qml" line="304"/>
         <source>Follower</source>
         <translation>关注我的</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="304"/>
-        <location filename="../qml/pages/UserPage.qml" line="330"/>
+        <location filename="../qml/pages/UserPage.qml" line="306"/>
+        <location filename="../qml/pages/UserPage.qml" line="332"/>
         <source>Follow</source>
         <translation>关注</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="328"/>
+        <location filename="../qml/pages/UserPage.qml" line="330"/>
         <source>CancelFollowing</source>
         <translation>取消关注</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="371"/>
+        <location filename="../qml/pages/UserPage.qml" line="373"/>
         <source>Description: </source>
         <translation>基本信息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="405"/>
+        <location filename="../qml/pages/UserPage.qml" line="407"/>
         <source>Weibo: </source>
         <translation>微博：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="420"/>
+        <location filename="../qml/pages/UserPage.qml" line="422"/>
         <source>following: </source>
         <translation>Ta关注的用户：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="442"/>
+        <location filename="../qml/pages/UserPage.qml" line="444"/>
         <source>follower: </source>
         <translation>关注Ta的：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="469"/>
+        <location filename="../qml/pages/UserPage.qml" line="471"/>
         <source>&apos;s RecentWeibo</source>
         <translation>的最新微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="540"/>
+        <location filename="../qml/pages/UserPage.qml" line="542"/>
         <source>Repost</source>
         <translation type="unfinished">转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="550"/>
+        <location filename="../qml/pages/UserPage.qml" line="552"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>
