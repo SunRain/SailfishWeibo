@@ -447,15 +447,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>repost: </source>
+        <source>Repost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>comment: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>like: </source>
+        <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
