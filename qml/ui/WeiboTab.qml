@@ -11,17 +11,9 @@ import "../js/Settings.js" as Settings
 
 Item {
     id: weiboTab
-    //anchors.fill: parent
-    //title: qsTr("Weibo")
-    //clip : true
-    
     property int pageNum: 1
-    //property int actionMethod
     property bool isRefresh: false
-    
-//    property alias menus:lvHomeWeibo.pullDownMenu //lvHomeWeiboPullDownMenu //._content
-//    property alias header: lvHomeWeibo.header
-    
+
     signal sendNewWeibo
     
     function refresh() {
@@ -55,7 +47,7 @@ Item {
             if (action == WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE) {
                 var jsonObj = JSON.parse(replyData);
                 for (var i=0; i<jsonObj.statuses.length; i++) {
-                    modelWeibo.append( jsonObj.statuses[i] )
+                    modelWeibo.append( {"JSON":jsonObj.statuses[i] })
                 }
                 if (lvHomeWeibo.model == undefined) {
                     lvHomeWeibo.model = modelWeibo;
@@ -127,13 +119,13 @@ Item {
                 height: childrenRect.height
                 WeiboCard {
                     id:weiboCard
-                    weiboJSONContent: modelWeibo.get(index)
+                    weiboJSONContent: modelWeibo.get(index).JSON
                     optionMenu: options
                     onRepostedWeiboClicked: {
-                        toWeiboPage(modelWeibo.get(index).retweeted_status/*, "-100"*/);
+                        toWeiboPage(modelWeibo.get(index).JSON.retweeted_status);
                     }
                     onUsWeiboClicked: {
-                        toWeiboPage(/*modelWeibo, index*/modelWeibo.get(index));
+                        toWeiboPage(modelWeibo.get(index).JSON);
                     }
                     onAvatarHeaderClicked: {
                         toUserPage(userId);
@@ -150,16 +142,16 @@ Item {
                             text: qsTr("Repost")
                             onClicked: {
                                 toSendPage("repost", {"id": model.id}, 
-                                           (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
+                                           (model.JSON.retweeted_status == undefined || model.JSON.retweeted_status == "") == true ?
                                                "" :
-                                               "//@"+model.user.name +": " + model.text ,
+                                               "//@"+model.JSON.user.name +": " + model.JSON.text ,
                                                true)
                             }
                         }
                         MenuItem {
                             text: qsTr("Comment")
                             onClicked: {
-                                toSendPage("comment", {"id": model.id}, "", true)                        
+                                toSendPage("comment", {"id": model.JSON.id}, "", true)
                             }
                         }
                     }

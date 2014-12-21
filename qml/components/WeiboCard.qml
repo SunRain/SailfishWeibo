@@ -54,18 +54,15 @@ Item {
             picURLs: weiboJSONContent.pic_urls
             
             onUserAvatarHeaderClicked: {
-                //toUserPage(weiboJSONContent.user.id);
                 weiboCard.avatarHeaderClicked(weiboJSONContent.user.id);
             }
             onLabelLinkClicked: {
-                 //Qt.openUrlExternally(link);
                 weiboCard.labelLinkClicked(link);
             }
             onBaseWeiboCardClicked: {
                 weiboCard.usWeiboClicked();
             }
             onLabelImageClicked: {
-                //toGalleryPage(modelImages, index);
                 weiboCard.labelImageClicked(modelImages, index);
             }
         }
@@ -96,18 +93,15 @@ Item {
                 picURLs: weiboJSONContent.retweeted_status.pic_urls
 
                 onUserAvatarHeaderClicked: {
-                    //toUserPage(weiboJSONContent.retweeted_status.user.id);
                     weiboCard.avatarHeaderClicked(weiboJSONContent.retweeted_status.user.id);
                 }
                 onLabelLinkClicked: {
-                    //Qt.openUrlExternally(link);
                     weiboCard.labelLinkClicked(link);
                 }
                 onBaseWeiboCardClicked: {
                     weiboCard.repostedWeiboClicked();
                 }
                 onLabelImageClicked: {
-                    //toGalleryPage(modelImages, index);
                     weiboCard.labelImageClicked(modelImages, index);
                 }
                 

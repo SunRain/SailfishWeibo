@@ -36,9 +36,14 @@ Item {
             for (var i=0; i<picURLs.length; i++) {
                 modelImages.append( picURLs[i] )
             }
+            if (gridRepeater.model == undefined) {
+                gridRepeater.model = modelImages;
+            }
         } 
     }
     
+    ListModel { id: modelImages }
+
     MouseArea {
         anchors.fill: parent
         onClicked: { baseWeiboCard.baseWeiboCardClicked(); }
@@ -110,16 +115,16 @@ Item {
             id: gridWeiboPics
             columns: 3
             spacing: Theme.paddingSmall
-
             Repeater {
-                model: ListModel { id: modelImages }
+                id:gridRepeater
+//                model: ListModel { id: modelImages }
                 delegate: Component {
                     Image{
                         id:image
                         fillMode: Image.PreserveAspectCrop;
                         width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - Theme.paddingSmall;
                         height: modelImages.count == 1 ? implicitHeight : width
-                        source: util.parseImageUrl(model.thumbnail_pic)
+                        source: util.parseImageUrl(model.thumbnail_pic);
 
                         MouseArea {
                             anchors.fill: parent
