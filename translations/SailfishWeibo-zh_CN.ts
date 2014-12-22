@@ -626,12 +626,12 @@
         <translation>的最新微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="542"/>
+        <location filename="../qml/pages/UserPage.qml" line="545"/>
         <source>Repost</source>
         <translation type="unfinished">转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="552"/>
+        <location filename="../qml/pages/UserPage.qml" line="555"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>

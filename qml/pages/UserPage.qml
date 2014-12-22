@@ -482,9 +482,13 @@ Page {
                 width: parent.width
                 height: userPage._showUserWeibo
                         ? userPage.height - pageHeader.height
+                          - Theme.itemSizeMedium //the FooterLoadMore height
                         : lvUserWeibo.contentHeight
                 parent: userPage._showUserWeibo ? userPage : innerAreaColumn
-                anchors.top: userPage._showUserWeibo ? pageHeader.bottom : undefined
+                anchors{
+                    top: userPage._showUserWeibo ? pageHeader.bottom : undefined
+                    topMargin: userPage._showUserWeibo ? pageHeader.height : undefined
+                }
 
                 cacheBuffer: 9999
                 delegate: delegateWeibo
