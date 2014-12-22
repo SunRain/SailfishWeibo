@@ -26,12 +26,12 @@ Page {
         id: userInfoObject
     }
 
-    Component.onCompleted: {
-//        //userGetInfo(Settings.getAccess_token())
-//        var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
-//        api.setWeiboAction(method, {'uid':uid});
-        showuserInfo();
-    }
+//    Component.onCompleted: {
+////        //userGetInfo(Settings.getAccess_token())
+////        var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
+////        api.setWeiboAction(method, {'uid':uid});
+//        showuserInfo();
+//    }
 
     function refreshUserWeibo() {
         showBusyIndicator();
@@ -61,7 +61,7 @@ Page {
         api.setWeiboAction(method, {'uid':uid});
     }
 
-    function showuserInfo() {
+    function showUserInfo() {
         modelWeibo.clear();
         if (userPage._refreshUserInfoLock) {
             modelWeibo.append({"JSON":userInfoObject.usrInfo.status});
@@ -199,27 +199,144 @@ Page {
                         userPage._showUserWeibo = !userPage._showUserWeibo;
                         if(userPage._showUserWeibo) {
                             userPage.showUserWeibo();
-                        } else {
+                        } /*else {
                             userPage.showuserInfo();
-                        }
+                        }*/
                     }
                 }
 
             }
+            Loader {
+                id: loader
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                height: implicitHeight
+                sourceComponent: userPage._showUserWeibo ? loader.Null : userInfoComponent
+                onStatusChanged: {
+                    if (loader.status == Loader.Ready) {
+                        userPage.showUserInfo();
+                    }
+                }
+            }
+
+            SilicaListView{
+                id: lvUserWeibo
+                width: parent.width
+                height: userPage._showUserWeibo
+                        ? userPage.height - pageHeader.height
+                          - Theme.itemSizeMedium //the FooterLoadMore Component height
+                        : lvUserWeibo.contentHeight
+                parent: userPage._showUserWeibo ? userPage : innerAreaColumn
+                anchors{
+                    top: userPage._showUserWeibo ? pageHeader.bottom : undefined
+                    topMargin: userPage._showUserWeibo ? pageHeader.height : undefined
+                }
+
+                cacheBuffer: 9999
+                delegate: delegateWeibo
+                footer: userPage._showUserWeibo
+                        ? footerLoadMore
+                        : null
+                Behavior on height {
+                    FadeAnimation{}
+                }
+
+            }
+        }
+    }
+
+    Component {
+        id: footerLoadMore
+        FooterLoadMore {
+            onClicked: {
+                userPage.userWeiboAddMore();
+            }
+        }
+    }
+
+    Component {
+        id: delegateWeibo
+        Column {
+            anchors{left:parent.left; right:parent.right }
+            spacing: Theme.paddingMedium
+
+            Item {
+                anchors{left:parent.left; right:parent.right; }
+                height: childrenRect.height
+                WeiboCard {
+                    id:weiboCard
+                    weiboJSONContent: modelWeibo.get(index).JSON
+                    optionMenu: options
+                    onRepostedWeiboClicked: {
+                        toWeiboPage(modelWeibo.get(index).JSON.retweeted_status);
+                    }
+                    onUsWeiboClicked: {
+                        toWeiboPage(modelWeibo.get(index).JSON);
+                    }
+                    onAvatarHeaderClicked: {
+                        toUserPage(userId);
+                    }
+                    onLabelLinkClicked: {
+                        Qt.openUrlExternally(link);
+                    }
+                    onLabelImageClicked: {
+                        toGalleryPage(modelImages, index);
+                    }
+                    ContextMenu {
+                        id:options
+                        MenuItem {
+                            text: qsTr("Repost")
+                            onClicked: {
+                                toSendPage("repost", {"id": model.id},
+                                           (model.JSON.retweeted_status == undefined || model.JSON.retweeted_status == "") == true ?
+                                               "" :
+                                               "//@"+model.JSON.user.name +": " + model.JSON.text ,
+                                               true)
+                            }
+                        }
+                        MenuItem {
+                            text: qsTr("Comment")
+                            onClicked: {
+                                toSendPage("comment", {"id": model.JSON.id}, "", true)
+                            }
+                        }
+                    }
+                }
+            }
+            Separator {
+                width: parent.width
+                color: Theme.highlightColor
+            }
+            Item {
+                width: parent.width
+                height: Theme.paddingSmall
+            }
+        }
+    }
+
+    Component {
+        id: userInfoComponent
+        Column {
+            id: wrapper
+            width: implicitWidth
+            //height: implicitHeight
+            spacing: Theme.paddingMedium
             Item {
                 id: topItem
                 anchors {
                     left: parent.left
                     right: parent.right
                 }
-                height: userPage._showUserWeibo ? 0 : childrenRect.height
-                opacity: userPage._showUserWeibo ? 0 : 1
-                Behavior on opacity {
-                    FadeAnimation{}
-                }
-                Behavior on height {
-                    FadeAnimation{}
-                }
+                height: /*userPage._showUserWeibo ? 0 : */childrenRect.height
+                //opacity: userPage._showUserWeibo ? 0 : 1
+//                Behavior on opacity {
+//                    FadeAnimation{}
+//                }
+//                Behavior on height {
+//                    FadeAnimation{}
+//                }
 
                 // user
                 Item {
@@ -464,110 +581,17 @@ Page {
             Label {
                 id:title
                 anchors.horizontalCenter: parent.horizontalCenter
-                opacity: userPage._showUserWeibo ? 0 : 1
-                height: userPage._showUserWeibo ? 0 : implicitHeight
+                //            opacity: userPage._showUserWeibo ? 0 : 1
+                height: /*userPage._showUserWeibo ? 0 : */implicitHeight
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeMedium
                 text: userInfoObject.usrInfo.screen_name + qsTr("'s RecentWeibo")
-                Behavior on opacity {
-                    FadeAnimation{}
-                }
-                Behavior on height {
-                    FadeAnimation{}
-                }
-            }
-
-            SilicaListView{
-                id: lvUserWeibo
-                width: parent.width
-                height: userPage._showUserWeibo
-                        ? userPage.height - pageHeader.height
-                          - Theme.itemSizeMedium //the FooterLoadMore height
-                        : lvUserWeibo.contentHeight
-                parent: userPage._showUserWeibo ? userPage : innerAreaColumn
-                anchors{
-                    top: userPage._showUserWeibo ? pageHeader.bottom : undefined
-                    topMargin: userPage._showUserWeibo ? pageHeader.height : undefined
-                }
-
-                cacheBuffer: 9999
-                delegate: delegateWeibo
-                footer: userPage._showUserWeibo
-                        ? footerLoadMore
-                        : null
-                Behavior on height {
-                    FadeAnimation{}
-                }
-
-            }
-        }
-    }
-
-    Component {
-        id: footerLoadMore
-        FooterLoadMore {
-            onClicked: {
-                userPage.userWeiboAddMore();
-            }
-        }
-    }
-
-    Component {
-        id: delegateWeibo
-        Column {
-            anchors{left:parent.left; right:parent.right }
-            spacing: Theme.paddingMedium
-
-            Item {
-                anchors{left:parent.left; right:parent.right; }
-                height: childrenRect.height
-                WeiboCard {
-                    id:weiboCard
-                    weiboJSONContent: modelWeibo.get(index).JSON
-                    optionMenu: options
-                    onRepostedWeiboClicked: {
-                        toWeiboPage(modelWeibo.get(index).JSON.retweeted_status);
-                    }
-                    onUsWeiboClicked: {
-                        toWeiboPage(modelWeibo.get(index).JSON);
-                    }
-                    onAvatarHeaderClicked: {
-                        toUserPage(userId);
-                    }
-                    onLabelLinkClicked: {
-                        Qt.openUrlExternally(link);
-                    }
-                    onLabelImageClicked: {
-                        toGalleryPage(modelImages, index);
-                    }
-                    ContextMenu {
-                        id:options
-                        MenuItem {
-                            text: qsTr("Repost")
-                            onClicked: {
-                                toSendPage("repost", {"id": model.id},
-                                           (model.JSON.retweeted_status == undefined || model.JSON.retweeted_status == "") == true ?
-                                               "" :
-                                               "//@"+model.JSON.user.name +": " + model.JSON.text ,
-                                               true)
-                            }
-                        }
-                        MenuItem {
-                            text: qsTr("Comment")
-                            onClicked: {
-                                toSendPage("comment", {"id": model.JSON.id}, "", true)
-                            }
-                        }
-                    }
-                }
-            }
-            Separator {
-                width: parent.width
-                color: Theme.highlightColor
-            }
-            Item {
-                width: parent.width
-                height: Theme.paddingSmall
+//                Behavior on opacity {
+//                    FadeAnimation{}
+//                }
+//                Behavior on height {
+//                    FadeAnimation{}
+//                }
             }
         }
     }
