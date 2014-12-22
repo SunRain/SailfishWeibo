@@ -616,12 +616,12 @@
         <translation>Ta关注的用户：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="561"/>
+        <location filename="../qml/pages/UserPage.qml" line="562"/>
         <source>follower: </source>
         <translation>关注Ta的：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="588"/>
+        <location filename="../qml/pages/UserPage.qml" line="589"/>
         <source>&apos;s RecentWeibo</source>
         <translation>的最新微博</translation>
     </message>

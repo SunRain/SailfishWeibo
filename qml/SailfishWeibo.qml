@@ -314,7 +314,7 @@ ApplicationWindow
     function toWeiboPage(jsonContent) {
         //console.log("toWeiboPage  index " + index + " model " + model);
         var content = jsonContent;
-        popAttachedPages();
+//        popAttachedPages();
         pageStack.push(Qt.resolvedUrl("pages/WeiboPage.qml"),
                         {"userWeiboJSONContent":content})
     }
@@ -323,25 +323,29 @@ ApplicationWindow
     function toSendPage(mode, userInfo, placeHoldText, shouldPopAttachedPages) {
         //sendPage.setMode(mode, info)
         //mainStack.push(sendPage)
-        if(shouldPopAttachedPages == true)
-            popAttachedPages();
+        var m = mode;
+        var info = userInfo;
+        var pht = placeHoldText;
+
+//        if(shouldPopAttachedPages)
+//            popAttachedPages();
 
         pageStack.push(Qt.resolvedUrl("pages/SendPage.qml"),
-                        {"mode":mode,
-                           "placeHoldText":placeHoldText,
-                           "userInfo":userInfo})
+                        {"mode":m,
+                           "placeHoldText":pht,
+                           "userInfo":info})
     }
     
     function toUserPage(uid) {
-        pageStack.push(Qt.resolvedUrl("pages/UserPage.qml"), { uid: uid/*, title: qsTr("About user")*/ })
+        pageStack.push(Qt.resolvedUrl("pages/UserPage.qml"), { "uid": uid/*, title: qsTr("About user")*/ })
     }
     
     function toFriendsPage(mode, uid) {
-        pageStack.push(Qt.resolvedUrl("pages/FriendsPage.qml"), { mode: mode, uid: uid })
+        pageStack.push(Qt.resolvedUrl("pages/FriendsPage.qml"), { "mode": mode, "uid": uid })
     }
     
     function toUserWeibo(uid, name) {
-        pageStack.push(Qt.resolvedUrl("ui/UserWeibo.qml"), { uid: uid, userName: name })
+        pageStack.push(Qt.resolvedUrl("ui/UserWeibo.qml"), { "uid": uid, "userName": name })
         //mainStack.currentPage.refresh()
     }
     
@@ -349,6 +353,10 @@ ApplicationWindow
         pageStack.push(Qt.resolvedUrl("pages/Gallery.qml"), { "modelGallery": model, "index": index })
     }
     
+//    function toFriendsPage(model, uid) {
+//        pageStack.push(Qt.resolvedUrl("pages/FriendsPage.qml"), { "mode": model, "uid": uid })
+//    }
+
     function weiboLogout() {
         Settings.setAccess_token("");
     }

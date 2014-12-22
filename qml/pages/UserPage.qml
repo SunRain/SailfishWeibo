@@ -542,7 +542,8 @@ Page {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfoObject.usrInfo.id })
+                                    //pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfoObject.usrInfo.id })
+                                    toFriendsPage("following", userInfoObject.usrInfo.id);
                                 }
                             }
                         }
