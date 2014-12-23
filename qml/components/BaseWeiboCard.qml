@@ -89,8 +89,10 @@ Item {
                         bottom: parent.bottom
                         right: parent.right
                     }
+                    smooth: true
                     width: Theme.iconSizeMedium
                     height: width
+                    fillMode: Image.PreserveAspectFit
                     source: optionItem.menuOpen ? 
                                 "../graphics/action_collapse.png" : 
                                 "../graphics/action_open.png"
