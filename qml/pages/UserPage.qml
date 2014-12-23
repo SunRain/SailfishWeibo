@@ -20,6 +20,7 @@ Page {
     property bool _showUserWeibo: false
     property bool _refreshUserWeiboLock: false
     property bool _refreshUserInfoLock: false
+    property bool _pageActive: false
     property var _userWeiboCache
 
     UserInfoObject {
@@ -32,6 +33,13 @@ Page {
 ////        api.setWeiboAction(method, {'uid':uid});
 //        showuserInfo();
 //    }
+    onStatusChanged: {
+        if (userPage.status == PageStatus.Active || userPage.status == PageStatus.Activating) {
+            userPage._pageActive = true;
+        } else {
+            userPage._pageActive = false;
+        }
+    }
 
     function refreshUserWeibo() {
         showBusyIndicator();
@@ -57,6 +65,7 @@ Page {
     }
 
     function refreshUserInfo() {
+        showBusyIndicator();
         var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
         api.setWeiboAction(method, {'uid':uid});
     }
@@ -87,6 +96,10 @@ Page {
         target: api
         //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
         onWeiboPutSucceed: {
+            if (!userPage._pageActive) {
+                return;
+            }
+
             if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
                 userInfoObject.usrInfo = JSON.parse(replyData);
                 _isFollowing = userInfoObject.usrInfo.following;
@@ -94,6 +107,7 @@ Page {
                 if (lvUserWeibo.model == undefined) {
                     lvUserWeibo.model = modelWeibo;
                 }
+                stopBusyIndicator();
             }
             if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_CREATE) {
                 _isFollowing = true;
