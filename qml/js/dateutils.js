@@ -27,7 +27,16 @@ var DAYS_LIMIT = 30 * DAY_LIMIT;           // print '<val> days ago' up to 30 da
 
 // Convert date string to a number of seconds since 1970-01-01
 function parseDate(dateAsStr) {
-    return new Date(dateAsStr).getTime()/MILLIS_IN_SECOND;
+    var list = dateAsStr.split(",");
+    var date = new Date();
+    //MM,dd,yyyy,HH,mm,ss
+    date.setFullYear(list[2]);
+    date.setMonth(list[0]);
+    date.setDate(list[1]);
+    date.setHours(list[3]);
+    date.setMinutes(list[4]);
+    date.setMilliseconds(list[5]);
+    return date.getTime()/MILLIS_IN_SECOND;
 }
 
 // date is a number of seconds since  1970-01-01

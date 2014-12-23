@@ -29,6 +29,11 @@ protected:
     int isARM() { return _isARM; }
 
 public slots:
+    ///
+    /// \brief dateParse convert datestring for js functions
+    /// \param datestring
+    /// \return MM,dd,yyyy,HH,mm,ss
+    ///
     QString dateParse(const QString &datestring);
 
 };

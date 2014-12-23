@@ -45,6 +45,7 @@ Item{
         Column {
             id:rowUserColumn
             spacing: Theme.paddingSmall
+            anchors.verticalCenter: usAvatar.verticalCenter
             
             Label {
                 id: labelUserName
