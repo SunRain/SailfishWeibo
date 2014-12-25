@@ -628,12 +628,12 @@
     <message>
         <location filename="../qml/pages/UserPage.qml" line="304"/>
         <source>Repost</source>
-        <translation type="unfinished">转发</translation>
+        <translation>转发</translation>
     </message>
     <message>
         <location filename="../qml/pages/UserPage.qml" line="314"/>
         <source>Comment</source>
-        <translation type="unfinished">评论</translation>
+        <translation>评论</translation>
     </message>
     <message>
         <source>repost: </source>
@@ -662,7 +662,7 @@
         <location filename="../qml/components/WeiboCard.qml" line="50"/>
         <location filename="../qml/components/WeiboCard.qml" line="89"/>
         <source> From </source>
-        <translation>来自</translation>
+        <translation> 来自 </translation>
     </message>
     <message>
         <source>repost: </source>
@@ -762,20 +762,29 @@
 </context>
 <context>
     <name>dateutils</name>
-    <message>
-        <location filename="../qml/js/dateutils.js" line="74"/>
-        <source>Sec ago</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <location filename="../qml/js/dateutils.js" line="71"/>
+        <source>%1 Sec ago</source>
+        <comment>%1 Sec ago</comment>
+        <translation>
+            <numerusform>%1秒前</numerusform>
+        </translation>
     </message>
-    <message>
-        <location filename="../qml/js/dateutils.js" line="78"/>
-        <source>Min ago</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <location filename="../qml/js/dateutils.js" line="76"/>
+        <source>%1 Min ago</source>
+        <comment>%1 Min ago</comment>
+        <translation>
+            <numerusform>%1分钟前</numerusform>
+        </translation>
     </message>
-    <message>
-        <location filename="../qml/js/dateutils.js" line="82"/>
-        <source>Hour ago</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <location filename="../qml/js/dateutils.js" line="81"/>
+        <source>%1 Hour ago</source>
+        <comment>%1 hours ago</comment>
+        <translation>
+            <numerusform>%1小时前</numerusform>
+        </translation>
     </message>
 </context>
 </TS>

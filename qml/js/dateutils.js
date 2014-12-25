@@ -68,15 +68,18 @@ function parseDate(dateAsStr) {
     var diff = nowDate - oldDate;
 
     if (diff >=0 && diff < SECONDS_LIMIT) { //sec
-        return parseInt(diff/MILLIS_IN_SECOND) + qsTr("Sec ago");
+        return qsTr("%1 Sec ago", "%1 Sec ago", parseInt(diff/MILLIS_IN_SECOND))
+        .arg(parseInt(diff/MILLIS_IN_SECOND))
     }
 
     if (diff >=SECONDS_LIMIT && diff < MINUTES_LIMIT) { //minute
-        return parseInt(diff/SECONDS_LIMIT) + qsTr("Min ago");
+        return qsTr("%1 Min ago", "%1 Min ago", parseInt(diff/SECONDS_LIMIT))
+        .arg(parseInt(diff/SECONDS_LIMIT))
     }
 
     if (diff >= MINUTES_LIMIT) { //hour
-        return parseInt(diff/MINUTES_LIMIT) + qsTr("Hour ago");
+        return qsTr("%1 Hour ago", "%1 hours ago", parseInt(diff/MINUTES_LIMIT))
+        .arg(parseInt(diff/MINUTES_LIMIT))
     }
     return undefined;
 }

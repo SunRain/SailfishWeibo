@@ -427,6 +427,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Repost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Bilateral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -464,14 +472,6 @@
     </message>
     <message>
         <source>&apos;s RecentWeibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repost</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -568,17 +568,26 @@
 </context>
 <context>
     <name>dateutils</name>
-    <message>
-        <source>Sec ago</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <source>%1 Sec ago</source>
+        <comment>%1 Sec ago</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Min ago</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <source>%1 Min ago</source>
+        <comment>%1 Min ago</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Hour ago</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <source>%1 Hour ago</source>
+        <comment>%1 hours ago</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 </TS>
