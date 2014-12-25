@@ -25,18 +25,60 @@ var HOURS_LIMIT = 12 * MINUTES_LIMIT;      // print hours up to 12h
 var DAY_LIMIT = 24 * MINUTES_LIMIT;        // print '<val> days ago' up to 30 days back
 var DAYS_LIMIT = 30 * DAY_LIMIT;           // print '<val> days ago' up to 30 days back
 
+var MONTH_OBJECT = {
+    Jan:"01",
+    Feb:"02",
+    Mar:"03",
+    Apr:"04",
+    May:"05",
+    Jun:"06",
+    Jul:"07",
+    Aug:"08",
+    Sep:"09",
+    Oct:"10",
+    Nov:"11",
+    Dec:"12",
+};
+
 // Convert date string to a number of seconds since 1970-01-01
 function parseDate(dateAsStr) {
+    //TODO ugly code
+    function monthParse(month) { //covert English month to number
+        var tmp = MONTH_OBJECT[month]
+        if (tmp == undefined || tmp == "" ) {
+            return month;
+        }
+        return tmp
+    }
+
     var list = dateAsStr.split(",");
-    var date = new Date();
+    var nowDate = new Date();
+    var oldDate = new Date(list[2], monthParse(list[0])-1, list[1]); //js里面月份以0开始
+
     //MM,dd,yyyy,HH,mm,ss
-    date.setFullYear(list[2]);
-    date.setMonth(list[0]);
-    date.setDate(list[1]);
-    date.setHours(list[3]);
-    date.setMinutes(list[4]);
-    date.setMilliseconds(list[5]);
-    return date.getTime()/MILLIS_IN_SECOND;
+    oldDate.setHours(list[3]);
+    oldDate.setMinutes(list[4]);
+    oldDate.setMilliseconds(list[5]);
+
+    if ((nowDate.getFullYear() - oldDate.getFullYear() >=0 || nowDate.getMonth() - oldDate.getMonth() >= 0)
+            && nowDate.getDate() - oldDate.getDate() >= 1 ) {
+        return oldDate.toLocaleString();
+    }
+
+    var diff = nowDate - oldDate;
+
+    if (diff >=0 && diff < SECONDS_LIMIT) { //sec
+        return parseInt(diff/MILLIS_IN_SECOND) + qsTr("Sec ago");
+    }
+
+    if (diff >=SECONDS_LIMIT && diff < MINUTES_LIMIT) { //minute
+        return parseInt(diff/SECONDS_LIMIT) + qsTr("Min ago");
+    }
+
+    if (diff >= MINUTES_LIMIT) { //hour
+        return parseInt(diff/MINUTES_LIMIT) + qsTr("Hour ago");
+    }
+    return undefined;
 }
 
 // date is a number of seconds since  1970-01-01

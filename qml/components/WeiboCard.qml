@@ -46,9 +46,9 @@ Item {
             avaterHeaderFontSize: Theme.fontSizeExtraSmall
             avaterHeaderUserName: weiboJSONContent.user.screen_name
             avaterHeaderAvaterImage: weiboJSONContent.user.profile_image_url
-            avaterHeaderWeiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(weiboJSONContent.created_at)))
-                                   + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.source)
-            
+            avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(weiboJSONContent.created_at))
+                    + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.source)
+
             labelFontSize: Theme.fontSizeMedium
             labelContent: util.parseWeiboContent(weiboJSONContent.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
             picURLs: weiboJSONContent.pic_urls
@@ -85,8 +85,8 @@ Item {
                 avaterHeaderFontSize: Theme.fontSizeExtraSmall
                 avaterHeaderUserName: weiboJSONContent.retweeted_status.user.screen_name
                 avaterHeaderAvaterImage: weiboJSONContent.retweeted_status.user.profile_image_url
-                avaterHeaderWeiboTime: DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(weiboJSONContent.retweeted_status.created_at)))
-                                       + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.retweeted_status.source)
+                avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(weiboJSONContent.retweeted_status.created_at))
+                        + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.retweeted_status.source)
                 
                 labelFontSize: Theme.fontSizeMedium
                 labelContent: util.parseWeiboContent(weiboJSONContent.retweeted_status.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)

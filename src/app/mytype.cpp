@@ -25,15 +25,18 @@ MyType::~MyType() {
 QString MyType::dateParse(const QString &datestring) // "Mon Oct 28 20:00:23 +0800 2013"
 {
     QString str = datestring;
-    QStringList list = str.split(" ");
+    QStringList dateList = str.split(" ");
+    QStringList timeList = dateList[3].split(":");
 
-    //month dd,yyyy hh:mm:ss
-    //Oct 28 ,2013 20:00:23"
-    QString tmp = QString("%1,%2,%3,%4")
-            .arg(list[1]) //moth
-            .arg(list[2]) //day
-            .arg(list[5]) //yyyy
-            .arg(list[3]); //hh:mm:ss
-    QDateTime datetime = QDateTime::fromString(tmp, "MMM,dd,yyyy,HH:mm:ss");
-    return datetime.toString("MM,dd,yyyy,HH,mm,ss");
+    //Mon Oct 28 20:00:23 +0800 2013"
+    //MM,dd,yyyy,HH,mm,ss
+    //Oct,28 ,2013,20,00,23,"
+    QString tmp = QString("%1,%2,%3,%4,%5,%6")
+            .arg(dateList[1]) //moth
+            .arg(dateList[2]) //day
+            .arg(dateList[5]) //yyyy
+            .arg(timeList[0]) //hh
+            .arg(timeList[1]) //mm
+            .arg(timeList[2]); //ss
+    return tmp;
 }

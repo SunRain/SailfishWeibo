@@ -366,32 +366,32 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/js/dateutils.js" line="48"/>
+        <location filename="../qml/js/dateutils.js" line="93"/>
         <source>MMMM d</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/js/dateutils.js" line="63"/>
+        <location filename="../qml/js/dateutils.js" line="108"/>
         <source>Yesterday at %1</source>
         <translation>昨天%1</translation>
     </message>
     <message>
-        <location filename="../qml/js/dateutils.js" line="66"/>
+        <location filename="../qml/js/dateutils.js" line="111"/>
         <source>h:mm AP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/js/dateutils.js" line="78"/>
+        <location filename="../qml/js/dateutils.js" line="123"/>
         <source>ddd, h:mm AP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/js/dateutils.js" line="85"/>
+        <location filename="../qml/js/dateutils.js" line="130"/>
         <source>A few seconds ago...</source>
         <translation>几分钟前</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/js/dateutils.js" line="88"/>
+        <location filename="../qml/js/dateutils.js" line="133"/>
         <source>%1 minute ago</source>
         <comment>%1 minutes ago</comment>
         <translation>
@@ -399,7 +399,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/js/dateutils.js" line="92"/>
+        <location filename="../qml/js/dateutils.js" line="137"/>
         <source>%1 hour ago</source>
         <comment>%1 hours ago</comment>
         <translation>
@@ -407,7 +407,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/js/dateutils.js" line="98"/>
+        <location filename="../qml/js/dateutils.js" line="143"/>
         <source>%1 day ago</source>
         <comment>%1 days ago</comment>
         <translation>
@@ -659,8 +659,8 @@
 <context>
     <name>WeiboCard</name>
     <message>
-        <location filename="../qml/components/WeiboCard.qml" line="54"/>
-        <location filename="../qml/components/WeiboCard.qml" line="94"/>
+        <location filename="../qml/components/WeiboCard.qml" line="50"/>
+        <location filename="../qml/components/WeiboCard.qml" line="89"/>
         <source> From </source>
         <translation>来自</translation>
     </message>
@@ -758,6 +758,24 @@
         <location filename="../qml/ui/WeiboTab.qml" line="152"/>
         <source>Comment</source>
         <translation>评论</translation>
+    </message>
+</context>
+<context>
+    <name>dateutils</name>
+    <message>
+        <location filename="../qml/js/dateutils.js" line="74"/>
+        <source>Sec ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/js/dateutils.js" line="78"/>
+        <source>Min ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/js/dateutils.js" line="82"/>
+        <source>Hour ago</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

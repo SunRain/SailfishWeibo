@@ -566,4 +566,19 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>dateutils</name>
+    <message>
+        <source>Sec ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hour ago</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
