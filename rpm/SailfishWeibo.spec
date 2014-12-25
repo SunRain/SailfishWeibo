@@ -14,7 +14,7 @@ Name:       SailfishWeibo
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    A Sina weibo for SailfishOS
 Version:    0.3
-Release:    0
+Release:    1
 Group:      Qt/Qt
 License:    LICENSE
 URL:        http://example.org/
