@@ -161,7 +161,7 @@
         <location filename="../qml/pages/FirstPage.qml" line="18"/>
         <location filename="../qml/pages/FirstPage.qml" line="56"/>
         <source>Sailfish Weibo</source>
-        <translation type="unfinished">Sailfish Weibo</translation>
+        <translation>Sailfish Weibo</translation>
     </message>
     <message>
         <location filename="../qml/pages/FirstPage.qml" line="86"/>
@@ -177,7 +177,7 @@
         <location filename="../qml/pages/FirstPage.qml" line="34"/>
         <location filename="../qml/pages/FirstPage.qml" line="98"/>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>分组</translation>
     </message>
     <message>
         <location filename="../qml/pages/FirstPage.qml" line="108"/>
@@ -218,7 +218,7 @@
     <message>
         <location filename="../qml/ui/GroupItem.qml" line="91"/>
         <source>All Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>所有分组</translation>
     </message>
 </context>
 <context>
