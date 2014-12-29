@@ -125,11 +125,38 @@
         <source></source>
         <translation></translation>
     </message>
+    <message>
+        <source>Sailfish Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FooterLoadMore</name>
     <message>
         <source>click here to load more..</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GroupItem</name>
+    <message>
+        <source>All Groups</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -540,22 +567,6 @@
     <message>
         <source>Show Page 2</source>
         <translation type="obsolete">Zur Seite 2</translation>
-    </message>
-    <message>
-        <source>Sailfish Weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Repost</source>

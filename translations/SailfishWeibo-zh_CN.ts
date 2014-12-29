@@ -158,20 +158,31 @@
 <context>
     <name>FirstPage</name>
     <message>
+        <location filename="../qml/pages/FirstPage.qml" line="18"/>
+        <location filename="../qml/pages/FirstPage.qml" line="56"/>
         <source>Sailfish Weibo</source>
-        <translation type="obsolete">Sailfish Weibo</translation>
+        <translation type="unfinished">Sailfish Weibo</translation>
     </message>
     <message>
+        <location filename="../qml/pages/FirstPage.qml" line="86"/>
         <source>Logout</source>
-        <translation type="vanished">注销</translation>
+        <translation>注销</translation>
     </message>
     <message>
+        <location filename="../qml/pages/FirstPage.qml" line="94"/>
         <source>Refresh</source>
-        <translation type="vanished">刷新</translation>
+        <translation>刷新</translation>
     </message>
     <message>
+        <location filename="../qml/pages/FirstPage.qml" line="34"/>
+        <location filename="../qml/pages/FirstPage.qml" line="98"/>
+        <source>Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/FirstPage.qml" line="108"/>
         <source>New</source>
-        <translation type="vanished">写微博</translation>
+        <translation>写微博</translation>
     </message>
     <message>
         <source>Login</source>
@@ -200,6 +211,14 @@
         <location filename="../qml/components/FooterLoadMore.qml" line="16"/>
         <source>click here to load more..</source>
         <translation>加载更多</translation>
+    </message>
+</context>
+<context>
+    <name>GroupItem</name>
+    <message>
+        <location filename="../qml/ui/GroupItem.qml" line="91"/>
+        <source>All Groups</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -621,7 +640,7 @@
         <translation>关注Ta的：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="604"/>
+        <location filename="../qml/pages/UserPage.qml" line="605"/>
         <source>&apos;s RecentWeibo</source>
         <translation>的最新微博</translation>
     </message>
@@ -730,32 +749,28 @@
 <context>
     <name>WeiboTab</name>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="70"/>
         <source>Sailfish Weibo</source>
-        <translation>Sailfish Weibo</translation>
+        <translation type="vanished">Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="76"/>
         <source>Logout</source>
-        <translation>注销</translation>
+        <translation type="vanished">注销</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="84"/>
         <source>Refresh</source>
-        <translation>刷新</translation>
+        <translation type="vanished">刷新</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="90"/>
         <source>New</source>
-        <translation>写微博</translation>
+        <translation type="vanished">写微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="142"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="134"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="152"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="144"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
