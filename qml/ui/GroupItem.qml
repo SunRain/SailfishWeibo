@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import com.sunrain.sinaweibo 1.0
 
 import "../js/Settings.js" as Settings
+import "../components"
 
 SilicaListView {
     id: groupItem
@@ -63,57 +64,76 @@ SilicaListView {
 
     Component {
         id: listViewdDlegate
-        ListItem {
+        Item {
             id: listItem
             anchors {
                 left:parent.left
                 right:parent.right
             }
-            height: Math.max(label.height, image.height)
+            height: Math.max(label.height, optionItem.height)
 
-            function remove() {
-                remorseAction("Deleting", function(){
-                    groupItem.deleteGroup(model.JSON.idstr);
-                    listModel.remove(index);
-                });
-            }
-            ListView.onRemove: animateRemoval()
+            RemorseItem {id: remorseItem}
 
-            Label {
-                id: label
+            BackgroundItem {
+                id: text
                 anchors {
-                    left: parent.left
-                    leftMargin: Screen.width/5
-                    verticalCenter: parent.verticalCenter
+                    left: listItem.left
+                    leftMargin: Theme.paddingLarge
+                    right: optionItem.left
+                }
+                height: Math.max(label.height, Theme.itemSizeSmall)
+                Label {
+                    id: label
+                    width: parent.width
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: model.JSON.name == "" ||  model.JSON.idstr == ""
+                          ? qsTr("All Groups")
+                          : model.JSON.name
+                    color: text.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeMedium
+                }
+                onClicked: {
+                    groupItem.clickItem(model.JSON.idstr, model.JSON.name);
+                }
+            }
+
+            OptionItem {
+                id: optionItem
+                anchors {
+                    left: optionItem.menuOpen ? listItem.left : undefined
+                    right: listItem.right
+                    rightMargin: Theme.paddingLarge
+                }
+                width: optionItem.menuOpen ? Screen.width : image.width
+
+                visible: !(model.JSON.idstr == "" || model.JSON.id == "" || model.JSON.name == "")
+                Image {
+                    id: image
+                    anchors{
+                        top:parent.top
+                        bottom: parent.bottom
+                        right: parent.right
+                    }
+                    smooth: true
+                    width: Theme.iconSizeMedium
+                    height: width
+                    fillMode: Image.PreserveAspectFit
+                    source: optionItem.menuOpen ?
+                                "../graphics/action_collapse.png" :
+                                "../graphics/action_open.png"
                 }
 
-                text: model.JSON.name == "" ||  model.JSON.idstr == ""
-                      ? qsTr("All Groups")
-                      : model.JSON.name
-                color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                font.pixelSize: Theme.fontSizeMedium
-            }
-            Image {
-                id: image
-                anchors {
-                    right: parent.right
-                    rightMargin: Screen.width/10
-                    verticalCenter: parent.verticalCenter
-                }
-                visible: model.JSON.name != "" &&  model.JSON.idstr != ""
-                fillMode: Image.PreserveAspectFit
-                width: Theme.iconSizeMedium
-                height: image.width
-                source: "../graphics/icon-cancel.png"
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        listItem.remove();
+                menu: ContextMenu {
+                    id:options
+                    MenuItem {
+                        text: qsTr("Delete Group")
+                        onClicked: {
+                            remorseItem.execute(listItem,"Deleting", function(){
+                                                groupItem.deleteGroup(model.JSON.idstr);
+                                                listModel.remove(index);})
+                        }
                     }
                 }
-            }
-            onClicked: {
-                groupItem.clickItem(model.JSON.idstr, model.JSON.name);
             }
         }
     }
