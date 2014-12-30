@@ -216,9 +216,29 @@
 <context>
     <name>GroupItem</name>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="91"/>
+        <location filename="../qml/ui/GroupItem.qml" line="136"/>
+        <source>Rename %1 ==&gt; %2 (%3/8)</source>
+        <translation>重命名分组 %1 为 %2 (%3/8)</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/GroupItem.qml" line="140"/>
+        <source>Rename</source>
+        <translation>重命名</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/GroupItem.qml" line="170"/>
         <source>All Groups</source>
         <translation>所有分组</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/GroupItem.qml" line="211"/>
+        <source>Delete Group</source>
+        <translation>删除分组</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/GroupItem.qml" line="219"/>
+        <source>Rename Group</source>
+        <translation>重命名</translation>
     </message>
 </context>
 <context>

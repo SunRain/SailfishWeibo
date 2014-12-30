@@ -12,6 +12,9 @@ SilicaListView {
     signal fetchFinished
     signal clickItem(string idstr, string name)
 
+    property string _newGroupName: undefined
+    property string _newGroupIdstr: undefined
+
     function fetchGroups() {
         //WBOPT_GET_FRIENDSHIPS_GROUPS
         groupItem.fetchPending();
@@ -27,6 +30,18 @@ SilicaListView {
                                "access_token":Settings.getAccess_token(),
                                "list_id":idstr
                            });
+    }
+
+    function updateGroupName() {
+        // WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE, //更新好友分组
+        groupItem.fetchPending();
+        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE;
+        api.setWeiboAction(method, {
+                               "access_token":Settings.getAccess_token(),
+                               "list_id":_newGroupIdstr,
+                               "name":_newGroupName
+                           });
+
     }
 
     Connections {
@@ -45,7 +60,8 @@ SilicaListView {
                 }
                 groupItem.fetchFinished();
             }
-            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_DESTROY) {
+            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_DESTROY
+                    || action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE) {
                 groupItem.fetchFinished();
                 groupItem.fetchGroups();
             }
@@ -70,67 +86,130 @@ SilicaListView {
                 left:parent.left
                 right:parent.right
             }
-            height: Math.max(label.height, optionItem.height)
+            height: childrenRect.height
+
+            //TODO: ugly hack for fix contextMenu display
+            property bool _contextMenuOpen: false
+            property bool _showInputType: false
 
             RemorseItem {id: remorseItem}
 
-            BackgroundItem {
-                id: text
+            Loader {
+                id: leftLoader
                 anchors {
                     left: listItem.left
                     leftMargin: Theme.paddingLarge
-                    right: optionItem.left
+                    right: listItem._showInputType
+                           ? listItem.right
+                           : rightLoader.left
                 }
-                height: Math.max(label.height, Theme.itemSizeSmall)
-                Label {
-                    id: label
-                    width: parent.width
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: model.JSON.name == "" ||  model.JSON.idstr == ""
-                          ? qsTr("All Groups")
-                          : model.JSON.name
-                    color: text.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    font.pixelSize: Theme.fontSizeMedium
-                }
-                onClicked: {
-                    groupItem.clickItem(model.JSON.idstr, model.JSON.name);
-                }
+                sourceComponent: listItem._showInputType ? textInputComponent : infoItemComponent
             }
-
-            OptionItem {
-                id: optionItem
+            Loader {
+                id: rightLoader
                 anchors {
-                    left: optionItem.menuOpen ? listItem.left : undefined
+                    //TODO: remove this, but how can I fix the contextMenuOpen display ?
+//                    left: listItem._contextMenuOpen ? listItem.left : parent.left
                     right: listItem.right
                     rightMargin: Theme.paddingLarge
                 }
-                width: optionItem.menuOpen ? Screen.width : image.width
+                sourceComponent: listItem._showInputType
+                                 ? rightLoader.Null
+                                 : optionComponent
+            }
 
-                visible: !(model.JSON.idstr == "" || model.JSON.id == "" || model.JSON.name == "")
-                Image {
-                    id: image
-                    anchors{
-                        top:parent.top
-                        bottom: parent.bottom
+            Component {
+                id: textInputComponent
+                TextField {
+                    id: textField
+                    width: parent.width
+                    label: qsTr("Rename %1 ==> %2 (%3/8)").arg(model.JSON.name).arg(textField.text).arg(textField.text.length)
+                    placeholderText: model.JSON.name
+                    horizontalAlignment: TextInput.AlignLeft
+//                    EnterKey.iconSource: "image://theme/icon-m-enter-accept"
+                    EnterKey.text: qsTr("Rename")
+                    EnterKey.highlighted: true
+                    EnterKey.onClicked: {
+                        groupItem._newGroupName = textField.text;
+                        groupItem._newGroupIdstr = model.JSON.idstr;
+                        parent.focus = true;
+//                        groupItem.focus = true;
+                        updateGroupName();
+                    }
+                    Component.onCompleted: {
+                        groupItem._newGroupName = model.JSON.name;
+                    }
+                }
+            }
+
+            Component {
+                id: infoItemComponent
+                BackgroundItem {
+                    id: text
+                    anchors {
+                        left: parent.left
                         right: parent.right
                     }
-                    smooth: true
-                    width: Theme.iconSizeMedium
-                    height: width
-                    fillMode: Image.PreserveAspectFit
-                    source: optionItem.menuOpen ?
-                                "../graphics/action_collapse.png" :
-                                "../graphics/action_open.png"
+
+                    height: Math.max(label.height, Theme.itemSizeSmall)
+                    Label {
+                        id: label
+                        width: parent.width
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: model.JSON.name == "" ||  model.JSON.idstr == ""
+                              ? qsTr("All Groups")
+                              : model.JSON.name
+                        color: text.highlighted ? Theme.highlightColor : Theme.primaryColor
+                        font.pixelSize: Theme.fontSizeMedium
+                    }
+                    onClicked: {
+                        groupItem.clickItem(model.JSON.idstr, model.JSON.name);
+                    }
                 }
 
-                menu: ContextMenu {
-                    id:options
-                    MenuItem {
-                        text: qsTr("Delete Group")
-                        onClicked: {
-                            remorseItem.execute(listItem,"Deleting", function(){
-                                                groupItem.deleteGroup(model.JSON.idstr);
-                                                listModel.remove(index);})
+            }
+            Component {
+                id: optionComponent
+                OptionItem {
+                    id: optionItem
+                    width: optionItem.menuOpen ? Screen.width : image.width
+
+                    visible: !(model.JSON.idstr == "" || model.JSON.id == "" || model.JSON.name == "")
+                    Image {
+                        id: image
+                        anchors{
+                            top:parent.top
+                            bottom: parent.bottom
+                            right: parent.right
+                        }
+                        smooth: true
+                        width: Theme.iconSizeMedium
+                        height: width
+                        fillMode: Image.PreserveAspectFit
+                        source: optionItem.menuOpen ?
+                                    "../graphics/action_collapse.png" :
+                                    "../graphics/action_open.png"
+                    }
+
+                    onMenuStateChanged: {
+                        listItem._contextMenuOpen = opened;
+                    }
+
+                    menu: ContextMenu {
+                        id:options
+                        MenuItem {
+                            text: qsTr("Delete Group")
+                            onClicked: {
+                                remorseItem.execute(listItem,"Deleting", function(){
+                                    groupItem.deleteGroup(model.JSON.idstr);
+                                    listModel.remove(index);})
+                            }
+                        }
+                        MenuItem {
+                            text: qsTr("Rename Group")
+                            onClicked: {
+                                listItem._showInputType = true;
+                            }
                         }
                     }
                 }
