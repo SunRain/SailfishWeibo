@@ -216,27 +216,27 @@
 <context>
     <name>GroupItem</name>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="136"/>
+        <location filename="../qml/ui/GroupItem.qml" line="126"/>
         <source>Rename %1 ==&gt; %2 (%3/8)</source>
         <translation>重命名分组 %1 为 %2 (%3/8)</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="140"/>
+        <location filename="../qml/ui/GroupItem.qml" line="130"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="170"/>
+        <location filename="../qml/ui/GroupItem.qml" line="160"/>
         <source>All Groups</source>
         <translation>所有分组</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="211"/>
+        <location filename="../qml/ui/GroupItem.qml" line="201"/>
         <source>Delete Group</source>
         <translation>删除分组</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="219"/>
+        <location filename="../qml/ui/GroupItem.qml" line="209"/>
         <source>Rename Group</source>
         <translation>重命名</translation>
     </message>
@@ -785,12 +785,12 @@
         <translation type="vanished">写微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="134"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="144"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="144"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="154"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>

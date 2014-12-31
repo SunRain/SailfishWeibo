@@ -24,7 +24,6 @@ Page {
     Drawer {
         id: drawer
         anchors.fill: parent
-
         background: GroupItem {
             id: groupItem
             anchors.fill: parent
@@ -41,14 +40,14 @@ Page {
                     }
                 }
             }
-//            PullDownMenu {
-//                id:listViewPullDownMenu
+            PullDownMenu {
+                id:groupPullDownMenu
 //                MenuItem {
 //                    text: qsTr("newGroup")
 //                }
-//            }
-            onFetchPending: {showBusyIndicator();}
-            onFetchFinished: {stopBusyIndicator();}
+            }
+            onFetchPending: {groupPullDownMenu.busy = true;}
+            onFetchFinished: {groupPullDownMenu.busy = false;}
             onClickItem: {
                 if (idstr == "" || idstr == undefined) {
                     weiboTab.showAllWeibo();
@@ -79,7 +78,7 @@ Page {
             }
 
             PullDownMenu {
-                id:lvHomeWeiboPullDownMenu
+                id:weiboTabPullDownMenu
                 MenuItem {
                     text: qsTr("Logout")
                     onClicked: {
@@ -101,13 +100,18 @@ Page {
                         }
                     }
                 }
-
                 MenuItem {
                     text: qsTr("New")
                     onClicked: {
                         toSendPage("", {});
                     }
                 }
+            }
+            onFetchPending: {
+                weiboTabPullDownMenu.busy = true;
+            }
+            onFetchFinished: {
+                weiboTabPullDownMenu.busy = false;
             }
         }
     }

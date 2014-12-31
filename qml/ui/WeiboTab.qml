@@ -17,8 +17,12 @@ SilicaListView {
 
     property bool _isGroupType: false
 
+    signal fetchPending
+    signal fetchFinished
+
     function refresh() {
-        showBusyIndicator();
+        //showBusyIndicator();
+        fetchPending();
         modelWeibo.clear();
         _allWeiboPageNum = 1;
         _isGroupType = false;
@@ -27,6 +31,7 @@ SilicaListView {
     }
     
     function addMore() {
+        fetchPending();
         if(_isGroupType) {
             _groupWeiboPageNum++;
             var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE;
@@ -47,7 +52,8 @@ SilicaListView {
 
     function showGroupWeibo(groupIdstr) {
         //        WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE, //获取某一好友分组的微博列表
-        showBusyIndicator();
+        //showBusyIndicator();
+        fetchPending();
         modelWeibo.clear();
         _groupWeiboPageNum = 1;
         _groupIdstr = groupIdstr;
@@ -58,7 +64,6 @@ SilicaListView {
                                "access_token":Settings.getAccess_token(),
                                "list_id":_groupIdstr});
     }
-
 
     ListModel {
         id: modelWeibo
@@ -77,7 +82,8 @@ SilicaListView {
                 if (weiboTab.model == undefined) {
                     weiboTab.model = modelWeibo;
                 }
-                stopBusyIndicator();
+                //stopBusyIndicator();
+                fetchFinished();
             }
         }
         onTokenExpired: {
