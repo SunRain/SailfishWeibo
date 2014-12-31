@@ -10,6 +10,7 @@ class Util : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString getCachePath READ getCachePath)
+    Q_PROPERTY(QString getVerison READ getVerison CONSTANT)
 public:
     static Util *getInstance();
     virtual ~Util();
@@ -32,6 +33,8 @@ public:
     
     QString getCachePath() const;
     Q_INVOKABLE static bool deleteDir(const QString &dirName);
+
+    static QString getVerison();
 signals:
     
 public slots:

@@ -4,14 +4,19 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="16"/>
+        <location filename="../qml/pages/AboutPage.qml" line="25"/>
         <source>About Sailfish Weibo</source>
-        <translation>关于Sailfish微博</translation>
+        <translation>关于</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="38"/>
+        <location filename="../qml/pages/AboutPage.qml" line="34"/>
         <source>Sailfish Weibo</source>
         <translation>Sailfish Weibo</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="43"/>
+        <source>verison</source>
+        <translation>Verison</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="52"/>
@@ -19,34 +24,58 @@
         <translation>作者：wanggjghost（泪の单翼天使）</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="63"/>
+        <location filename="../qml/pages/AboutPage.qml" line="59"/>
         <source>E-mail:41245110@qq.com</source>
         <translation>E-Mail：41245110@qq.com</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="83"/>
-        <source>Github: https://github.com/SunRain/SailfishWeibo</source>
-        <translation>Github: https://github.com/SunRain/SailfishWeibo</translation>
+        <location filename="../qml/pages/AboutPage.qml" line="68"/>
+        <source>Donate to alipay wanggjghost@126.com(**健) if U like this app</source>
+        <translation>如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="110"/>
+        <location filename="../qml/pages/AboutPage.qml" line="74"/>
+        <location filename="../qml/pages/AboutPage.qml" line="111"/>
+        <source>SourceCode</source>
+        <translation>查看开源代码</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="129"/>
+        <source>Cache: </source>
+        <translation>缓存路径:</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="136"/>
+        <source>DeleteCache</source>
+        <translation>删除缓存</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="138"/>
+        <source>Deleting</source>
+        <translation>删除中</translation>
+    </message>
+    <message>
+        <source>Github: https://github.com/SunRain/SailfishWeibo</source>
+        <translation type="vanished">Github: https://github.com/SunRain/SailfishWeibo</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="90"/>
         <source>Credit</source>
         <translation>致谢</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="128"/>
+        <location filename="../qml/pages/AboutPage.qml" line="98"/>
         <source>UbuntuTouch Weibo</source>
         <translation>UbuntuTouch微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="141"/>
+        <location filename="../qml/pages/AboutPage.qml" line="106"/>
         <source>Author:Joey_Chan</source>
         <translation>作者：Joey_Chan</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="161"/>
         <source>http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</source>
-        <translation>http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</translation>
+        <translation type="vanished">http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</translation>
     </message>
 </context>
 <context>
@@ -159,28 +188,28 @@
     <name>FirstPage</name>
     <message>
         <location filename="../qml/pages/FirstPage.qml" line="18"/>
-        <location filename="../qml/pages/FirstPage.qml" line="55"/>
+        <location filename="../qml/pages/FirstPage.qml" line="54"/>
         <source>Sailfish Weibo</source>
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="84"/>
+        <location filename="../qml/pages/FirstPage.qml" line="83"/>
         <source>Logout</source>
         <translation>注销</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="92"/>
+        <location filename="../qml/pages/FirstPage.qml" line="91"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="34"/>
-        <location filename="../qml/pages/FirstPage.qml" line="96"/>
+        <location filename="../qml/pages/FirstPage.qml" line="33"/>
+        <location filename="../qml/pages/FirstPage.qml" line="95"/>
         <source>Groups</source>
         <translation>分组</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="106"/>
+        <location filename="../qml/pages/FirstPage.qml" line="104"/>
         <source>New</source>
         <translation>写微博</translation>
     </message>
@@ -785,12 +814,12 @@
         <translation type="vanished">写微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="144"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="140"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="154"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="150"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>

@@ -26,6 +26,15 @@ void Util::setEngine(QQmlEngine *engine)
     this->m_Engine = engine;
 }
 
+QString Util::getVerison()
+{
+#ifdef VERSION_STR
+    return QString(VERSION_STR);
+#else
+    return QString("Unknown");
+#endif
+}
+
 void Util::setValue(const QString &key, const QVariant &value)
 {
     if (m_Map.value(key) != value) {

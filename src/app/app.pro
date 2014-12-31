@@ -26,3 +26,6 @@ else:unix: LIBS += -L$$OUT_PWD/../QSinaWeiboApi/weiboAPI/ -lQSinaWeiboAPI
 
 INCLUDEPATH += $$PWD/../QSinaWeiboApi/weiboAPI
 DEPENDPATH += $$PWD/../QSinaWeiboApi/weiboAPI
+
+DEFINES += VERSION_STR=\\\"$$system($${PWD}/get_version_str.sh)\\\"
+

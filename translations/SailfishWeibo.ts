@@ -20,10 +20,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Github: https://github.com/SunRain/SailfishWeibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Credit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -36,7 +32,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</source>
+        <source>verison</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SourceCode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Donate to alipay wanggjghost@126.com(**健) if U like this app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cache: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DeleteCache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
