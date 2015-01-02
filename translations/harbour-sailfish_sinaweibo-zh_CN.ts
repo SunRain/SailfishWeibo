@@ -603,27 +603,27 @@
         <translation type="obsolete">再次输入微博内容</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="412"/>
+        <location filename="../qml/pages/SendPage.qml" line="422"/>
         <source>Click the inserted image to remove from the uploading queue</source>
         <translation>点击已插入的图片可以将图片移除</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="459"/>
+        <location filename="../qml/pages/SendPage.qml" line="469"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="464"/>
+        <location filename="../qml/pages/SendPage.qml" line="474"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="469"/>
+        <location filename="../qml/pages/SendPage.qml" line="479"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="475"/>
+        <location filename="../qml/pages/SendPage.qml" line="485"/>
         <source>Send Weibo</source>
         <translation>发送微博</translation>
     </message>

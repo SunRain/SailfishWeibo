@@ -25,7 +25,7 @@ Page {
     property var userInfo         // include id, cid, etc..
     property string placeHoldText:""
     //property string imgPath: ""
-    property var imgPath: ""
+    property string imgPath: ""
     property int optionIndex: 0
 
     //////////////////////////////////////////////////////////////////         send weibo
@@ -222,23 +222,23 @@ Page {
         }
     }
     
-    Component {
-        id:insertImageSheet
-        ImagePreviewComponent {
-            id: imagePreviewComponent
-            anchors.fill: parent
+//    Component {
+//        id:insertImageSheet
+//        ImagePreviewComponent {
+//            id: imagePreviewComponent
+//            anchors.fill: parent
 
-            onImageClicked: {
-                //console.log("SendPage == imagePreviewComponent clicked " +  model.url);
-                //TODO 暂时只支持上传一张图片
-                modelImages.clear();
-                modelImages.append(
-                            {"path":/*model.get(index).url*/model.url.toString()}
-                            );
-                setImgPath(model.url.toString());
-            }
-        }
-    }
+//            onImageClicked: {
+//                //console.log("SendPage == imagePreviewComponent clicked " +  model.url);
+//                //TODO 暂时只支持上传一张图片
+//                modelImages.clear();
+//                modelImages.append(
+//                            {"path":/*model.get(index).url*/model.url.toString()}
+//                            );
+//                setImgPath(model.url.toString());
+//            }
+//        }
+//    }
 
     Component {
         id:commentOption
@@ -369,11 +369,21 @@ Page {
                 MenuItem {
                     text: qsTr("Add Image")
                     onClicked: {
-                        drawerBackgroundLoader.sourceComponent = drawerBackgroundLoader.Null
-                        drawerBackgroundLoader.sourceComponent = insertImageSheet;
-                        if (!drawer.opened) {
-                            drawer.open = true;
-                        } 
+//                        drawerBackgroundLoader.sourceComponent = drawerBackgroundLoader.Null
+//                        drawerBackgroundLoader.sourceComponent = insertImageSheet;
+//                        if (!drawer.opened) {
+//                            drawer.open = true;
+//                        }
+                        var imagePicker = pageStack.push("Sailfish.Pickers.ImagePickerPage");
+                        imagePicker.selectedContentChanged.connect(function() {
+                            var imagePath = imagePicker.selectedContent;
+                            var tmp = imagePath.toString().replace("file://", "");
+                            modelImages.clear();
+                            modelImages.append(
+                                        {"path":tmp}
+                                        );
+                            setImgPath(imagePath);
+                        });
                     }
                 }
             }
