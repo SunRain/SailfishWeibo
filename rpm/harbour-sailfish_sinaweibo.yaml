@@ -1,12 +1,12 @@
 Name: harbour-sailfish_sinaweibo
 Summary: A Sina weibo for SailfishOS
-Version: 0.5
+Version: 1.0
 Release: 0
 # The contents of the Group field should be one of the groups listed here:
 # http://gitorious.org/meego-developer-tools/spectacle/blobs/master/data/GROUPS
 Group: Qt/Qt
 URL: http://example.org/
-License: LICENSE
+License: GPL v3
 # This must be generated before uploading a package to a remote build service.
 # Usually this line does not need to be modified.
 Sources:
@@ -25,7 +25,6 @@ PkgConfigBR:
   - Qt5Core
   - Qt5Qml
   - Qt5Quick
-  - qdeclarative5-boostable
 
 # Build dependencies without a pkgconfig setup can be listed here
 # PkgBR:
@@ -37,10 +36,6 @@ Requires:
   - qt5-qtsvg-plugin-imageformat-svg
   - qt5-plugin-imageformat-gif
   - qt5-qtsvg
-  - qt5-qtdocgallery
-  - sailfishsilica-qt5
-  - nemo-qml-plugin-thumbnailer-qt5
-  - mapplauncherd-booster-silica-qt5
 
 # All installed files
 Files:
