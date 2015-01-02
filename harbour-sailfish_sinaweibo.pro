@@ -25,18 +25,18 @@ OTHER_FILES += qml/SailfishWeibo.qml \
     qml/ui/*.qml \
     qml/graphics/* \
     qml/emoticons/* \
-    rpm/SailfishWeibo.changes.in \
-    rpm/SailfishWeibo.spec \
-    rpm/SailfishWeibo.yaml \
-    translations/*.ts \
-    SailfishWeibo.desktop \
+    rpm/harbour-sailfish_sinaweibo.changes.in \
+    rpm/harbour-sailfish_sinaweibo.spec \
+    rpm/harbour-sailfish_sinaweibo.yaml \
+    harbour-sailfish_sinaweibo.desktop \
     translations/*
 
-    
+
+
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
-TRANSLATIONS += translations/SailfishWeibo-de.ts \
-                translations/SailfishWeibo-zh_CN.ts
+TRANSLATIONS += translations/harbour-sailfish_sinaweibo-de.ts \
+                translations/harbour-sailfish_sinaweibo-zh_CN.ts
 
 

@@ -1,8 +1,8 @@
 import QtQuick 2.0
-import "../components"
 import Sailfish.Silica 1.0
-import com.sunrain.sinaweibo 1.0
+import harbour.sailfish_sinaweibo.sunrain 1.0
 
+import "../components"
 import "../js/Settings.js" as Settings
 
 /*************************************************

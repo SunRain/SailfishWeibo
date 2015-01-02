@@ -1,6 +1,6 @@
 TEMPLATE = app
 # The name of your application
-TARGET = SailfishWeibo
+TARGET = harbour-sailfish_sinaweibo
 
 CONFIG += sailfishapp
 

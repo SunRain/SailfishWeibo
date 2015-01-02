@@ -1,7 +1,7 @@
 import QtQuick 2.0
 //import "./weiboapi.js" as WB
 import "../js/Settings.js" as Settings
-import com.sunrain.sinaweibo 1.0
+import harbour.sailfish_sinaweibo.sunrain 1.0
 
 QtObject {
     id: weiboApiHandler

@@ -7,7 +7,7 @@ import "../js/Settings.js" as Settings
 import "../js/getURL.js" as GetURL
 import "../components"
 
-import com.sunrain.sinaweibo 1.0
+import harbour.sailfish_sinaweibo.sunrain 1.0
 
 Page{
     id: commentMentionedPage

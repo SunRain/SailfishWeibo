@@ -10,7 +10,7 @@ import Sailfish.Silica 1.0
 //import org.nemomobile.thumbnailer 1.0
 
 import "../components"
-import com.sunrain.sinaweibo 1.0
+import harbour.sailfish_sinaweibo.sunrain 1.0
 
 Page {
     id: sendPage

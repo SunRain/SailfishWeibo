@@ -55,11 +55,11 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-    qmlRegisterType<MyType>("com.sunrain.sinaweibo", 1, 0, "MyType");
-    qmlRegisterType<NetworkHelper>("com.sunrain.sinaweibo", 1, 0, "NetworkHelper");
-    qmlRegisterType<QSinaWeiboAPI::QSinaWeibo>("com.sunrain.sinaweibo", 1, 0, "WeiboApi");
+    qmlRegisterType<MyType>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "MyType");
+    qmlRegisterType<NetworkHelper>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "NetworkHelper");
+    qmlRegisterType<QSinaWeiboAPI::QSinaWeibo>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "WeiboApi");
     //qmlRegisterType<QSinaWeiboAPI::QWeiboMethod>("com.sunrain.sinaweibo", 1, 0, "WeiboMethod");
-    qmlRegisterUncreatableType<QSinaWeiboAPI::QWeiboMethod>("com.sunrain.sinaweibo", 1, 0, "WeiboMethod", "");
+    qmlRegisterUncreatableType<QSinaWeiboAPI::QWeiboMethod>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "WeiboMethod", "");
     //return SailfishApp::main(argc, argv);
     QScopedPointer<QGuiApplication> app (SailfishApp::application(argc, argv));
     app.data()->setOrganizationName("SunRain");

@@ -12,11 +12,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>verison</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Author:wanggjghost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>E-mail:41245110@qq.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Donate to alipay wanggjghost@126.com(**健) if U like this app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SourceCode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -29,18 +41,6 @@
     </message>
     <message>
         <source>Author:Joey_Chan</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>verison</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SourceCode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Donate to alipay wanggjghost@126.com(**健) if U like this app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -146,15 +146,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Groups</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -172,6 +172,14 @@
 <context>
     <name>GroupItem</name>
     <message>
+        <source>Rename %1 ==&gt; %2 (%3/8)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>All Groups</source>
         <translation type="unfinished"></translation>
     </message>
@@ -181,14 +189,6 @@
     </message>
     <message>
         <source>Rename Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename %1 ==&gt; %2 (%3/8)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

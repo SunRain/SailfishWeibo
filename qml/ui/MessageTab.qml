@@ -7,7 +7,7 @@ import "../js/Settings.js" as Settings
 import "../components"
 import "../pages"
 
-import com.sunrain.sinaweibo 1.0
+import harbour.sailfish_sinaweibo.sunrain 1.0
 
 Page {
     id: messageTab
