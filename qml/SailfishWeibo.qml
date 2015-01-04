@@ -50,76 +50,118 @@ ApplicationWindow
 
     //cover: Qt.resolvedUrl("cover/CoverPage.qml")
     initialPage: Component {
-        id: indexPageComponent
-        FirstPage {
-            id: indexPage
+        SplashesPage { //SplashesPage，同时用于初始化数据库和检测token值
+            id: splashes
             property bool _settingsInitialized: false
-            property bool _dataInitialized: false
-            property bool withPanelView: true
-            Binding {
-                target: indexPage.contentItem
-                property: "parent"
-                value: indexPage.status === PageStatus.Active
-                       ? (panelView .closed ? panelView : indexPage)
-                       : indexPage
-            }
-            Component.onCompleted: {
-                if (!_settingsInitialized) {
-                    Settings.initialize();
-                    _settingsInitialized = true;
+            property int _delayType: -1; // 0 ==> start login page
+                                        // 1 ==> start index page
+            onStatusChanged: {
+                if (splashes.status === PageStatus.Active) {
+                    if (!_settingsInitialized) {
+                        Settings.initialize();
+                        _settingsInitialized = true;
+                    }
+                    var token = Settings.getAccess_token();
+                    if (token == "" ) {
+                        _delayType = 0;
+                        delay.restart();
+                    } else {
+                        api.checkToken(token);
+                    }
                 }
             }
-            onStatusChanged: {
-//                if (indexPage.status === PageStatus.Activating) {
-////                    if (!_settingsInitialized) {
-////                        Settings.initialize();
-////                        _settingsInitialized = true;
-////                    }
-////                    if (_firstUiLaunchTime) {
-////                        reset();
-////                        _firstUiLaunchTime = false;
-////                    }
-//                }
-                if (indexPage.status === PageStatus.Active) {
-                    if (!tokenValid) {
-                        startLogin();
+            Timer {
+                id: delay
+                interval: 1000
+                onTriggered: {
+                    if (splashes._delayType == 0) {
+                        toLoginPage();
+                    }
+                    if (splashes._delayType == 1) {
+                        toIndexPage();
+                    }
+                }
+            }
+            Connections {
+                target: api
+                onTokenExpired: {
+                    if (!tokenExpired) {
+                        console.log("==== !tokenExpired")
+                        api.accessToken = Settings.getAccess_token();
+                        api.uid = Settings.getUid();
+                        _delayType = 1;
+                        delay.restart();
                     } else {
-                        if (!_dataInitialized) {
-                            indexPage.refresh();
-                            panelView.initUserAvatar();
-                            panelView.initRemind();
-                            _dataInitialized = true;
-                        }
+                        _delayType = 0;
+                        delay.restart()
                     }
                 }
             }
         }
     }
 
-    //Dirty hack
-    //Use a Timer to fix Warning: cannot pop while transition is in progress
-    function startLogin() {
-        pageStack.completeAnimation();
-        loginDelay.restart();
-    }
-    Timer {
-        id: loginDelay
-        interval: 500
-        onTriggered: {
-            _startLogin();
+    //主页微博列表显示
+    Component {
+        id: indexPageComponent
+        FirstPage {
+            id: indexPage
+//            property bool _settingsInitialized: false
+            property bool _dataInitialized: false
+            property bool withPanelView: true
+            Binding {
+                target: indexPage.contentItem
+                property: "parent"
+                value: indexPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : indexPage) //修正listview焦点
+                       : indexPage
+            }
+//            Component.onCompleted: {
+//                if (!_settingsInitialized) {
+//                    Settings.initialize();
+//                    _settingsInitialized = true;
+//                }
+//            }
+            onStatusChanged: {
+                if (indexPage.status === PageStatus.Active) {
+//                    if (!tokenValid) {
+//                        startLogin();
+//                    } else {
+                        if (!_dataInitialized) {
+                            indexPage.refresh();
+                            panelView.initUserAvatar();
+                            panelView.initRemind();
+                            _dataInitialized = true;
+//                        }
+                    }
+                }
+            }
         }
     }
 
-    function _startLogin() {
-        var dialog = pageStack.push(Qt.resolvedUrl("ui/LoginDialog.qml"),{ token: Settings.getAccess_token()});
-        dialog.accepted.connect(function() {
-            tokenValid = true;
+//    //Dirty hack
+//    //Use a Timer to fix Warning: cannot pop while transition is in progress
+//    function startLogin() {
+//        pageStack.completeAnimation();
+//        loginDelay.restart();
+//    }
+//    Timer {
+//        id: loginDelay
+//        interval: 500
+//        onTriggered: {
+//            _startLogin();
+//        }
+//    }
 
-        })
-        dialog.rejected.connect(function() {
-            startLogin();
-        })
-    }
+//    function _startLogin() {
+//        var dialog = pageStack.push(Qt.resolvedUrl("ui/LoginDialog.qml"),{ token: Settings.getAccess_token()});
+//        dialog.accepted.connect(function() {
+//            tokenValid = true;
+
+//        })
+//        dialog.rejected.connect(function() {
+//            startLogin();
+//        })
+//    }
 
     Item{
         id:notiItem
@@ -270,6 +312,13 @@ ApplicationWindow
         }
     }
 
+    Component {
+        id: loginPageComponent
+        LoginPage {
+            onLogined: {toIndexPage();}
+        }
+    }
+
     function showBusyIndicator() {
         busyIndicator.runningBusyIndicator = true
     }
@@ -286,11 +335,11 @@ ApplicationWindow
         }
     }
     
-    function attachSecondPage() {
-        if (pageStack.depth == 1) {
-            pageStack.pushAttached("pages/SecondPage.qml");
-        }
-    }
+//    function attachSecondPage() {
+//        if (pageStack.depth == 1) {
+//            pageStack.pushAttached("pages/SecondPage.qml");
+//        }
+//    }
 
     function popAttachedPages() {
         // find the first page
@@ -304,7 +353,14 @@ ApplicationWindow
         // pop to first page
         pageStack.pop(firstPage);
     }
+
+    ///////////// 登陆页面
+    function toLoginPage() {
+        popAttachedPages();
+        pageStack.replace(loginPageComponent);
+    }
     
+    ///////////// 主页（微博列表显示页面）
     function toIndexPage() {
         popAttachedPages();
         pageStack.replace(indexPageComponent)

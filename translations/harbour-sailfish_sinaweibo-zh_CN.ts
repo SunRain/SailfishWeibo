@@ -633,6 +633,14 @@
     </message>
 </context>
 <context>
+    <name>SplashesPage</name>
+    <message>
+        <location filename="../qml/pages/SplashesPage.qml" line="39"/>
+        <source>Loading ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UserAvatarHeader</name>
     <message>
         <source> From </source>

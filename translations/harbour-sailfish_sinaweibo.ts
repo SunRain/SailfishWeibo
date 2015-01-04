@@ -460,6 +460,13 @@
     </message>
 </context>
 <context>
+    <name>SplashesPage</name>
+    <message>
+        <source>Loading ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UserPage</name>
     <message>
         <source>About user</source>
