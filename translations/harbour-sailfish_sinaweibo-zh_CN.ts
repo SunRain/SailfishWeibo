@@ -637,7 +637,7 @@
     <message>
         <location filename="../qml/pages/SplashesPage.qml" line="39"/>
         <source>Loading ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading ...</translation>
     </message>
 </context>
 <context>
