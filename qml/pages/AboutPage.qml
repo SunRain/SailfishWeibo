@@ -40,7 +40,7 @@ Dialog {
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeSmall
                 wrapMode: Text.Wrap
-                text: qsTr("verison") + " " + util.getVerison
+                text: qsTr("version") + " " + util.getVerison
             }
             
             //author info

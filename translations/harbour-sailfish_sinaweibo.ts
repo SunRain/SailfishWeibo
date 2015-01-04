@@ -32,10 +32,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>verison</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SourceCode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -53,6 +49,10 @@
     </message>
     <message>
         <source>Deleting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>version</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

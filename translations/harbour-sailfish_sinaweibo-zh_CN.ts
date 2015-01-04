@@ -14,9 +14,13 @@
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="43"/>
         <source>verison</source>
-        <translation>Verison</translation>
+        <translation type="vanished">Verison</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="43"/>
+        <source>version</source>
+        <translation>Version</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="52"/>
@@ -147,7 +151,7 @@
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="38"/>
         <source>My Cover</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -316,17 +320,17 @@
     <message>
         <location filename="../qml/components/MainComponent.qml" line="13"/>
         <source>Show Page 2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/components/MainComponent.qml" line="45"/>
         <source>UI Template</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/components/MainComponent.qml" line="49"/>
         <source>Hello Sailors</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -334,7 +338,7 @@
     <message>
         <location filename="../src/QSinaWeiboApi/examples/mainwindow.ui" line="13"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -410,19 +414,19 @@
         <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="51"/>
         <source>Qt wrapper for sina weibo api.
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="52"/>
         <source>Distributed under the terms of LGPLv2.1 or later.
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="54"/>
         <source>Shanghai University, Shanghai, China
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -436,7 +440,7 @@
     <message>
         <location filename="../qml/js/dateutils.js" line="93"/>
         <source>MMMM d</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/js/dateutils.js" line="108"/>
@@ -446,12 +450,12 @@
     <message>
         <location filename="../qml/js/dateutils.js" line="111"/>
         <source>h:mm AP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/js/dateutils.js" line="123"/>
         <source>ddd, h:mm AP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/js/dateutils.js" line="130"/>
