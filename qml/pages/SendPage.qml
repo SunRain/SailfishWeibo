@@ -219,6 +219,14 @@ Page {
                 drawer.hide();
                 parent.focus = true;
             }
+            onFetchPending: {
+                pullDownMenu.busy = true;
+                pushUpMenu.busy = true;
+            }
+            onFetchFinish: {
+                pullDownMenu.busy = false;
+                pushUpMenu.busy = false;
+            }
         }
     }
     
@@ -317,6 +325,7 @@ Page {
             }
             
             PullDownMenu {
+                id: pullDownMenu
                 MenuItem {
                     text: qsTr("Send")
                     onClicked: {
@@ -356,6 +365,7 @@ Page {
             }
 
             PushUpMenu {
+                id: pushUpMenu
                 MenuItem {
                     text: qsTr("@SomeOne")
                     onClicked: {

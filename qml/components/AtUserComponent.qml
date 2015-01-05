@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.sailfish_sinaweibo.sunrain 1.0
 
 import "../js/weiboapi.js" as WB
 import "../js/Settings.js" as Settings
@@ -11,27 +12,45 @@ Item {
     
     signal userClicked(string userName)
     signal closeIconClicked
+    signal fetchPending
+    signal fetchFinish
     
+    Connections {
+        target: api
+        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+        onWeiboPutSucceed: {
+            if (action == WeiboMethod.WBOPT_GET_SEARCH_SUGGESTIONS_AT_USERS) {
+                var jsonObj = JSON.parse(replyData);
+                modelAtUser.clear();
+                for (var i=0; i<jsonObj.length; i++) {
+                    modelAtUser.append(jsonObj[i])
+                }
+                fetchFinish();
+            }
+        }
+        onTokenExpired: {}
+    }
+
     Column {
         id:mainColumn
         width: parent.width
-        
         spacing: Theme.paddingSmall 
         
         PageHeader {
             id:pageHeader
             title: qsTr("SearchUser")
+            visible: modelAtUser.count <= 0
         }
         
         Row {
             id:searchArea
             spacing: Theme.paddingSmall 
-            height: searchInput.height > searchIcon.height ? searchInput.height : searchIcon.height + Theme.paddingSmall 
+            height: Math.max(searchInput.height, searchIcon.height + Theme.paddingSmall)//searchInput.height > searchIcon.height ? searchInput.height : searchIcon.height + Theme.paddingSmall
             
             TextField {
                 id:searchInput
                 width: drawer.width - searchIcon.width - closeIcon.width - Theme.paddingSmall
-                label: "Text field"
+                label: qsTr("search") + " " +searchInput.text
                 placeholderText: "Type here"
                 focus: true
                 horizontalAlignment: TextInput.AlignLeft
@@ -45,15 +64,11 @@ Item {
                 id:searchIcon
                 icon.source: "image://theme/icon-m-search"
                 highlighted: down || searchInput._editor.activeFocus
-                
                 enabled: searchInput.enabled
-                
                 onClicked: {
-                    //console.log("SendPage == search for UserName " + searchInput.text);
                     modelAtUser.searchAtUser(searchInput.text);
                 }
             }
-            //icon.source: "image://theme/icon-m-clear"
             IconButton {
                 id:closeIcon
                 icon.source: "image://theme/icon-m-clear"
@@ -75,7 +90,7 @@ Item {
             
             currentIndex:  -1;
             model: modelAtUser
-            
+
             delegate: BackgroundItem {
                 id: backgroundItem
                 
@@ -86,6 +101,10 @@ Item {
                     target: backgroundItem
                 }
                 
+                onClicked: {
+                    atUserComponent.userClicked(model.nickname);
+                }
+
                 Label {
                     anchors{
                         left: parent.left
@@ -96,13 +115,7 @@ Item {
                     }
                     textFormat: Text.StyledText
                     text: model.nickname
-                    
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            atUserComponent.userClicked(model.nickname);
-                        }
-                    }
+                    font.pixelSize:Theme.fontSizeExtraSmall
                 }
             }
             VerticalScrollDecorator {}
@@ -111,28 +124,14 @@ Item {
             id:modelAtUser
             
             function searchAtUser(kw) {
-                function observer() {}
-                observer.prototype = {
-                    update: function(status, result)
-                    {
-                        if(status != "error"){
-                            if(result.error) {
-                                // TODO  error handler
-                            }else {
-                                // right result
-                                //                                console.log("search at users: ", JSON.stringify(result))
-                                modelAtUser.clear()
-                                for (var i=0; i<result.length; i++) {
-                                    modelAtUser.append(result[i])
-                                }
-                            }
-                        }else{
-                            // TODO  empty result
-                        }
-                    }
-                }
-                
-                WB.searchAtUser(Settings.getAccess_token(), kw, 20, 0, 2, new observer())
+                fetchPending();
+                var q = encodeURIComponent(kw);
+                var method = WeiboMethod.WBOPT_GET_SEARCH_SUGGESTIONS_AT_USERS;
+                api.setWeiboAction(method, {
+                                       "access_token":Settings.getAccess_token(),
+                                       "q":q,
+                                       "type":0,
+                                       "range":2});
             }
         }
     }
