@@ -85,14 +85,14 @@
 <context>
     <name>AtUserComponent</name>
     <message>
-        <location filename="../qml/components/AtUserComponent.qml" line="42"/>
+        <location filename="../qml/components/AtUserComponent.qml" line="41"/>
         <source>SearchUser</source>
         <translation>搜索用户</translation>
     </message>
     <message>
-        <location filename="../qml/components/AtUserComponent.qml" line="54"/>
+        <location filename="../qml/components/AtUserComponent.qml" line="53"/>
         <source>search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
 </context>
 <context>
@@ -756,6 +756,29 @@
     <message>
         <source>like: </source>
         <translation type="obsolete">顶：</translation>
+    </message>
+</context>
+<context>
+    <name>WeiboFavorites</name>
+    <message>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="71"/>
+        <source>Weibo Favorites</source>
+        <translation>收藏</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="76"/>
+        <source>Refresh</source>
+        <translation>刷新</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="118"/>
+        <source>Repost</source>
+        <translation>转发</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="128"/>
+        <source>Comment</source>
+        <translation>评论</translation>
     </message>
 </context>
 <context>

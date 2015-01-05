@@ -540,6 +540,25 @@
     </message>
 </context>
 <context>
+    <name>WeiboFavorites</name>
+    <message>
+        <source>Weibo Favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WeiboMentioned</name>
     <message>
         <source>Weibo mentioned me</source>

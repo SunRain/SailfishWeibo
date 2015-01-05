@@ -270,7 +270,7 @@ Panel {
                 icon: "../graphics/panel_fav.png"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-                    toDummyDialog();
+                    toFavoritesPage();
                 }
             }
         }

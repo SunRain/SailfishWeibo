@@ -313,6 +313,30 @@ ApplicationWindow
     }
 
     Component {
+        id: weiboFavoritesComponent
+        WeiboFavorites {
+            id: weiboFavoritesPage
+            property bool withPanelView: true
+            property bool _refreshed: false
+            Binding {
+                target: weiboFavoritesPage.contentItem
+                property: "parent"
+                value: weiboFavoritesPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : weiboFavoritesPage)
+                       : weiboFavoritesPage
+            }
+            onStatusChanged: {
+                if (weiboFavoritesPage.status == PageStatus.Active) {
+                    if (!weiboFavoritesPage._refreshed) {
+                        weiboFavoritesPage.refresh();
+                        weiboFavoritesPage._refreshed = true;
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
         id: loginPageComponent
         LoginPage {
             onLogined: {toIndexPage();}
@@ -434,6 +458,10 @@ ApplicationWindow
 
     function toSettingsPage() {
         pageStack.push(Qt.resolvedUrl("pages/AboutPage.qml"));
+    }
+
+    function toFavoritesPage() {
+        pageStack.push(weiboFavoritesComponent);
     }
 
     function toDummyDialog() {
