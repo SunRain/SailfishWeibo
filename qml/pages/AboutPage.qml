@@ -82,6 +82,7 @@ Dialog {
                 color: Theme.highlightColor
             }
             
+            ////////////////// Credit
             Label {
                 id:creditLabel
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -90,6 +91,7 @@ Dialog {
                 text: qsTr("Credit")
             }
 
+            //////////////// ubuntu touch weibo
             Label {
                 id:fineDayLabel
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -114,11 +116,54 @@ Dialog {
                 }
             }
 
+            /////////////////////////// BlackLight
+            Separator {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width:parent.width/2;
+                color: Theme.highlightColor
+            }
+
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeMedium
+                text: qsTr("BlackLight Weibo")
+            }
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("SourceCode")
+                onClicked: {
+                    openUrl("https://github.com/PaperAirplane-Dev-Team/BlackLight");
+                }
+            }
+
+            //////////////////////////// WangBin
+            Separator {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width:parent.width/2;
+                color: Theme.highlightColor
+            }
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeMedium
+                text: qsTr("WangBin")
+            }
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Github")
+                onClicked: {
+                    openUrl("https://github.com/wang-bin");
+                }
+            }
+
+            ///////////////
             Separator {
                 width:parent.width;
                 color: Theme.highlightColor
             }
 
+            ////////////////// settings
             OptionItem {
                 id:optionItem
                 width: parent.width

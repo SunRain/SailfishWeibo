@@ -39,22 +39,38 @@
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="74"/>
-        <location filename="../qml/pages/AboutPage.qml" line="111"/>
+        <location filename="../qml/pages/AboutPage.qml" line="113"/>
+        <location filename="../qml/pages/AboutPage.qml" line="134"/>
         <source>SourceCode</source>
         <translation>查看开源代码</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="129"/>
+        <location filename="../qml/pages/AboutPage.qml" line="130"/>
+        <source>BlackLight Weibo</source>
+        <translation>BlackLight项目</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="150"/>
+        <source>WangBin</source>
+        <translation>WangBin</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="154"/>
+        <source>Github</source>
+        <translation>Github主页</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="174"/>
         <source>Cache: </source>
         <translation>缓存路径:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="136"/>
+        <location filename="../qml/pages/AboutPage.qml" line="181"/>
         <source>DeleteCache</source>
         <translation>删除缓存</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="138"/>
+        <location filename="../qml/pages/AboutPage.qml" line="183"/>
         <source>Deleting</source>
         <translation>删除中</translation>
     </message>
@@ -63,17 +79,17 @@
         <translation type="vanished">Github: https://github.com/SunRain/SailfishWeibo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="90"/>
+        <location filename="../qml/pages/AboutPage.qml" line="91"/>
         <source>Credit</source>
         <translation>致谢</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="98"/>
+        <location filename="../qml/pages/AboutPage.qml" line="100"/>
         <source>UbuntuTouch Weibo</source>
         <translation>UbuntuTouch微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="106"/>
+        <location filename="../qml/pages/AboutPage.qml" line="108"/>
         <source>Author:Joey_Chan</source>
         <translation>作者：Joey_Chan</translation>
     </message>

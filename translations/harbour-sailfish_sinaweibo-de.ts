@@ -55,6 +55,18 @@
         <source>version</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>BlackLight Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WangBin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Github</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AtUserComponent</name>
