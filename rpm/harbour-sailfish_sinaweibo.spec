@@ -16,7 +16,7 @@ Name:       harbour-sailfish_sinaweibo
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    A Sina weibo for SailfishOS
-Version:    1.0
+Version:    1.1
 Release:    0
 Group:      Qt/Qt
 License:    GPL v3
