@@ -761,24 +761,37 @@
 <context>
     <name>WeiboFavorites</name>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="71"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="37"/>
+        <source>Removing from favorites</source>
+        <translation>正在删除...</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="62"/>
+        <source>Fail to remove from favorites</source>
+        <translation>删除收藏失败</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="84"/>
         <source>Weibo Favorites</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="76"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="89"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="118"/>
-        <source>Repost</source>
-        <translation>转发</translation>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="131"/>
+        <source>Remove from favorites</source>
+        <translation>取消收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="128"/>
+        <source>Repost</source>
+        <translation type="vanished">转发</translation>
+    </message>
+    <message>
         <source>Comment</source>
-        <translation>评论</translation>
+        <translation type="vanished">评论</translation>
     </message>
 </context>
 <context>
@@ -854,14 +867,34 @@
         <translation type="vanished">写微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="140"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="54"/>
+        <source>Start adding to favorites</source>
+        <translation>正在添加到收藏</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="97"/>
+        <source>Succeed to add to favorites</source>
+        <translation>添加收藏成功</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="102"/>
+        <source>Fail to add to favorites</source>
+        <translation>添加收藏失败</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="154"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="150"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="165"/>
         <source>Comment</source>
         <translation>评论</translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/WeiboTab.qml" line="171"/>
+        <source>Add to favorites</source>
+        <translation>收藏</translation>
     </message>
 </context>
 <context>

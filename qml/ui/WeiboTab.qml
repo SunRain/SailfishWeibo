@@ -50,6 +50,14 @@ SilicaListView {
         refresh();
     }
 
+    function addToFavorites(weiboId) {
+        addNotification(qsTr("Start adding to favorites"));
+        var method = WeiboMethod.WBOPT_POST_FAVORITES_CREATE; //添加收藏
+        api.setWeiboAction(method, {
+                               "id":" "+weiboId+" ", //FIXME: How can I avoid to change string ==> int when using QVariant ?
+                               "access_token":Settings.getAccess_token()});
+    }
+
     function showGroupWeibo(groupIdstr) {
         //        WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE, //获取某一好友分组的微博列表
         //showBusyIndicator();
@@ -72,6 +80,7 @@ SilicaListView {
     Connections {
         target: api
         //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+        //weiboPutFail(mWeiboMethod.getWeiboAction(parseRequestedWeiboPutUrl(requestedUrl)), error);
         onWeiboPutSucceed: {
             if (action == WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE
                     || action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE) {
@@ -82,13 +91,18 @@ SilicaListView {
                 if (weiboTab.model == undefined) {
                     weiboTab.model = modelWeibo;
                 }
-                //stopBusyIndicator();
                 fetchFinished();
             }
+            if (action == WeiboMethod.WBOPT_POST_FAVORITES_CREATE) {
+                addNotification(qsTr("Succeed to add to favorites"));
+            }
         }
-        onTokenExpired: {
-            //            console.log("====== WeiboTab onTokenExpired value is "+ tokenExpired);
+        onWeiboPutFail: {
+            if (action == WeiboMethod.WBOPT_POST_FAVORITES_CREATE) {
+                addNotification(qsTr("Fail to add to favorites"));
+            }
         }
+        onTokenExpired: {}
     }
 
     cacheBuffer: 999999
@@ -139,17 +153,24 @@ SilicaListView {
                         MenuItem {
                             text: qsTr("Repost")
                             onClicked: {
-                                toSendPage("repost", {"id": model.id},
-                                           (model.JSON.retweeted_status == undefined || model.JSON.retweeted_status == "") == true ?
-                                               "" :
-                                               "//@"+model.JSON.user.name +": " + model.JSON.text ,
-                                               true)
+                                toSendPage("repost",
+                                           {"id": model.id},
+                                           (model.JSON.retweeted_status == undefined || model.JSON.retweeted_status == "") == true
+                                               ? ""
+                                               : "//@"+model.JSON.user.name +": " + model.JSON.text ,
+                                           true);
                             }
                         }
                         MenuItem {
                             text: qsTr("Comment")
                             onClicked: {
-                                toSendPage("comment", {"id": model.JSON.id}, "", true)
+                                toSendPage("comment", {"id": model.JSON.id}, "", true);
+                            }
+                        }
+                        MenuItem {
+                            text: qsTr("Add to favorites")
+                            onClicked: {
+                                addToFavorites(model.JSON.id);
                             }
                         }
                     }

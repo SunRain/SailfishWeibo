@@ -17,7 +17,6 @@ Page {
 
     function refresh() {
         modelWeibo.clear()
-
         _pageNum = 1
         _weiboFavorites(_pageNum)
     }
@@ -31,7 +30,13 @@ Page {
     function _weiboFavorites(page) {
         pullDownMenu.busy = true;
         var method = WeiboMethod.WBOPT_GET_FAVORITES;
-        api.setWeiboAction(method, {'page':_pageNum});
+        api.setWeiboAction(method, {"page":_pageNum});
+    }
+
+    function _removeFromFavorites(weiboId) {
+        addNotification(qsTr("Removing from favorites"))
+        var method = WeiboMethod.WBOPT_POST_FAVORITES_DESTROY;
+        api.setWeiboAction(method, {"id":" "+weiboId+" "});
     }
 
     Connections {
@@ -47,6 +52,14 @@ Page {
                     lvUserWeibo.model = modelWeibo;
                 }
                 pullDownMenu.busy = false;
+            }
+            if (action == WeiboMethod.WBOPT_POST_FAVORITES_DESTROY) {
+                refresh();
+            }
+        }
+        onWeiboPutFail: {
+            if (action == WeiboMethod.WBOPT_POST_FAVORITES_DESTROY) {
+                addNotification(qsTr("Fail to remove from favorites"));
             }
         }
     }
@@ -115,19 +128,9 @@ Page {
                     ContextMenu {
                         id:options
                         MenuItem {
-                            text: qsTr("Repost")
+                            text: qsTr("Remove from favorites")
                             onClicked: {
-                                toSendPage("repost", {"id": model.id}, 
-                                           (model.status.retweeted_status == undefined || model.status.retweeted_status == "") == true ?
-                                               "" :
-                                               "//@"+model.status.user.name +": " + model.status.text ,
-                                               false)
-                            }
-                        }
-                        MenuItem {
-                            text: qsTr("Comment")
-                            onClicked: {
-                                toSendPage("comment", {"id": model.status.id}, "", false)
+                                _removeFromFavorites(modelWeibo.get(index).status.id);
                             }
                         }
                     }

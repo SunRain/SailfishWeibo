@@ -570,11 +570,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Repost</source>
+        <source>Removing from favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Comment</source>
+        <source>Fail to remove from favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove from favorites</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -636,6 +640,22 @@
     </message>
     <message>
         <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start adding to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Succeed to add to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fail to add to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
