@@ -62,8 +62,8 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<QSinaWeiboAPI::QWeiboMethod>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "WeiboMethod", "");
     //return SailfishApp::main(argc, argv);
     QScopedPointer<QGuiApplication> app (SailfishApp::application(argc, argv));
-    app.data()->setOrganizationName("SunRain");
-    app.data()->setApplicationName("SailfishWeibo");
+    app.data()->setOrganizationName("harbour-sailfish_sinaweibo");
+    app.data()->setApplicationName("harbour-sailfish_sinaweibo");
     
     QScopedPointer<QQuickView> view (SailfishApp::createView());
     
