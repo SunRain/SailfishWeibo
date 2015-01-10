@@ -33,9 +33,13 @@
         <translation>E-Mail：41245110@qq.com</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="68"/>
         <source>Donate to alipay wanggjghost@126.com(**健) if U like this app</source>
-        <translation>如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
+        <translation type="vanished">如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AboutPage.qml" line="68"/>
+        <source>Please donate to alipay wanggjghost@126.com(**健) if U like this app</source>
+        <translation>如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝支持一下好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="74"/>
@@ -60,17 +64,17 @@
         <translation>Github主页</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="174"/>
+        <location filename="../qml/pages/AboutPage.qml" line="181"/>
         <source>Cache: </source>
         <translation>缓存路径:</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="181"/>
+        <location filename="../qml/pages/AboutPage.qml" line="188"/>
         <source>DeleteCache</source>
         <translation>删除缓存</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AboutPage.qml" line="183"/>
+        <location filename="../qml/pages/AboutPage.qml" line="190"/>
         <source>Deleting</source>
         <translation>删除中</translation>
     </message>

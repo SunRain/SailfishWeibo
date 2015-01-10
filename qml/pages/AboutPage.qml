@@ -9,7 +9,7 @@ Dialog {
         
     SilicaFlickable {
         anchors.fill: parent
-        contentHeight: column.height
+        contentHeight: column.height + optionItem.height + Theme.paddingMedium *4
 
         Column {
             id:column
@@ -65,7 +65,7 @@ Dialog {
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall
                 wrapMode: Text.Wrap
-                text: qsTr("Donate to alipay wanggjghost@126.com(**健) if U like this app")
+                text: qsTr("Please donate to alipay wanggjghost@126.com(**健) if U like this app")
                 //如果你喜欢本项目的话，给我买瓶啤酒喝好不;)
             }
 
@@ -162,32 +162,38 @@ Dialog {
                 width:parent.width;
                 color: Theme.highlightColor
             }
+        }
+        ////////////////// settings
+        OptionItem {
+            id:optionItem
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: column.bottom
+                margins: Theme.paddingMedium
+            }
 
-            ////////////////// settings
-            OptionItem {
-                id:optionItem
+            Label {
                 width: parent.width
-                Label {
-                    width: parent.width
-                    color: Theme.primaryColor
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    text:qsTr("Cache: ") + util.getCachePath
-                }
+                color: Theme.primaryColor
+                wrapMode: Text.WrapAnywhere
+                font.pixelSize: Theme.fontSizeMedium
+                text:qsTr("Cache: ") + util.getCachePath
+            }
 
-                menu: contextMenu
-                ContextMenu {
-                    id:contextMenu
-                    MenuItem {
-                        text: qsTr("DeleteCache")
-                        onClicked: {
-                            remorse.execute(optionItem, qsTr("Deleting"), function() {
-                                util.deleteDir(util.getCachePath)
-                            });
-                        }
+            menu: contextMenu
+            ContextMenu {
+                id:contextMenu
+                MenuItem {
+                    text: qsTr("DeleteCache")
+                    onClicked: {
+                        remorse.execute(optionItem, qsTr("Deleting"), function() {
+                            util.deleteDir(util.getCachePath)
+                        });
                     }
                 }
-                RemorseItem { id: remorse }
             }
+            RemorseItem { id: remorse }
         }
     }
     

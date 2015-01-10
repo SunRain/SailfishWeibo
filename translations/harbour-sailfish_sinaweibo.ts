@@ -36,10 +36,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Donate to alipay wanggjghost@126.com(**健) if U like this app</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cache: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -65,6 +61,10 @@
     </message>
     <message>
         <source>Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please donate to alipay wanggjghost@126.com(**健) if U like this app</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
