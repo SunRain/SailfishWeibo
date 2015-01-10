@@ -225,6 +225,10 @@
         <source>Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show Password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainComponent</name>

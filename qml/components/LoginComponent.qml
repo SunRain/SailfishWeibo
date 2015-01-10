@@ -61,12 +61,21 @@ Item {
                         id:password
                         width:loginComponent.width - Theme.paddingLarge*4
                         height:implicitHeight
+                        echoMode: TextInput.Password
                         font.pixelSize: Theme.fontSizeMedium 
                         placeholderText: "Enter Password"
                         label: qsTr("Password")
                     }
                 }
             }
+            TextSwitch {
+                text: qsTr("Show Password")
+                onCheckedChanged: {
+                    checked ? password.echoMode = TextInput.Normal
+                            : password.echoMode = TextInput.Password
+                }
+            }
+
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Login")

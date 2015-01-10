@@ -315,23 +315,28 @@
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="66"/>
+        <location filename="../qml/components/LoginComponent.qml" line="67"/>
         <source>Password</source>
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="113"/>
+        <location filename="../qml/components/LoginComponent.qml" line="72"/>
+        <source>Show Password</source>
+        <translation>显示密码</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/LoginComponent.qml" line="122"/>
         <source>Login fail</source>
         <translation>登录失败</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="113"/>
+        <location filename="../qml/components/LoginComponent.qml" line="122"/>
         <source>Please try again.</source>
         <translation>请重试</translation>
     </message>
     <message>
         <location filename="../qml/components/LoginComponent.qml" line="33"/>
-        <location filename="../qml/components/LoginComponent.qml" line="72"/>
+        <location filename="../qml/components/LoginComponent.qml" line="81"/>
         <source>Login</source>
         <translation>登入</translation>
     </message>
