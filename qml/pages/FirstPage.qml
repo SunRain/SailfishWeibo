@@ -83,8 +83,8 @@ Page {
                     text: qsTr("Logout")
                     onClicked: {
                         weiboLogout();
-                        pageStack.popAttached(undefined, PageStackAction.Animated);
-                        reset();
+//                        pageStack.popAttached(undefined, PageStackAction.Animated);
+//                        reset();
                     }
                 }
                 MenuItem {

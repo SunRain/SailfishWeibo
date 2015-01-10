@@ -439,6 +439,7 @@ ApplicationWindow
 
     function weiboLogout() {
         Settings.setAccess_token("");
+        toLoginPage();
     }
 
     function toCommentAllPage() {
