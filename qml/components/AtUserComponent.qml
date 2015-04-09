@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
 import "../js/weiboapi.js" as WB
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 
 Item {
     id:atUserComponent
@@ -128,7 +128,7 @@ Item {
                 var q = encodeURIComponent(kw);
                 var method = WeiboMethod.WBOPT_GET_SEARCH_SUGGESTIONS_AT_USERS;
                 api.setWeiboAction(method, {
-                                       "access_token":Settings.getAccess_token(),
+                                       "access_token":settings.accessToken,
                                        "q":q,
                                        "type":0,
                                        "range":2});

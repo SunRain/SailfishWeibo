@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 import "../components"
 
 SilicaListView {
@@ -20,14 +20,14 @@ SilicaListView {
         groupItem.fetchPending();
         listModel.clear();
         var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS;
-        api.setWeiboAction(method, {'access_token':Settings.getAccess_token()});
+        api.setWeiboAction(method, {'access_token':settings.accessToken/*Settings.getAccess_token()*/});
     }
 
     function deleteGroup(idstr) {
         groupItem.fetchPending();
         var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_DESTROY;
         api.setWeiboAction(method, {
-                               "access_token":Settings.getAccess_token(),
+                               "access_token":settings.accessToken,//Settings.getAccess_token(),
                                "list_id":idstr
                            });
     }
@@ -37,7 +37,7 @@ SilicaListView {
         groupItem.fetchPending();
         var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE;
         api.setWeiboAction(method, {
-                               "access_token":Settings.getAccess_token(),
+                               "access_token":settings.accessToken,//Settings.getAccess_token(),
                                "list_id":_newGroupIdstr,
                                "name":_newGroupName
                            });

@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
 import "../components"
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 
 Panel {
     id: panel
@@ -18,7 +18,7 @@ Panel {
     function initUserAvatar() {
         //userGetInfo(Settings.getAccess_token())
         var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
-        api.setWeiboAction(method, {'uid':Settings.getUid()});
+        api.setWeiboAction(method, {'uid':settings.uid/*Settings.getUid()*/});
     }
 
     function messageGetRemind() {
@@ -66,7 +66,7 @@ Panel {
                 id: avatarLoading
                 anchors.centerIn: parent
                 parent: userAvatar
-                size: BusyIndicatorSize.Smal
+                size: BusyIndicatorSize.Small
                 opacity: avatarLoading.running ? 1 : 0
                 running: cover.status != Image.Ready && profile.status != Image.Ready
             }

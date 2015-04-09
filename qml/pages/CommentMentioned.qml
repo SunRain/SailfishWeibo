@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 
 import "../js/dateutils.js" as DateUtils
 import "../js/weiboapi.js" as WB
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 import "../js/getURL.js" as GetURL
 import "../components"
 

@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
 import "../components"
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 
 /*************************************************
   微博程序的首页以及微博条目展示列表
@@ -27,7 +27,10 @@ SilicaListView {
         _allWeiboPageNum = 1;
         _isGroupType = false;
         var method = WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
-        api.setWeiboAction(method, {'page':_allWeiboPageNum,'access_token':Settings.getAccess_token()});
+        api.setWeiboAction(method, {
+                               'page':_allWeiboPageNum,
+                               'access_token':settings.accessToken//Settings.getAccess_token()
+                           });
     }
     
     function addMore() {
@@ -37,12 +40,15 @@ SilicaListView {
             var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE;
             api.setWeiboAction(method, {
                                    "page":_groupWeiboPageNum,
-                                   "access_token":Settings.getAccess_token(),
+                                   "access_token":settings.accessToken, //Settings.getAccess_token(),
                                    "list_id":_groupIdstr});
         } else {
             _allWeiboPageNum++;
             var method = WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
-            api.setWeiboAction(method, {'page':_allWeiboPageNum,'access_token':Settings.getAccess_token()});
+            api.setWeiboAction(method, {
+                                   'page':_allWeiboPageNum,
+                                   'access_token':settings.accessToken//Settings.getAccess_token()
+                               });
         }
     }
 
@@ -55,7 +61,8 @@ SilicaListView {
         var method = WeiboMethod.WBOPT_POST_FAVORITES_CREATE; //添加收藏
         api.setWeiboAction(method, {
                                "id":" "+weiboId+" ", //FIXME: How can I avoid to change string ==> int when using QVariant ?
-                               "access_token":Settings.getAccess_token()});
+                               "access_token":settings.accessToken//Settings.getAccess_token()
+                           });
     }
 
     function showGroupWeibo(groupIdstr) {
@@ -69,7 +76,7 @@ SilicaListView {
         var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE;
         api.setWeiboAction(method, {
                                "page":_groupWeiboPageNum,
-                               "access_token":Settings.getAccess_token(),
+                               "access_token":settings.accessToken,//Settings.getAccess_token(),
                                "list_id":_groupIdstr});
     }
 

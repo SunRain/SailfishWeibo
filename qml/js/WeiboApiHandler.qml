@@ -1,6 +1,6 @@
 import QtQuick 2.0
 //import "./weiboapi.js" as WB
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
 QtObject {

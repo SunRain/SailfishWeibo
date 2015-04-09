@@ -1,13 +1,50 @@
-import QtQuick 2.2
-//import QtWebKit 3.0
-
+import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 SilicaWebView {
     id:webViewLoginComponent
     signal loginSucceed()
 
+    anchors.fill: parent
+    url: api.getLoginUrl()
 
+    Component.onCompleted: {
+        console.log("==== url is " + api.getLoginUrl());
+    }
+
+    onLoadingChanged: {
+        webViewLoginComponent.focus = true;
+        console.log("=== onLoadingChanged " + loadRequest.status);
+        console.log("=== onLoadingChanged  ret " + loadRequest.url);
+
+        if (util.parseOauthTokenUrl(loadRequest.url)) {
+            api.accessToken = weiboSettings.accessToken;
+            api.uid = weiboSettings.uid;
+            loginSucceed();
+        }
+//        switch (loadRequest.status)
+//        {
+//        case webViewLoginComponent.LoadSucceededStatus:
+////            opacity = 1
+//            var ret = loadRequest.url + ""
+//            console.log("===== " + ret);
+////            var temp = url.split("code=")
+////            if (temp[0].indexOf("https://api.weibo.com/oauth2/default.html") == 0) {
+////                console.log("final code: ", temp[1])
+////                loginComponent.loginSucceed(temp[1]);
+////            }
+//            break
+//        case webViewLoginComponent.LoadFailedStatus:
+//            console.log(" onLoadingChanged LoadFailedStatus" + loadRequest.status);
+////            opacity = 0
+////            loginComponent.loginFailed(errorString);
+//            break
+//        default:
+////            opacity = 0
+////            loginComponent.loginFailed("");
+//            break
+//        }
+    }
 
 //    property alias menus: viewPullDownMenu._content
 //    //property alias header: webView.header

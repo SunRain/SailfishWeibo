@@ -314,33 +314,33 @@
         <translation type="obsolete">如果页面的登入按钮点击无效，请尝试点击软键盘的回车键来登入</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="58"/>
+        <location filename="../qml/components/LoginComponent.qml" line="57"/>
         <source>UserName</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="67"/>
+        <location filename="../qml/components/LoginComponent.qml" line="66"/>
         <source>Password</source>
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="72"/>
+        <location filename="../qml/components/LoginComponent.qml" line="71"/>
         <source>Show Password</source>
         <translation>显示密码</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="122"/>
+        <location filename="../qml/components/LoginComponent.qml" line="123"/>
         <source>Login fail</source>
         <translation>登录失败</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="122"/>
+        <location filename="../qml/components/LoginComponent.qml" line="123"/>
         <source>Please try again.</source>
         <translation>请重试</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="33"/>
-        <location filename="../qml/components/LoginComponent.qml" line="81"/>
+        <location filename="../qml/components/LoginComponent.qml" line="32"/>
+        <location filename="../qml/components/LoginComponent.qml" line="80"/>
         <source>Login</source>
         <translation>登入</translation>
     </message>
@@ -892,32 +892,32 @@
         <translation type="vanished">写微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="54"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="60"/>
         <source>Start adding to favorites</source>
         <translation>正在添加到收藏</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="97"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="104"/>
         <source>Succeed to add to favorites</source>
         <translation>添加收藏成功</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="102"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="109"/>
         <source>Fail to add to favorites</source>
         <translation>添加收藏失败</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="154"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="161"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="165"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="172"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="171"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="178"/>
         <source>Add to favorites</source>
         <translation>收藏</translation>
     </message>

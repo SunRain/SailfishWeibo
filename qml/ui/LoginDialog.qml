@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "../components"
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 
 Dialog {
     id: dialog
@@ -39,8 +39,8 @@ Dialog {
         onTokenExpired: {
             if (!tokenExpired) {
                 console.log("==== !tokenExpired")
-                api.accessToken = Settings.getAccess_token();
-                api.uid = Settings.getUid();
+                api.accessToken = settings.accessToken; //Settings.getAccess_token();
+                api.uid = settings.uid;//Settings.getUid();
                 timer.start();
             } else {
                 _showLoginView = true;

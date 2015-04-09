@@ -40,6 +40,7 @@
 #include "networkhelper.h"
 #include "MyNetworkAccessManagerFactory.h"
 #include "Util.h"
+#include "Settings.h"
 
 #include "include/QSinaWeibo.h"
 #include "include/QWeiboMethod.h"
@@ -68,20 +69,25 @@ int main(int argc, char *argv[])
     QScopedPointer<QQuickView> view (SailfishApp::createView());
     
     MyNetworkAccessManagerFactory factory;
-    view->engine()->setNetworkAccessManagerFactory(&factory);
+    view.data ()->engine()->setNetworkAccessManagerFactory(&factory);
     
     Util *util = Util::getInstance();
     util->setEngine(view->engine());
-    view->rootContext()->setContextProperty("util", util);
+    view.data ()->rootContext()->setContextProperty("util", util);
     
+    Settings *settings = Settings::instance ();
+    view.data ()->rootContext ()->setContextProperty ("settings", settings);
+    //Dirty hack for fix SilicaWebView, it seems that SilicaWebView has a own settings property
+    view.data ()->rootContext ()->setContextProperty ("weiboSettings", settings);
+
 //    QSinaWeiboAPI::QSinaWeibo api;
 //    view->rootContext()->setContextProperty("api", &api);
     
 //    QSinaWeiboAPI::QWeiboMethod weiboMethod;
 //    view->rootContext()->setContextProperty("weibomethod", &weiboMethod);
 
-    view->setSource(SailfishApp::pathTo("qml/SailfishWeibo.qml"));
-    view->show();
+    view.data ()->setSource(SailfishApp::pathTo("qml/SailfishWeibo.qml"));
+    view.data ()->show();
     
     return app->exec();
 }

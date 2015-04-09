@@ -6,10 +6,11 @@
 #include <QQmlEngine>
 #include <QPointer>
 
+class Settings;
 class Util : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString getCachePath READ getCachePath)
+    Q_PROPERTY(QString getCachePath READ getCachePath CONSTANT)
     Q_PROPERTY(QString getVerison READ getVerison CONSTANT)
 public:
     static Util *getInstance();
@@ -18,8 +19,8 @@ public:
     void setEngine(QQmlEngine* engine);
     
 public:
-    Q_INVOKABLE void setValue(const QString &key, const QVariant &value);
-    Q_INVOKABLE QVariant getValue(const QString &key, const QVariant defaultValue = QVariant());
+//    Q_INVOKABLE void setValue(const QString &key, const QVariant &value);
+//    Q_INVOKABLE QVariant getValue(const QString &key, const QVariant defaultValue = QVariant());
     Q_INVOKABLE bool saveToCache(const QString &remoteUrl, const QString &dirName, const QString &fileName);
     
     //解析微博内容，替换表情/链接等
@@ -31,8 +32,15 @@ public:
     Q_INVOKABLE QString parseImageUrl(const QString &remoteUrl);
     Q_INVOKABLE void saveRemoteImage(const QString &remoteUrl);
     
+    ///
+    /// \brief getCachePath
+    /// \return QStandardPaths::writableLocation(QStandardPaths::CacheLocatio
+    ///
     QString getCachePath() const;
+
     Q_INVOKABLE static bool deleteDir(const QString &dirName);
+
+    Q_INVOKABLE static bool parseOauthTokenUrl(const QString &url);
 
     static QString getVerison();
 signals:
@@ -44,9 +52,10 @@ private:
     bool cacheImageFiles(const QString &remoteUrl);
     QString parseEmoticons(const QString &pattern,const QString &emoticonStr);
 private:
-    QPointer<QSettings> m_Settings;
-    QPointer<QQmlEngine> m_Engine;
-    QVariantMap m_Map;
+//    QPointer<QSettings> m_Settings;
+    QPointer<QQmlEngine> mQmlEngine;
+    Settings *mSettings;
+//    QVariantMap m_Map;
 };
 
 #endif // UTIL_H

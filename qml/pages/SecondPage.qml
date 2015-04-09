@@ -31,7 +31,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 import "../components"
 Page {
     id: mainPage
@@ -107,7 +107,7 @@ Page {
                             console.log("click item " + title + "with targe " + page + " arg " + arg);
                             if (arg == "getUid") {
                                 //pageStack.push(Qt.resolvedUrl(page))
-                                var uid = Settings.getUid();
+                                var uid = settings.uid; //Settings.getUid();
                                 toUserPage(uid);
                             } else {
                                 pageStack.push(Qt.resolvedUrl(page))

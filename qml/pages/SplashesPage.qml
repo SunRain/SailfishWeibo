@@ -7,7 +7,7 @@ import harbour.sailfish_sinaweibo.sunrain 1.0
 
 import "../components"
 import "../js"
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 
 
 Page {

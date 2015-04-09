@@ -3,7 +3,7 @@ import QtQuick 2.0
 //import Ubuntu.Components.Popups 0.1
 //import Ubuntu.Components.ListItems 0.1 as ListItem
 import "../js/weiboapi.js" as WB
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 import Sailfish.Silica 1.0
 
 //import QtDocGallery 5.0

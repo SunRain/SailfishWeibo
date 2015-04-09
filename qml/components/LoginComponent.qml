@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 
 Item {
     id:loginComponent
@@ -111,8 +111,10 @@ Item {
                 busyIndicator.running = false;
                 api.accessToken = accessToken;
                 api.uid = uid;
-                Settings.setAccess_token(accessToken);
-                Settings.setUid(uid);
+//                Settings.setAccess_token(accessToken);
+                settings.accessToken = accessToken;
+//                Settings.setUid(uid);
+                settings.uid = uid;
                 loginComponent.loginSucceed();
             }
             onLoginFail: {

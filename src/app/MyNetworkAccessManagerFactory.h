@@ -37,6 +37,8 @@ class MyNetworkCookieJar : public QNetworkCookieJar
 {
 public:
     static MyNetworkCookieJar* GetInstance();
+    ~MyNetworkCookieJar();
+
     void clearCookies();
 
     virtual QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
@@ -44,8 +46,6 @@ public:
 
 private:
     explicit MyNetworkCookieJar(QObject *parent = 0);
-    ~MyNetworkCookieJar();
-
     void save();
     void load();
     mutable QMutex mutex;

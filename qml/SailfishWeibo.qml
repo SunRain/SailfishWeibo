@@ -34,7 +34,7 @@ import "pages"
 import "components"
 import "ui"
 
-import "js/Settings.js" as Settings
+//import "js/Settings.js" as Settings
 
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
@@ -52,17 +52,19 @@ ApplicationWindow
     initialPage: Component {
         SplashesPage { //SplashesPage，同时用于初始化数据库和检测token值
             id: splashes
-            property bool _settingsInitialized: false
+//            property bool _settingsInitialized: false
             property int _delayType: -1; // 0 ==> start login page
                                         // 1 ==> start index page
             onStatusChanged: {
                 if (splashes.status === PageStatus.Active) {
-                    if (!_settingsInitialized) {
-                        Settings.initialize();
-                        _settingsInitialized = true;
-                    }
-                    var token = Settings.getAccess_token();
-                    if (token == "" ) {
+//                    if (!_settingsInitialized) {
+//                        Settings.initialize();
+//                        _settingsInitialized = true;
+//                    }
+                    var token = settings.accessToken;//Settings.getAccess_token();
+
+                    console.log("===== main view token is " + token);
+                    if (token == "" || token == undefined) {
                         _delayType = 0;
                         delay.restart();
                     } else {
@@ -87,8 +89,8 @@ ApplicationWindow
                 onTokenExpired: {
                     if (!tokenExpired) {
                         console.log("==== !tokenExpired")
-                        api.accessToken = Settings.getAccess_token();
-                        api.uid = Settings.getUid();
+                        api.accessToken = settings.accessToken;//Settings.getAccess_token();
+                        api.uid = settings.uid//Settings.getUid();
                         _delayType = 1;
                         delay.restart();
                     } else {
@@ -231,7 +233,7 @@ ApplicationWindow
                 panelView.hidePanel();
             }
             onUserAvatarClicked: {
-                toUserPage(Settings.getUid());
+                toUserPage(settings.uid/*Settings.getUid()*/);
             }
 
             Component.onCompleted: {
@@ -438,7 +440,8 @@ ApplicationWindow
 //    }
 
     function weiboLogout() {
-        Settings.setAccess_token("");
+//        Settings.setAccess_token("");
+        settings.accessToken = "";
         toLoginPage();
     }
 

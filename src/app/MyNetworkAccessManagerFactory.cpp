@@ -1,9 +1,12 @@
 
+#include "MyNetworkAccessManagerFactory.h"
+
 #include <QtDebug>
 #include <QDir>
+#include <QScopedPointer>
 
-#include "MyNetworkAccessManagerFactory.h"
 #include "Util.h"
+#include "Settings.h"
 
 static const char *DOMAIN_IMAGE = ".sinaimg.cn/";
 
@@ -83,8 +86,14 @@ MyNetworkCookieJar::~MyNetworkCookieJar()
 
 MyNetworkCookieJar* MyNetworkCookieJar::GetInstance()
 {
-    static MyNetworkCookieJar cookieJar;
-    return &cookieJar;
+    static QMutex mutex;
+    static QScopedPointer<MyNetworkCookieJar> scp;
+    if (Q_UNLIKELY(scp.isNull())) {
+        mutex.lock();
+        scp.reset(new MyNetworkCookieJar(0));
+        mutex.unlock();
+    }
+    return scp.data();
 }
 
 void MyNetworkCookieJar::clearCookies()
@@ -98,10 +107,7 @@ QList<QNetworkCookie> MyNetworkCookieJar::cookiesForUrl(const QUrl &url) const
     QMutexLocker lock(&mutex);
     Q_UNUSED(lock);
     QList<QNetworkCookie> cookies = QNetworkCookieJar::cookiesForUrl(url);
-    
-//    qDebug()<<"cookiesForUrl "<<url;
-//    qDebug()<<"cookiesForUrl "<<cookies;
-    
+
     if (!cookies.contains(keepAliveCookie))
         cookies.prepend(keepAliveCookie);
     return cookies;
@@ -132,13 +138,15 @@ void MyNetworkCookieJar::save()
             }
         }
     }
-    Util::getInstance()->setValue("cookies", data);
+//    Util::getInstance()->setValue("cookies", data);
+    Settings::instance ()->setValue ("cookies", data);
 }
 
 void MyNetworkCookieJar::load()
 {
     QMutexLocker lock(&mutex);
     Q_UNUSED(lock);
-    QByteArray data = Util::getInstance()->getValue("cookies").toByteArray();
+//    QByteArray data = Util::getInstance()->getValue("cookies").toByteArray();
+    QByteArray data = Settings::instance ()->getValue ("cookies", data).toByteArray ();
     setAllCookies(QNetworkCookie::parseCookies(data));
 }

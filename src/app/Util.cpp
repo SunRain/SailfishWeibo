@@ -1,29 +1,76 @@
 
+#include "Util.h"
+
 #include <QSettings>
 #include <QGuiApplication>
 #include <QRegExp>
 #include <QDir>
+#include <QMutex>
+#include <QScopedPointer>
 
 #include <sailfishapp.h>
 
 #include "MyNetworkAccessManagerFactory.h"
 #include "Emoticons.h"
-#include "Util.h"
+#include "Settings.h"
 
 Util *Util::getInstance()
 {
-    static Util u;
-    return &u;
+    static QMutex mutex;
+    static QScopedPointer<Util> scp;
+    if (Q_UNLIKELY(scp.isNull())) {
+        mutex.lock();
+        scp.reset(new Util(0));
+        mutex.unlock();
+    }
+    return scp.data();
 }
 
 Util::~Util()
 {
-    m_Settings->deleteLater();
+//    m_Settings->deleteLater();
 }
 
 void Util::setEngine(QQmlEngine *engine)
 {
-    this->m_Engine = engine;
+    this->mQmlEngine = engine;
+}
+
+/*
+ * http://oauth.weico.cc/#access_token=
+ * &remind_in=
+ * &expires_in=
+ * &refresh_token=
+ */
+
+bool Util::parseOauthTokenUrl(const QString &url)
+{
+    if (!url.contains ("access_token")
+            || !url.contains ("expires_in")
+            || !url.contains ("refresh_token")) {
+        return false;
+    }
+    QStringList list = url.split ("#");
+    if (list.empty () || list.size () < 2) {
+        return false;
+    }
+    list = list.at (1).split ("&");
+    foreach (QString s, list) {
+        if (s.startsWith ("access_token")) {
+            s = s.replace ("access_token=", "");
+            Settings::instance ()->setAccessToken (s);
+        } else if (s.startsWith ("expires_in")) {
+            s = s.replace ("expires_in=", "");
+            Settings::instance ()->setExpiresData (s);
+        } else if (s.startsWith ("refresh_token")) {
+            s = s.replace ("refresh_token=", "");
+            Settings::instance ()->setRefreshToken (s);
+        } else if (s.startsWith ("uid")) {
+            s = s.replace ("uid=", "");
+            Settings::instance ()->setUid (s);
+        }
+    }
+    return true;
 }
 
 QString Util::getVerison()
@@ -35,29 +82,29 @@ QString Util::getVerison()
 #endif
 }
 
-void Util::setValue(const QString &key, const QVariant &value)
-{
-    if (m_Map.value(key) != value) {
-        m_Map.insert(key, value);
-        m_Settings->setValue(key, value);
-    }
-}
+//void Util::setValue(const QString &key, const QVariant &value)
+//{
+//    if (m_Map.value(key) != value) {
+//        m_Map.insert(key, value);
+//        m_Settings->setValue(key, value);
+//    }
+//}
 
-QVariant Util::getValue(const QString &key, const QVariant defaultValue)
-{
-    if (m_Map.contains(key)){
-        return m_Map.value(key);
-    } else {
-        return m_Settings->value(key, defaultValue);
-    }
-}
+//QVariant Util::getValue(const QString &key, const QVariant defaultValue)
+//{
+//    if (m_Map.contains(key)){
+//        return m_Map.value(key);
+//    } else {
+//        return m_Settings->value(key, defaultValue);
+//    }
+//}
 
 bool Util::saveToCache(const QString &remoteUrl, const QString &dirName, const QString &fileName)
 {
-    if (m_Engine.isNull()) {
+    if (mQmlEngine.isNull()) {
         return false;
     }
-    MyNetworkAccessManager *manage = (MyNetworkAccessManager*)m_Engine->networkAccessManager();
+    MyNetworkAccessManager *manage = (MyNetworkAccessManager*)mQmlEngine.data ()->networkAccessManager();
 
     QAbstractNetworkCache *diskCache = manage->cache();
 
@@ -204,7 +251,8 @@ bool Util::deleteDir(const QString &dirName)
 Util::Util(QObject *parent) :
     QObject(parent)
 {
-    m_Settings = new QSettings(qApp->organizationName(), qApp->applicationName());
+//    m_Settings = new QSettings(qApp->organizationName(), qApp->applicationName());
+    mSettings = Settings::instance ();
 }
 
 QString Util::parseEmoticons(const QString &pattern, const QString &str)

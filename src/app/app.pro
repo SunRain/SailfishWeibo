@@ -9,7 +9,8 @@ SOURCES += SailfishWeibo.cpp \
     mytype.cpp \
     MyNetworkAccessManagerFactory.cpp \
     Util.cpp \
-    Emoticons.cpp
+    Emoticons.cpp \
+    Settings.cpp
 
 HEADERS += \
     networkhelper.h \
@@ -17,7 +18,8 @@ HEADERS += \
     app.h \
     MyNetworkAccessManagerFactory.h \
     Util.h \
-    Emoticons.h
+    Emoticons.h \
+    Settings.h
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QSinaWeiboApi/weiboAPI/ -lQSinaWeiboAPI

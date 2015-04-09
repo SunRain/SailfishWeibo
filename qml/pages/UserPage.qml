@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 
 import "../js/dateutils.js" as DateUtils
 import "../js/weiboapi.js" as WB
-import "../js/Settings.js" as Settings
+//import "../js/Settings.js" as Settings
 import "../components"
 
 import harbour.sailfish_sinaweibo.sunrain 1.0
@@ -408,7 +408,7 @@ Page {
                                     left: parent.left
                                     right: parent.right
                                 }
-                                visible: userInfoObject.usrInfo.id != Settings.getUid()
+                                visible: userInfoObject.usrInfo.id != settings.uid //Settings.getUid()
                                 Rectangle {
                                     width: parent.width
                                     height: parent.height

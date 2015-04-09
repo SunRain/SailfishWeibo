@@ -15,8 +15,7 @@ private:
     explicit Emoticons(QObject *parent = 0);
     void initData();
     
-    QHash<QString, QString> m_emoticonsHash;    
-    
+    QHash<QString, QString> mEmoticonsHash;
 };
 
 #endif // EMOTICONS_H
