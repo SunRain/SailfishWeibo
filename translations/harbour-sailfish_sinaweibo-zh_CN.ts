@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<TS version="2.0" language="zh_CN">
 <context>
     <name>AboutPage</name>
     <message>
@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>verison</source>
-        <translation type="vanished">Verison</translation>
+        <translation type="obsolete">Verison</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="43"/>
@@ -34,12 +34,16 @@
     </message>
     <message>
         <source>Donate to alipay wanggjghost@126.com(**健) if U like this app</source>
-        <translation type="vanished">如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
+        <translation type="obsolete">如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
+    </message>
+    <message>
+        <source>Please donate to alipay wanggjghost@126.com(**健) if U like this app</source>
+        <translation type="obsolete">如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝支持一下好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="68"/>
-        <source>Please donate to alipay wanggjghost@126.com(**健) if U like this app</source>
-        <translation>如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝支持一下好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
+        <source>Please donate to alipay wanggjghost@126.com(**���) if U like this app</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="74"/>
@@ -80,7 +84,7 @@
     </message>
     <message>
         <source>Github: https://github.com/SunRain/SailfishWeibo</source>
-        <translation type="vanished">Github: https://github.com/SunRain/SailfishWeibo</translation>
+        <translation type="obsolete">Github: https://github.com/SunRain/SailfishWeibo</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="91"/>
@@ -99,7 +103,7 @@
     </message>
     <message>
         <source>http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</source>
-        <translation type="vanished">http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</translation>
+        <translation type="obsolete">http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</translation>
     </message>
 </context>
 <context>
@@ -747,15 +751,15 @@
     </message>
     <message>
         <source>repost: </source>
-        <translation type="vanished">转发：</translation>
+        <translation type="obsolete">转发：</translation>
     </message>
     <message>
         <source>comment: </source>
-        <translation type="vanished">回复：</translation>
+        <translation type="obsolete">回复：</translation>
     </message>
     <message>
         <source>like: </source>
-        <translation type="vanished">顶：</translation>
+        <translation type="obsolete">顶：</translation>
     </message>
 </context>
 <context>
@@ -812,11 +816,11 @@
     </message>
     <message>
         <source>Repost</source>
-        <translation type="vanished">转发</translation>
+        <translation type="obsolete">转发</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="vanished">评论</translation>
+        <translation type="obsolete">评论</translation>
     </message>
 </context>
 <context>
@@ -877,19 +881,19 @@
     <name>WeiboTab</name>
     <message>
         <source>Sailfish Weibo</source>
-        <translation type="vanished">Sailfish Weibo</translation>
+        <translation type="obsolete">Sailfish Weibo</translation>
     </message>
     <message>
         <source>Logout</source>
-        <translation type="vanished">注销</translation>
+        <translation type="obsolete">注销</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="vanished">刷新</translation>
+        <translation type="obsolete">刷新</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="vanished">写微博</translation>
+        <translation type="obsolete">写微博</translation>
     </message>
     <message>
         <location filename="../qml/ui/WeiboTab.qml" line="60"/>

@@ -56,7 +56,7 @@ SilicaListView {
                                          "name": ""
                                      }}); //添加一个空列表用于显示所有分组功能
                 for (var i=0; i<jsonObj.lists.length; i++) {
-                    listModel.append( {"JSON":jsonObj.lists[i] })
+                    listModel.append(jsonObj.lists[i])
                 }
                 groupItem.fetchFinished();
             }
@@ -123,21 +123,21 @@ SilicaListView {
                 TextField {
                     id: textField
                     width: parent.width
-                    label: qsTr("Rename %1 ==> %2 (%3/8)").arg(model.JSON.name).arg(textField.text).arg(textField.text.length)
-                    placeholderText: model.JSON.name
+                    label: qsTr("Rename %1 ==> %2 (%3/8)").arg(model.name).arg(textField.text).arg(textField.text.length)
+                    placeholderText: model.name
                     horizontalAlignment: TextInput.AlignLeft
 //                    EnterKey.iconSource: "image://theme/icon-m-enter-accept"
                     EnterKey.text: qsTr("Rename")
                     EnterKey.highlighted: true
                     EnterKey.onClicked: {
                         groupItem._newGroupName = textField.text;
-                        groupItem._newGroupIdstr = model.JSON.idstr;
+                        groupItem._newGroupIdstr = model.idstr;
                         parent.focus = true;
 //                        groupItem.focus = true;
                         updateGroupName();
                     }
                     Component.onCompleted: {
-                        groupItem._newGroupName = model.JSON.name;
+                        groupItem._newGroupName = model.name;
                     }
                 }
             }
@@ -156,14 +156,14 @@ SilicaListView {
                         id: label
                         width: parent.width
                         anchors.verticalCenter: parent.verticalCenter
-                        text: model.JSON.name == "" ||  model.JSON.idstr == ""
+                        text: model.name == "" ||  model.idstr == ""
                               ? qsTr("All Groups")
-                              : model.JSON.name
+                              : model.name
                         color: text.highlighted ? Theme.highlightColor : Theme.primaryColor
                         font.pixelSize: Theme.fontSizeMedium
                     }
                     onClicked: {
-                        groupItem.clickItem(model.JSON.idstr, model.JSON.name);
+                        groupItem.clickItem(model.idstr, model.name);
                     }
                 }
 
@@ -174,7 +174,7 @@ SilicaListView {
                     id: optionItem
                     width: optionItem.menuOpen ? Screen.width : image.width
 
-                    visible: !(model.JSON.idstr == "" || model.JSON.id == "" || model.JSON.name == "")
+                    visible: !(model.idstr == "" || model.id == "" || model.name == "")
                     Image {
                         id: image
                         anchors{
@@ -201,7 +201,7 @@ SilicaListView {
                             text: qsTr("Delete Group")
                             onClicked: {
                                 remorseItem.execute(listItem,"Deleting", function(){
-                                    groupItem.deleteGroup(model.JSON.idstr);
+                                    groupItem.deleteGroup(model.idstr);
                                     listModel.remove(index);})
                             }
                         }

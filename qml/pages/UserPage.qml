@@ -53,7 +53,7 @@ Page {
         modelWeibo.clear();
         if (userPage._refreshUserWeiboLock) {
             for (var i=0; i<userPage._userWeiboCache.statuses.length; i++) {
-                modelWeibo.append({"JSON":userPage._userWeiboCache.statuses[i] } )
+                modelWeibo.append(userPage._userWeiboCache.statuses[i])
             }
             if (lvUserWeibo.model == undefined) {
                 lvUserWeibo.model = modelWeibo;
@@ -73,7 +73,7 @@ Page {
     function showUserInfo() {
         modelWeibo.clear();
         if (userPage._refreshUserInfoLock) {
-            modelWeibo.append({"JSON":userInfoObject.usrInfo.status});
+            modelWeibo.append(userInfoObject.usrInfo.status);
             if (lvUserWeibo.model == undefined) {
                 lvUserWeibo.model = modelWeibo;
             }
@@ -103,7 +103,7 @@ Page {
             if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
                 userInfoObject.usrInfo = JSON.parse(replyData);
                 _isFollowing = userInfoObject.usrInfo.following;
-                modelWeibo.append({"JSON":userInfoObject.usrInfo.status});
+                modelWeibo.append(userInfoObject.usrInfo.status);
                 if (lvUserWeibo.model == undefined) {
                     lvUserWeibo.model = modelWeibo;
                 }
@@ -118,7 +118,7 @@ Page {
             if (action == WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE) {
                 userPage._userWeiboCache = JSON.parse(replyData);
                 for (var i=0; i<userPage._userWeiboCache.statuses.length; i++) {
-                    modelWeibo.append({"JSON":userPage._userWeiboCache.statuses[i] } )
+                    modelWeibo.append(userPage._userWeiboCache.statuses[i])
                 }
                 if (lvUserWeibo.model == undefined) {
                     lvUserWeibo.model = modelWeibo;
@@ -284,7 +284,7 @@ Page {
                     weiboJSONContent: modelWeibo.get(index).JSON
                     optionMenu: options
                     onRepostedWeiboClicked: {
-                        toWeiboPage(modelWeibo.get(index).JSON.retweeted_status);
+                        toWeiboPage(modelWeibo.get(index).retweeted_status);
                     }
                     onUsWeiboClicked: {
                         toWeiboPage(modelWeibo.get(index).JSON);
@@ -304,16 +304,16 @@ Page {
                             text: qsTr("Repost")
                             onClicked: {
                                 toSendPage("repost", {"id": model.id},
-                                           (model.JSON.retweeted_status == undefined || model.JSON.retweeted_status == "") == true ?
+                                           (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
                                                "" :
-                                               "//@"+model.JSON.user.name +": " + model.JSON.text ,
+                                               "//@"+model.user.name +": " + model.text ,
                                                true)
                             }
                         }
                         MenuItem {
                             text: qsTr("Comment")
                             onClicked: {
-                                toSendPage("comment", {"id": model.JSON.id}, "", true)
+                                toSendPage("comment", {"id": model.id}, "", true)
                             }
                         }
                     }

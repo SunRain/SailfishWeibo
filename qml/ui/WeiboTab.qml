@@ -93,7 +93,7 @@ SilicaListView {
                     || action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE) {
                 var jsonObj = JSON.parse(replyData);
                 for (var i=0; i<jsonObj.statuses.length; i++) {
-                    modelWeibo.append( {"JSON":jsonObj.statuses[i] })
+                    modelWeibo.append(jsonObj.statuses[i])
                 }
                 if (weiboTab.model == undefined) {
                     weiboTab.model = modelWeibo;
@@ -138,13 +138,13 @@ SilicaListView {
                 height: childrenRect.height
                 WeiboCard {
                     id:weiboCard
-                    weiboJSONContent: modelWeibo.get(index).JSON
+                    weiboJSONContent: modelWeibo.get(index)
                     optionMenu: options
                     onRepostedWeiboClicked: {
-                        toWeiboPage(modelWeibo.get(index).JSON.retweeted_status);
+                        toWeiboPage(modelWeibo.get(index).retweeted_status);
                     }
                     onUsWeiboClicked: {
-                        toWeiboPage(modelWeibo.get(index).JSON);
+                        toWeiboPage(modelWeibo.get(index));
                     }
                     onAvatarHeaderClicked: {
                         toUserPage(userId);
@@ -162,22 +162,22 @@ SilicaListView {
                             onClicked: {
                                 toSendPage("repost",
                                            {"id": model.id},
-                                           (model.JSON.retweeted_status == undefined || model.JSON.retweeted_status == "") == true
+                                           (model.retweeted_status == undefined || model.retweeted_status == "") == true
                                                ? ""
-                                               : "//@"+model.JSON.user.name +": " + model.JSON.text ,
+                                               : "//@"+model.user.name +": " + model.text ,
                                            true);
                             }
                         }
                         MenuItem {
                             text: qsTr("Comment")
                             onClicked: {
-                                toSendPage("comment", {"id": model.JSON.id}, "", true);
+                                toSendPage("comment", {"id": model.id}, "", true);
                             }
                         }
                         MenuItem {
                             text: qsTr("Add to favorites")
                             onClicked: {
-                                addToFavorites(model.JSON.id);
+                                addToFavorites(model.id);
                             }
                         }
                     }
