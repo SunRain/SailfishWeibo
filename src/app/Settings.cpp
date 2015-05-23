@@ -94,7 +94,7 @@ QString Settings::accessToken() const
     return mAccessToken;
 }
 
-QVariant Settings::getValue(const QString &key, const QVariant defaultValue)
+QVariant Settings::getValue(const QString &key, const QVariant &defaultValue)
 {
     return mSettings->value (key, defaultValue);
 }

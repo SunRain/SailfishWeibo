@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.1">
 <context>
     <name>AboutPage</name>
     <message>
@@ -64,7 +64,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please donate to alipay wanggjghost@126.com(**���) if U like this app</source>
+        <source>Please donate to alipay wanggjghost@126.com(**健) if U like this app</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

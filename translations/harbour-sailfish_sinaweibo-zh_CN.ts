@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AboutPage</name>
     <message>
@@ -37,13 +37,9 @@
         <translation type="obsolete">如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
     </message>
     <message>
-        <source>Please donate to alipay wanggjghost@126.com(**健) if U like this app</source>
-        <translation type="obsolete">如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝支持一下好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
-    </message>
-    <message>
         <location filename="../qml/pages/AboutPage.qml" line="68"/>
-        <source>Please donate to alipay wanggjghost@126.com(**���) if U like this app</source>
-        <translation type="unfinished"></translation>
+        <source>Please donate to alipay wanggjghost@126.com(**健) if U like this app</source>
+        <translation type="unfinished">如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝支持一下好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="74"/>

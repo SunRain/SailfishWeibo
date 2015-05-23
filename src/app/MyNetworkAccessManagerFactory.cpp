@@ -147,6 +147,6 @@ void MyNetworkCookieJar::load()
     QMutexLocker lock(&mutex);
     Q_UNUSED(lock);
 //    QByteArray data = Util::getInstance()->getValue("cookies").toByteArray();
-    QByteArray data = Settings::instance ()->getValue ("cookies", data).toByteArray ();
+    QByteArray data = Settings::instance ()->getValue ("cookies").toByteArray ();
     setAllCookies(QNetworkCookie::parseCookies(data));
 }

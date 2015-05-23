@@ -18,7 +18,7 @@ public:
     virtual ~Settings();
 
     void setValue(const QString &key, const QVariant &value);
-    QVariant getValue(const QString &key, const QVariant defaultValue = QVariant());
+    QVariant getValue(const QString &key, const QVariant &defaultValue = QVariant());
 
     QString accessToken() const;
     void setAccessToken(const QString &value);
