@@ -4,6 +4,8 @@
 #include <sailfishapp.h>
 #include <QScopedPointer>
 #include <QMutex>
+#include <QFile>
+#include <QStringList>
 
 Emoticons *Emoticons::getInstance()
 {

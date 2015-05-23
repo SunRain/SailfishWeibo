@@ -28,10 +28,7 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifdef QT_QML_DEBUG
 #include <QtQuick>
-#endif
-
 #include <QtQml>
 #include <QUrl>
 #include <sailfishapp.h>
