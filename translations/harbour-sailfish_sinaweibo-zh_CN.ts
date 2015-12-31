@@ -14,10 +14,6 @@
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <source>verison</source>
-        <translation type="obsolete">Verison</translation>
-    </message>
-    <message>
         <location filename="../qml/pages/AboutPage.qml" line="43"/>
         <source>version</source>
         <translation>Version</translation>
@@ -31,10 +27,6 @@
         <location filename="../qml/pages/AboutPage.qml" line="59"/>
         <source>E-mail:41245110@qq.com</source>
         <translation>E-Mail：41245110@qq.com</translation>
-    </message>
-    <message>
-        <source>Donate to alipay wanggjghost@126.com(**健) if U like this app</source>
-        <translation type="obsolete">如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="68"/>
@@ -79,10 +71,6 @@
         <translation>删除中</translation>
     </message>
     <message>
-        <source>Github: https://github.com/SunRain/SailfishWeibo</source>
-        <translation type="obsolete">Github: https://github.com/SunRain/SailfishWeibo</translation>
-    </message>
-    <message>
         <location filename="../qml/pages/AboutPage.qml" line="91"/>
         <source>Credit</source>
         <translation>致谢</translation>
@@ -96,10 +84,6 @@
         <location filename="../qml/pages/AboutPage.qml" line="108"/>
         <source>Author:Joey_Chan</source>
         <translation>作者：Joey_Chan</translation>
-    </message>
-    <message>
-        <source>http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</source>
-        <translation type="obsolete">http://bbs.qter.org/forum.php?mod=viewthread&amp;tid=1035&amp;extra=page%3D1%EF%BC%89</translation>
     </message>
 </context>
 <context>
@@ -180,32 +164,6 @@
     </message>
 </context>
 <context>
-    <name>DelegateRepostedWeibo</name>
-    <message>
-        <source> From </source>
-        <translation type="obsolete">来自</translation>
-    </message>
-</context>
-<context>
-    <name>DelegateWeibo</name>
-    <message>
-        <source> From </source>
-        <translation type="obsolete">来自</translation>
-    </message>
-    <message>
-        <source>repost: </source>
-        <translation type="obsolete">转发：</translation>
-    </message>
-    <message>
-        <source>comment: </source>
-        <translation type="obsolete">评论：</translation>
-    </message>
-    <message>
-        <source>like: </source>
-        <translation type="obsolete">顶：</translation>
-    </message>
-</context>
-<context>
     <name>Dummy</name>
     <message>
         <location filename="../qml/pages/Dummy.qml" line="13"/>
@@ -241,26 +199,6 @@
         <location filename="../qml/pages/FirstPage.qml" line="104"/>
         <source>New</source>
         <translation>写微博</translation>
-    </message>
-    <message>
-        <source>Login</source>
-        <translation type="obsolete">登入</translation>
-    </message>
-    <message>
-        <source>pull down menu to start oauth login</source>
-        <translation type="obsolete">在下拉菜单中选择登入开始微博之旅</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation type="obsolete">刷新</translation>
-    </message>
-    <message>
-        <source>Web content load error: </source>
-        <translation type="obsolete">载入错误：</translation>
-    </message>
-    <message>
-        <source>Check network connectivity and pull down to reload</source>
-        <translation type="obsolete">查看网络链接或者刷新登入界面</translation>
     </message>
 </context>
 <context>
@@ -309,10 +247,6 @@
 </context>
 <context>
     <name>LoginComponent</name>
-    <message>
-        <source>click the enter key if the webview login icon not work</source>
-        <translation type="obsolete">如果页面的登入按钮点击无效，请尝试点击软键盘的回车键来登入</translation>
-    </message>
     <message>
         <location filename="../qml/components/LoginComponent.qml" line="57"/>
         <source>UserName</source>
@@ -520,10 +454,6 @@
 <context>
     <name>SecondPage</name>
     <message>
-        <source>Message</source>
-        <translation type="obsolete">信息</translation>
-    </message>
-    <message>
         <location filename="../qml/pages/SecondPage.qml" line="85"/>
         <source>Sailfish Weibo</source>
         <translation>Sailfish微博</translation>
@@ -633,10 +563,6 @@
         <translation>添加图片</translation>
     </message>
     <message>
-        <source>Input Weibo content here</source>
-        <translation type="obsolete">再次输入微博内容</translation>
-    </message>
-    <message>
         <location filename="../qml/pages/SendPage.qml" line="432"/>
         <source>Click the inserted image to remove from the uploading queue</source>
         <translation>点击已插入的图片可以将图片移除</translation>
@@ -668,13 +594,6 @@
         <location filename="../qml/pages/SplashesPage.qml" line="39"/>
         <source>Loading ...</source>
         <translation>Loading ...</translation>
-    </message>
-</context>
-<context>
-    <name>UserAvatarHeader</name>
-    <message>
-        <source> From </source>
-        <translation type="obsolete">来自</translation>
     </message>
 </context>
 <context>
@@ -745,18 +664,6 @@
         <source>Comment</source>
         <translation>评论</translation>
     </message>
-    <message>
-        <source>repost: </source>
-        <translation type="obsolete">转发：</translation>
-    </message>
-    <message>
-        <source>comment: </source>
-        <translation type="obsolete">回复：</translation>
-    </message>
-    <message>
-        <source>like: </source>
-        <translation type="obsolete">顶：</translation>
-    </message>
 </context>
 <context>
     <name>UserWeibo</name>
@@ -773,14 +680,6 @@
         <location filename="../qml/components/WeiboCard.qml" line="89"/>
         <source> From </source>
         <translation> 来自 </translation>
-    </message>
-    <message>
-        <source>repost: </source>
-        <translation type="obsolete">转发：</translation>
-    </message>
-    <message>
-        <source>like: </source>
-        <translation type="obsolete">顶：</translation>
     </message>
 </context>
 <context>
@@ -809,14 +708,6 @@
         <location filename="../qml/pages/WeiboFavorites.qml" line="131"/>
         <source>Remove from favorites</source>
         <translation>取消收藏</translation>
-    </message>
-    <message>
-        <source>Repost</source>
-        <translation type="obsolete">转发</translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="obsolete">评论</translation>
     </message>
 </context>
 <context>
@@ -875,22 +766,6 @@
 </context>
 <context>
     <name>WeiboTab</name>
-    <message>
-        <source>Sailfish Weibo</source>
-        <translation type="obsolete">Sailfish Weibo</translation>
-    </message>
-    <message>
-        <source>Logout</source>
-        <translation type="obsolete">注销</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="obsolete">刷新</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="obsolete">写微博</translation>
-    </message>
     <message>
         <location filename="../qml/ui/WeiboTab.qml" line="60"/>
         <source>Start adding to favorites</source>

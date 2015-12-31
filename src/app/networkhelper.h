@@ -8,7 +8,7 @@
 class NetworkHelper : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY( QString imgFolder READ imgFolder )
+    Q_PROPERTY(QString imgFolder READ imgFolder)
 
 public:
     explicit NetworkHelper(QObject *parent = 0);

@@ -14,6 +14,8 @@
 #include "Emoticons.h"
 #include "Settings.h"
 
+#include "TokenProvider.h"
+
 Util *Util::getInstance()
 {
     static QMutex mutex;
@@ -28,12 +30,14 @@ Util *Util::getInstance()
 
 Util::~Util()
 {
-//    m_Settings->deleteLater();
+    if (m_emoticons)
+        m_emoticons->deleteLater ();
+    m_emoticons = nullptr;
 }
 
 void Util::setEngine(QQmlEngine *engine)
 {
-    this->mQmlEngine = engine;
+    this->m_qmlEngine = engine;
 }
 
 /*
@@ -48,26 +52,32 @@ bool Util::parseOauthTokenUrl(const QString &url)
     if (!url.contains ("access_token")
             || !url.contains ("expires_in")
             || !url.contains ("refresh_token")) {
+        qDebug()<<Q_FUNC_INFO<<"url invalid";
         return false;
     }
     QStringList list = url.split ("#");
     if (list.empty () || list.size () < 2) {
+        qDebug()<<Q_FUNC_INFO<<"url  size invalid";
         return false;
     }
     list = list.at (1).split ("&");
     foreach (QString s, list) {
         if (s.startsWith ("access_token")) {
             s = s.replace ("access_token=", "");
-            Settings::instance ()->setAccessToken (s);
+//            Settings::instance ()->setAccessToken (s);
+            QWeiboSDK::TokenProvider::instance ()->setAccessToken (s);
         } else if (s.startsWith ("expires_in")) {
             s = s.replace ("expires_in=", "");
-            Settings::instance ()->setExpiresData (s);
+//            Settings::instance ()->setExpiresData (s);
+            QWeiboSDK::TokenProvider::instance ()->setExpiresData (s);
         } else if (s.startsWith ("refresh_token")) {
             s = s.replace ("refresh_token=", "");
-            Settings::instance ()->setRefreshToken (s);
+//            Settings::instance ()->setRefreshToken (s);
+            QWeiboSDK::TokenProvider::instance ()->setRefreshToken (s);
         } else if (s.startsWith ("uid")) {
             s = s.replace ("uid=", "");
-            Settings::instance ()->setUid (s);
+//            Settings::instance ()->setUid (s);
+            QWeiboSDK::TokenProvider::instance ()->setUid (s);
         }
     }
     return true;
@@ -101,10 +111,10 @@ QString Util::getVerison()
 
 bool Util::saveToCache(const QString &remoteUrl, const QString &dirName, const QString &fileName)
 {
-    if (mQmlEngine.isNull()) {
+    if (m_qmlEngine.isNull()) {
         return false;
     }
-    MyNetworkAccessManager *manage = (MyNetworkAccessManager*)mQmlEngine.data ()->networkAccessManager();
+    MyNetworkAccessManager *manage = (MyNetworkAccessManager*)m_qmlEngine.data ()->networkAccessManager();
 
     QAbstractNetworkCache *diskCache = manage->cache();
 
@@ -248,11 +258,11 @@ bool Util::deleteDir(const QString &dirName)
     return dir.entryInfoList().isEmpty();    
 }
 
-Util::Util(QObject *parent) :
-    QObject(parent)
+Util::Util(QObject *parent)
+    :QObject(parent)
+    ,m_settings(Settings::instance ())
+    ,m_emoticons(nullptr)
 {
-//    m_Settings = new QSettings(qApp->organizationName(), qApp->applicationName());
-    mSettings = Settings::instance ();
 }
 
 QString Util::parseEmoticons(const QString &pattern, const QString &str)
@@ -262,13 +272,14 @@ QString Util::parseEmoticons(const QString &pattern, const QString &str)
     int  pos = 0;
     QString reText;
     QString emoticons;
-    
     QRegExp emoticonRE(pattern);
+    if (!m_emoticons)
+        m_emoticons = new Emoticons(this);
+
     while((pos = emoticonRE.indexIn(tmp, pos)) != -1) {
         emoticons = emoticonRE.cap(0);
-        emoticons = Emoticons::getInstance()->getEmoticonName(emoticons);
+        emoticons = m_emoticons->getEmoticonName (emoticons);
         if (emoticons.isEmpty()) {
-            //qDebug()<<" ====== skip empty file "<<emoticonRE.cap(0);
             pos += emoticonRE.cap(0).length();
             continue;
         }

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 _SCRIPT=$(readlink -f $0)
-_DIR=$(dirname ${_SCRIPT})/../..
+_DIR=$(dirname ${_SCRIPT})
 
 _BASE=$(grep -oE 'Version: [0-9.]*' ${_DIR}/rpm/harbour-sailfish_sinaweibo.yaml | awk '{ print $2 }') 
 _RELEASE=$(grep 'Release:*' ${_DIR}/rpm/harbour-sailfish_sinaweibo.yaml | awk '{ print $2 }') 

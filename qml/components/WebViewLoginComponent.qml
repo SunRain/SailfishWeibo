@@ -1,15 +1,17 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import "../js/AutheticatorToken.js" as AutheticatorUrl
+
 SilicaWebView {
     id:webViewLoginComponent
     signal loginSucceed()
 
     anchors.fill: parent
-    url: api.getLoginUrl()
+    url: AutheticatorUrl.getWeicoAuthorizeUrl()
 
     Component.onCompleted: {
-        console.log("==== url is " + api.getLoginUrl());
+        console.log("==== url is " + AutheticatorUrl.getWeicoAuthorizeUrl());
     }
 
     onLoadingChanged: {
@@ -18,8 +20,9 @@ SilicaWebView {
         console.log("=== onLoadingChanged  ret " + loadRequest.url);
 
         if (util.parseOauthTokenUrl(loadRequest.url)) {
-            api.accessToken = weiboSettings.accessToken;
-            api.uid = weiboSettings.uid;
+//            api.accessToken = weiboSettings.accessToken;
+//            api.uid = weiboSettings.uid;
+            console.log("=== parseOauthTokenUrl ok");
             loginSucceed();
         }
 //        switch (loadRequest.status)

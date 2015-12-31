@@ -46,9 +46,7 @@ ApplicationWindow
 
     property bool tokenValid: false
     property bool reminderRefreshed: false
-//    property /*Dialog*/var _loginDialog
 
-    //cover: Qt.resolvedUrl("cover/CoverPage.qml")
     initialPage: Component {
         SplashesPage { //SplashesPage，同时用于初始化数据库和检测token值
             id: splashes
@@ -61,14 +59,15 @@ ApplicationWindow
 //                        Settings.initialize();
 //                        _settingsInitialized = true;
 //                    }
-                    var token = settings.accessToken;//Settings.getAccess_token();
+                    var token = tokenProvider.accessToken;
 
                     console.log("===== main view token is " + token);
                     if (token == "" || token == undefined) {
                         _delayType = 0;
                         delay.restart();
                     } else {
-                        api.checkToken(token);
+//                        api.checkToken(token);
+                        tokenProvider.checkToken(token);
                     }
                 }
             }
@@ -85,12 +84,12 @@ ApplicationWindow
                 }
             }
             Connections {
-                target: api
+                target: tokenProvider
                 onTokenExpired: {
                     if (!tokenExpired) {
                         console.log("==== !tokenExpired")
-                        api.accessToken = settings.accessToken;//Settings.getAccess_token();
-                        api.uid = settings.uid//Settings.getUid();
+//                        api.accessToken = settings.accessToken;//Settings.getAccess_token();
+//                        api.uid = settings.uid//Settings.getUid();
                         _delayType = 1;
                         delay.restart();
                     } else {
@@ -476,9 +475,9 @@ ApplicationWindow
         id: appData
     }
     
-    WeiboApi {
-        id:api
-    }
+//    WeiboApi {
+//        id:api
+//    }
 }
 
 

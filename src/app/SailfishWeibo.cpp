@@ -39,25 +39,19 @@
 #include "Util.h"
 #include "Settings.h"
 
-#include "include/QSinaWeibo.h"
-#include "include/QWeiboMethod.h"
+#include "PluginRegister.h"
+#include "TokenProvider.h"
 
 int main(int argc, char *argv[])
 {
-    // SailfishApp::main() will display "qml/template.qml", if you need more
-    // control over initialization, you can use:
-    //
-    //   - SailfishApp::application(int, char *[]) to get the QGuiApplication *
-    //   - SailfishApp::createView() to get a new QQuickView * instance
-    //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
-    //
-    // To display the view, call "show()" (will show fullscreen on device).
+    //QWeiboSDK
+    QWeiboSDK::registerPlugins ("harbour.sailfish_sinaweibo.sunrain");
 
     qmlRegisterType<MyType>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "MyType");
     qmlRegisterType<NetworkHelper>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "NetworkHelper");
-    qmlRegisterType<QSinaWeiboAPI::QSinaWeibo>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "WeiboApi");
+//    qmlRegisterType<QSinaWeiboAPI::QSinaWeibo>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "WeiboApi");
     //qmlRegisterType<QSinaWeiboAPI::QWeiboMethod>("com.sunrain.sinaweibo", 1, 0, "WeiboMethod");
-    qmlRegisterUncreatableType<QSinaWeiboAPI::QWeiboMethod>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "WeiboMethod", "");
+//    qmlRegisterUncreatableType<QSinaWeiboAPI::QWeiboMethod>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "WeiboMethod", "");
     //return SailfishApp::main(argc, argv);
     QScopedPointer<QGuiApplication> app (SailfishApp::application(argc, argv));
     app.data()->setOrganizationName("harbour-sailfish_sinaweibo");
@@ -77,13 +71,12 @@ int main(int argc, char *argv[])
     //Dirty hack for fix SilicaWebView, it seems that SilicaWebView has a own settings property
     view.data ()->rootContext ()->setContextProperty ("weiboSettings", settings);
 
-//    QSinaWeiboAPI::QSinaWeibo api;
-//    view->rootContext()->setContextProperty("api", &api);
-    
-//    QSinaWeiboAPI::QWeiboMethod weiboMethod;
-//    view->rootContext()->setContextProperty("weibomethod", &weiboMethod);
+    QWeiboSDK::TokenProvider *provider = QWeiboSDK::TokenProvider::instance ();
+    view.data ()->rootContext ()->setContextProperty ("tokenProvider", provider);
+    //Dirty hack for fix SilicaWebView, it seems that SilicaWebView has a own settings property
+    view.data ()->rootContext ()->setContextProperty ("webTokenProvider", provider);
 
-    view.data ()->setSource(SailfishApp::pathTo("qml/SailfishWeibo.qml"));
+    view.data ()->setSource(QUrl(QStringLiteral("qrc:/SailfishWeibo.qml")));
     view.data ()->show();
     
     return app->exec();

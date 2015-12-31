@@ -33,21 +33,21 @@ Panel {
         id: userInfoObject
     }
 
-    Connections {
-        target: api
-        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-        onWeiboPutSucceed: {
-            if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
-                if (!panel._userAvatarLock) {
-                    userInfoObject.usrInfo = JSON.parse(replyData)
-                    panel._userAvatarLock = !panel._userAvatarLock;
-                }
-            }
-            if (action == WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT) {
-                remindObject.remind = JSON.parse(replyData);
-            }
-        }
-    }
+//    Connections {
+//        target: api
+//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+//        onWeiboPutSucceed: {
+//            if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
+//                if (!panel._userAvatarLock) {
+//                    userInfoObject.usrInfo = JSON.parse(replyData)
+//                    panel._userAvatarLock = !panel._userAvatarLock;
+//                }
+//            }
+//            if (action == WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT) {
+//                remindObject.remind = JSON.parse(replyData);
+//            }
+//        }
+//    }
 
     Column {
         id: column

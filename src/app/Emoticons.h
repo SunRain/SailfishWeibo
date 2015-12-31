@@ -8,14 +8,13 @@ class Emoticons : public QObject
 {
     Q_OBJECT
 public:
-    static Emoticons *getInstance();
+    explicit Emoticons(QObject *parent = 0);
     virtual ~Emoticons();
     QString getEmoticonName(const QString &name);
 private:
-    explicit Emoticons(QObject *parent = 0);
     void initData();
     
-    QHash<QString, QString> mEmoticonsHash;
+    QHash<QString, QString> m_emoticonsList;
 };
 
 #endif // EMOTICONS_H

@@ -11,98 +11,98 @@
 #include <QScopedPointer>
 #include <QVariant>
 
-static const char *KEY_ACCESS_TOKEN = "access_token";
-static const char *KEY_EXPIRE_DATA = "expire_data";
-static const char *KEY_UID = "uid";
-static const char *KEY_REFRESH_TOKEN = "refresh_token";
+//static const char *KEY_ACCESS_TOKEN = "access_token";
+//static const char *KEY_EXPIRE_DATA = "expire_data";
+//static const char *KEY_UID = "uid";
+//static const char *KEY_REFRESH_TOKEN = "refresh_token";
 
 Settings::Settings(QObject *parent)
     : QObject(parent)
 {
-    mSettings = new QSettings(qApp->organizationName(), qApp->applicationName(), parent);
+    m_settings = new QSettings(qApp->organizationName(), qApp->applicationName(), parent);
 
-    mRefreshToken = mSettings->value (KEY_REFRESH_TOKEN, QVariant()).toString ();
-    mUID = mSettings->value (KEY_UID, QVariant()).toString ();
-    mExpiresData = mSettings->value (KEY_EXPIRE_DATA, QVariant()).toString ();
-    mAccessToken = mSettings->value (KEY_ACCESS_TOKEN, QVariant()).toString ();
+//    m_refreshToken = m_settings->value (KEY_REFRESH_TOKEN, QVariant()).toString ();
+//    m_uid = m_settings->value (KEY_UID, QVariant()).toString ();
+//    m_expiresData = m_settings->value (KEY_EXPIRE_DATA, QVariant()).toString ();
+//    m_accessToken = m_settings->value (KEY_ACCESS_TOKEN, QVariant()).toString ();
 
 }
 
 Settings::~Settings()
 {
-    mSettings->sync ();
-    mSettings->deleteLater ();
+    m_settings->sync ();
+    m_settings->deleteLater ();
 }
 
-void Settings::setRefreshToken(const QString &value)
-{
-    if (mRefreshToken == value)
-        return;
-    mRefreshToken = value;
-    mSettings->setValue (KEY_REFRESH_TOKEN, value);
-    mSettings->sync ();
-    emit refreshTokenChanged ();
-}
+//void Settings::setRefreshToken(const QString &value)
+//{
+//    if (m_refreshToken == value)
+//        return;
+//    m_refreshToken = value;
+//    m_settings->setValue (KEY_REFRESH_TOKEN, value);
+//    m_settings->sync ();
+//    emit refreshTokenChanged ();
+//}
 
-QString Settings::refreshToken() const
-{
-    return mRefreshToken;
-}
+//QString Settings::refreshToken() const
+//{
+//    return m_refreshToken;
+//}
 
-void Settings::setUid(const QString &value)
-{
-    if (mUID == value)
-        return;
-    mUID = value;
-    mSettings->setValue (KEY_UID, value);
-    mSettings->sync ();
-    emit uidChanged ();
-}
+//void Settings::setUid(const QString &value)
+//{
+//    if (m_uid == value)
+//        return;
+//    m_uid = value;
+//    m_settings->setValue (KEY_UID, value);
+//    m_settings->sync ();
+//    emit uidChanged ();
+//}
 
-QString Settings::uid() const
-{
-    return mUID;
-}
+//QString Settings::uid() const
+//{
+//    return m_uid;
+//}
 
-void Settings::setExpiresData(const QString &value)
-{
-    if (mExpiresData == value)
-        return;
-    mExpiresData = value;
-    mSettings->setValue (KEY_EXPIRE_DATA, value);
-    mSettings->sync ();
-    emit expiresDataChanged ();
-}
+//void Settings::setExpiresData(const QString &value)
+//{
+//    if (m_expiresData == value)
+//        return;
+//    m_expiresData = value;
+//    m_settings->setValue (KEY_EXPIRE_DATA, value);
+//    m_settings->sync ();
+//    emit expiresDataChanged ();
+//}
 
-QString Settings::expiresData() const
-{
-    return mExpiresData;
-}
+//QString Settings::expiresData() const
+//{
+//    return m_expiresData;
+//}
 
-void Settings::setAccessToken(const QString &value)
-{
-    if (mAccessToken == value)
-        return;
-    mAccessToken = value;
-    mSettings->setValue (KEY_ACCESS_TOKEN, value);
-    mSettings->sync ();
-    emit accessTokenChanged ();
-}
+//void Settings::setAccessToken(const QString &value)
+//{
+//    if (m_accessToken == value)
+//        return;
+//    m_accessToken = value;
+//    m_settings->setValue (KEY_ACCESS_TOKEN, value);
+//    m_settings->sync ();
+//    emit accessTokenChanged ();
+//}
 
-QString Settings::accessToken() const
-{
-    return mAccessToken;
-}
+//QString Settings::accessToken() const
+//{
+//    return m_accessToken;
+//}
 
 QVariant Settings::getValue(const QString &key, const QVariant &defaultValue)
 {
-    return mSettings->value (key, defaultValue);
+    return m_settings->value (key, defaultValue);
 }
 
 void Settings::setValue(const QString &key, const QVariant &value)
 {
-    mSettings->setValue (key, value);
-    mSettings->sync ();
+    m_settings->setValue (key, value);
+    m_settings->sync ();
 }
 
 Settings *Settings::instance()

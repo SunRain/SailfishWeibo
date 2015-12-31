@@ -9,11 +9,6 @@ Page {
 
     signal logined
 
-//    LoginComponent {
-//        id:loginView
-//        anchors.fill: parent
-//        onLoginSucceed: {logined();}
-//    }
     WebViewLoginComponent {
         id:loginView
         anchors.fill: parent

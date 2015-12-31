@@ -1,4 +1,4 @@
-#ifndef UTIL_H
+﻿#ifndef UTIL_H
 #define UTIL_H
 
 #include <QObject>
@@ -7,6 +7,7 @@
 #include <QPointer>
 
 class Settings;
+class Emoticons;
 class Util : public QObject
 {
     Q_OBJECT
@@ -52,10 +53,9 @@ private:
     bool cacheImageFiles(const QString &remoteUrl);
     QString parseEmoticons(const QString &pattern,const QString &emoticonStr);
 private:
-//    QPointer<QSettings> m_Settings;
-    QPointer<QQmlEngine> mQmlEngine;
-    Settings *mSettings;
-//    QVariantMap m_Map;
+    QPointer<QQmlEngine> m_qmlEngine;
+    Settings *m_settings;
+    Emoticons *m_emoticons;
 };
 
 #endif // UTIL_H
