@@ -30,7 +30,7 @@ public:
                                           const QString &userColor,
                                           const QString &linkColor);
     ///解析图片链接，返回本地缓存/远程链接
-    Q_INVOKABLE QString parseImageUrl(const QString &remoteUrl);
+    Q_INVOKABLE QUrl parseImageUrl(const QString &remoteUrl);
     Q_INVOKABLE void saveRemoteImage(const QString &remoteUrl);
     
     ///

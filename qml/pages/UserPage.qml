@@ -196,8 +196,8 @@ Page {
                     width: implicitWidth
                     height: implicitHeight
                     source: userPage._showUserWeibo
-                            ? "../graphics/action_collapse.png"
-                            : "../graphics/action_open.png"
+                            ? util.pathTo("qml/graphics/action_collapse.png")
+                            : util.pathTo("qml/graphics/action_open.png")
 //                    RotationAnimator on rotation {
 //                        id: animation
 //                        from: userPage._showUserWeibo ? 0 : 180
@@ -448,9 +448,9 @@ Page {
                                         width: Theme.iconSizeMedium
                                         height: width
                                         fillMode: Image.PreserveAspectFit
-                                        source: optionItem.menuOpen ?
-                                                    "../graphics/action_collapse.png" :
-                                                    "../graphics/action_open.png"
+                                        source: optionItem.menuOpen
+                                                ? util.pathTo("qml/graphics/action_collapse.png")
+                                                : util.pathTo("qml/graphics/action_open.png")
                                     }
                                 }
                                 menu: optionMenu

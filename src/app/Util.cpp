@@ -94,6 +94,8 @@ QString Util::getVerison()
 
 QUrl Util::pathTo(const QString &filename)
 {
+    if (filename.toLower ().startsWith ("qrc:"))
+        return filename;
     return SailfishApp::pathTo (filename);
 }
 
@@ -200,15 +202,14 @@ QString Util::parseWeiboContent(const QString &weiboContent, const QString &cont
     return content;
 }
 
-QString Util::parseImageUrl(const QString &remoteUrl)
+QUrl Util::parseImageUrl(const QString &remoteUrl)
 {
     QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     QByteArray byteArray = remoteUrl.toLocal8Bit().toBase64();
     QString fileName(byteArray);
-    QString filePath = QString("%1%2%3").arg(cachePath).arg(QDir::separator()).arg(fileName);
-    QFile file(filePath);
-    if (file.exists()) {
-        return filePath;
+    QString filePath = QString("%1/%2").arg(cachePath).arg(fileName);
+    if (QFile::exists(filePath)) {
+        return QString("file://%1").arg (filePath);
     }
     return remoteUrl;
     

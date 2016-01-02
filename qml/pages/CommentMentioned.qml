@@ -194,7 +194,7 @@ Page{
 
                     Image {
                         id: background
-                        source: "../graphics/mask_background_reposted.png"
+                        source: util.pathTo("qml/graphics/mask_background_reposted.png")
                         fillMode: Image.PreserveAspectCrop
                     }
                     

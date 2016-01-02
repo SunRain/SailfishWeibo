@@ -94,8 +94,8 @@ Item {
                     height: width
                     fillMode: Image.PreserveAspectFit
                     source: optionItem.menuOpen ? 
-                                "../graphics/action_collapse.png" : 
-                                "../graphics/action_open.png"
+                                util.pathTo("qml/graphics/action_collapse.png") :
+                                util.pathTo("qml/graphics/action_open.png")
                 }
                 onMenuStateChanged: {
 //                    console.log("====== option Item " + menuOpen);

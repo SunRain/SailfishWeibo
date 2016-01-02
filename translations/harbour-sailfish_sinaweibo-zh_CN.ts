@@ -298,14 +298,6 @@
     </message>
 </context>
 <context>
-    <name>MainWindow</name>
-    <message>
-        <location filename="../src/QSinaWeiboApi/examples/mainwindow.ui" line="13"/>
-        <source>MainWindow</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>MessageTab</name>
     <message>
         <location filename="../qml/ui/MessageTab.qml" line="70"/>
@@ -370,27 +362,6 @@
         <location filename="../qml/ui/NavigationPanel.qml" line="302"/>
         <source>Settings</source>
         <translation>设置</translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="51"/>
-        <source>Qt wrapper for sina weibo api.
-</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="52"/>
-        <source>Distributed under the terms of LGPLv2.1 or later.
-</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/QSinaWeiboApi/weiboAPI/qweiboapi_global.cpp" line="54"/>
-        <source>Shanghai University, Shanghai, China
-</source>
-        <translation></translation>
     </message>
 </context>
 <context>

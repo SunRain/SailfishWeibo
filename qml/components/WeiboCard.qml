@@ -113,7 +113,7 @@ Item {
                         right: repostedWeibo.right
                         bottom: repostedWeibo.bottom
                     }
-                    source: "../graphics/mask_background_reposted.png"
+                    source: util.pathTo("qml/graphics/mask_background_reposted.png")
                     fillMode:Image.TileHorizontally
                 }
             }
@@ -128,7 +128,7 @@ Item {
                 HorizontalIconTextButton {
                     id:repostButton
                     anchors.horizontalCenter: parent.horizontalCenter
-                    icon: "../graphics/repost.png"
+                    icon: util.pathTo("qml/graphics/repost.png")
                     text: weiboJSONContent.reposts_count
                     color: repostButtonColor == undefined ? Theme.secondaryColor : repostButtonColor
                     onClicked: {
@@ -147,7 +147,7 @@ Item {
                 HorizontalIconTextButton {
                     id:commentButton
                     anchors.horizontalCenter: parent.horizontalCenter
-                    icon: "../graphics/comment.png"
+                    icon: util.pathTo("qml/graphics/comment.png")
                     text: weiboJSONContent.comments_count
                     color: commentButtonColor == undefined ? Theme.secondaryColor : commentButtonColor
                     onClicked: {
@@ -166,7 +166,7 @@ Item {
                 HorizontalIconTextButton {
                     id:likeButton
                     anchors.horizontalCenter: parent.horizontalCenter
-                    icon: "../graphics/like.png"
+                    icon: util.pathTo("qml/graphics/like.png")
                     text: weiboJSONContent.attitudes_count
                     color: likeButtonColor == undefined ? Theme.secondaryColor : likeButtonColor
                     onClicked: {
