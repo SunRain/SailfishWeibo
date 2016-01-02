@@ -44,6 +44,8 @@ public:
     Q_INVOKABLE static bool parseOauthTokenUrl(const QString &url);
 
     static QString getVerison();
+
+    Q_INVOKABLE QUrl pathTo(const QString &filename);
 signals:
     
 public slots:

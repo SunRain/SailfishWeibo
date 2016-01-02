@@ -2,7 +2,6 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
-//import "../js/Settings.js" as Settings
 import "../components"
 
 SilicaListView {
@@ -12,61 +11,119 @@ SilicaListView {
     signal fetchFinished
     signal clickItem(string idstr, string name)
 
-    property string _newGroupName: undefined
-    property string _newGroupIdstr: undefined
+    property string _newGroupName: ""
+    property string _newGroupIdstr: ""
+
+    FriendshipsGroups {
+        id: friendshipsGroups
+        onRequestAbort: {
+            console.log("== friendshipsGroups onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== friendshipsGroups onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            console.log("== friendshipsGroups onRequestSuccess ["+replyData+"]")
+            var jsonObj = JSON.parse(replyData);
+            listModel.append({"JSON":{
+                                     "id": "",
+                                     "idstr":"",
+                                     "name": ""
+                                 }}); //添加一个空列表用于显示所有分组功能
+            for (var i=0; i<jsonObj.lists.length; i++) {
+                listModel.append(jsonObj.lists[i])
+            }
+            groupItem.fetchFinished();
+        }
+    }
+
+    FriendshipsGroupsDestroy {
+        id: friendshipsGroupsDestroy
+        onRequestAbort: {
+            console.log("== friendshipsGroupsDestroy onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== friendshipsGroupsDestroy onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            console.log("== friendshipsGroupsDestroy onRequestSuccess ["+replyData+"]")
+            groupItem.fetchFinished();
+            groupItem.fetchGroups();
+        }
+    }
+    FriendshipsGroupsUpdate {
+        id: friendshipsGroupsUpdate
+        onRequestAbort: {
+            console.log("== friendshipsGroupsUpdate onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== friendshipsGroupsUpdate onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            console.log("== friendshipsGroupsUpdate onRequestSuccess ["+replyData+"]")
+            groupItem.fetchFinished();
+            groupItem.fetchGroups();
+        }
+    }
 
     function fetchGroups() {
         //WBOPT_GET_FRIENDSHIPS_GROUPS
         groupItem.fetchPending();
         listModel.clear();
-        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS;
-        api.setWeiboAction(method, {'access_token':settings.accessToken/*Settings.getAccess_token()*/});
+//        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS;
+//        api.setWeiboAction(method, {'access_token':settings.accessToken/*Settings.getAccess_token()*/});
+        friendshipsGroups.getRequest();
     }
 
     function deleteGroup(idstr) {
         groupItem.fetchPending();
-        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_DESTROY;
-        api.setWeiboAction(method, {
-                               "access_token":settings.accessToken,//Settings.getAccess_token(),
-                               "list_id":idstr
-                           });
+//        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_DESTROY;
+//        api.setWeiboAction(method, {
+//                               "access_token":settings.accessToken,//Settings.getAccess_token(),
+//                               "list_id":idstr
+//                           });
+        friendshipsGroupsDestroy.setParameters("list_id", idstr);
+        friendshipsGroups.postRequest();
     }
 
     function updateGroupName() {
         // WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE, //更新好友分组
         groupItem.fetchPending();
-        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE;
-        api.setWeiboAction(method, {
-                               "access_token":settings.accessToken,//Settings.getAccess_token(),
-                               "list_id":_newGroupIdstr,
-                               "name":_newGroupName
-                           });
+//        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE;
+//        api.setWeiboAction(method, {
+//                               "access_token":settings.accessToken,//Settings.getAccess_token(),
+//                               "list_id":_newGroupIdstr,
+//                               "name":_newGroupName
+//                           });
+        friendshipsGroupsUpdate.setParameters("list_id", _newGroupIdstr);
+        friendshipsGroupsUpdate.setParameters("name", _newGroupName);
+        friendshipsGroupsUpdate.postRequest();
 
     }
 
-    Connections {
-        target: api
-        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-        onWeiboPutSucceed: {
-            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS) {
-                var jsonObj = JSON.parse(replyData);
-                listModel.append({"JSON":{
-                                         "id": "",
-                                         "idstr":"",
-                                         "name": ""
-                                     }}); //添加一个空列表用于显示所有分组功能
-                for (var i=0; i<jsonObj.lists.length; i++) {
-                    listModel.append(jsonObj.lists[i])
-                }
-                groupItem.fetchFinished();
-            }
-            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_DESTROY
-                    || action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE) {
-                groupItem.fetchFinished();
-                groupItem.fetchGroups();
-            }
-        }
-    }
+//    Connections {
+//        target: api
+//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+//        onWeiboPutSucceed: {
+//            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS) {
+//                var jsonObj = JSON.parse(replyData);
+//                listModel.append({"JSON":{
+//                                         "id": "",
+//                                         "idstr":"",
+//                                         "name": ""
+//                                     }}); //添加一个空列表用于显示所有分组功能
+//                for (var i=0; i<jsonObj.lists.length; i++) {
+//                    listModel.append(jsonObj.lists[i])
+//                }
+//                groupItem.fetchFinished();
+//            }
+//            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_DESTROY
+//                    || action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE) {
+//                groupItem.fetchFinished();
+//                groupItem.fetchGroups();
+//            }
+//        }
+//    }
 
     ListModel {
         id: listModel
@@ -187,8 +244,8 @@ SilicaListView {
                         height: width
                         fillMode: Image.PreserveAspectFit
                         source: optionItem.menuOpen ?
-                                    "../graphics/action_collapse.png" :
-                                    "../graphics/action_open.png"
+                                    util.pathTo("qml/graphics/action_collapse.png") :
+                                    util.pathTo("qml/graphics/action_open.png")
                     }
 
                     onMenuStateChanged: {

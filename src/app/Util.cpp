@@ -92,6 +92,11 @@ QString Util::getVerison()
 #endif
 }
 
+QUrl Util::pathTo(const QString &filename)
+{
+    return SailfishApp::pathTo (filename);
+}
+
 //void Util::setValue(const QString &key, const QVariant &value)
 //{
 //    if (m_Map.value(key) != value) {

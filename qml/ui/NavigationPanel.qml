@@ -15,16 +15,49 @@ Panel {
     signal clicked
     signal userAvatarClicked
 
+    UsersShow {
+        id: usersShow
+        onRequestAbort: {
+            console.log("== usersShow onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== usersShow onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            console.log("== usersShow onRequestSuccess ["+replyData+"]")
+
+            if (!panel._userAvatarLock) {
+                userInfoObject.usrInfo = JSON.parse(replyData)
+                panel._userAvatarLock = !panel._userAvatarLock;
+            }
+        }
+    }
+
+    RemindUnreadCount {
+        id: remindUnreadCount
+        onRequestAbort: {
+            console.log("== remindUnreadCount onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== remindUnreadCount onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            console.log("== remindUnreadCount onRequestSuccess ["+replyData+"]")
+
+            remindObject.remind = JSON.parse(replyData);
+        }
+    }
+
     function initUserAvatar() {
-        //userGetInfo(Settings.getAccess_token())
-        var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
-        api.setWeiboAction(method, {'uid':settings.uid/*Settings.getUid()*/});
+        console.log("=== panel initUserAvatar");
+        usersShow.getRequest();
     }
 
     function messageGetRemind() {
-        var method = WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT;
-        api.setWeiboAction(method, "");
+        console.log("=== panel messageGetRemind");
+        remindUnreadCount.getRequest();
     }
+
 
     RemindObject {
         id: remindObject
@@ -32,22 +65,6 @@ Panel {
     UserInfoObject {
         id: userInfoObject
     }
-
-//    Connections {
-//        target: api
-//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-//        onWeiboPutSucceed: {
-//            if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
-//                if (!panel._userAvatarLock) {
-//                    userInfoObject.usrInfo = JSON.parse(replyData)
-//                    panel._userAvatarLock = !panel._userAvatarLock;
-//                }
-//            }
-//            if (action == WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT) {
-//                remindObject.remind = JSON.parse(replyData);
-//            }
-//        }
-//    }
 
     Column {
         id: column
@@ -125,7 +142,7 @@ Panel {
                 text: qsTr("Home")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "../graphics/panel_home.png"
+                icon: util.pathTo("qml/graphics/panel_home.png")
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     toIndexPage();
@@ -144,7 +161,7 @@ Panel {
                 text: qsTr("AtMeWeibo")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "../graphics/panel_at.png"
+                icon: util.pathTo("qml/graphics/panel_at.png")
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     toWeiboMentionedPage();
@@ -175,7 +192,7 @@ Panel {
                 text: qsTr("AtMeComment")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "../graphics/panel_at.png"
+                icon: util.pathTo("qml/graphics/panel_at.png")
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     toCommentMentionedPage();
@@ -206,7 +223,7 @@ Panel {
                 text: qsTr("Comment")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "../graphics/panel_comment.png"
+                icon: util.pathTo("qml/graphics/panel_comment.png")
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     toCommentAllPage();
@@ -237,7 +254,7 @@ Panel {
                 text: qsTr("PM")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "../graphics/panel_pm.png"
+                icon: util.pathTo("qml/graphics/panel_pm.png")
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     toDummyDialog();
@@ -267,7 +284,7 @@ Panel {
                 text: qsTr("Favourite")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "../graphics/panel_fav.png"
+                icon: util.pathTo("qml/graphics/panel_fav.png")
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     toFavoritesPage();
@@ -285,7 +302,7 @@ Panel {
                 text: qsTr("Settings")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "../graphics/panel_set.png"
+                icon: util.pathTo("qml/graphics/panel_set.png")
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     toSettingsPage();

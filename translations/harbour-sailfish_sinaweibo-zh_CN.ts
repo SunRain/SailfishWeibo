@@ -212,27 +212,27 @@
 <context>
     <name>GroupItem</name>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="126"/>
+        <location filename="../qml/ui/GroupItem.qml" line="183"/>
         <source>Rename %1 ==&gt; %2 (%3/8)</source>
         <translation>重命名分组 %1 为 %2 (%3/8)</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="130"/>
+        <location filename="../qml/ui/GroupItem.qml" line="187"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="160"/>
+        <location filename="../qml/ui/GroupItem.qml" line="217"/>
         <source>All Groups</source>
         <translation>所有分组</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="201"/>
+        <location filename="../qml/ui/GroupItem.qml" line="258"/>
         <source>Delete Group</source>
         <translation>删除分组</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="209"/>
+        <location filename="../qml/ui/GroupItem.qml" line="266"/>
         <source>Rename Group</source>
         <translation>重命名</translation>
     </message>
@@ -337,37 +337,37 @@
 <context>
     <name>NavigationPanel</name>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="125"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="142"/>
         <source>Home</source>
         <translation>首页</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="144"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="161"/>
         <source>AtMeWeibo</source>
         <translation>微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="175"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="192"/>
         <source>AtMeComment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="206"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="223"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="237"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="254"/>
         <source>PM</source>
         <translation>私信</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="267"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="284"/>
         <source>Favourite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="285"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="302"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
@@ -767,32 +767,32 @@
 <context>
     <name>WeiboTab</name>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="60"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="121"/>
         <source>Start adding to favorites</source>
         <translation>正在添加到收藏</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="104"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="73"/>
         <source>Succeed to add to favorites</source>
         <translation>添加收藏成功</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="109"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="70"/>
         <source>Fail to add to favorites</source>
         <translation>添加收藏失败</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="161"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="227"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="172"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="238"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="178"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="244"/>
         <source>Add to favorites</source>
         <translation>收藏</translation>
     </message>

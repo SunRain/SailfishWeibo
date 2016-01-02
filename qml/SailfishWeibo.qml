@@ -55,10 +55,6 @@ ApplicationWindow
                                         // 1 ==> start index page
             onStatusChanged: {
                 if (splashes.status === PageStatus.Active) {
-//                    if (!_settingsInitialized) {
-//                        Settings.initialize();
-//                        _settingsInitialized = true;
-//                    }
                     var token = tokenProvider.accessToken;
 
                     console.log("===== main view token is " + token);
@@ -66,7 +62,6 @@ ApplicationWindow
                         _delayType = 0;
                         delay.restart();
                     } else {
-//                        api.checkToken(token);
                         tokenProvider.checkToken(token);
                     }
                 }
@@ -88,8 +83,6 @@ ApplicationWindow
                 onTokenExpired: {
                     if (!tokenExpired) {
                         console.log("==== !tokenExpired")
-//                        api.accessToken = settings.accessToken;//Settings.getAccess_token();
-//                        api.uid = settings.uid//Settings.getUid();
                         _delayType = 1;
                         delay.restart();
                     } else {
@@ -106,7 +99,6 @@ ApplicationWindow
         id: indexPageComponent
         FirstPage {
             id: indexPage
-//            property bool _settingsInitialized: false
             property bool _dataInitialized: false
             property bool withPanelView: true
             Binding {
@@ -116,23 +108,13 @@ ApplicationWindow
                        ? (panelView .closed ? panelView : indexPage) //修正listview焦点
                        : indexPage
             }
-//            Component.onCompleted: {
-//                if (!_settingsInitialized) {
-//                    Settings.initialize();
-//                    _settingsInitialized = true;
-//                }
-//            }
             onStatusChanged: {
                 if (indexPage.status === PageStatus.Active) {
-//                    if (!tokenValid) {
-//                        startLogin();
-//                    } else {
-                        if (!_dataInitialized) {
-                            indexPage.refresh();
-                            panelView.initUserAvatar();
-                            panelView.initRemind();
-                            _dataInitialized = true;
-//                        }
+                    if (!_dataInitialized) {
+                        indexPage.refresh();
+                        panelView.initUserAvatar();
+                        panelView.initRemind();
+                        _dataInitialized = true;
                     }
                 }
             }

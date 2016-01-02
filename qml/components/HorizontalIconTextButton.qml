@@ -22,8 +22,8 @@ MouseArea {
     }
     onCanceled: pressTimer.stop()
 
-    width: image.width + buttonText.width + horizontalIconTextButton.spacing
-    height: Math.max(image.height, buttonText.height)
+    width: parent ? parent.width : image.width + buttonText.width + horizontalIconTextButton.spacing
+    height: parent ? parent.height : Math.max(image.height, buttonText.height)
 
     Timer {
         id: pressTimer

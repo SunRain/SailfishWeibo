@@ -20,35 +20,96 @@ SilicaListView {
     signal fetchPending
     signal fetchFinished
 
+    StatusesFriendsTimeline {
+        id: statusesFriendsTimeline
+        onRequestAbort: {
+            console.log("== statusesFriendsTimeline onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== statusesFriendsTimeline onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            var jsonObj = JSON.parse(replyData);
+            for (var i=0; i<jsonObj.statuses.length; i++) {
+                modelWeibo.append(jsonObj.statuses[i])
+            }
+            if (weiboTab.model == undefined) {
+                weiboTab.model = modelWeibo;
+            }
+            fetchFinished();
+        }
+    }
+
+    FriendshipsGroupsTimeline {
+        id: friendshipsGroupsTimeline
+        onRequestAbort: {
+            console.log("== friendshipsGroupsTimeline onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== friendshipsGroupsTimeline onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            var jsonObj = JSON.parse(replyData);
+            for (var i=0; i<jsonObj.statuses.length; i++) {
+                modelWeibo.append(jsonObj.statuses[i])
+            }
+            if (weiboTab.model == undefined) {
+                weiboTab.model = modelWeibo;
+            }
+            fetchFinished();
+        }
+    }
+
+    FavoritesCreate {
+        id: favoritesCreate
+        onRequestAbort: {
+            console.log("== favoritesCreate onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== favoritesCreate onRequestFailure ["+replyData+"]")
+            addNotification(qsTr("Fail to add to favorites"));
+        }
+        onRequestSuccess: { //replyData
+            addNotification(qsTr("Succeed to add to favorites"));
+        }
+    }
+
     function refresh() {
         //showBusyIndicator();
         fetchPending();
         modelWeibo.clear();
         _allWeiboPageNum = 1;
         _isGroupType = false;
-        var method = WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
-        api.setWeiboAction(method, {
-                               'page':_allWeiboPageNum,
-                               'access_token':settings.accessToken//Settings.getAccess_token()
-                           });
+//        var method = WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
+//        api.setWeiboAction(method, {
+//                               'page':_allWeiboPageNum,
+//                               'access_token':settings.accessToken//Settings.getAccess_token()
+//                           });
+        statusesFriendsTimeline.setParameters("page", " "+_allWeiboPageNum);
+        statusesFriendsTimeline.getRequest();
     }
     
     function addMore() {
         fetchPending();
         if(_isGroupType) {
             _groupWeiboPageNum++;
-            var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE;
-            api.setWeiboAction(method, {
-                                   "page":_groupWeiboPageNum,
-                                   "access_token":settings.accessToken, //Settings.getAccess_token(),
-                                   "list_id":_groupIdstr});
+//            var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE;
+//            api.setWeiboAction(method, {
+//                                   "page":_groupWeiboPageNum,
+//                                   "access_token":settings.accessToken, //Settings.getAccess_token(),
+//                                   "list_id":_groupIdstr});
+            friendshipsGroupsTimeline.setParameters("page", " "+_groupWeiboPageNum);
+            friendshipsGroupsTimeline.setParameters("list_id", _groupIdstr);
+            friendshipsGroupsTimeline.getRequest();
         } else {
             _allWeiboPageNum++;
-            var method = WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
-            api.setWeiboAction(method, {
-                                   'page':_allWeiboPageNum,
-                                   'access_token':settings.accessToken//Settings.getAccess_token()
-                               });
+//            var method = WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
+//            api.setWeiboAction(method, {
+//                                   'page':_allWeiboPageNum,
+//                                   'access_token':settings.accessToken//Settings.getAccess_token()
+//                               });
+            statusesFriendsTimeline.setParameters("page", _allWeiboPageNum);
+            statusesFriendsTimeline.getRequest();
         }
     }
 
@@ -58,11 +119,13 @@ SilicaListView {
 
     function addToFavorites(weiboId) {
         addNotification(qsTr("Start adding to favorites"));
-        var method = WeiboMethod.WBOPT_POST_FAVORITES_CREATE; //添加收藏
-        api.setWeiboAction(method, {
-                               "id":" "+weiboId+" ", //FIXME: How can I avoid to change string ==> int when using QVariant ?
-                               "access_token":settings.accessToken//Settings.getAccess_token()
-                           });
+//        var method = WeiboMethod.WBOPT_POST_FAVORITES_CREATE; //添加收藏
+//        api.setWeiboAction(method, {
+//                               "id":" "+weiboId+" ", //FIXME: How can I avoid to change string ==> int when using QVariant ?
+//                               "access_token":settings.accessToken//Settings.getAccess_token()
+//                           });
+        favoritesCreate.setParameters("id", " "+weiboId);
+        favoritesCreate.postRequest();
     }
 
     function showGroupWeibo(groupIdstr) {
@@ -73,44 +136,47 @@ SilicaListView {
         _groupWeiboPageNum = 1;
         _groupIdstr = groupIdstr;
         _isGroupType = true;
-        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE;
-        api.setWeiboAction(method, {
-                               "page":_groupWeiboPageNum,
-                               "access_token":settings.accessToken,//Settings.getAccess_token(),
-                               "list_id":_groupIdstr});
+//        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE;
+//        api.setWeiboAction(method, {
+//                               "page":_groupWeiboPageNum,
+//                               "access_token":settings.accessToken,//Settings.getAccess_token(),
+//                               "list_id":_groupIdstr});
+        friendshipsGroupsTimeline.setParameters("page", " "+_groupWeiboPageNum);
+        friendshipsGroupsTimeline.setParameters("list_id", _groupIdstr);
+        friendshipsGroupsTimeline.getRequest();
     }
 
     ListModel {
         id: modelWeibo
     }
     
-    Connections {
-        target: api
-        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-        //weiboPutFail(mWeiboMethod.getWeiboAction(parseRequestedWeiboPutUrl(requestedUrl)), error);
-        onWeiboPutSucceed: {
-            if (action == WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE
-                    || action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE) {
-                var jsonObj = JSON.parse(replyData);
-                for (var i=0; i<jsonObj.statuses.length; i++) {
-                    modelWeibo.append(jsonObj.statuses[i])
-                }
-                if (weiboTab.model == undefined) {
-                    weiboTab.model = modelWeibo;
-                }
-                fetchFinished();
-            }
-            if (action == WeiboMethod.WBOPT_POST_FAVORITES_CREATE) {
-                addNotification(qsTr("Succeed to add to favorites"));
-            }
-        }
-        onWeiboPutFail: {
-            if (action == WeiboMethod.WBOPT_POST_FAVORITES_CREATE) {
-                addNotification(qsTr("Fail to add to favorites"));
-            }
-        }
-        onTokenExpired: {}
-    }
+//    Connections {
+//        target: api
+//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+//        //weiboPutFail(mWeiboMethod.getWeiboAction(parseRequestedWeiboPutUrl(requestedUrl)), error);
+//        onWeiboPutSucceed: {
+//            if (action == WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE
+//                    || action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE) {
+//                var jsonObj = JSON.parse(replyData);
+//                for (var i=0; i<jsonObj.statuses.length; i++) {
+//                    modelWeibo.append(jsonObj.statuses[i])
+//                }
+//                if (weiboTab.model == undefined) {
+//                    weiboTab.model = modelWeibo;
+//                }
+//                fetchFinished();
+//            }
+//            if (action == WeiboMethod.WBOPT_POST_FAVORITES_CREATE) {
+//                addNotification(qsTr("Succeed to add to favorites"));
+//            }
+//        }
+//        onWeiboPutFail: {
+//            if (action == WeiboMethod.WBOPT_POST_FAVORITES_CREATE) {
+//                addNotification(qsTr("Fail to add to favorites"));
+//            }
+//        }
+//        onTokenExpired: {}
+//    }
 
     cacheBuffer: 999999
     // model: modelWeibo
