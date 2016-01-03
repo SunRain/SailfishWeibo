@@ -6,6 +6,12 @@ BackgroundItem {
     property variant menu
     property Item _menuItem
     property bool menuOpen: _menuItem != null && _menuItem._open
+    property real arrowSize: Theme.iconSizeSmallPlus
+    property string openActionIcon: util.pathTo("qml/graphics/action_open.png")
+    property string closeActionIcon: util.pathTo("qml/graphics/action_collapse.png")
+
+    default property alias children: subcontent.data
+
 //    property bool showMenuOnPressAndHold: true
 
     // If this item is removed by a RemorseItem, do not restore visibility
@@ -13,6 +19,7 @@ BackgroundItem {
     property bool __silica_item_removed
     
     signal menuStateChanged(bool opened)
+    signal clicked
     
     Binding on opacity {
         when: __silica_item_removed
@@ -51,6 +58,9 @@ BackgroundItem {
             } else {
                 _menuItem = menu
             }
+            //FIXME dirty hack for contexmenu display
+//            _menuItem.z = optionItem.z + 1;
+            _menuItem.x = -(Screen.width - optionItem.width)/2
         }
         if (_menuItem) {
             if (menu.createObject === undefined) {
@@ -77,7 +87,42 @@ BackgroundItem {
     _backgroundColor: Theme.rgba(Theme.highlightBackgroundColor, _showPress && !menuOpen ? Theme.highlightBackgroundOpacity : 0)
 
     onClicked: {
-        showMenu()
+        optionItem.clicked();
+    }
+
+    Item {
+        width: parent.width
+        height: parent.height
+        Item {
+            id: subcontent
+            anchors {
+                left: parent.left
+                top: parent.top
+                right: arrow.left
+            }
+            height: parent.height
+        }
+        MouseArea {
+            id: arrow
+            height: parent.height
+            width: height
+            anchors {
+                right: parent.right
+                top:parent.top
+            }
+            enabled: menu != null
+            visible: menu != null
+            Image {
+                anchors.centerIn: parent
+                width: optionItem.arrowSize
+                height: width
+                fillMode: Image.PreserveAspectFit
+                source: menuOpen ? optionItem.closeActionIcon : optionItem.openActionIcon
+            }
+            onClicked: {
+                showMenu();
+            }
+        }
     }
 
     Component {

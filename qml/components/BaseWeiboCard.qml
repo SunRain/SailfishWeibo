@@ -64,38 +64,15 @@ Item {
         Item {
             id: avatarBar
             width: columnWContent.width
-            height: optionItem.menuOpen ? userAvatarHeader.height + optionItem.height : userAvatarHeader.height
+            height: optionItem.height
             
-            UserAvatarHeader {
-                id: userAvatarHeader
-
-                width: parent.width *7/10
-                onUserAvatarClicked: {
-                    baseWeiboCard.userAvatarHeaderClicked();
-                }
-            }
             OptionItem{
                 id:optionItem
-                //FIXME: Dirty hack to fix the OptionItem align
-                anchors {
-                    left: optionItem.menuOpen ? avatarBar.left : userAvatarHeader.right
-                    leftMargin: -(Screen.width - avatarBar.width)/2
-                    right: avatarBar.right
-                }
-                visible: optionMenu != null
-                Image {
-                    anchors{
-                        top:parent.top
-                        bottom: parent.bottom
-                        right: parent.right
+                UserAvatarHeader {
+                    id: userAvatarHeader
+                    onUserAvatarClicked: {
+                        baseWeiboCard.userAvatarHeaderClicked();
                     }
-                    smooth: true
-                    width: Theme.iconSizeMedium
-                    height: width
-                    fillMode: Image.PreserveAspectFit
-                    source: optionItem.menuOpen ? 
-                                util.pathTo("qml/graphics/action_collapse.png") :
-                                util.pathTo("qml/graphics/action_open.png")
                 }
                 onMenuStateChanged: {
 //                    console.log("====== option Item " + menuOpen);

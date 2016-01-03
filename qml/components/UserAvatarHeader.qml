@@ -9,6 +9,9 @@ Item{
     property alias userAvatar: avatarImage.source
     property alias userNameFontSize: labelUserName.font.pixelSize
 
+    width: parent ? parent.width : Screen.width
+    height: parent ? parent.height : Theme.itemSizeMedium
+
     signal userAvatarClicked
     
     Row {
