@@ -26,13 +26,19 @@ Page {
         modelInfo.clear();
         var method;
         if (_footInfoBarIndex == 0) {
-            method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
-            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_repostPageNum});
+//            method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
+//            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_repostPageNum});
+            statusesRepostTimeline.setParameters("id", " "+id+" ");
+            statusesRepostTimeline.setParameters("page", _repostPageNum);
+            statusesRepostTimeline.getRequest();
         }
         
         if (_footInfoBarIndex == 1) {
-            method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_commentsPageNum});
+//            method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
+//            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_commentsPageNum});
+            commentsShow.setParameters("id", " "+id+" ");
+            commentsShow.setParameters("page", _commentsPageNum);
+            commentsShow.getRequest();
         }
 
     }
@@ -41,14 +47,20 @@ Page {
         var method
         if (_footInfoBarIndex == 0) {
             _repostPageNum++;
-            method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
-            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_repostPageNum});
+//            method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
+//            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_repostPageNum});
+            statusesRepostTimeline.setParameters("id", " "+_weiboId+" ");
+            statusesRepostTimeline.setParameters("page", _repostPageNum);
+            statusesRepostTimeline.getRequest();
         }
         
         if (_footInfoBarIndex == 1) {
             _commentsPageNum++;
-            method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_commentsPageNum});
+//            method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
+//            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_commentsPageNum});
+            commentsShow.setParameters("id", " "+_weiboId+" ");
+            commentsShow.setParameters("page", _commentsPageNum);
+            commentsShow.getRequest();
         }
 
     }
@@ -58,24 +70,62 @@ Page {
         }
     }
     
-    Connections {
-        target: api
-        onWeiboPutSucceed: {
+    CommentsShow {
+        id: commentsShow
+        onRequestAbort: {
             weiboPage._gettingInfo = false
-            if (action == WeiboMethod.WBOPT_GET_COMMENTS_SHOW) {
-                var json = JSON.parse(replyData);
-                for (var i=0; i<json.comments.length; i++) {
-                    modelInfo.append(json.comments[i])
-                }
-            }
-            if (action == WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE) {
-                json = JSON.parse(replyData);
-                for (i=0; i<json.reposts.length; i++) {
-                    modelInfo.append(json.reposts[i])
-                }
+            console.log("== commentsShow onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            weiboPage._gettingInfo = false
+            console.log("== commentsShow onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            weiboPage._gettingInfo = false
+            var json = JSON.parse(replyData);
+            for (var i=0; i<json.comments.length; i++) {
+                modelInfo.append(json.comments[i])
             }
         }
     }
+
+    StatusesRepostTimeline {
+        id: statusesRepostTimeline
+        onRequestAbort: {
+            weiboPage._gettingInfo = false
+            console.log("== statusesRepostTimeline onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            weiboPage._gettingInfo = false
+            console.log("== statusesRepostTimeline onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            weiboPage._gettingInfo = false
+            json = JSON.parse(replyData);
+            for (i=0; i<json.reposts.length; i++) {
+                modelInfo.append(json.reposts[i])
+            }
+        }
+    }
+
+//    Connections {
+//        target: api
+//        onWeiboPutSucceed: {
+//            weiboPage._gettingInfo = false
+//            if (action == WeiboMethod.WBOPT_GET_COMMENTS_SHOW) {
+//                var json = JSON.parse(replyData);
+//                for (var i=0; i<json.comments.length; i++) {
+//                    modelInfo.append(json.comments[i])
+//                }
+//            }
+//            if (action == WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE) {
+//                json = JSON.parse(replyData);
+//                for (i=0; i<json.reposts.length; i++) {
+//                    modelInfo.append(json.reposts[i])
+//                }
+//            }
+//        }
+//    }
     
     SilicaFlickable {
         id: main

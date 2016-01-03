@@ -33,31 +33,49 @@ Page {
     function _weiboMentioned(page) {
         showBusyIndicator();
 
-        var method = WeiboMethod.WBOPT_GET_STATUSES_MENTIONS;
-        api.setWeiboAction(method, {'page':_pageNum});
+//        var method = WeiboMethod.WBOPT_GET_STATUSES_MENTIONS;
+//        api.setWeiboAction(method, {'page':_pageNum});
+        statusesMentions.setParameters("page", _pageNum);
+        statusesMentions.getRequest();
     }
 
-    Connections {
-        target: api
-        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-        onWeiboPutSucceed: {
-            if (action == WeiboMethod.WBOPT_GET_STATUSES_MENTIONS) {
-                var jsonObj = JSON.parse(replyData);
-                for (var i=0; i<jsonObj.statuses.length; i++) {
-                    modelWeibo.append( jsonObj.statuses[i] )
-                }
-                if (lvUserWeibo.model == undefined) {
-                    lvUserWeibo.model = modelWeibo;
-                }
-                stopBusyIndicator();
+    StatusesMentions {
+        id: statusesMentions
+        onRequestAbort: {
+            console.log("== statusesMentions onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== statusesMentions onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            var jsonObj = JSON.parse(replyData);
+            for (var i=0; i<jsonObj.statuses.length; i++) {
+                modelWeibo.append( jsonObj.statuses[i] )
             }
+            if (lvUserWeibo.model == undefined) {
+                lvUserWeibo.model = modelWeibo;
+            }
+            stopBusyIndicator();
         }
     }
-    
-//    Component.onCompleted: {
-//        weiboMentionedPage.refresh();
-//    }
 
+//    Connections {
+//        target: api
+//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+//        onWeiboPutSucceed: {
+//            if (action == WeiboMethod.WBOPT_GET_STATUSES_MENTIONS) {
+//                var jsonObj = JSON.parse(replyData);
+//                for (var i=0; i<jsonObj.statuses.length; i++) {
+//                    modelWeibo.append( jsonObj.statuses[i] )
+//                }
+//                if (lvUserWeibo.model == undefined) {
+//                    lvUserWeibo.model = modelWeibo;
+//                }
+//                stopBusyIndicator();
+//            }
+//        }
+//    }
+    
     ListView{
         id: lvUserWeibo
         anchors.fill: parent

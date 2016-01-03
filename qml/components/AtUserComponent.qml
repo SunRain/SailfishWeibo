@@ -15,20 +15,34 @@ Item {
     signal fetchPending
     signal fetchFinish
     
-    Connections {
-        target: api
-        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-        onWeiboPutSucceed: {
-            if (action == WeiboMethod.WBOPT_GET_SEARCH_SUGGESTIONS_AT_USERS) {
-                var jsonObj = JSON.parse(replyData);
-                modelAtUser.clear();
-                for (var i=0; i<jsonObj.length; i++) {
-                    modelAtUser.append(jsonObj[i])
-                }
-                fetchFinish();
-            }
+//    Connections {
+//        target: api
+//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+//        onWeiboPutSucceed: {
+//            if (action == WeiboMethod.WBOPT_GET_SEARCH_SUGGESTIONS_AT_USERS) {
+//                var jsonObj = JSON.parse(replyData);
+//                modelAtUser.clear();
+//                for (var i=0; i<jsonObj.length; i++) {
+//                    modelAtUser.append(jsonObj[i])
+//                }
+//                fetchFinish();
+//            }
+//        }
+//        onTokenExpired: {}
+//    }
+    SearchSuggestionsAtUsers {
+        id: searchSuggestionsAtUsers
+        onRequestAbort: {}
+        onRequestFailure: { //replyData
         }
-        onTokenExpired: {}
+        onRequestSuccess: { //replyData
+            var jsonObj = JSON.parse(replyData);
+            modelAtUser.clear();
+            for (var i=0; i<jsonObj.length; i++) {
+                modelAtUser.append(jsonObj[i])
+            }
+            fetchFinish();
+        }
     }
 
     Column {
@@ -126,12 +140,16 @@ Item {
             function searchAtUser(kw) {
                 fetchPending();
                 var q = encodeURIComponent(kw);
-                var method = WeiboMethod.WBOPT_GET_SEARCH_SUGGESTIONS_AT_USERS;
-                api.setWeiboAction(method, {
-                                       "access_token":settings.accessToken,
-                                       "q":q,
-                                       "type":0,
-                                       "range":2});
+//                var method = WeiboMethod.WBOPT_GET_SEARCH_SUGGESTIONS_AT_USERS;
+//                api.setWeiboAction(method, {
+//                                       "access_token":settings.accessToken,
+//                                       "q":q,
+//                                       "type":0,
+//                                       "range":2});
+                searchSuggestionsAtUsers.setParameters("q", q);
+                searchSuggestionsAtUsers.setParameters("type", 0);
+                searchSuggestionsAtUsers.setParameters("range", 2);
+                searchSuggestionsAtUsers.getRequest();
             }
         }
     }

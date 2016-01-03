@@ -29,40 +29,75 @@ Page {
     //////////////////////////////////////////////////////////////////         user status mentioned me
     function _weiboFavorites(page) {
         pullDownMenu.busy = true;
-        var method = WeiboMethod.WBOPT_GET_FAVORITES;
-        api.setWeiboAction(method, {"page":_pageNum});
+//        var method = WeiboMethod.WBOPT_GET_FAVORITES;
+//        api.setWeiboAction(method, {"page":_pageNum});
+        favorites.setParameters("page", _pageNum);
+        favorites.getRequest();
     }
 
     function _removeFromFavorites(weiboId) {
         addNotification(qsTr("Removing from favorites"))
-        var method = WeiboMethod.WBOPT_POST_FAVORITES_DESTROY;
-        api.setWeiboAction(method, {"id":" "+weiboId+" "});
+//        var method = WeiboMethod.WBOPT_POST_FAVORITES_DESTROY;
+//        api.setWeiboAction(method, {"id":" "+weiboId+" "});
+        favoritesDestroy.setParameters("id", weiboId);
+        favoritesDestroy.postRequest();
+    }
+    Favorites {
+        id: favorites
+        onRequestAbort: {
+            console.log("== favorites onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== favorites onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            var jsonObj = JSON.parse(replyData);
+            for (var i=0; i<jsonObj.favorites.length; i++) {
+                modelWeibo.append( jsonObj.favorites[i] )
+            }
+            if (lvUserWeibo.model == undefined) {
+                lvUserWeibo.model = modelWeibo;
+            }
+            pullDownMenu.busy = false;
+        }
+    }
+    FavoritesDestroy {
+        id: favoritesDestroy
+        onRequestAbort: {
+            console.log("== favoritesDestroy onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== favoritesDestroy onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            refresh();
+        }
     }
 
-    Connections {
-        target: api
-        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-        onWeiboPutSucceed: {
-            if (action == WeiboMethod.WBOPT_GET_FAVORITES) {
-                var jsonObj = JSON.parse(replyData);
-                for (var i=0; i<jsonObj.favorites.length; i++) {
-                    modelWeibo.append( jsonObj.favorites[i] )
-                }
-                if (lvUserWeibo.model == undefined) {
-                    lvUserWeibo.model = modelWeibo;
-                }
-                pullDownMenu.busy = false;
-            }
-            if (action == WeiboMethod.WBOPT_POST_FAVORITES_DESTROY) {
-                refresh();
-            }
-        }
-        onWeiboPutFail: {
-            if (action == WeiboMethod.WBOPT_POST_FAVORITES_DESTROY) {
-                addNotification(qsTr("Fail to remove from favorites"));
-            }
-        }
-    }
+//    Connections {
+//        target: api
+//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+//        onWeiboPutSucceed: {
+//            if (action == WeiboMethod.WBOPT_GET_FAVORITES) {
+//                var jsonObj = JSON.parse(replyData);
+//                for (var i=0; i<jsonObj.favorites.length; i++) {
+//                    modelWeibo.append( jsonObj.favorites[i] )
+//                }
+//                if (lvUserWeibo.model == undefined) {
+//                    lvUserWeibo.model = modelWeibo;
+//                }
+//                pullDownMenu.busy = false;
+//            }
+//            if (action == WeiboMethod.WBOPT_POST_FAVORITES_DESTROY) {
+//                refresh();
+//            }
+//        }
+//        onWeiboPutFail: {
+//            if (action == WeiboMethod.WBOPT_POST_FAVORITES_DESTROY) {
+//                addNotification(qsTr("Fail to remove from favorites"));
+//            }
+//        }
+//    }
     
 //    Component.onCompleted: {
 //        weiboFavoritesPage.refresh();

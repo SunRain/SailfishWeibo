@@ -72,46 +72,105 @@ Page {
 //                ("trim_status", 0)  //返回值中user字段中的status字段开关，0：返回完整status字段、1：status字段仅返回status_id，默认为1。
 //        REQUEST_API_END()
         //WBOPT_GET_FRIENDSHIPS_FRIENDS
-        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS;
-        api.setWeiboAction(method, {
-                               'uid':uid,
-                               'count':count,
-                               'cursor':cursor});
+//        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS;
+//        api.setWeiboAction(method, {
+//                               'uid':uid,
+//                               'count':count,
+//                               'cursor':cursor});
+        friendshipsFriends.setParameters("uid", uid);
+        friendshipsFriends.setParameters("count", count);
+        friendshipsFriends.setParameters("cursor", cursor);
+        friendshipsFriends.getRequest();
     }
-    Connections {
-        target: api
-        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-        onWeiboPutSucceed: {
-            var result = JSON.parse(replyData);
-            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS) {
-                modelFollowing.cursor = result.next_cursor
-                if (result.next_cursor == 0) {
-                    lvUsers0.footerItem.visible = false
-                }
-                for (var i=0; i<result.users.length; i++) {
-                    modelFollowing.append(result.users[i])
-                }
+    FriendshipsFriends {
+        id: friendshipsFriends
+        onRequestAbort: {
+            console.log("== friendshipsFriends onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== friendshipsFriends onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            modelFollowing.cursor = result.next_cursor
+            if (result.next_cursor == 0) {
+                lvUsers0.footerItem.visible = false
             }
-            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_FOLLOWERS) {
-                modelFollower.cursor = result.next_cursor
-                if (result.next_cursor == 0) {
-                    lvUsers1.footerItem.visible = false
-                }
-                for (var i=0; i<result.users.length; i++) {
-                    modelFollower.append(result.users[i])
-                }
+            for (var i=0; i<result.users.length; i++) {
+                modelFollowing.append(result.users[i])
             }
-            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS_BILATERAL) {
-                for (var i=0; i<result.users.length; i++) {
-                    modelBilateral.append(result.users[i])
-                }
-                if (modelBilateral.count == result.total_number) {
-                    lvUsers2.footerItem.visible = false
-                }
-            }
-            
         }
     }
+    FriendshipsFollowers {
+        id: friendshipsFollowers
+        onRequestAbort: {
+            console.log("== friendshipsFollowers onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== friendshipsFollowers onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            modelFollower.cursor = result.next_cursor
+            if (result.next_cursor == 0) {
+                lvUsers1.footerItem.visible = false
+            }
+            for (var i=0; i<result.users.length; i++) {
+                modelFollower.append(result.users[i])
+            }
+        }
+    }
+    FriendshipsFriendsBilateral {
+        id: friendshipsFriendsBilateral
+        onRequestAbort: {
+            console.log("== friendshipsFriendsBilateral onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== friendshipsFriendsBilateral onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            for (var i=0; i<result.users.length; i++) {
+                modelBilateral.append(result.users[i])
+            }
+            if (modelBilateral.count == result.total_number) {
+                lvUsers2.footerItem.visible = false
+            }
+        }
+    }
+
+
+//    Connections {
+//        target: api
+//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+//        onWeiboPutSucceed: {
+//            var result = JSON.parse(replyData);
+//            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS) {
+//                modelFollowing.cursor = result.next_cursor
+//                if (result.next_cursor == 0) {
+//                    lvUsers0.footerItem.visible = false
+//                }
+//                for (var i=0; i<result.users.length; i++) {
+//                    modelFollowing.append(result.users[i])
+//                }
+//            }
+//            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_FOLLOWERS) {
+//                modelFollower.cursor = result.next_cursor
+//                if (result.next_cursor == 0) {
+//                    lvUsers1.footerItem.visible = false
+//                }
+//                for (var i=0; i<result.users.length; i++) {
+//                    modelFollower.append(result.users[i])
+//                }
+//            }
+//            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS_BILATERAL) {
+//                for (var i=0; i<result.users.length; i++) {
+//                    modelBilateral.append(result.users[i])
+//                }
+//                if (modelBilateral.count == result.total_number) {
+//                    lvUsers2.footerItem.visible = false
+//                }
+//            }
+            
+//        }
+//    }
 
     function addMoreFollowing() {
 //        console.log("modelFollowing.cursor: ", modelFollowing.cursor)
@@ -132,11 +191,15 @@ Page {
 //        REQUEST_API_END()
         //WBOPT_GET_FRIENDSHIPS_FOLLOWERS
         
-        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_FOLLOWERS;
-        api.setWeiboAction(method, {
-                               'uid':uid,
-                               'count':count,
-                               'cursor':cursor});
+//        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_FOLLOWERS;
+//        api.setWeiboAction(method, {
+//                               'uid':uid,
+//                               'count':count,
+//                               'cursor':cursor});
+        friendshipsFollowers.setParameters("uid", uid);
+        friendshipsFollowers.setParameters("count", count);
+        friendshipsFollowers.setParameters("cursor", cursor);
+        friendshipsFollowers.getRequest();
     }
 
     function addMoreFollower() {
@@ -157,11 +220,15 @@ Page {
 //        REQUEST_API_END()
         //WBOPT_GET_FRIENDSHIPS_FRIENDS_BILATERAL
         
-        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS_BILATERAL;
-        api.setWeiboAction(method, {
-                               'uid':uid,
-                               'count':count,
-                               'page':page});
+//        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_FRIENDS_BILATERAL;
+//        api.setWeiboAction(method, {
+//                               'uid':uid,
+//                               'count':count,
+//                               'page':page});
+        friendshipsFriendsBilateral.setParameters("uid", uid);
+        friendshipsFriendsBilateral.setParameters("count", count);
+        friendshipsFriendsBilateral.setParameters("page", page);
+        friendshipsFriendsBilateral.getRequest();
     }
 
     function addMoreBilateral() {
