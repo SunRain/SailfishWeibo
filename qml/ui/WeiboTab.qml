@@ -198,7 +198,7 @@ SilicaListView {
         Column {
             anchors{left:parent.left; right:parent.right }
             spacing: Theme.paddingMedium
-            
+
             Item {
                 anchors{left:parent.left; right:parent.right; }
                 height: childrenRect.height
