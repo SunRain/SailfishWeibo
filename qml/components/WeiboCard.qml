@@ -120,58 +120,98 @@ Item {
         }
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
-            height: childrenRect.height
+            height: Theme.itemSizeExtraSmall /2
+            spacing: Theme.paddingLarge *2
 
-            Item {
-                width: columnWContent.width / 3 -Theme.paddingSmall
-                height: Theme.fontSizeSmall
-                HorizontalIconTextButton {
-                    id:repostButton
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    icon: util.pathTo("qml/graphics/repost.png")
-                    text: weiboJSONContent.reposts_count
-                    color: repostButtonColor == undefined ? Theme.secondaryColor : repostButtonColor
-                    onClicked: {
-                        weiboCard.repostButtonClicked();
+            MouseArea {
+                id: repostMouse
+                height: parent.height
+                width: childrenRect.width
+                property bool _press: repostMouse.pressed && repostMouse.containsMouse
+                Row {
+                    height: parent.height
+                    spacing: Theme.paddingSmall/2
+                    Image {
+                        source: util.pathTo("qml/graphics/repost.png")
+                        height: parent.height
+                        width: height
+                        fillMode: Image.PreserveAspectFit
+                        anchors.verticalCenter: parent.verticalCenter
                     }
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: weiboJSONContent.reposts_count
+                        font.bold: repostMouse._press
+                        font.pixelSize: parent.height
+                        color: repostMouse._press ? Theme.highlightColor : Theme.secondaryColor
+                    }
+                }
+                onClicked: {
+                    weiboCard.repostButtonClicked();
                 }
             }
             Rectangle {
                 width: 1
-                height: Theme.fontSizeSmall -2
+                height: parent.height
                 color: Theme.highlightColor
             }
-            Item {
-                width: columnWContent.width / 3 - Theme.paddingSmall
-                height: Theme.fontSizeSmall
-                HorizontalIconTextButton {
-                    id:commentButton
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    icon: util.pathTo("qml/graphics/comment.png")
-                    text: weiboJSONContent.comments_count
-                    color: commentButtonColor == undefined ? Theme.secondaryColor : commentButtonColor
-                    onClicked: {
-                        weiboCard.commentButtonClicked();
+            MouseArea {
+                id: commentMouse
+                height: parent.height
+                width: childrenRect.width
+                property bool _press: commentMouse.pressed && commentMouse.containsMouse
+                Row {
+                    height: parent.height
+                    spacing: Theme.paddingSmall/2
+                    Image {
+                        source: util.pathTo("qml/graphics/comment.png")
+                        height: parent.height
+                        width: height
+                        fillMode: Image.PreserveAspectFit
+                        anchors.verticalCenter: parent.verticalCenter
                     }
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: weiboJSONContent.comments_count
+                        font.bold: commentMouse._press
+                        font.pixelSize: parent.height
+                        color: commentMouse._press ? Theme.highlightColor : Theme.secondaryColor
+                    }
+                }
+                onClicked: {
+                    weiboCard.commentButtonClicked();
                 }
             }
             Rectangle {
                 width: 1
-                height: Theme.fontSizeSmall -2
+                height: parent.height
                 color: Theme.highlightColor
             }
-            Item {
-                width: columnWContent.width / 3 - Theme.paddingSmall
-                height: Theme.fontSizeSmall
-                HorizontalIconTextButton {
-                    id:likeButton
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    icon: util.pathTo("qml/graphics/like.png")
-                    text: weiboJSONContent.attitudes_count
-                    color: likeButtonColor == undefined ? Theme.secondaryColor : likeButtonColor
-                    onClicked: {
-                        weiboCard.likeButtonClicked();
+            MouseArea {
+                id: likeMouse
+                height: parent.height
+                width: childrenRect.width
+                property bool _press: likeMouse.pressed && likeMouse.containsMouse
+                Row {
+                    height: parent.height
+                    spacing: Theme.paddingSmall/2
+                    Image {
+                        source: util.pathTo("qml/graphics/like.png")
+                        height: parent.height
+                        width: height
+                        fillMode: Image.PreserveAspectFit
+                        anchors.verticalCenter: parent.verticalCenter
                     }
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: weiboJSONContent.attitudes_count
+                        font.bold: likeMouse._press
+                        font.pixelSize: parent.height
+                        color: likeMouse._press ? Theme.highlightColor : Theme.secondaryColor
+                    }
+                }
+                onClicked: {
+                    weiboCard.likeButtonClicked();
                 }
             }
         }

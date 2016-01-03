@@ -131,182 +131,162 @@ Panel {
                 color: Theme.secondaryColor
             }
         }
-        Item {
-            width: column.width
+        HorizontalIconTextButton {
+            width: column.width - Theme.paddingLarge *2
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
-                }
-                text: qsTr("Home")
-                color: Theme.secondaryColor
-                spacing: Theme.paddingMedium
-                icon: util.pathTo("qml/graphics/panel_home.png")
-                iconSize: Theme.itemSizeExtraSmall *2/3
-                onClicked: {
-                    toIndexPage();
-                }
+            anchors.horizontalCenter: column.horizontalCenter
+            text: qsTr("Home")
+            fontSize: Theme.itemSizeExtraSmall *0.8
+            color: Theme.secondaryColor
+            spacing: Theme.paddingMedium
+            icon: util.pathTo("qml/graphics/panel_home.png")
+            iconSize: Theme.itemSizeExtraSmall *0.6
+            onClicked: {
+                toIndexPage();
             }
         }
-        Item {
-            width: column.width
+        HorizontalIconTextButton {
+            id: atMeWeibo
+            width: column.width - Theme.paddingLarge *2
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
-                id: atMeWeibo
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
-                }
-                text: qsTr("AtMeWeibo")
-                color: Theme.secondaryColor
-                spacing: Theme.paddingMedium
-                icon: util.pathTo("qml/graphics/panel_at.png")
-                iconSize: Theme.itemSizeExtraSmall *2/3
-                onClicked: {
-                    toWeiboMentionedPage();
-                }
+            anchors.horizontalCenter: column.horizontalCenter
+            fontSize: Theme.itemSizeExtraSmall *0.8
+            text: qsTr("AtMeWeibo")
+            color: Theme.secondaryColor
+            spacing: Theme.paddingMedium
+            icon: util.pathTo("qml/graphics/panel_at.png")
+            iconSize: Theme.itemSizeExtraSmall *0.6
+            onClicked: {
+                toWeiboMentionedPage();
             }
-            Label {
+            Rectangle {
+                radius: 90
                 anchors {
                     left: atMeWeibo.left
-                    leftMargin: atMeWeibo.iconSize -2
+                    leftMargin: atMeWeibo.iconSize
                     top: atMeWeibo.top
-                    topMargin: -3
+                    topMargin: atMeWeibo.height - atMeWeibo.fontSize
                 }
+                width: atMeWeibo.height - atMeWeibo.fontSize
+                height: width
+                z: parent.z + 1
+                color: Theme.highlightColor
                 opacity: remindObject.remind.mention_status == "0" ? 0 : 1
-                text: remindObject.remind.mention_status
-                font.pixelSize: atMeWeibo.iconSize/2
-                color: Theme.secondaryHighlightColor
             }
         }
-        Item {
-            width: column.width
+        HorizontalIconTextButton {
+            id: atMeComment
+            width: column.width - Theme.paddingLarge *2
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
-                id: atMeComment
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
-                }
-                text: qsTr("AtMeComment")
-                color: Theme.secondaryColor
-                spacing: Theme.paddingMedium
-                icon: util.pathTo("qml/graphics/panel_at.png")
-                iconSize: Theme.itemSizeExtraSmall *2/3
-                onClicked: {
-                    toCommentMentionedPage();
-                }
+            anchors.horizontalCenter: column.horizontalCenter
+            fontSize: Theme.itemSizeExtraSmall *0.8
+            text: qsTr("AtMeComment")
+            color: Theme.secondaryColor
+            spacing: Theme.paddingMedium
+            icon: util.pathTo("qml/graphics/panel_at.png")
+            iconSize: Theme.itemSizeExtraSmall *0.6
+            onClicked: {
+                toCommentMentionedPage();
             }
-            Label {
+            Rectangle {
+                radius: 90
                 anchors {
                     left: atMeComment.left
-                    leftMargin: atMeComment.iconSize -2
+                    leftMargin: atMeComment.iconSize
                     top: atMeComment.top
-                    topMargin: -3
+                    topMargin: atMeComment.height - atMeComment.fontSize
                 }
+                width: atMeComment.height - atMeComment.fontSize
+                height: width
+                z: parent.z + 1
+                color: Theme.highlightColor
                 opacity: remindObject.remind.mention_cmt == "0" ? 0 : 1
-                text: remindObject.remind.mention_cmt
-                font.pixelSize: atMeComment.iconSize/2
-                color: Theme.secondaryHighlightColor
             }
         }
-        Item {
-            width: column.width
+        HorizontalIconTextButton {
+            id: comment
+            width: column.width - Theme.paddingLarge *2
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
-                id: comment
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
-                }
-                text: qsTr("Comment")
-                color: Theme.secondaryColor
-                spacing: Theme.paddingMedium
-                icon: util.pathTo("qml/graphics/panel_comment.png")
-                iconSize: Theme.itemSizeExtraSmall *2/3
-                onClicked: {
-                    toCommentAllPage();
-                }
+            anchors.horizontalCenter: column.horizontalCenter
+            fontSize: Theme.itemSizeExtraSmall *0.8
+            text: qsTr("Comment")
+            color: Theme.secondaryColor
+            spacing: Theme.paddingMedium
+            icon: util.pathTo("qml/graphics/panel_comment.png")
+            iconSize: Theme.itemSizeExtraSmall *0.6
+            onClicked: {
+                toCommentAllPage();
             }
-            Label {
+            Rectangle {
+                radius: 90
                 anchors {
                     left: comment.left
-                    leftMargin: comment.iconSize -2
+                    leftMargin: comment.iconSize
                     top: comment.top
-                    topMargin: -3
+                    topMargin: comment.height - comment.fontSize
                 }
+                width: comment.height - comment.fontSize
+                height: width
+                z: parent.z + 1
+                color: Theme.highlightColor
                 opacity: remindObject.remind.cmt == "0" ? 0 : 1
-                text: remindObject.remind.cmt
-                font.pixelSize: comment.iconSize/2
-                color: Theme.secondaryHighlightColor
             }
         }
-        Item {
-            width: column.width
+        HorizontalIconTextButton {
+            id: pm
+            width: column.width - Theme.paddingLarge *2
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
-                id: pm
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
-                }
-                text: qsTr("PM")
-                color: Theme.secondaryColor
-                spacing: Theme.paddingMedium
-                icon: util.pathTo("qml/graphics/panel_pm.png")
-                iconSize: Theme.itemSizeExtraSmall *2/3
-                onClicked: {
-                    toDummyDialog();
-                }
+            anchors.horizontalCenter: column.horizontalCenter
+            fontSize: Theme.itemSizeExtraSmall *0.8
+            text: qsTr("PM")
+            color: Theme.secondaryColor
+            spacing: Theme.paddingMedium
+            icon: util.pathTo("qml/graphics/panel_pm.png")
+            iconSize: Theme.itemSizeExtraSmall *0.6
+            onClicked: {
+                toDummyDialog();
             }
-//            Label {
-//                anchors {
-//                    left: pm.left
-//                    leftMargin: pm.iconSize -2
-//                    top: pm.top
-//                    topMargin: -3
-//                }
-//                opacity: remindObject.remind.cmt == "0" ? 0 : 1
-//                text: remindObject.remind.cmt
-//                font.pixelSize: comment.iconSize/2
-//                color: Theme.secondaryHighlightColor
-//            }
-        }
-        Item {
-            width: column.width
-            height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
+            Rectangle {
+                radius: 90
                 anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
+                    left: pm.left
+                    leftMargin: pm.iconSize
+                    top: pm.top
+                    topMargin: pm.height - pm.fontSize
                 }
-                text: qsTr("Favourite")
-                color: Theme.secondaryColor
-                spacing: Theme.paddingMedium
-                icon: util.pathTo("qml/graphics/panel_fav.png")
-                iconSize: Theme.itemSizeExtraSmall *2/3
-                onClicked: {
-                    toFavoritesPage();
-                }
+                width: pm.height - pm.fontSize
+                height: width
+                z: parent.z + 1
+                color: Theme.highlightColor
+                opacity: remindObject.remind.cmt == "0" ? 0 : 1
             }
         }
-        Item {
-            width: column.width
+        HorizontalIconTextButton {
+            width: column.width - Theme.paddingLarge *2
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
-                }
-                text: qsTr("Settings")
-                color: Theme.secondaryColor
-                spacing: Theme.paddingMedium
-                icon: util.pathTo("qml/graphics/panel_set.png")
-                iconSize: Theme.itemSizeExtraSmall *2/3
-                onClicked: {
-                    toSettingsPage();
-                }
+            anchors.horizontalCenter: column.horizontalCenter
+            fontSize: Theme.itemSizeExtraSmall *0.8
+            text: qsTr("Favourite")
+            color: Theme.secondaryColor
+            spacing: Theme.paddingMedium
+            icon: util.pathTo("qml/graphics/panel_fav.png")
+            iconSize: Theme.itemSizeExtraSmall *0.6
+            onClicked: {
+                toFavoritesPage();
+            }
+        }
+        HorizontalIconTextButton {
+            width: column.width - Theme.paddingLarge *2
+            height: Theme.itemSizeExtraSmall
+            anchors.horizontalCenter: column.horizontalCenter
+            fontSize: Theme.itemSizeExtraSmall *0.8
+            text: qsTr("Settings")
+            color: Theme.secondaryColor
+            spacing: Theme.paddingMedium
+            icon: util.pathTo("qml/graphics/panel_set.png")
+            iconSize: Theme.itemSizeExtraSmall *0.6
+            onClicked: {
+                toSettingsPage();
             }
         }
     }

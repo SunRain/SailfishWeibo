@@ -20,7 +20,6 @@ Page {
     function refresh() {
         weiboTab.refresh();
     }
-
     Drawer {
         id: drawer
         anchors.fill: parent

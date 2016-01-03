@@ -6,8 +6,8 @@ MouseArea {
 
     property bool down: pressed && containsMouse
     property alias text: buttonText.text
-    property int fontSize: Math.min(image.width, image.height)
-    property bool _showPress: down || pressTimer.running
+    property int fontSize: horizontalIconTextButton.height
+    property bool _showPress: down //|| pressTimer.running
     property color color: Theme.primaryColor
     property color highlightColor: Theme.highlightColor
     property int spacing: Theme.paddingSmall
@@ -15,34 +15,42 @@ MouseArea {
     property real iconSize: Theme.iconSizeSmall
     //property alias source: image.source
 
-    onPressedChanged: {
-        if (pressed) {
-            pressTimer.start()
-        }
-    }
-    onCanceled: pressTimer.stop()
+//    onPressedChanged: {
+//        if (pressed) {
+//            pressTimer.start()
+//        }
+//    }
+//    onCanceled: pressTimer.stop()
 
-    width: parent ? parent.width : image.width + buttonText.width + horizontalIconTextButton.spacing
-    height: parent ? parent.height : Math.max(image.height, buttonText.height)
+    width: parent ? parent.width : Screen.width//image.width + buttonText.width + horizontalIconTextButton.spacing
+    height: parent ? parent.height : Theme.itemSizeExtraSmall //Math.max(image.height, buttonText.height)
 
-    Timer {
-        id: pressTimer
-        interval: 50
+//    Timer {
+//        id: pressTimer
+//        interval: 50
+//    }
+
+    Image {
+        id:image
+        anchors {
+            left: parent.left
+            verticalCenter: parent.verticalCenter
+        }
+        fillMode: Image.PreserveAspectFit
+        width: image.height
+        height: Math.min(horizontalIconTextButton.height, horizontalIconTextButton.iconSize)
     }
-    Row {
-        id: row
-        spacing: horizontalIconTextButton.spacing
-        Image {
-            id:image
-            fillMode: Image.PreserveAspectFit
-            width: horizontalIconTextButton.iconSize
-            height: image.width
+    Label {
+        id:buttonText
+        anchors{
+            left: image.right
+            leftMargin: horizontalIconTextButton.spacing
+            right: parent.right
+            verticalCenter: image.verticalCenter
         }
-        Label {
-            id:buttonText
-            anchors.verticalCenter: image.verticalCenter
-            color: _showPress ? horizontalIconTextButton.highlightColor : horizontalIconTextButton.color
-            font.pixelSize: horizontalIconTextButton.fontSize
-        }
+        elide: Text.ElideRight
+        color: _showPress ? horizontalIconTextButton.highlightColor : horizontalIconTextButton.color
+        font.bold: _showPress
+        font.pixelSize: Math.min(horizontalIconTextButton.fontSize, horizontalIconTextButton.height)
     }
 }
