@@ -39,50 +39,94 @@ Page {
 //                ("callback", "")  //JSONP回调函数，用于前端调用返回JS格式的信息。
 //                ("unread_message", 0)  //未读数版本。0：原版未读数，1：新版未读数。默认为0。
 //        REQUEST_API_END()
-        var method = WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT;
-        api.setWeiboAction(method, "");
+//        var method = WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT;
+//        api.setWeiboAction(method, "");
+        remindUnreadCount.getRequest();
     }
-    
-    Connections {
-        target: api
-        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-        onWeiboPutSucceed: {
-            if (action == WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT) {
-                var result = JSON.parse(replyData);
-                
-                //                        status	int	新微博未读数
-                //                        follower	int	新粉丝数
-                //                        cmt	int	新评论数
-                //                        dm	int	新私信数
-                //                        mention_status	int	新提及我的微博数
-                //                        mention_cmt	int	新提及我的评论数
-                
-                //remind = result
-                remindObject.remind = result
-                var mCount = result.follower + result.cmt + result.mention_status + result.mention_cmt
-                if (mCount > 1) {
-                    addNotification(qsTr("You have ") + mCount + qsTr(" new messages"), 3)
-                }
-                else if (mCount > 0) {
-                    addNotification(qsTr("You have ") + mCount + qsTr(" new message"), 3)
-                }
-                else {
-                    addNotification(qsTr("You have no new message"), 3)
-                }
-                
-                listModel.append({"title":"New comment", "text":remindObject.remind.cmt, "page":"CommentAllPage.qml", "toFunction":"0"});
-                listModel.append({"title":"New mentioned comment", "text":remindObject.remind.mention_cmt, "page":"CommentMentioned.qml","toFunction":"0"});
-                listModel.append({"title":"New mentioned weibo", "text":remindObject.remind.mention_status, "page":"WeiboMentioned.qml", "toFunction":"0"});
-                listModel.append({"title":"New follower", "text":remindObject.remind.follower, "page":"follower", "toFunction":"1"});
-                
-                if (innerAreaColumn.model == undefined) {
-                    innerAreaColumn.model = listModel;
-                }
-                
-                stopBusyIndicator();
+    RemindUnreadCount {
+        id: remindUnreadCount
+        onRequestAbort: {
+            console.log("== remindUnreadCount onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== remindUnreadCount onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            var result = JSON.parse(replyData);
+
+            //                        status	int	新微博未读数
+            //                        follower	int	新粉丝数
+            //                        cmt	int	新评论数
+            //                        dm	int	新私信数
+            //                        mention_status	int	新提及我的微博数
+            //                        mention_cmt	int	新提及我的评论数
+
+            //remind = result
+            remindObject.remind = result
+            var mCount = result.follower + result.cmt + result.mention_status + result.mention_cmt
+            if (mCount > 1) {
+                addNotification(qsTr("You have ") + mCount + qsTr(" new messages"), 3)
             }
+            else if (mCount > 0) {
+                addNotification(qsTr("You have ") + mCount + qsTr(" new message"), 3)
+            }
+            else {
+                addNotification(qsTr("You have no new message"), 3)
+            }
+
+            listModel.append({"title":"New comment", "text":remindObject.remind.cmt, "page":"CommentAllPage.qml", "toFunction":"0"});
+            listModel.append({"title":"New mentioned comment", "text":remindObject.remind.mention_cmt, "page":"CommentMentioned.qml","toFunction":"0"});
+            listModel.append({"title":"New mentioned weibo", "text":remindObject.remind.mention_status, "page":"WeiboMentioned.qml", "toFunction":"0"});
+            listModel.append({"title":"New follower", "text":remindObject.remind.follower, "page":"follower", "toFunction":"1"});
+
+            if (innerAreaColumn.model == undefined) {
+                innerAreaColumn.model = listModel;
+            }
+
+            stopBusyIndicator();
         }
     }
+    
+//    Connections {
+//        target: api
+//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+//        onWeiboPutSucceed: {
+//            if (action == WeiboMethod.WBOPT_GET_REMIND_UNREAD_COUNT) {
+//                var result = JSON.parse(replyData);
+                
+//                //                        status	int	新微博未读数
+//                //                        follower	int	新粉丝数
+//                //                        cmt	int	新评论数
+//                //                        dm	int	新私信数
+//                //                        mention_status	int	新提及我的微博数
+//                //                        mention_cmt	int	新提及我的评论数
+                
+//                //remind = result
+//                remindObject.remind = result
+//                var mCount = result.follower + result.cmt + result.mention_status + result.mention_cmt
+//                if (mCount > 1) {
+//                    addNotification(qsTr("You have ") + mCount + qsTr(" new messages"), 3)
+//                }
+//                else if (mCount > 0) {
+//                    addNotification(qsTr("You have ") + mCount + qsTr(" new message"), 3)
+//                }
+//                else {
+//                    addNotification(qsTr("You have no new message"), 3)
+//                }
+                
+//                listModel.append({"title":"New comment", "text":remindObject.remind.cmt, "page":"CommentAllPage.qml", "toFunction":"0"});
+//                listModel.append({"title":"New mentioned comment", "text":remindObject.remind.mention_cmt, "page":"CommentMentioned.qml","toFunction":"0"});
+//                listModel.append({"title":"New mentioned weibo", "text":remindObject.remind.mention_status, "page":"WeiboMentioned.qml", "toFunction":"0"});
+//                listModel.append({"title":"New follower", "text":remindObject.remind.follower, "page":"follower", "toFunction":"1"});
+                
+//                if (innerAreaColumn.model == undefined) {
+//                    innerAreaColumn.model = listModel;
+//                }
+                
+//                stopBusyIndicator();
+//            }
+//        }
+//    }
     
     ListModel {
         id:listModel

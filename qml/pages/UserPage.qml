@@ -44,11 +44,13 @@ Page {
     function refreshUserWeibo() {
         showBusyIndicator();
         _pageNum = 1;
-        var method = WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE;
-        api.setWeiboAction(method, {'page':_pageNum,
-                               'uid':userInfoObject.usrInfo.id});
+//        var method = WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE;
+//        api.setWeiboAction(method, {'page':_pageNum,
+//                               'uid':userInfoObject.usrInfo.id});
+        statusesUserTimeline.setParameters("page", _pageNum)
+        statusesUserTimeline.setParameters("uid", userInfoObject.usrInfo.id);
+        statusesUserTimeline.getRequest();
     }
-
     function showUserWeibo() {
         modelWeibo.clear();
         if (userPage._refreshUserWeiboLock) {
@@ -66,8 +68,10 @@ Page {
 
     function refreshUserInfo() {
         showBusyIndicator();
-        var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
-        api.setWeiboAction(method, {'uid':uid});
+//        var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
+//        api.setWeiboAction(method, {'uid':uid});
+        usersShow.setParameters("uid", uid);
+        usersShow.getRequest();
     }
 
     function showUserInfo() {
@@ -86,56 +90,135 @@ Page {
     function userWeiboAddMore() {
         showBusyIndicator();
         _pageNum++
-        var method = WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE;
-        api.setWeiboAction(method, {'page':_pageNum,
-                               'uid':userInfoObject.usrInfo.id
-                               /*,'access_token':Settings.getAccess_token()*/});
+//        var method = WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE;
+//        api.setWeiboAction(method, {'page':_pageNum,
+//                               'uid':userInfoObject.usrInfo.id
+//                               /*,'access_token':Settings.getAccess_token()*/});
+        statusesUserTimeline.setParameters("page", _pageNum);
+        statusesUserTimeline.setParameters("uid", userInfoObject.usrInfo.id);
+        statusesUserTimeline.getRequest();
+    }
+    StatusesUserTimeline {
+        id: statusesUserTimeline
+        onRequestAbort: {
+            console.log("== statusesUserTimeline onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== statusesUserTimeline onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            userPage._userWeiboCache = JSON.parse(replyData);
+            for (var i=0; i<userPage._userWeiboCache.statuses.length; i++) {
+                modelWeibo.append(userPage._userWeiboCache.statuses[i])
+            }
+            if (lvUserWeibo.model == undefined) {
+                lvUserWeibo.model = modelWeibo;
+            }
+            stopBusyIndicator();
+        }
     }
 
-    Connections {
-        target: api
-        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-        onWeiboPutSucceed: {
+    UsersShow {
+        id: usersShow
+        onRequestAbort: {
+            console.log("== usersShow onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== usersShow onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
             if (!userPage._pageActive) {
                 return;
             }
-
-            if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
-                userInfoObject.usrInfo = JSON.parse(replyData);
-                _isFollowing = userInfoObject.usrInfo.following;
-                modelWeibo.append(userInfoObject.usrInfo.status);
-                if (lvUserWeibo.model == undefined) {
-                    lvUserWeibo.model = modelWeibo;
-                }
-                stopBusyIndicator();
+            userInfoObject.usrInfo = JSON.parse(replyData);
+            _isFollowing = userInfoObject.usrInfo.following;
+            modelWeibo.append(userInfoObject.usrInfo.status);
+            if (lvUserWeibo.model == undefined) {
+                lvUserWeibo.model = modelWeibo;
             }
-            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_CREATE) {
-                _isFollowing = true;
-            }
-            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_DESTROY) {
-                _isFollowing = false;
-            }
-            if (action == WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE) {
-                userPage._userWeiboCache = JSON.parse(replyData);
-                for (var i=0; i<userPage._userWeiboCache.statuses.length; i++) {
-                    modelWeibo.append(userPage._userWeiboCache.statuses[i])
-                }
-                if (lvUserWeibo.model == undefined) {
-                    lvUserWeibo.model = modelWeibo;
-                }
-                stopBusyIndicator();
-            }
+            stopBusyIndicator();
         }
     }
+
+    FriendshipsCreate {
+        id: friendshipsCreate
+        onRequestAbort: {
+            console.log("== friendshipsCreate onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== friendshipsCreate onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            if (!userPage._pageActive) {
+                return;
+            }
+            _isFollowing = true;
+        }
+    }
+    FriendshipsDestroy {
+        id: friendshipsDestroy
+        onRequestAbort: {
+            console.log("== FriendshipsDestroy onRequestAbort");
+        }
+        onRequestFailure: { //replyData
+            console.log("== FriendshipsDestroy onRequestFailure ["+replyData+"]")
+        }
+        onRequestSuccess: { //replyData
+            if (!userPage._pageActive) {
+                return;
+            }
+            _isFollowing = false;
+        }
+    }
+
+//    Connections {
+//        target: api
+//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
+//        onWeiboPutSucceed: {
+//            if (!userPage._pageActive) {
+//                return;
+//            }
+
+//            if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
+//                userInfoObject.usrInfo = JSON.parse(replyData);
+//                _isFollowing = userInfoObject.usrInfo.following;
+//                modelWeibo.append(userInfoObject.usrInfo.status);
+//                if (lvUserWeibo.model == undefined) {
+//                    lvUserWeibo.model = modelWeibo;
+//                }
+//                stopBusyIndicator();
+//            }
+//            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_CREATE) {
+//                _isFollowing = true;
+//            }
+//            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_DESTROY) {
+//                _isFollowing = false;
+//            }
+//            if (action == WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE) {
+//                userPage._userWeiboCache = JSON.parse(replyData);
+//                for (var i=0; i<userPage._userWeiboCache.statuses.length; i++) {
+//                    modelWeibo.append(userPage._userWeiboCache.statuses[i])
+//                }
+//                if (lvUserWeibo.model == undefined) {
+//                    lvUserWeibo.model = modelWeibo;
+//                }
+//                stopBusyIndicator();
+//            }
+//        }
+//    }
     
     function userFollowCreate() {
-        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_CREATE;
-        api.setWeiboAction(method, {'uid':uid});
+//        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_CREATE;
+//        api.setWeiboAction(method, {'uid':uid});
+        friendshipsCreate.setParameters("uid", uid);
+        friendshipsCreate.postRequest();
     }
     
     function userFollowCancel() {
-        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_DESTROY;
-        api.setWeiboAction(method, {'uid':uid});
+//        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_DESTROY;
+//        api.setWeiboAction(method, {'uid':uid});
+        friendshipsDestroy.setParameters("uid", uid);
+        friendshipsDestroy.postRequest();
     }
     
     ListModel {
