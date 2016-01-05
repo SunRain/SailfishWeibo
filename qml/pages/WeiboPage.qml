@@ -101,7 +101,7 @@ Page {
         }
         onRequestSuccess: { //replyData
             weiboPage._gettingInfo = false
-            json = JSON.parse(replyData);
+            var json = JSON.parse(replyData);
             for (i=0; i<json.reposts.length; i++) {
                 modelInfo.append(json.reposts[i])
             }
