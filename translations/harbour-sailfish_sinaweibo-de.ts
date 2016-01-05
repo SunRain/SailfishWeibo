@@ -90,10 +90,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> From </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reply comment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -110,10 +106,6 @@
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> From </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

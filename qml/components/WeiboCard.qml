@@ -12,7 +12,34 @@ Item {
     }
     height: columnWContent.height
 
-    property var weiboJSONContent
+    property var weiboJSONContent: undefined
+    onWeiboJSONContentChanged: {
+        if (weiboJSONContent != undefined && weiboJSONContent != "") {
+            inner.attitudes_count = weiboJSONContent.attitudes_count;
+            inner.comments_count = weiboJSONContent.comments_count;
+            inner.reposts_count = weiboJSONContent.reposts_count;
+            if (inner.attitudes_count == undefined
+                    || inner.comments_count == undefined
+                    || inner.reposts_count == undefined) {
+                inner.showFooterBar = false;
+                //set value to "" to avoid qml warning
+                inner.attitudes_count = "";
+                inner.comments_count  = "";
+                inner.reposts_count = "";
+            } else {
+                inner.showFooterBar = true;
+            }
+
+            inner.subValue = weiboJSONContent.retweeted_status;
+            if (inner.subValue == undefined || inner.subValue == "")
+                inner.subValue = weiboJSONContent.status;
+            if (inner.subValue == undefined || inner.subValue == "")
+                inner.subValue = weiboJSONContent.reply_comment;
+            if (inner.subValue == undefined || inner.subValue == "")
+                inner.subValue = undefined;
+        }
+    }
+
     property alias optionMenu: usWeibo.optionMenu
     
     property var repostButtonColor
@@ -27,6 +54,15 @@ Item {
     signal commentButtonClicked
     signal repostButtonClicked
     signal likeButtonClicked
+
+    QtObject {
+        id: inner
+        property var subValue: undefined
+        property var reposts_count: undefined
+        property var comments_count: undefined
+        property var attitudes_count: undefined
+        property bool showFooterBar: false
+    }
 
     Column {
         id: columnWContent
@@ -71,7 +107,7 @@ Item {
             id:repostedLoader
             width: parent.width
             height: childrenRect.height
-            sourceComponent: weiboJSONContent.retweeted_status == undefined 
+            sourceComponent: inner.subValue == undefined//weiboJSONContent.retweeted_status == undefined
                              ? repostedLoader.Null
                              : repostedBaseWeiboCard
         }
@@ -80,20 +116,20 @@ Item {
             id:repostedBaseWeiboCard
             BaseWeiboCard {
                 id:repostedWeibo
-                isInvalid:  weiboJSONContent.retweeted_status == undefined
+                isInvalid:  inner.subValue == undefined
                 avatarHeaderHeight: Theme.itemSizeSmall
                 avaterHeaderFontSize: Theme.fontSizeExtraSmall
-                avaterHeaderUserName: weiboJSONContent.retweeted_status.user.screen_name
-                avaterHeaderAvaterImage: weiboJSONContent.retweeted_status.user.profile_image_url
-                avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(weiboJSONContent.retweeted_status.created_at))
-                        + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.retweeted_status.source)
+                avaterHeaderUserName: inner.subValue.user.screen_name
+                avaterHeaderAvaterImage: inner.subValue.user.profile_image_url
+                avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(inner.subValue.created_at))
+                        + qsTr(" From ") + GetURL.linkToStr(inner.subValue.source)
                 
                 labelFontSize: Theme.fontSizeMedium
-                labelContent: util.parseWeiboContent(weiboJSONContent.retweeted_status.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-                picURLs: weiboJSONContent.retweeted_status.pic_urls
+                labelContent: util.parseWeiboContent(inner.subValue.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+                picURLs: inner.subValue.pic_urls
 
                 onUserAvatarHeaderClicked: {
-                    weiboCard.avatarHeaderClicked(weiboJSONContent.retweeted_status.user.id);
+                    weiboCard.avatarHeaderClicked(inner.subValue.user.id);
                 }
                 onLabelLinkClicked: {
                     weiboCard.labelLinkClicked(link);
@@ -122,6 +158,8 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             height: Theme.itemSizeExtraSmall /2
             spacing: Theme.paddingLarge *2
+            enabled: inner.showFooterBar
+            visible: inner.showFooterBar
 
             MouseArea {
                 id: repostMouse
@@ -140,7 +178,7 @@ Item {
                     }
                     Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: weiboJSONContent.reposts_count
+                        text: inner.reposts_count
                         font.bold: repostMouse._press
                         font.pixelSize: parent.height
                         color: repostMouse._press ? Theme.highlightColor : Theme.secondaryColor
@@ -172,7 +210,7 @@ Item {
                     }
                     Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: weiboJSONContent.comments_count
+                        text: inner.comments_count
                         font.bold: commentMouse._press
                         font.pixelSize: parent.height
                         color: commentMouse._press ? Theme.highlightColor : Theme.secondaryColor
@@ -204,7 +242,7 @@ Item {
                     }
                     Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: weiboJSONContent.attitudes_count
+                        text: inner.attitudes_count
                         font.bold: likeMouse._press
                         font.pixelSize: parent.height
                         color: likeMouse._press ? Theme.highlightColor : Theme.secondaryColor

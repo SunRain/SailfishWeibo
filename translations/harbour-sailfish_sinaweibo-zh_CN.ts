@@ -112,18 +112,12 @@
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="104"/>
-        <location filename="../qml/pages/CommentAllPage.qml" line="155"/>
-        <source> From </source>
-        <translation>来自</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="124"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="114"/>
         <source>Reply comment</source>
         <translation>回复评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="136"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="126"/>
         <source>View weibo</source>
         <translation>查看微博</translation>
     </message>
@@ -141,18 +135,12 @@
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentMentioned.qml" line="95"/>
-        <location filename="../qml/pages/CommentMentioned.qml" line="151"/>
-        <source> From </source>
-        <translation>来自</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/CommentMentioned.qml" line="115"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="112"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentMentioned.qml" line="127"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="124"/>
         <source>View weibo</source>
         <translation>查看微博</translation>
     </message>
@@ -651,8 +639,8 @@
 <context>
     <name>WeiboCard</name>
     <message>
-        <location filename="../qml/components/WeiboCard.qml" line="50"/>
-        <location filename="../qml/components/WeiboCard.qml" line="89"/>
+        <location filename="../qml/components/WeiboCard.qml" line="86"/>
+        <location filename="../qml/components/WeiboCard.qml" line="125"/>
         <source> From </source>
         <translation> 来自 </translation>
     </message>

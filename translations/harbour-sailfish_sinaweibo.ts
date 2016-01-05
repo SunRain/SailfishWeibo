@@ -94,10 +94,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> From </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -114,10 +110,6 @@
     </message>
     <message>
         <source>View weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> From </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

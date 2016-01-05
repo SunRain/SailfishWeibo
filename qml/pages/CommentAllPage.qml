@@ -94,32 +94,22 @@ Page {
             width: parent.width
             spacing: Theme.paddingSmall
 
-            BaseWeiboCard {
-                id: commentCard
-                avatarHeaderHeight: Theme.itemSizeSmall
-                avaterHeaderFontSize: Theme.fontSizeExtraSmall
-                avaterHeaderUserName: model.user.screen_name
-                avaterHeaderAvaterImage: model.user.profile_image_url
-                avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(model.created_at))
-                                       + qsTr(" From ") + GetURL.linkToStr(model.source)
-                labelFontSize: Theme.fontSizeMedium
-                labelContent: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-                picURLs: model.pic_urls
-                onUserAvatarHeaderClicked: {
-                    console.log("==== commentCard onUserAvatarHeaderClicked")
+            WeiboCard {
+                id: weiboCard
+                weiboJSONContent: modelComment.get(index)
+                optionMenu: options
+                onRepostedWeiboClicked: {
+                }
+                onUsWeiboClicked: {
+                }
+                onAvatarHeaderClicked: {
                 }
                 onLabelLinkClicked: {
-                    console.log("==== commentCard onLabelLinkClicked")
-                }
-                onBaseWeiboCardClicked: {
-                    console.log("==== commentCard onBaseWeiboCardClicked")
                 }
                 onLabelImageClicked: {
-                    console.log("==== commentCard onLabelImageClicked")
                 }
-                optionMenu:menu
                 ContextMenu {
-                    id: menu
+                    id:options
                     MenuItem {
                         text: qsTr("Reply comment")
                         onClicked: {
@@ -140,39 +130,6 @@ Page {
                                            {"userWeiboJSONContent":model.status})
                         }
                     }
-                }
-            }
-            BaseWeiboCard {
-                id: statusCard
-                // use reply_comment if reply_comment exist
-                property var _status: model.reply_comment == undefined ? model.status : model.reply_comment
-
-                avatarHeaderHeight: Theme.itemSizeSmall
-                avaterHeaderFontSize: Theme.fontSizeExtraSmall
-                avaterHeaderUserName: _status.user.screen_name//weiboJSONContent.user.screen_name
-                avaterHeaderAvaterImage: _status.user.profile_image_url//weiboJSONContent.user.profile_image_url
-                avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(_status.created_at))
-                                       + qsTr(" From ") + GetURL.linkToStr(_status.source)
-                labelFontSize: Theme.fontSizeMedium
-                labelContent: util.parseWeiboContent(_status.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-                picURLs: _status.pic_urls
-                onUserAvatarHeaderClicked: {
-                    console.log("==== statusCard onUserAvatarHeaderClicked")
-                }
-                onLabelLinkClicked: {
-                    console.log("==== statusCard onLabelLinkClicked")
-                }
-                onBaseWeiboCardClicked: {
-                    console.log("==== statusCard onBaseWeiboCardClicked")
-                }
-                onLabelImageClicked: {
-                    console.log("==== statusCard onLabelImageClicked")
-                }
-                Image {
-                    id: background
-                    anchors.fill: parent
-                    source: util.pathTo("qml/graphics/mask_background_reposted.png")
-                    fillMode: Image.PreserveAspectCrop
                 }
             }
             Separator {
