@@ -94,11 +94,6 @@ Panel {
                 fillMode: Image.PreserveAspectCrop
                 asynchronous: true
                 source: util.parseImageUrl(userInfoObject.usrInfo.cover_image_phone)
-                onStatusChanged: {
-                    if (cover.status == Image.Ready) {
-                        util.saveRemoteImage(userInfoObject.usrInfo.cover_image_phone)
-                    }
-                }
             }
             Image {
                 id: profile
@@ -107,11 +102,6 @@ Panel {
                 anchors.centerIn: cover
                 asynchronous: true
                 source: util.parseImageUrl(userInfoObject.usrInfo.profile_image_url)
-                onStatusChanged: {
-                    if (profile.status == Image.Ready) {
-                        util.saveRemoteImage(userInfoObject.usrInfo.profile_image_url)
-                    }
-                }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
