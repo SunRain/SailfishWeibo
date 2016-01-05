@@ -176,6 +176,13 @@ ApplicationWindow
         running: runningBusyIndicator
         opacity: busyIndicator.running ? 1: 0
     }
+    Timer {
+        id: busyIndicatorTimeout
+        interval: 5000
+        onTriggered: {
+            busyIndicator.runningBusyIndicator = false;
+        }
+    }
 
     PanelView {
         id: panelView
@@ -327,9 +334,11 @@ ApplicationWindow
     }
 
     function showBusyIndicator() {
+        busyIndicatorTimeout.restart();
         busyIndicator.runningBusyIndicator = true
     }
     function stopBusyIndicator() {
+        busyIndicatorTimeout.stop();
         busyIndicator.runningBusyIndicator = false
     }
     
