@@ -28,18 +28,28 @@ QtObject {
 //    photo 	int 	相册消息未读数
 //    msgbox 	int 	{{{3}}}
     property var remind: {
-        "status":0,
-        "follower":0,
-        "cmt":0,
-        "dm":0,
-        "mention_status":0,
-        "mention_cmt":0,
-        "group":0,
-        "private_group":0,
-        "notice":0,
-        "invite":0,
-        "badge":0,
-        "photo":0,
-        "msgbox":0
+        "status": 0,
+        "follower": 0,
+        "cmt": 0,
+        "dm": 0,
+        "chat_group_pc": 0,
+        "chat_group_client": 0,
+        "mention_status": 0,
+        "mention_cmt": 0,
+        "group": 0,
+        "notice": 0,
+        "invite": 0,
+        "badge": 0,
+        "photo": 0,
+        "all_mention_status": 0,
+        "attention_mention_status": 0,
+        "all_mention_cmt": 0,
+        "attention_mention_cmt": 0,
+        "all_cmt": 0,
+        "attention_cmt": 0,
+        "all_follower": 0,
+        "attention_follower": 0,
+        "page_friends_to_me": 0,
+        "chat_group_notice": 0
     }
 }
