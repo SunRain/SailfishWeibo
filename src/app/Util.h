@@ -46,6 +46,7 @@ public:
     static QString getVerison();
 
     Q_INVOKABLE QUrl pathTo(const QString &filename);
+    Q_INVOKABLE QUrl pathPrefix(const QString &path);
 signals:
     
 public slots:

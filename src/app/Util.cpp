@@ -99,6 +99,21 @@ QUrl Util::pathTo(const QString &filename)
     return SailfishApp::pathTo (filename);
 }
 
+QUrl Util::pathPrefix(const QString &path)
+{
+    if (path.isEmpty ()) {
+        qWarning()<<Q_FUNC_INFO<<"Invalid path!!";
+        return QUrl();
+    }
+    if (path.startsWith ("qrc:"))
+        return path;
+    if (path.startsWith ("/"))
+        return QUrl::fromLocalFile (path);
+    return path;
+}
+
+
+
 //void Util::setValue(const QString &key, const QVariant &value)
 //{
 //    if (m_Map.value(key) != value) {
@@ -208,11 +223,9 @@ QUrl Util::parseImageUrl(const QString &remoteUrl)
     QByteArray byteArray = remoteUrl.toLocal8Bit().toBase64();
     QString fileName(byteArray);
     QString filePath = QString("%1/%2").arg(cachePath).arg(fileName);
-    if (QFile::exists(filePath)) {
-        return QString("file://%1").arg (filePath);
-    }
-    return remoteUrl;
-    
+    if (QFile::exists(filePath))
+        return QUrl::fromLocalFile (filePath);
+    return QUrl(remoteUrl);
 }
 
 void Util::saveRemoteImage(const QString &remoteUrl)
@@ -220,7 +233,7 @@ void Util::saveRemoteImage(const QString &remoteUrl)
     QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     QByteArray byteArray = remoteUrl.toLocal8Bit().toBase64();
     QString fileName(byteArray);
-    QString filePath = QString("%1%2%3").arg(cachePath).arg(QDir::separator()).arg(fileName);
+    QString filePath = QString("%1/%2").arg(cachePath).arg(fileName);
     QFile file(filePath);
     if (file.exists()) {
         return;
@@ -291,7 +304,7 @@ QString Util::parseEmoticons(const QString &pattern, const QString &str)
         }
         emoticons = SailfishApp::pathTo(QString("qml/emoticons/%1").arg(emoticons)).toString();
         ///FIXME 似乎以file:///path 形式的路径在qml里面显示有问题，所以去掉file：///，直接使用绝对路径
-        emoticons = emoticons.replace("file:///", "/");   
+//        emoticons = emoticons.replace("file:///", "/");
         reText = QString("<img src=\"%1\">").arg(emoticons);
         tmp.replace(pos, emoticonRE.cap(0).length(), reText);
         pos += reText.length();
