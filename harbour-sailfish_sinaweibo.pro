@@ -4,7 +4,7 @@ TARGET = harbour-sailfish_sinaweibo
 
 QT += qml quick network
 
-CONFIG += sailfishapp
+CONFIG += sailfishapp sailfishapp_no_deploy_qml
 CONFIG += c++11
 
 DEFINES += \
@@ -14,13 +14,19 @@ DEFINES += \
 include (src/QSinaWeiboApi/QWeiboSDK/QWeiboSDK.pri)
 
 OTHER_FILES += \
-    qml/graphics/* \
-    qml/emoticons/* \
     rpm/harbour-sailfish_sinaweibo.changes.in \
     rpm/harbour-sailfish_sinaweibo.spec \
     rpm/harbour-sailfish_sinaweibo.yaml \
     harbour-sailfish_sinaweibo.desktop \
     translations/*
+
+graphics.path = /usr/share/$${TARGET}/qml/graphics
+graphics.files += qml/graphics/*
+INSTALLS += graphics
+
+emoticons.path = /usr/share/$${TARGET}/qml/emoticons
+emoticons.files += qml/emoticons/*
+INSTALLS += emoticons
 
 HEADERS += \
     src/app/app.h \
