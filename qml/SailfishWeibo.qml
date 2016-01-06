@@ -2,9 +2,9 @@
   Copyright (C) 2013 Jolla Ltd.
   Contact: Thomas Perl <thomas.perl@jollamobile.com>
   All rights reserved.
-  
+
   You may use this file under the terms of BSD license as follows:
-  
+
   Redistribution and use in source and binary forms, with or without
   modification, are permitted provided that the following conditions are met:
     * Redistributions of source code must retain the above copyright
@@ -15,11 +15,11 @@
     * Neither the name of the Jolla Ltd nor the
       names of its contributors may be used to endorse or promote products
       derived from this software without specific prior written permission.
-      
+
   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR
   ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
   (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -30,6 +30,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import io.thp.pyotherside 1.3
 import "pages"
 import "components"
 import "ui"
@@ -341,7 +342,7 @@ ApplicationWindow
         busyIndicatorTimeout.stop();
         busyIndicator.runningBusyIndicator = false
     }
-    
+
     function addNotification(inText, inTime) {
         var text = inText == undefined ? "" : inText
         var time = inTime == undefined ? 3 : inTime
@@ -350,7 +351,7 @@ ApplicationWindow
             var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
         }
     }
-    
+
 //    function attachSecondPage() {
 //        if (pageStack.depth == 1) {
 //            pageStack.pushAttached("pages/SecondPage.qml");
@@ -375,7 +376,7 @@ ApplicationWindow
         popAttachedPages();
         pageStack.replace(loginPageComponent);
     }
-    
+
     ///////////// 主页（微博列表显示页面）
     function toIndexPage() {
         popAttachedPages();
@@ -390,7 +391,7 @@ ApplicationWindow
         pageStack.push(Qt.resolvedUrl("pages/WeiboPage.qml"),
                         {"userWeiboJSONContent":content})
     }
-    
+
     //////////////////////////////////////////////////////////////////         go to send page
     function toSendPage(mode, userInfo, placeHoldText, shouldPopAttachedPages) {
         //sendPage.setMode(mode, info)
@@ -407,24 +408,24 @@ ApplicationWindow
                            "placeHoldText":pht,
                            "userInfo":info})
     }
-    
+
     function toUserPage(uid) {
         pageStack.push(Qt.resolvedUrl("pages/UserPage.qml"), { "uid": uid/*, title: qsTr("About user")*/ })
     }
-    
+
     function toFriendsPage(mode, uid) {
         pageStack.push(Qt.resolvedUrl("pages/FriendsPage.qml"), { "mode": mode, "uid": uid })
     }
-    
+
     function toUserWeibo(uid, name) {
         pageStack.push(Qt.resolvedUrl("ui/UserWeibo.qml"), { "uid": uid, "userName": name })
         //mainStack.currentPage.refresh()
     }
-    
+
     function toGalleryPage(model, index) {
         pageStack.push(Qt.resolvedUrl("pages/Gallery.qml"), { "modelGallery": model, "index": index })
     }
-    
+
 //    function toFriendsPage(model, uid) {
 //        pageStack.push(Qt.resolvedUrl("pages/FriendsPage.qml"), { "mode": model, "uid": uid })
 //    }
@@ -465,10 +466,28 @@ ApplicationWindow
     MyType {
         id: appData
     }
-    
+
+    Python{
+            id:py
+            signal pyhandle(string access_token)
+            Component.onCompleted: {
+              addImportPath(Qt.resolvedUrl('./py'));
+              py.importModule('main', function () {
+              });
+              setHandler('pyhandle',pyhandle);
+            }
+            onPyhandle:{
+              //得到token
+              //var token = access_token;
+            }
+            function getToken(API_KEY,API_SECRET,REDIRECT_URI,username,password){
+              call('main.getToken',[API_KEY,API_SECRET,REDIRECT_URI,username,password],function(result){
+            })
+        }
+
+      }
+
 //    WeiboApi {
 //        id:api
 //    }
 }
-
-
