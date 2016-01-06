@@ -7,8 +7,8 @@ def getToken(API_KEY,API_SECRET,REDIRECT_URI,username,password):
     try:
         weibo.auth(authenticator)
         access_token = authenticator.auth(example_app)
+        print(access_token)
+        pyotherside.send("pyhandle",access_token)
     except rpweibo.AuthorizeFailed:
         print("Invalid username or password!")
         pyotherside.send("pyhandle","Error")
-    print(access_token)
-    pyotherside.send("pyhandle",access_token)

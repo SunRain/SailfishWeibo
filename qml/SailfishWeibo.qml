@@ -477,7 +477,7 @@ ApplicationWindow
               setHandler('pyhandle',pyhandle);
             }
             onPyhandle:{
-              //得到token
+              //得到token,如果结果是Error字符，则表示用户名或密码无效
               //var token = access_token;
             }
             function getToken(API_KEY,API_SECRET,REDIRECT_URI,username,password){
