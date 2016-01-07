@@ -31,17 +31,20 @@
 #include <QtQuick>
 #include <QtQml>
 #include <QUrl>
+#include <QQmlEngine>
 #include <sailfishapp.h>
 
 #include "mytype.h"
 #include "networkhelper.h"
-#include "MyNetworkAccessManagerFactory.h"
 #include "Util.h"
 #include "Settings.h"
+
+#include "WBNetworkAccessManagerFactory.h"
 
 #include "PluginRegister.h"
 #include "TokenProvider.h"
 
+QQmlEngine *g_QQmlEngine;
 int main(int argc, char *argv[])
 {
     //QWeiboSDK
@@ -49,21 +52,19 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<MyType>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "MyType");
     qmlRegisterType<NetworkHelper>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "NetworkHelper");
-//    qmlRegisterType<QSinaWeiboAPI::QSinaWeibo>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "WeiboApi");
-    //qmlRegisterType<QSinaWeiboAPI::QWeiboMethod>("com.sunrain.sinaweibo", 1, 0, "WeiboMethod");
-//    qmlRegisterUncreatableType<QSinaWeiboAPI::QWeiboMethod>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "WeiboMethod", "");
-    //return SailfishApp::main(argc, argv);
+
     QScopedPointer<QGuiApplication> app (SailfishApp::application(argc, argv));
     app.data()->setOrganizationName("harbour-sailfish_sinaweibo");
     app.data()->setApplicationName("harbour-sailfish_sinaweibo");
     
     QScopedPointer<QQuickView> view (SailfishApp::createView());
     
-    MyNetworkAccessManagerFactory factory;
-    view.data ()->engine()->setNetworkAccessManagerFactory(&factory);
-    
-    Util *util = Util::getInstance();
-    util->setEngine(view->engine());
+    QScopedPointer<WBNetworkAccessManagerFactory> factory (new WBNetworkAccessManagerFactory());
+    view.data ()->engine ()->setNetworkAccessManagerFactory (factory.data ());
+    g_QQmlEngine = view.data ()->engine ();
+
+    Util *util = Util::instance ();
+//    util->setEngine(view->engine());
     view.data ()->rootContext()->setContextProperty("util", util);
     
     Settings *settings = Settings::instance ();

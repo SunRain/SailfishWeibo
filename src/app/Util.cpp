@@ -10,23 +10,11 @@
 
 #include <sailfishapp.h>
 
-#include "MyNetworkAccessManagerFactory.h"
+#include "WBNetworkAccessManager.h"
 #include "Emoticons.h"
 #include "Settings.h"
 
 #include "TokenProvider.h"
-
-Util *Util::getInstance()
-{
-    static QMutex mutex;
-    static QScopedPointer<Util> scp;
-    if (Q_UNLIKELY(scp.isNull())) {
-        mutex.lock();
-        scp.reset(new Util(0));
-        mutex.unlock();
-    }
-    return scp.data();
-}
 
 Util::~Util()
 {
@@ -35,10 +23,10 @@ Util::~Util()
     m_emoticons = nullptr;
 }
 
-void Util::setEngine(QQmlEngine *engine)
-{
-    this->m_qmlEngine = engine;
-}
+//void Util::setEngine(QQmlEngine *engine)
+//{
+//    this->m_qmlEngine = engine;
+//}
 
 /*
  * http://oauth.weico.cc/#access_token=
@@ -112,45 +100,27 @@ QUrl Util::pathPrefix(const QString &path)
     return path;
 }
 
-
-
-//void Util::setValue(const QString &key, const QVariant &value)
-//{
-//    if (m_Map.value(key) != value) {
-//        m_Map.insert(key, value);
-//        m_Settings->setValue(key, value);
-//    }
-//}
-
-//QVariant Util::getValue(const QString &key, const QVariant defaultValue)
-//{
-//    if (m_Map.contains(key)){
-//        return m_Map.value(key);
-//    } else {
-//        return m_Settings->value(key, defaultValue);
-//    }
-//}
-
+extern QQmlEngine *g_QQmlEngine;
 bool Util::saveToCache(const QString &remoteUrl, const QString &dirName, const QString &fileName)
 {
-    if (m_qmlEngine.isNull()) {
+    if (!g_QQmlEngine) {
         return false;
     }
-    MyNetworkAccessManager *manage = (MyNetworkAccessManager*)m_qmlEngine.data ()->networkAccessManager();
 
-    QAbstractNetworkCache *diskCache = manage->cache();
+    QNetworkAccessManager *manager = g_QQmlEngine->networkAccessManager ();
+    QAbstractNetworkCache *diskCache = manager->cache();
 
-    if (diskCache == 0) {
+    if (!diskCache) {
         return false;
     }
     QIODevice *data = diskCache->data(QUrl(remoteUrl));
-    if (data == 0) {
+    if (!data) {
         return false;
     }
     //QString path = dir;
     QDir dir(dirName);
     if (!dir.exists()) dir.mkpath(dirName);
-    QFile file(dirName + QDir::separator() + fileName);
+    QFile file(QString("%1/%2").arg (dirName).arg (fileName));
     if (file.open(QIODevice::WriteOnly)){
         file.write(data->readAll());
         file.close();

@@ -31,20 +31,22 @@ INSTALLS += emoticons
 HEADERS += \
     src/app/app.h \
     src/app/Emoticons.h \
-    src/app/MyNetworkAccessManagerFactory.h \
     src/app/mytype.h \
     src/app/networkhelper.h \
     src/app/Settings.h \
-    src/app/Util.h
+    src/app/Util.h \
+    src/app/WBNetworkAccessManagerFactory.h \
+    src/app/WBNetworkAccessManager.h \
 
 SOURCES += \
     src/app/Emoticons.cpp \
-    src/app/MyNetworkAccessManagerFactory.cpp \
     src/app/mytype.cpp \
     src/app/networkhelper.cpp \
     src/app/SailfishWeibo.cpp \
     src/app/Settings.cpp \
-    src/app/Util.cpp
+    src/app/Util.cpp \
+    src/app/WBNetworkAccessManagerFactory.cpp \
+    src/app/WBNetworkAccessManager.cpp
 
 # to disable building translations every time, comment out the
 # following CONFIG line

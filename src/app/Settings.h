@@ -5,6 +5,8 @@
 #include <QStringList>
 #include <QVariant>
 
+#include "SingletonPointer.h"
+
 class QSettings;
 class Settings : public QObject
 {
@@ -13,8 +15,9 @@ class Settings : public QObject
 //    Q_PROPERTY(QString expiresData READ expiresData WRITE setExpiresData NOTIFY expiresDataChanged)
 //    Q_PROPERTY(QString uid READ uid WRITE setUid NOTIFY uidChanged)
 //    Q_PROPERTY(QString refreshToken READ refreshToken WRITE setRefreshToken NOTIFY refreshTokenChanged)
+    DECLARE_SINGLETON_POINTER(Settings)
 public:
-    static Settings *instance();
+//    static Settings *instance();
     virtual ~Settings();
 
     void setValue(const QString &key, const QVariant &value);
@@ -37,11 +40,6 @@ signals:
 //    void expiresDataChanged();
 //    void uidChanged();
 //    void refreshTokenChanged();
-
-public slots:
-
-private:
-    explicit Settings(QObject *parent = 0);
 
 private:
     QSettings *m_settings;

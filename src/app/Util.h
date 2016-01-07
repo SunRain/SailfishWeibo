@@ -6,6 +6,8 @@
 #include <QQmlEngine>
 #include <QPointer>
 
+#include "SingletonPointer.h"
+
 class Settings;
 class Emoticons;
 class Util : public QObject
@@ -13,11 +15,13 @@ class Util : public QObject
     Q_OBJECT
     Q_PROPERTY(QString getCachePath READ getCachePath CONSTANT)
     Q_PROPERTY(QString getVerison READ getVerison CONSTANT)
+
+    DECLARE_SINGLETON_POINTER(Util)
 public:
-    static Util *getInstance();
+//    static Util *getInstance();
     virtual ~Util();
     
-    void setEngine(QQmlEngine* engine);
+//    void setEngine(QQmlEngine* engine);
     
 public:
 //    Q_INVOKABLE void setValue(const QString &key, const QVariant &value);
@@ -47,16 +51,11 @@ public:
 
     Q_INVOKABLE QUrl pathTo(const QString &filename);
     Q_INVOKABLE QUrl pathPrefix(const QString &path);
-signals:
-    
-public slots:
-    
 private:
-    explicit Util(QObject *parent = 0);
     bool cacheImageFiles(const QString &remoteUrl);
     QString parseEmoticons(const QString &pattern,const QString &emoticonStr);
 private:
-    QPointer<QQmlEngine> m_qmlEngine;
+//    QPointer<QQmlEngine> m_qmlEngine;
     Settings *m_settings;
     Emoticons *m_emoticons;
 };

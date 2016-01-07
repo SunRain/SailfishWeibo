@@ -105,16 +105,16 @@ void Settings::setValue(const QString &key, const QVariant &value)
     m_settings->sync ();
 }
 
-Settings *Settings::instance()
-{
-    static QMutex mutex;
-    static QScopedPointer<Settings> scp;
-    if (Q_UNLIKELY(scp.isNull())) {
-        mutex.lock();
-        scp.reset(new Settings(0));
-        mutex.unlock();
-    }
-    return scp.data();
-}
+//Settings *Settings::instance()
+//{
+//    static QMutex mutex;
+//    static QScopedPointer<Settings> scp;
+//    if (Q_UNLIKELY(scp.isNull())) {
+//        mutex.lock();
+//        scp.reset(new Settings(0));
+//        mutex.unlock();
+//    }
+//    return scp.data();
+//}
 
 
