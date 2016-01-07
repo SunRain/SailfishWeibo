@@ -64,6 +64,7 @@ A native SinaWeibo for Sailfish OS
 
 %install
 rm -rf %{buildroot}
+python3 -m pip install -t %{buildroot}/usr/lib/python3.4/site-packages/ rsa-3.2.3-py2.py3-none-any.whl
 # >> install pre
 # << install pre
 %qmake5_install
@@ -81,5 +82,6 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+/usr/lib/python3.4/site-packages/*
 # >> files
 # << files
