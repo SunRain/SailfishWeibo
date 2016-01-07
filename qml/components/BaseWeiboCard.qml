@@ -31,11 +31,23 @@ Item {
     
     
     Component.onCompleted: {
-        if ( !isInvalid && picURLs != undefined && picURLs.length > 0) {
+        if ( !isInvalid && picURLs != undefined && (picURLs.length > 0 || picURLs.count > 0)) {
             modelImages.clear()
-            for (var i=0; i<picURLs.length; i++) {
-                modelImages.append( picURLs[i] )
+            //picURLs as a json object
+            if (picURLs.length > 0) {
+                for (var i=0; i<picURLs.length; i++) {
+                    modelImages.append( picURLs[i] )
+                }
+            } else { //picURLs as a qml list model
+//                console.log("======== picURLs.count " + picURLs.count);
+//                console.log(" *** avaterHeaderUserName " + avaterHeaderUserName);
+                for (var i=0; i<picURLs.count; i++) {
+                    var value = JSON.stringify(picURLs.get(i))
+//                    console.log(" >>>>> " + value + " <<<< ")
+                    modelImages.append( JSON.parse(value) )
+                }
             }
+
             if (gridRepeater.model == undefined) {
                 gridRepeater.model = modelImages;
             }

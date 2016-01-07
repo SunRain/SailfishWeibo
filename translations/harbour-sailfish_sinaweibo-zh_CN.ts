@@ -135,12 +135,12 @@
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentMentioned.qml" line="112"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="105"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentMentioned.qml" line="124"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="117"/>
         <source>View weibo</source>
         <translation>查看微博</translation>
     </message>
@@ -640,7 +640,7 @@
     <name>WeiboCard</name>
     <message>
         <location filename="../qml/components/WeiboCard.qml" line="86"/>
-        <location filename="../qml/components/WeiboCard.qml" line="125"/>
+        <location filename="../qml/components/WeiboCard.qml" line="140"/>
         <source> From </source>
         <translation> 来自 </translation>
     </message>

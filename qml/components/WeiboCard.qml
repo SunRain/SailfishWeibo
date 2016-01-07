@@ -88,7 +88,7 @@ Item {
             labelFontSize: Theme.fontSizeMedium
             labelContent: util.parseWeiboContent(weiboJSONContent.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
             picURLs: weiboJSONContent.pic_urls
-            
+
             onUserAvatarHeaderClicked: {
                 weiboCard.avatarHeaderClicked(weiboJSONContent.user.id);
             }
