@@ -640,7 +640,7 @@
     <name>WeiboCard</name>
     <message>
         <location filename="../qml/components/WeiboCard.qml" line="86"/>
-        <location filename="../qml/components/WeiboCard.qml" line="140"/>
+        <location filename="../qml/components/WeiboCard.qml" line="125"/>
         <source> From </source>
         <translation> 来自 </translation>
     </message>

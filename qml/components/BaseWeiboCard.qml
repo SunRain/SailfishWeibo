@@ -115,20 +115,18 @@ Item {
                         fillMode: Image.PreserveAspectCrop;
                         width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - Theme.paddingSmall;
                         height: modelImages.count == 1 ? implicitHeight : width
-                        source: util.parseImageUrl(model.thumbnail_pic);
-
+                        source: model.thumbnail_pic //util.parseImageUrl(model.thumbnail_pic);
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 baseWeiboCard.labelImageClicked(modelImages, index);
                             }
                         }
-                        
-                        onStatusChanged: {
-                            if(image.status == Image.Ready) {
-                                util.saveRemoteImage(model.thumbnail_pic);
-                            }
-                        }
+//                        onStatusChanged: {
+//                            if(image.status == Image.Ready) {
+//                                util.saveRemoteImage(model.thumbnail_pic);
+//                            }
+//                        }
                     }
                 }
             }
