@@ -27,11 +27,19 @@ Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   qt5-qtsvg-plugin-imageformat-svg
 Requires:   qt5-plugin-imageformat-gif
 Requires:   qt5-qtsvg
+Requires:   openssl-devel
+Requires:   python3-devel
+Requires:   libcurl-devel
+Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
+BuildRequires:  python3-devel
+BuildRequires:  gcc
+BuildRequires:	libcurl-devel
+BuildRequires:  openssl-devel
 
 %description
 A native SinaWeibo for Sailfish OS
@@ -56,6 +64,7 @@ A native SinaWeibo for Sailfish OS
 
 %install
 rm -rf %{buildroot}
+python3 -m pip install -t %{buildroot}/usr/lib/python3.4/site-packages/ rsa-3.2.3-py2.py3-none-any.whl
 # >> install pre
 # << install pre
 %qmake5_install
@@ -73,5 +82,6 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+/usr/lib/python3.4/site-packages/*
 # >> files
 # << files
