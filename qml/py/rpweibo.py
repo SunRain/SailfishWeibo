@@ -3,7 +3,7 @@ import pycurl
 from io import BytesIO
 import urllib.parse
 import base64
-import rsa
+from rsa import *
 import json
 import itertools
 import time
