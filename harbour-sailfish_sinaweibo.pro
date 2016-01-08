@@ -18,7 +18,9 @@ OTHER_FILES += \
     rpm/harbour-sailfish_sinaweibo.spec \
     rpm/harbour-sailfish_sinaweibo.yaml \
     harbour-sailfish_sinaweibo.desktop \
-    translations/*
+    translations/* \
+    qml/py/*.py \
+    qml/py/rsa/*.py
 
 graphics.path = /usr/share/$${TARGET}/qml/graphics
 graphics.files += qml/graphics/*
@@ -27,6 +29,10 @@ INSTALLS += graphics
 emoticons.path = /usr/share/$${TARGET}/qml/emoticons
 emoticons.files += qml/emoticons/*
 INSTALLS += emoticons
+
+py.path = /usr/share/$${TARGET}/qml/py
+py.files += qml/py/*
+INSTALLS += py
 
 HEADERS += \
     src/app/app.h \
