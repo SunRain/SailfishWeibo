@@ -567,10 +567,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> From </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reply</source>
         <translation type="unfinished"></translation>
     </message>
@@ -580,6 +576,10 @@
     </message>
     <message>
         <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> From </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

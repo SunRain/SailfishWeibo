@@ -222,7 +222,7 @@ ApplicationWindow
                 panelView.hidePanel();
             }
             onUserAvatarClicked: {
-                toUserPage(settings.uid/*Settings.getUid()*/);
+                toUserPage(tokenProvider.uid);
             }
 
             Component.onCompleted: {

@@ -575,11 +575,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> From </source>
+        <source>Reply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reply</source>
+        <source> From </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
