@@ -33,7 +33,7 @@
 #include <QUrl>
 #include <QQmlEngine>
 #include <sailfishapp.h>
-
+#include <QGuiApplication>
 #include "mytype.h"
 #include "networkhelper.h"
 #include "Util.h"
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 
     view.data ()->setSource(QUrl(QStringLiteral("qrc:/SailfishWeibo.qml")));
     view.data ()->show();
-    
+    //QObject::connect((QObject*)view->engine(), SIGNAL(quit()), app, SLOT(quit()));
     return app->exec();
 }
 
