@@ -57,5 +57,3 @@ TRANSLATIONS += translations/harbour-sailfish_sinaweibo-de.ts \
 RESOURCES += \
     qml/resource.qrc
 
-DISTFILES += \
-    rsa-3.2.3-py2.py3-none-any.whl
