@@ -31,7 +31,7 @@
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="68"/>
         <source>Please donate to alipay wanggjghost@126.com(**健) if U like this app</source>
-        <translation type="unfinished">如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝支持一下好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
+        <translation>如果你喜欢本软件的话，在我码代码的时候给我买瓶啤酒喝支持一下好不;)我的支付宝账号是wanggjghost@126.com(**健)</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="74"/>
@@ -562,68 +562,68 @@
 <context>
     <name>UserPage</name>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="237"/>
+        <location filename="../qml/pages/UserPage.qml" line="231"/>
         <source>About user</source>
         <translation>关于用户</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="453"/>
+        <location filename="../qml/pages/UserPage.qml" line="447"/>
         <source>Bilateral</source>
         <translation>互相关注</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="455"/>
+        <location filename="../qml/pages/UserPage.qml" line="449"/>
         <source>Following</source>
         <translation>关注中</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="459"/>
+        <location filename="../qml/pages/UserPage.qml" line="453"/>
         <source>Follower</source>
         <translation>关注我的</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="461"/>
-        <location filename="../qml/pages/UserPage.qml" line="474"/>
+        <location filename="../qml/pages/UserPage.qml" line="455"/>
+        <location filename="../qml/pages/UserPage.qml" line="468"/>
         <source>Follow</source>
         <translation>关注</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="472"/>
+        <location filename="../qml/pages/UserPage.qml" line="466"/>
         <source>CancelFollowing</source>
         <translation>取消关注</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="515"/>
+        <location filename="../qml/pages/UserPage.qml" line="509"/>
         <source>Description: </source>
         <translation>基本信息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="549"/>
+        <location filename="../qml/pages/UserPage.qml" line="543"/>
         <source>Weibo: </source>
         <translation>微博：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="564"/>
+        <location filename="../qml/pages/UserPage.qml" line="558"/>
         <source>following: </source>
         <translation>Ta关注的用户：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="587"/>
+        <location filename="../qml/pages/UserPage.qml" line="581"/>
         <source>follower: </source>
         <translation>关注Ta的：</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="615"/>
+        <location filename="../qml/pages/UserPage.qml" line="609"/>
         <source>&apos;s RecentWeibo</source>
         <translation>的最新微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="337"/>
+        <location filename="../qml/pages/UserPage.qml" line="331"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="347"/>
+        <location filename="../qml/pages/UserPage.qml" line="341"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
@@ -714,7 +714,7 @@
     <message>
         <location filename="../qml/pages/WeiboPage.qml" line="281"/>
         <source> From </source>
-        <translation type="unfinished"> 来自 </translation>
+        <translation> 来自 </translation>
     </message>
     <message>
         <location filename="../qml/pages/WeiboPage.qml" line="303"/>
