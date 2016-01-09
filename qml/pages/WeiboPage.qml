@@ -252,7 +252,7 @@ Page {
     
     Component {
         id: delegateComment
-        
+
         OptionItem {
             width: parent.width
             contentHeight: columnWContent.height
@@ -272,7 +272,7 @@ Page {
                 UserAvatarHeader {
                     id:commnetAvaterHeader
                     width: parent.width
-                    height:Theme.itemSizeExtraSmall 
+                    height:Theme.itemSizeExtraSmall
                     
                     userName: model.user.screen_name
                     userNameFontSize: Theme.fontSizeTiny

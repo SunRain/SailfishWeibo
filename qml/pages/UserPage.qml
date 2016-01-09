@@ -12,7 +12,7 @@ import harbour.sailfish_sinaweibo.sunrain 1.0
 Page {
     id: userPage
     
-    property var uid
+    property var uid: undefined
     property bool _isFollowing: false
 
     property int _pageNum: 1
@@ -21,18 +21,12 @@ Page {
     property bool _refreshUserWeiboLock: false
     property bool _refreshUserInfoLock: false
     property bool _pageActive: false
-    property var _userWeiboCache
+    property var _userWeiboCache: undefined
 
     UserInfoObject {
         id: userInfoObject
     }
 
-//    Component.onCompleted: {
-////        //userGetInfo(Settings.getAccess_token())
-////        var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
-////        api.setWeiboAction(method, {'uid':uid});
-//        showuserInfo();
-//    }
     onStatusChanged: {
         if (userPage.status == PageStatus.Active || userPage.status == PageStatus.Activating) {
             userPage._pageActive = true;
@@ -44,9 +38,6 @@ Page {
     function refreshUserWeibo() {
         showBusyIndicator();
         _pageNum = 1;
-//        var method = WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE;
-//        api.setWeiboAction(method, {'page':_pageNum,
-//                               'uid':userInfoObject.usrInfo.id});
         statusesUserTimeline.setParameters("page", _pageNum)
         statusesUserTimeline.setParameters("uid", userInfoObject.usrInfo.id);
         statusesUserTimeline.getRequest();
@@ -68,8 +59,6 @@ Page {
 
     function refreshUserInfo() {
         showBusyIndicator();
-//        var method = WeiboMethod.WBOPT_GET_USERS_SHOW;
-//        api.setWeiboAction(method, {'uid':uid});
         usersShow.setParameters("uid", uid);
         usersShow.getRequest();
     }
@@ -90,10 +79,6 @@ Page {
     function userWeiboAddMore() {
         showBusyIndicator();
         _pageNum++
-//        var method = WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE;
-//        api.setWeiboAction(method, {'page':_pageNum,
-//                               'uid':userInfoObject.usrInfo.id
-//                               /*,'access_token':Settings.getAccess_token()*/});
         statusesUserTimeline.setParameters("page", _pageNum);
         statusesUserTimeline.setParameters("uid", userInfoObject.usrInfo.id);
         statusesUserTimeline.getRequest();
@@ -131,8 +116,14 @@ Page {
                 return;
             }
             userInfoObject.usrInfo = JSON.parse(replyData);
+
+            console.log("==== == usersShow object value "+ userInfoObject.usrInfo)
+
+            console.log(">>>>> usersShow object value "+ JSON.stringify(userInfoObject.usrInfo))
+
             _isFollowing = userInfoObject.usrInfo.following;
             modelWeibo.append(userInfoObject.usrInfo.status);
+
             if (lvUserWeibo.model == undefined) {
                 lvUserWeibo.model = modelWeibo;
             }
@@ -171,52 +162,12 @@ Page {
         }
     }
 
-//    Connections {
-//        target: api
-//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-//        onWeiboPutSucceed: {
-//            if (!userPage._pageActive) {
-//                return;
-//            }
-
-//            if (action == WeiboMethod.WBOPT_GET_USERS_SHOW) {
-//                userInfoObject.usrInfo = JSON.parse(replyData);
-//                _isFollowing = userInfoObject.usrInfo.following;
-//                modelWeibo.append(userInfoObject.usrInfo.status);
-//                if (lvUserWeibo.model == undefined) {
-//                    lvUserWeibo.model = modelWeibo;
-//                }
-//                stopBusyIndicator();
-//            }
-//            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_CREATE) {
-//                _isFollowing = true;
-//            }
-//            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_DESTROY) {
-//                _isFollowing = false;
-//            }
-//            if (action == WeiboMethod.WBOPT_GET_STATUSES_USER_TIMELINE) {
-//                userPage._userWeiboCache = JSON.parse(replyData);
-//                for (var i=0; i<userPage._userWeiboCache.statuses.length; i++) {
-//                    modelWeibo.append(userPage._userWeiboCache.statuses[i])
-//                }
-//                if (lvUserWeibo.model == undefined) {
-//                    lvUserWeibo.model = modelWeibo;
-//                }
-//                stopBusyIndicator();
-//            }
-//        }
-//    }
-    
     function userFollowCreate() {
-//        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_CREATE;
-//        api.setWeiboAction(method, {'uid':uid});
         friendshipsCreate.setParameters("uid", uid);
         friendshipsCreate.postRequest();
     }
     
     function userFollowCancel() {
-//        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_DESTROY;
-//        api.setWeiboAction(method, {'uid':uid});
         friendshipsDestroy.setParameters("uid", uid);
         friendshipsDestroy.postRequest();
     }
@@ -230,14 +181,12 @@ Page {
         boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
         anchors.fill: parent
         contentHeight: userPage._showUserWeibo ? Screen.height : innerAreaColumn.height + Theme.paddingSmall
-        
+        clip: true
         ScrollDecorator{
 //            flickable: userPage._showUserWeibo ? lvUserWeibo : scrollArea
         }
-
         Column {
             id: innerAreaColumn
-            
             spacing: Theme.paddingMedium
             anchors {
                 top: parent.top
@@ -248,51 +197,11 @@ Page {
             Item {
                 id:pageHeader
                 width: parent.width
-                height: Math.max(Theme.itemSizeLarge, childrenRect.height)
-
-                Rectangle {
-                    z: -1
-                    width: pageHeader.width
-                    height: pageHeader.height
-                    color: Theme.highlightDimmerColor
-                    opacity: scrollArea.moving || lvUserWeibo.moving || userPage._showUserWeibo ? 0.5 : 0.0
-                    Behavior on opacity { FadeAnimation { } }
-                }
-                Label {
-                    id: label
-                    anchors {
-                        right: image.left
-                        margins: Theme.paddingMedium
-                        verticalCenter: parent.verticalCenter
-                    }
-                    font.pixelSize: Theme.fontSizeLarge
-                    color: mouseArea.pressed ? Theme.highlightColor : Theme.primaryColor
-                    text: qsTr("About user")
-                }
-                Image {
-                    id: image
-                    anchors {
-                        right: parent.right
-                        margins: Theme.paddingMedium
-                        verticalCenter: label.verticalCenter
-                    }
-                    width: implicitWidth
-                    height: implicitHeight
-                    source: userPage._showUserWeibo
-                            ? util.pathTo("qml/graphics/action_collapse.png")
-                            : util.pathTo("qml/graphics/action_open.png")
-//                    RotationAnimator on rotation {
-//                        id: animation
-//                        from: userPage._showUserWeibo ? 0 : 180
-//                        to: userPage._showUserWeibo ? 180 : 360
-//                    }
-
-                }
+                height: childrenRect.height//Math.max(Theme.itemSizeLarge, childrenRect.height)
                 MouseArea {
                     id: mouseArea
                     anchors.fill: parent
                     onClicked: {
-//                        animation.running = true;
                         userPage._showUserWeibo = !userPage._showUserWeibo;
                         if(userPage._showUserWeibo) {
                             userPage.showUserWeibo();
@@ -301,7 +210,42 @@ Page {
                         }*/
                     }
                 }
+                Rectangle {
+                    z: -1
+                    width: pageHeader.width
+                    height: pageHeader.height
+                    color: Theme.highlightDimmerColor
+                    opacity: scrollArea.moving || lvUserWeibo.moving || userPage._showUserWeibo ? 0.5 : 0.0
+                    Behavior on opacity { FadeAnimation { } }
+                }
+                Row {
+                    height: Math.max(label.height, image.height) + Theme.paddingMedium
+                    anchors.right: parent.right
+                    anchors.rightMargin: Theme.horizontalPageMargin
+                    spacing: Theme.paddingMedium
+                    Label {
+                        id: label
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: Theme.fontSizeLarge
+                        color: mouseArea.pressed ? Theme.highlightColor : Theme.primaryColor
+                        text: qsTr("About user")
+                    }
+                    Image {
+                        id: image
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: implicitWidth
+                        height: implicitHeight
+                        source: userPage._showUserWeibo
+                                ? util.pathTo("qml/graphics/action_collapse.png")
+                                : util.pathTo("qml/graphics/action_open.png")
+                        //                    RotationAnimator on rotation {
+                        //                        id: animation
+                        //                        from: userPage._showUserWeibo ? 0 : 180
+                        //                        to: userPage._showUserWeibo ? 180 : 360
+                        //                    }
 
+                    }
+                }
             }
             Loader {
                 id: loader
@@ -309,7 +253,9 @@ Page {
                     left: parent.left
                     right: parent.right
                 }
-                height: implicitHeight
+                visible: !userPage._showUserWeibo
+                enabled: !userPage._showUserWeibo
+                height: userPage._showUserWeibo ? 0 : implicitHeight
                 sourceComponent: userPage._showUserWeibo ? loader.Null : userInfoComponent
                 onStatusChanged: {
                     if (loader.status == Loader.Ready) {
@@ -317,7 +263,6 @@ Page {
                     }
                 }
             }
-
             SilicaListView{
                 id: lvUserWeibo
                 width: parent.width
@@ -330,7 +275,7 @@ Page {
                     top: userPage._showUserWeibo ? pageHeader.bottom : undefined
                     topMargin: userPage._showUserWeibo ? pageHeader.height : undefined
                 }
-
+                clip: true
                 cacheBuffer: 9999
                 delegate: delegateWeibo
                 footer: userPage._showUserWeibo
@@ -339,7 +284,6 @@ Page {
                 Behavior on height {
                     FadeAnimation{}
                 }
-
             }
         }
     }
@@ -364,13 +308,13 @@ Page {
                 height: childrenRect.height
                 WeiboCard {
                     id:weiboCard
-                    weiboJSONContent: modelWeibo.get(index).JSON
+                    weiboJSONContent: modelWeibo.get(index)//.JSON
                     optionMenu: options
                     onRepostedWeiboClicked: {
                         toWeiboPage(modelWeibo.get(index).retweeted_status);
                     }
                     onUsWeiboClicked: {
-                        toWeiboPage(modelWeibo.get(index).JSON);
+                        toWeiboPage(modelWeibo.get(index)/*.JSON*/);
                     }
                     onAvatarHeaderClicked: {
                         toUserPage(userId);
@@ -418,7 +362,6 @@ Page {
         Column {
             id: wrapper
             width: implicitWidth
-            //height: implicitHeight
             spacing: Theme.paddingMedium
             Item {
                 id: topItem
@@ -426,15 +369,7 @@ Page {
                     left: parent.left
                     right: parent.right
                 }
-                height: /*userPage._showUserWeibo ? 0 : */childrenRect.height
-                //opacity: userPage._showUserWeibo ? 0 : 1
-//                Behavior on opacity {
-//                    FadeAnimation{}
-//                }
-//                Behavior on height {
-//                    FadeAnimation{}
-//                }
-
+                height: childrenRect.height
                 // user
                 Item {
                     id: userArea
@@ -486,54 +421,40 @@ Page {
                             }
                             OptionItem {
                                 id:optionItem
-                                //width: rowUserColumn.width
-                                anchors{
-                                    left: parent.left
-                                    right: parent.right
-                                }
-                                visible: userInfoObject.usrInfo.id != settings.uid //Settings.getUid()
+                                width: parent.width
+                                visible: userInfoObject.usrInfo.id != tokenProvider.uid
                                 Rectangle {
-                                    width: parent.width
-                                    height: parent.height
+                                    z: optionItem.z - 1
+                                    width: optionItem.width
+                                    height: optionItem.height
+                                    anchors.left: optionItem.left
+                                    anchors.top: optionItem.top
                                     border.color:Theme.highlightColor
                                     color:"#00000000"
                                     radius: 15
-                                    Label {
-                                        anchors {
-                                            verticalCenter: parent.verticalCenter
-                                            left: parent.left
-                                            leftMargin: Theme.paddingSmall
-                                        }
-                                        color: Theme.primaryColor
-                                        font.pixelSize: Theme.fontSizeMedium
-                                        text: {
-                                            if (_isFollowing == true) {
-                                                if (userInfoObject.usrInfo.follow_me == true) {
-                                                    return qsTr("Bilateral")
-                                                } else {
-                                                    return qsTr("Following")
-                                                }
+                                }
+                                Label {
+                                    anchors {
+                                        verticalCenter: parent.verticalCenter
+                                        left: parent.left
+                                        leftMargin: Theme.paddingSmall
+                                    }
+                                    color: Theme.primaryColor
+                                    font.pixelSize: Theme.fontSizeMedium
+                                    text: {
+                                        if (_isFollowing == true) {
+                                            if (userInfoObject.usrInfo.follow_me == true) {
+                                                return qsTr("Bilateral")
                                             } else {
-                                                if (userInfoObject.usrInfo.follow_me == true) {
-                                                    return qsTr("Follower")
-                                                } else {
-                                                    return qsTr("Follow")
-                                                }
+                                                return qsTr("Following")
+                                            }
+                                        } else {
+                                            if (userInfoObject.usrInfo.follow_me == true) {
+                                                return qsTr("Follower")
+                                            } else {
+                                                return qsTr("Follow")
                                             }
                                         }
-                                    }
-                                    Image {
-                                        anchors{
-                                            top:parent.top
-                                            bottom: parent.bottom
-                                            right: parent.right
-                                        }
-                                        width: Theme.iconSizeMedium
-                                        height: width
-                                        fillMode: Image.PreserveAspectFit
-                                        source: optionItem.menuOpen
-                                                ? util.pathTo("qml/graphics/action_collapse.png")
-                                                : util.pathTo("qml/graphics/action_open.png")
                                     }
                                 }
                                 menu: optionMenu
