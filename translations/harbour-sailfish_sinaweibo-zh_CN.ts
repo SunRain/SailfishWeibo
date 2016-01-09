@@ -272,7 +272,7 @@
 <context>
     <name>LoginPage</name>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="41"/>
+        <location filename="../qml/pages/LoginPage.qml" line="40"/>
         <source>Login Autheticator</source>
         <translation type="unfinished"></translation>
     </message>
@@ -282,12 +282,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="29"/>
+        <location filename="../qml/pages/LoginPage.qml" line="28"/>
         <source>User Password Autheticator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="34"/>
+        <location filename="../qml/pages/LoginPage.qml" line="33"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>

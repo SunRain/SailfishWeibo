@@ -87,7 +87,6 @@ Item {
                     }
                 }
                 onMenuStateChanged: {
-//                    console.log("====== option Item " + menuOpen);
                 }
             }
         }
@@ -104,29 +103,27 @@ Item {
 
         Grid {
             id: gridWeiboPics
-            columns: 3
+            columns: modelImages.count == 1 ? 1 : 3
             spacing: Theme.paddingSmall
             Repeater {
                 id:gridRepeater
-//                model: ListModel { id: modelImages }
                 delegate: Component {
                     Image{
                         id:image
                         fillMode: Image.PreserveAspectCrop;
-                        width: modelImages.count == 1 ? implicitWidth : columnWContent.width / 3 - Theme.paddingSmall;
-                        height: modelImages.count == 1 ? implicitHeight : width
-                        source: model.thumbnail_pic //util.parseImageUrl(model.thumbnail_pic);
+                        width: modelImages.count == 1
+                               ? implicitHeight > Screen.height/2 ? Screen.width/2 : implicitWidth
+                               : columnWContent.width / 3 - Theme.paddingSmall;
+                        height: modelImages.count == 1
+                                ? implicitHeight > Screen.height/2 ? Screen.width/2 : implicitHeight
+                                : width
+                        source: model.thumbnail_pic
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 baseWeiboCard.labelImageClicked(modelImages, index);
                             }
                         }
-//                        onStatusChanged: {
-//                            if(image.status == Image.Ready) {
-//                                util.saveRemoteImage(model.thumbnail_pic);
-//                            }
-//                        }
                     }
                 }
             }
