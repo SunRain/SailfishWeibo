@@ -28,6 +28,7 @@ emoticons.path = /usr/share/$${TARGET}/qml/emoticons
 emoticons.files += qml/emoticons/*
 INSTALLS += emoticons
 
+
 HEADERS += \
     src/app/app.h \
     src/app/Emoticons.h \
@@ -56,3 +57,4 @@ TRANSLATIONS += translations/harbour-sailfish_sinaweibo-de.ts \
 
 RESOURCES += \
     qml/resource.qrc
+

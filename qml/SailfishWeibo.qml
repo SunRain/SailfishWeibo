@@ -30,7 +30,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-//import io.thp.pyotherside 1.3
 import "pages"
 import "components"
 import "ui"
@@ -466,26 +465,6 @@ ApplicationWindow
     MyType {
         id: appData
     }
-
-//    Python{
-//            id:py
-//            signal pyhandle(string access_token)
-//            Component.onCompleted: {
-//              addImportPath(Qt.resolvedUrl('./py'));
-//              py.importModule('main', function () {
-//              });
-//              setHandler('pyhandle',pyhandle);
-//            }
-//            onPyhandle:{
-//              //得到token,如果结果是Error字符，则表示用户名或密码无效
-//              //var token = access_token;
-//            }
-//            function getToken(API_KEY,API_SECRET,REDIRECT_URI,username,password){
-//              call('main.getToken',[API_KEY,API_SECRET,REDIRECT_URI,username,password],function(result){
-//            })
-//        }
-
-//      }
 
 //    WeiboApi {
 //        id:api
