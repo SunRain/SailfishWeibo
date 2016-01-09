@@ -28,9 +28,6 @@ emoticons.path = /usr/share/$${TARGET}/qml/emoticons
 emoticons.files += qml/emoticons/*
 INSTALLS += emoticons
 
-py.path = /usr/share/$${TARGET}/qml/py
-py.files += qml/py/*
-INSTALLS += py
 
 HEADERS += \
     src/app/app.h \
