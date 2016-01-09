@@ -223,6 +223,25 @@
     </message>
 </context>
 <context>
+    <name>LoginPage</name>
+    <message>
+        <source>Manual Autheticator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Password Autheticator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login Autheticator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainComponent</name>
     <message>
         <source>Show Page 2</source>

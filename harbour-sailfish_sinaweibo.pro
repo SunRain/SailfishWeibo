@@ -34,6 +34,9 @@ emoticons.path = /usr/share/$${TARGET}/qml/emoticons
 emoticons.files += qml/emoticons/*
 INSTALLS += emoticons
 
+warning.path = /usr/share/$${TARGET}/qml
+warning.files += qml/warning.html
+INSTALLS += warning
 
 HEADERS += \
     src/app/app.h \
@@ -63,4 +66,3 @@ TRANSLATIONS += translations/harbour-sailfish_sinaweibo-de.ts \
 
 RESOURCES += \
     qml/resource.qrc
-

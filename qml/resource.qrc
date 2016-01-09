@@ -49,5 +49,6 @@
         <file>ui/WeiboTab.qml</file>
         <file>SailfishWeibo.qml</file>
         <file>js/AutheticatorToken.js</file>
+        <file>pages/LoginSelectPage.qml</file>
     </qresource>
 </RCC>

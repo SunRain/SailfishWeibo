@@ -430,8 +430,8 @@ ApplicationWindow
 //    }
 
     function weiboLogout() {
-//        Settings.setAccess_token("");
-        settings.accessToken = "";
+        tokenProvider.accessToken = "";
+        tokenProvider.uid = "";
         toLoginPage();
     }
 
