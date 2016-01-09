@@ -18,9 +18,7 @@ OTHER_FILES += \
     rpm/harbour-sailfish_sinaweibo.spec \
     rpm/harbour-sailfish_sinaweibo.yaml \
     harbour-sailfish_sinaweibo.desktop \
-    translations/* \
-    qml/py/*.py \
-    qml/py/rsa/*.py
+    translations/*
 
 graphics.path = /usr/share/$${TARGET}/qml/graphics
 graphics.files += qml/graphics/*
