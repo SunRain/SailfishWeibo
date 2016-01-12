@@ -27,6 +27,7 @@ Page {
             MenuItem {
                 text: qsTr("User Password Autheticator")
                 onClicked: {
+		   pageStack.push(Qt.resolveUrl("LoginComponent.qml"))
                 }
             }
             MenuItem {
