@@ -27,7 +27,7 @@ Page {
             MenuItem {
                 text: qsTr("User Password Autheticator")
                 onClicked: {
-		   pageStack.push(Qt.resolveUrl("LoginComponent.qml"))
+		                pageStack.push("file:////usr/share/harbour-sailfish_sinaweibo/qml/pages/LoginComponent.qml")
                 }
             }
             MenuItem {
