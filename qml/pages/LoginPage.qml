@@ -27,7 +27,12 @@ Page {
             MenuItem {
                 text: qsTr("User Password Autheticator")
                 onClicked: {
-		                pageStack.push("file:////usr/share/harbour-sailfish_sinaweibo/qml/pages/LoginComponent.qml")
+		                pageStack.push("file:////usr/share/harbour-sailfish_sinaweibo/qml/pages/LoginComponent.qml",
+                                  {
+                                    "api_key":"",//TODO
+                                    "api_secret":"",//TODO
+                                    "redirect_uri":""//TODO
+                                  })
                 }
             }
             MenuItem {
