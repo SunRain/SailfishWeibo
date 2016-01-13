@@ -10,7 +10,25 @@ Page {
 
     signal logined
 
-    property var _warning_url: util.pathTo("qml/warning.html")
+    property var _warning_url//: util.pathTo("qml/warning.html")
+
+    onStatusChanged:  {
+        if (status == PageStatus.Active)
+            loginPage._warning_url = util.pathTo("qml/warning.html");
+    }
+
+    Timer {
+        id: popTimer
+        interval: 1000
+        onTriggered: {
+            console.log("=====  popTimer onTriggered");
+            toIndexPage()
+        }
+    }
+
+    function bibibi() {
+        console.log("======= bibibi");
+    }
 
     SilicaWebView {
         id: webView
@@ -27,12 +45,28 @@ Page {
             MenuItem {
                 text: qsTr("User Password Autheticator")
                 onClicked: {
-		                pageStack.push("file:////usr/share/harbour-sailfish_sinaweibo/qml/pages/LoginComponent.qml",
-                                  {
-                                    "api_key":"",//TODO
-                                    "api_secret":"",//TODO
-                                    "redirect_uri":""//TODO
-                                  })
+                    var p = pageStack.replace(Qt.resolvedUrl("file:///usr/share/harbour-sailfish_sinaweibo/qml/pages/LoginComponent.qml"));
+                    p.loginSucceed.connect(function() {
+                        console.log("==== User Password Autheticator loginSucceed");
+//                        pageStack.pop(p, PageStackAction.Immediate);
+//                        toIndexPage();
+//                        pageStack.replace(indexPageComponent)
+//                         logined();
+                        bibibi();
+//                        popTimer.start();
+
+//                        var firstPage = pageStack.previousPage();
+//                        if (!firstPage) {
+//                            return;
+//                        }
+//                        while (pageStack.previousPage(firstPage)) {
+//                            console.log("=== seek page");
+//                            firstPage = pageStack.previousPage(firstPage);
+//                        }
+//                        // pop to first page
+//                        pageStack.pop(firstPage, PageStackAction.Animated);
+//                         pageStack.replace(indexPageComponent);
+                    })
                 }
             }
             MenuItem {
