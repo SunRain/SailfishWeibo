@@ -7,6 +7,8 @@
 #include <QDir>
 #include <QMutex>
 #include <QScopedPointer>
+#include <QStandardPaths>
+#include <QAbstractNetworkCache>
 
 #include <sailfishapp.h>
 
