@@ -10,7 +10,12 @@ Page {
 
     signal logined
 
-    property var _warning_url: util.pathTo("qml/warning.html")
+    property var _warning_url//: util.pathTo("qml/warning.html")
+
+    onStatusChanged:  {
+        if (status == PageStatus.Active)
+            loginPage._warning_url = util.pathTo("qml/warning.html");
+    }
 
     SilicaWebView {
         id: webView
@@ -27,7 +32,7 @@ Page {
             MenuItem {
                 text: qsTr("User Password Autheticator")
                 onClicked: {
-			pageStack.replace(Qt.resolvedUrl("file:///usr/share/harbour-sailfish_sinaweibo/qml/pages/LoginComponent.qml"));
+                    pageStack.replace(Qt.resolvedUrl("file:///usr/share/harbour-sailfish_sinaweibo/qml/pages/LoginComponent.qml"));
                 }
             }
             MenuItem {
