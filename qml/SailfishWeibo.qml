@@ -33,7 +33,7 @@ import Sailfish.Silica 1.0
 import "pages"
 import "components"
 import "ui"
-
+import "cover"
 //import "js/Settings.js" as Settings
 
 import harbour.sailfish_sinaweibo.sunrain 1.0
@@ -93,7 +93,7 @@ ApplicationWindow
             }
         }
     }
-
+    cover: CoverPage{}
     //主页微博列表显示
     Component {
         id: indexPageComponent
