@@ -79,7 +79,8 @@ int main(int argc, char *argv[])
 
     view.data ()->setSource(QUrl(QStringLiteral("qrc:/SailfishWeibo.qml")));
     view.data ()->show();
-    //QObject::connect((QObject*)view->engine(), SIGNAL(quit()), app, SLOT(quit()));
+    QObject::connect (view.data ()->engine (), &QQmlEngine::quit,
+                      app.data (), &QGuiApplication::quit);
     return app->exec();
 }
 
