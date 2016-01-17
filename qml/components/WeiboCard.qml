@@ -6,10 +6,7 @@ import "../js/getURL.js" as GetURL
 Item {
     id:weiboCard
     
-    anchors {
-        left: parent.left
-        right: parent.right
-    }
+    width: parent ? parent.width : Screen.width
     height: columnWContent.height
 
     property var weiboJSONContent: undefined
@@ -66,13 +63,10 @@ Item {
 
     Column {
         id: columnWContent
+        width: parent.width
         anchors {
             top: parent.top
-            topMargin: Theme.paddingSmall
             left: parent.left
-            right: parent.right
-            leftMargin: Theme.paddingLarge 
-            rightMargin: Theme.paddingLarge 
         }
         spacing: Theme.paddingMedium
         BaseWeiboCard {
@@ -114,41 +108,44 @@ Item {
 
         Component {
             id:repostedBaseWeiboCard
-            BaseWeiboCard {
-                id:repostedWeibo
-                isInvalid:  inner.subValue == undefined
-                avatarHeaderHeight: Theme.itemSizeSmall
-                avaterHeaderFontSize: Theme.fontSizeExtraSmall
-                avaterHeaderUserName: inner.subValue.user.screen_name
-                avaterHeaderAvaterImage: inner.subValue.user.profile_image_url
-                avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(inner.subValue.created_at))
-                        + qsTr(" From ") + GetURL.linkToStr(inner.subValue.source)
-                
-                labelFontSize: Theme.fontSizeMedium
-                labelContent: util.parseWeiboContent(inner.subValue.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-                picURLs: inner.subValue.pic_urls
+            Item {
+                width: parent.width
+                height: repostedWeibo.height
+                BaseWeiboCard {
+                    id: repostedWeibo
+                    width: parent.width - Theme.paddingSmall * 2
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.paddingSmall
+                    }
+                    isInvalid:  inner.subValue == undefined
+                    avatarHeaderHeight: Theme.itemSizeSmall
+                    avaterHeaderFontSize: Theme.fontSizeExtraSmall
+                    avaterHeaderUserName: inner.subValue.user.screen_name
+                    avaterHeaderAvaterImage: inner.subValue.user.profile_image_url
+                    avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(inner.subValue.created_at))
+                                           + qsTr(" From ") + GetURL.linkToStr(inner.subValue.source)
 
-                onUserAvatarHeaderClicked: {
-                    weiboCard.avatarHeaderClicked(inner.subValue.user.id);
+                    labelFontSize: Theme.fontSizeMedium
+                    labelContent: util.parseWeiboContent(inner.subValue.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+                    picURLs: inner.subValue.pic_urls
+
+                    onUserAvatarHeaderClicked: {
+                        weiboCard.avatarHeaderClicked(inner.subValue.user.id);
+                    }
+                    onLabelLinkClicked: {
+                        weiboCard.labelLinkClicked(link);
+                    }
+                    onBaseWeiboCardClicked: {
+                        weiboCard.repostedWeiboClicked();
+                    }
+                    onLabelImageClicked: {
+                        weiboCard.labelImageClicked(modelImages, index);
+                    }
                 }
-                onLabelLinkClicked: {
-                    weiboCard.labelLinkClicked(link);
-                }
-                onBaseWeiboCardClicked: {
-                    weiboCard.repostedWeiboClicked();
-                }
-                onLabelImageClicked: {
-                    weiboCard.labelImageClicked(modelImages, index);
-                }
-                
                 Image {
                     id: background
-                    anchors {
-                        top: repostedWeibo.top
-                        left: repostedWeibo.left
-                        right: repostedWeibo.right
-                        bottom: repostedWeibo.bottom
-                    }
+                    anchors.fill: parent
                     source: util.pathTo("qml/graphics/mask_background_reposted.png")
                     fillMode:Image.TileHorizontally
                 }

@@ -6,10 +6,10 @@ import "../js/getURL.js" as GetURL
 
 Item {
     id:baseWeiboCard
-    anchors { left: parent.left; right: parent.right }
-    height: isInvalid ? 0 : columnWContent.height + Theme.paddingMedium
+    width: parent ? parent.width : Screen.width
+    height: isInvalid ? 0 : columnWContent.height// + Theme.paddingMedium
 
-    property var picURLs:undefined
+    property var picURLs: undefined
     
     property bool isInvalid: false
     
@@ -63,19 +63,17 @@ Item {
     
     Column {
         id: columnWContent
+        width: parent.width
         anchors {
-            top: parent.top
-            topMargin: Theme.paddingSmall
             left: parent.left
-            right: parent.right
-            leftMargin: Theme.paddingSmall
-            rightMargin:Theme.paddingSmall
+            top: parent.top
         }
+
         spacing: Theme.paddingSmall
         
         Item {
             id: avatarBar
-            width: columnWContent.width
+            width: parent.width
             height: optionItem.height
             
             OptionItem{
