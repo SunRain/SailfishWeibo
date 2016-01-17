@@ -300,48 +300,48 @@ Page {
     Component {
         id: delegateWeibo
         Column {
-            anchors{left:parent.left; right:parent.right }
+            width: parent.width
             spacing: Theme.paddingMedium
-
-            Item {
-                anchors{left:parent.left; right:parent.right; }
-                height: childrenRect.height
-                WeiboCard {
-                    id:weiboCard
-                    weiboJSONContent: modelWeibo.get(index)//.JSON
-                    optionMenu: options
-                    onRepostedWeiboClicked: {
-                        toWeiboPage(modelWeibo.get(index).retweeted_status);
-                    }
-                    onUsWeiboClicked: {
-                        toWeiboPage(modelWeibo.get(index)/*.JSON*/);
-                    }
-                    onAvatarHeaderClicked: {
-                        toUserPage(userId);
-                    }
-                    onLabelLinkClicked: {
-                        Qt.openUrlExternally(link);
-                    }
-                    onLabelImageClicked: {
-                        toGalleryPage(modelImages, index);
-                    }
-                    ContextMenu {
-                        id:options
-                        MenuItem {
-                            text: qsTr("Repost")
-                            onClicked: {
-                                toSendPage("repost", {"id": model.id},
-                                           (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
-                                               "" :
-                                               "//@"+model.user.name +": " + model.text ,
-                                               true)
-                            }
+            WeiboCard {
+                id:weiboCard
+                width: parent.width - Theme.paddingMedium * 2
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingMedium
+                }
+                weiboJSONContent: modelWeibo.get(index)//.JSON
+                optionMenu: options
+                onRepostedWeiboClicked: {
+                    toWeiboPage(modelWeibo.get(index).retweeted_status);
+                }
+                onUsWeiboClicked: {
+                    toWeiboPage(modelWeibo.get(index)/*.JSON*/);
+                }
+                onAvatarHeaderClicked: {
+                    toUserPage(userId);
+                }
+                onLabelLinkClicked: {
+                    Qt.openUrlExternally(link);
+                }
+                onLabelImageClicked: {
+                    toGalleryPage(modelImages, index);
+                }
+                ContextMenu {
+                    id:options
+                    MenuItem {
+                        text: qsTr("Repost")
+                        onClicked: {
+                            toSendPage("repost", {"id": model.id},
+                                       (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
+                                           "" :
+                                           "//@"+model.user.name +": " + model.text ,
+                                           true)
                         }
-                        MenuItem {
-                            text: qsTr("Comment")
-                            onClicked: {
-                                toSendPage("comment", {"id": model.id}, "", true)
-                            }
+                    }
+                    MenuItem {
+                        text: qsTr("Comment")
+                        onClicked: {
+                            toSendPage("comment", {"id": model.id}, "", true)
                         }
                     }
                 }

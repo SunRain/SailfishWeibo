@@ -133,40 +133,40 @@ Page {
     Component {
         id: delegateWeibo
         Column {
-            anchors{left:parent.left; right:parent.right }
+            width: parent.width
             spacing: Theme.paddingMedium
-            
-            Item {
-                anchors{left:parent.left; right:parent.right; }
-                height: childrenRect.height
-                WeiboCard {
-                    id:weiboCard
-                    weiboJSONContent: modelWeibo.get(index).status
-                    optionMenu: options
-                    onRepostedWeiboClicked: {
-                        pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                       {"userWeiboJSONContent":modelWeibo.get(index).status.retweeted_status})
-                    }
-                    onUsWeiboClicked: {
-                        pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                       {"userWeiboJSONContent":modelWeibo.get(index).status})
-                    }
-                    onAvatarHeaderClicked: {
-                        toUserPage(userId);
-                    }
-                    onLabelLinkClicked: {
-                        Qt.openUrlExternally(link);
-                    }
-                    onLabelImageClicked: {
-                        toGalleryPage(modelImages, index);
-                    }
-                    ContextMenu {
-                        id:options
-                        MenuItem {
-                            text: qsTr("Remove from favorites")
-                            onClicked: {
-                                _removeFromFavorites(modelWeibo.get(index).status.id);
-                            }
+            WeiboCard {
+                id:weiboCard
+                width: parent.width - Theme.paddingMedium * 2
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingMedium
+                }
+                weiboJSONContent: modelWeibo.get(index).status
+                optionMenu: options
+                onRepostedWeiboClicked: {
+                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+                                   {"userWeiboJSONContent":modelWeibo.get(index).status.retweeted_status})
+                }
+                onUsWeiboClicked: {
+                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+                                   {"userWeiboJSONContent":modelWeibo.get(index).status})
+                }
+                onAvatarHeaderClicked: {
+                    toUserPage(userId);
+                }
+                onLabelLinkClicked: {
+                    Qt.openUrlExternally(link);
+                }
+                onLabelImageClicked: {
+                    toGalleryPage(modelImages, index);
+                }
+                ContextMenu {
+                    id:options
+                    MenuItem {
+                        text: qsTr("Remove from favorites")
+                        onClicked: {
+                            _removeFromFavorites(modelWeibo.get(index).status.id);
                         }
                     }
                 }
@@ -177,7 +177,6 @@ Page {
             }
         }
     }
-
     ListModel {
         id: modelWeibo
     }

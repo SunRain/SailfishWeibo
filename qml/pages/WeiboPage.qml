@@ -142,18 +142,19 @@ Page {
 
         Column {
             id:column
-            
-            anchors{left:parent.left; right:parent.right }
+            width: parent.width
             spacing: Theme.paddingMedium
-            
             PageHeader {
                 id:pageHeader
                 title: qsTr("Sailfish Weibo")
             }
-                
             WeiboCard {
                 id:weiboCard
-                parent: column
+                width: parent.width - Theme.paddingMedium * 2
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingMedium
+                }
                 weiboJSONContent: userWeiboJSONContent
                 optionMenu: options
                 repostButtonColor: _footInfoBarIndex == 0 ? Theme.secondaryHighlightColor : undefined
@@ -313,10 +314,11 @@ Page {
             menu: contextMenu
             Column {
                 id: columnWContent
-                width: parent.width - Theme.paddingSmall *2
+                width: parent.width - Theme.paddingMedium *2
                 anchors {
                     top: parent.top
-                    leftMargin: Theme.paddingSmall
+                    left: parent.left
+                    leftMargin: Theme.paddingMedium
                 }
                 spacing: Theme.paddingMedium
                 

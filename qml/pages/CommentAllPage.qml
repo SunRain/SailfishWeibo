@@ -96,6 +96,11 @@ Page {
 
             WeiboCard {
                 id: weiboCard
+                width: parent.width - Theme.paddingMedium * 2
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingMedium
+                }
                 weiboJSONContent: modelComment.get(index)
                 optionMenu: options
                 onRepostedWeiboClicked: {
