@@ -734,12 +734,12 @@
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="334"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="335"/>
         <source> From </source>
         <translation type="unfinished"> 来自 </translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="356"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="357"/>
         <source>Reply</source>
         <translation type="unfinished">回复</translation>
     </message>

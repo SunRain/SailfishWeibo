@@ -314,10 +314,11 @@ Page {
             menu: contextMenu
             Column {
                 id: columnWContent
-                width: parent.width - Theme.paddingSmall *2
+                width: parent.width - Theme.paddingMedium *2
                 anchors {
                     top: parent.top
-                    leftMargin: Theme.paddingSmall
+                    left: parent.left
+                    leftMargin: Theme.paddingMedium
                 }
                 spacing: Theme.paddingMedium
                 
