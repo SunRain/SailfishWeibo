@@ -717,32 +717,31 @@
 <context>
     <name>WeiboPage</name>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="145"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="151"/>
         <source>Sailfish Weibo</source>
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="185"/>
-        <location filename="../qml/pages/WeiboPage.qml" line="227"/>
-        <location filename="../qml/pages/WeiboPage.qml" line="230"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="191"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="280"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="195"/>
-        <location filename="../qml/pages/WeiboPage.qml" line="229"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="201"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="295"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="281"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="351"/>
         <source> From </source>
-        <translation> 来自 </translation>
+        <translation type="unfinished"> 来自 </translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="303"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="373"/>
         <source>Reply</source>
-        <translation>回复</translation>
+        <translation type="unfinished">回复</translation>
     </message>
 </context>
 <context>

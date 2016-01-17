@@ -18,18 +18,18 @@ Page {
     property int _commentsPageNum:1
     property int _repostPageNum: 1
     property bool _gettingInfo: false
-    property string _weiboId
+    property string _weiboId: ""
 
     function _getInfo(id) {
         weiboPage._gettingInfo = true;
         _weiboId = String(id);
         modelInfo.clear();
-        var method;
         if (_footInfoBarIndex == 0) {
 //            method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
 //            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_repostPageNum});
             statusesRepostTimeline.setParameters("id", " "+id+" ");
             statusesRepostTimeline.setParameters("page", _repostPageNum);
+            statusesRepostTimeline.setParameters("count", 20)  //单页返回的记录条数，默认为50。
             statusesRepostTimeline.getRequest();
         }
         
@@ -38,6 +38,7 @@ Page {
 //            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_commentsPageNum});
             commentsShow.setParameters("id", " "+id+" ");
             commentsShow.setParameters("page", _commentsPageNum);
+            commentsShow.setParameters("count", 20)  //单页返回的记录条数，默认为50。
             commentsShow.getRequest();
         }
 
@@ -51,6 +52,7 @@ Page {
 //            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_repostPageNum});
             statusesRepostTimeline.setParameters("id", " "+_weiboId+" ");
             statusesRepostTimeline.setParameters("page", _repostPageNum);
+            statusesRepostTimeline.setParameters("count", 20)  //单页返回的记录条数，默认为50。
             statusesRepostTimeline.getRequest();
         }
         
@@ -60,14 +62,10 @@ Page {
 //            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_commentsPageNum});
             commentsShow.setParameters("id", " "+_weiboId+" ");
             commentsShow.setParameters("page", _commentsPageNum);
+            commentsShow.setParameters("count", 20)  //单页返回的记录条数，默认为50。
             commentsShow.getRequest();
         }
 
-    }
-    onStatusChanged: {
-        if (weiboPage.status == PageStatus.Active) {
-            _getInfo(userWeiboJSONContent.id);
-        }
     }
     
     CommentsShow {
@@ -81,11 +79,17 @@ Page {
             console.log("== commentsShow onRequestFailure ["+replyData+"]")
         }
         onRequestSuccess: { //replyData
+//            console.log("== commentsShow onRequestSuccess")
             weiboPage._gettingInfo = false
             var json = JSON.parse(replyData);
+//            console.log("== commentsShow onRequestSuccess 2 ")
             for (var i=0; i<json.comments.length; i++) {
                 modelInfo.append(json.comments[i])
             }
+//            console.log("== commentsShow onRequestSuccess 3")
+            if (commentListView.model == undefined)
+                commentListView.model = modelInfo;
+//            console.log("== commentsShow onRequestSuccess 4")
         }
     }
 
@@ -101,38 +105,40 @@ Page {
         }
         onRequestSuccess: { //replyData
             weiboPage._gettingInfo = false
+//            console.log("== statusesRepostTimeline onRequestSuccess");
             var json = JSON.parse(replyData);
+//            console.log("== statusesRepostTimeline onRequestSuccess 2 ");
+
+//            console.log("== statusesRepostTimeline onRequestSuccess ["+replyData+"]");
+
             for (var i=0; i<json.reposts.length; ++i) {
                 modelInfo.append(json.reposts[i])
             }
+//            console.log("== statusesRepostTimeline onRequestSuccess 3");
+            if (commentListView.model == undefined)
+                commentListView.model = modelInfo;
+//            console.log("== statusesRepostTimeline onRequestSuccess 4");
+        }
+    }
+    ListModel {
+        id: modelInfo
+    }
+    onStatusChanged: {
+        console.log("====== weiboPage status " + status)
+        if (weiboPage.status == PageStatus.Active) {
+            console.log("====== weiboPage Active")
         }
     }
 
-//    Connections {
-//        target: api
-//        onWeiboPutSucceed: {
-//            weiboPage._gettingInfo = false
-//            if (action == WeiboMethod.WBOPT_GET_COMMENTS_SHOW) {
-//                var json = JSON.parse(replyData);
-//                for (var i=0; i<json.comments.length; i++) {
-//                    modelInfo.append(json.comments[i])
-//                }
-//            }
-//            if (action == WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE) {
-//                json = JSON.parse(replyData);
-//                for (i=0; i<json.reposts.length; i++) {
-//                    modelInfo.append(json.reposts[i])
-//                }
-//            }
-//        }
-//    }
-    
     SilicaFlickable {
         id: main
-        anchors.fill: parent
-
-        boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
+        anchors {
+            top: parent.top
+            bottom: toolBar.top
+        }
+        width: parent.width
         contentHeight: column.height
+        clip: true
 
         Column {
             id:column
@@ -168,12 +174,12 @@ Page {
                     toGalleryPage(modelImages, index);
                 }
                 onRepostButtonClicked: {
-                    _footInfoBarIndex = 0;
-                    _getInfo(userWeiboJSONContent.id);
+//                    _footInfoBarIndex = 0;
+//                    _getInfo(userWeiboJSONContent.id);
                 }
                 onCommentButtonClicked: {
-                    _footInfoBarIndex = 1;
-                    _getInfo(userWeiboJSONContent.id);
+//                    _footInfoBarIndex = 1;
+//                    _getInfo(userWeiboJSONContent.id);
                 }
                 onLikeButtonClicked: {
                     //                        footInfoBarIndex = 2;
@@ -204,52 +210,100 @@ Page {
                 width: parent.width
                 color: Theme.highlightColor
             }            
-            //////////////微博下面评论/转发的内容（listView展示）
-            Item {
-                id: commentItem
-                width: parent.width
-                height: childrenRect.height
-                BusyIndicator {
-                    id: commentLoading
-                    anchors.centerIn: parent
-                    parent: commentItem
-                    size: BusyIndicatorSize.Medium
-                    opacity: commentLoading.running ? 1 : 0
-                    running: weiboPage._gettingInfo ? (modelInfo.count == 0 ? true : false) : false
-                }
-                SilicaListView {
-                    id:commentListView
-                    width: parent.width
-                    height: modelInfo.count ==0 ? 0 : contentItem.childrenRect.height
-                    opacity: modelInfo.count ==0 ? 0 : 1
-                    header: PageHeader {
-                        title: _footInfoBarIndex == 0
-                               ? qsTr("Repost")
-                               : _footInfoBarIndex == 1
-                               ? qsTr("Comment")
-                               : qsTr("Repost") //fallback
-                    }
+        }
+    }
 
-                    interactive: false
-                    clip: true
-                    spacing:Theme.paddingSmall
-                    model: ListModel {
-                        id: modelInfo
+    BottomPopupToolBar {
+        id: toolBar
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+        }
+        popupContent: Item {
+            anchors.fill: parent
+            SilicaListView {
+                id: commentListView
+                anchors.fill: parent
+                clip: true
+                spacing: Theme.paddingSmall
+                delegate: delegateComment
+                footer: FooterLoadMore {
+                    visible: modelInfo.count != 0
+                    onClicked: {
+                        _addMore();
                     }
-                    delegate: delegateComment
-                    footer: FooterLoadMore {
-                        visible: modelInfo.count != 0
-                        onClicked: {
-                            _addMore();
-                        }
+                }
+                VerticalScrollDecorator {}
+            }
+            BusyIndicator {
+                id: busyIndicator
+                size: BusyIndicatorSize.Medium
+                anchors.centerIn: parent
+                running: weiboPage._gettingInfo
+            }
+        }
+        onPopupReady: {
+            console.log("==== toolBar onPopupReady ")
+            _getInfo(userWeiboJSONContent.id);
+        }
+        Item {
+            id: tools
+            width: parent.width - Theme.paddingLarge*2//parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: Theme.itemSizeMedium
+            property int index: 0
+            Image {
+                id: background
+                anchors.fill: parent
+                source: "image://theme/graphic-header"
+            }
+            Rectangle {
+                id: indicator
+                anchors.top: tools.top
+                height: Theme.paddingSmall
+                color: Theme.highlightColor
+                width: tools.width/2
+                x: tools.width * tools.index /2
+                Behavior on x {
+                    NumberAnimation {duration: 200}
+                }
+            }
+            Row {
+                anchors.centerIn: parent
+                BackgroundItem {
+                    id: repostLabel
+                    width: tools.width/2
+                    Label {
+                        anchors.centerIn: parent
+                        text: qsTr("Repost")
+                        color: repostLabel.highlighted ? Theme.highlightColor : Theme.primaryColor
                     }
-                    VerticalScrollDecorator { /*flickable: commentListView*/ }
-                    Behavior on opacity { FadeAnimation{} }
+                    onClicked: {
+                        tools.index = 0;
+                        _footInfoBarIndex = 0;
+                        if (toolBar.popuped)
+                            _getInfo(userWeiboJSONContent.id);
+                    }
+                }
+                BackgroundItem {
+                    id: commentLabel
+                    width: tools.width/2
+                    Label {
+                        anchors.centerIn: parent
+                        text: qsTr("Comment")
+                        color: commentLabel.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    }
+                    onClicked: {
+                        tools.index = 1;
+                        _footInfoBarIndex = 1;
+                        if (toolBar.popuped)
+                            _getInfo(userWeiboJSONContent.id);
+                    }
                 }
             }
         }
     }
-    
+
     Component {
         id: delegateComment
 
@@ -259,12 +313,10 @@ Page {
             menu: contextMenu
             Column {
                 id: columnWContent
+                width: parent.width - Theme.paddingSmall *2
                 anchors {
                     top: parent.top
-                    left: parent.left
-                    right: parent.right
                     leftMargin: Theme.paddingSmall
-                    rightMargin: Theme.paddingSmall
                 }
                 spacing: Theme.paddingMedium
                 
@@ -311,6 +363,5 @@ Page {
                 }
             }
         }
-    
     }
 }
