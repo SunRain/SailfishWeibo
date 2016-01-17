@@ -91,8 +91,7 @@ BackgroundItem {
     }
 
     Item {
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         Item {
             id: subcontent
             anchors {
@@ -105,16 +104,16 @@ BackgroundItem {
         MouseArea {
             id: arrow
             height: parent.height
-            width: height
+            width: Math.min(parent.height, Theme.itemSizeMedium)
             anchors {
                 right: parent.right
-                top:parent.top
+                top: parent.top
             }
             enabled: menu != null
             visible: menu != null
             Image {
                 anchors.centerIn: parent
-                width: optionItem.arrowSize
+                width: Math.min(optionItem.arrowSize, arrow.width, arrow.height)
                 height: width
                 fillMode: Image.PreserveAspectFit
                 source: menuOpen ? optionItem.closeActionIcon : optionItem.openActionIcon
