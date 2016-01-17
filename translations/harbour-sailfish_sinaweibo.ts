@@ -120,7 +120,7 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>My Cover</source>
+        <source>Weibo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

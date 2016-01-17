@@ -32,23 +32,14 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-    Label {
-        id: label
-        anchors.centerIn: parent
-        text: qsTr("My Cover")
+
+    CoverPlaceholder{
+        icon.source: Qt.resolvedUrl("file:////usr/share/icons/hicolor/86x86/apps/harbour-sailfish_sinaweibo.png")
+        icon.height: parent.width / 2.5
+        icon.width: parent.width / 2.5
+        text: qsTr("Weibo")
     }
     
-    CoverActionList {
-        id: coverAction
-        
-        CoverAction {
-            iconSource: "image://theme/icon-cover-next"
-        }
-        
-        CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
-        }
-    }
 }
 
 
