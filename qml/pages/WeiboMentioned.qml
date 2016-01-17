@@ -8,14 +8,14 @@ import "../components"
 
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
-Page {
+WBPage {
     id: weiboMentionedPage
 
     property var uid
     property string userName: ""
     property int _pageNum: 1
 
-    property alias contentItem: lvUserWeibo
+//    property alias contentItem: lvUserWeibo
 
     function refresh() {
         modelWeibo.clear()

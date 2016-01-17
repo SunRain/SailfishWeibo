@@ -10,10 +10,10 @@ import "../js"
 //import "../js/Settings.js" as Settings
 
 
-Page {
+WBPage {
     id: mainView
     
-    property alias contentItem: drawer//weiboTab
+//    property alias contentItem: drawer//weiboTab
     property bool _dockOpened: false
     property var _title: qsTr("Sailfish Weibo")
 

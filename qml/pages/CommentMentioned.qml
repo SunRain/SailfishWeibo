@@ -9,7 +9,7 @@ import "../components"
 
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
-Page{
+WBPage{
     id: commentMentionedPage
     //title: qsTr("Comments mentioned me")
 
@@ -20,7 +20,7 @@ Page{
     property var _commentInfo
     property var _weiboTmp
 
-    property alias contentItem: commentMentionedListView
+//    property alias contentItem: commentMentionedListView
 
     function refresh() {
         modelComment.clear()

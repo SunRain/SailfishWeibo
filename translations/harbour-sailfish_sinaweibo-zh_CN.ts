@@ -148,9 +148,9 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <location filename="../qml/cover/CoverPage.qml" line="38"/>
-        <source>My Cover</source>
-        <translation></translation>
+        <location filename="../qml/cover/CoverPage.qml" line="40"/>
+        <source>Weibo</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

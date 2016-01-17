@@ -9,7 +9,7 @@ import "../components"
 
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
-Page {
+WBPage {
     id: commentAllPage
 
     property var uid
@@ -19,7 +19,7 @@ Page {
     property var _commentInfo
     property var _weiboTmp
 
-    property alias contentItem: commentListView
+//    property alias contentItem: commentListView
 
     function refresh() {
         modelComment.clear()

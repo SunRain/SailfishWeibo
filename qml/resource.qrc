@@ -51,5 +51,6 @@
         <file>js/AutheticatorToken.js</file>
         <file>pages/LoginSelectPage.qml</file>
         <file>components/BottomPopupToolBar.qml</file>
+        <file>components/WBPage.qml</file>
     </qresource>
 </RCC>
