@@ -2,3 +2,7 @@
 	path = src/QSinaWeiboApi
 	url = https://github.com/SunRain/QSinaWeiboApi.git
 	
+[submodule "WeiboPyModule"]
+	path = WeiboPyModule
+	url = https://github.com/SunRain/SailfishWeiboPyModule.git
+	branch = master
