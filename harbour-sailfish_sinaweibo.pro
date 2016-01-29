@@ -9,8 +9,16 @@ CONFIG += c++11
 CONFIG += WITH_HACKLOGIN
 
 DEFINES += \
-    VERSION_STR=\\\"$$system($${PWD}/get_version_str.sh)\\\" \
     SAILFISH_OS
+
+win32 {
+    DEFINES += \
+        VERSION_STR="win32_dummy"
+}
+unix {
+    DEFINES += \
+        VERSION_STR=\\\"$$system($${PWD}/get_version_str.sh)\\\"
+}
 
 include (src/QSinaWeiboApi/QWeiboSDK/QWeiboSDK.pri)
 
@@ -68,13 +76,13 @@ TRANSLATIONS += translations/harbour-sailfish_sinaweibo-de.ts \
 RESOURCES += \
     qml/resource.qrc
 
-win32 {
-    COPY = copy /y
-    MKDIR = mkdir
-} else {
-    COPY = cp
-    MKDIR = mkdir -p
-}
+#win32 {
+#    COPY = copy /y
+#    MKDIR = mkdir
+#} else {
+#    COPY = cp
+#    MKDIR = mkdir -p
+#}
 
 #url=http://htmlcxx.sourceforge.net/
 #prefix=/usr
@@ -101,15 +109,15 @@ win32 {
 #    }
 #}
 
-TAGLIB_BUILD_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build
-TAGLIB_TARGET_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/target
-BUILD_TAGLIB = cd $$TAGLIB_BUILD_DIR \
-    && ../configure --enable-shared --enable-static \
-    && make
-#    && make install
-system ($$MKDIR $$TAGLIB_BUILD_DIR)
-system ($$MKDIR $$TAGLIB_TARGET_DIR)
-system ($$BUILD_TAGLIB)
+#TAGLIB_BUILD_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build
+##TAGLIB_TARGET_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/target
+#BUILD_TAGLIB = cd $$TAGLIB_BUILD_DIR \
+#    && ../configure --enable-shared --enable-static \
+#    && make
+##    && make install
+#system ($$MKDIR $$TAGLIB_BUILD_DIR)
+##system ($$MKDIR $$TAGLIB_TARGET_DIR)
+#system ($$BUILD_TAGLIB)
 
 #TAGLIB_FILE = \
 #    $$PWD/../../../ThirdParty/Taglib/target/lib/*.so \
@@ -129,24 +137,31 @@ system ($$BUILD_TAGLIB)
 #system ($$COPY_LIB)
 
 
+INCLUDEPATH += \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/css \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/html
 
-unix:!macx: LIBS += -L$$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/ -lcss_parser_pp
+DEPENDPATH += \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/css \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/html
 
-INCLUDEPATH += $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css
-DEPENDPATH += $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css
-
-unix:!macx: PRE_TARGETDEPS += $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/libcss_parser_pp.a
-
-unix:!macx: LIBS += -L$$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/ -lcss_parser
-
-INCLUDEPATH += $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css
-DEPENDPATH += $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css
-
-unix:!macx: PRE_TARGETDEPS += $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/libcss_parser.a
-
-unix:!macx: LIBS += -L$$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/ -lhtmlcxx
-
-INCLUDEPATH += $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html
-DEPENDPATH += $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html
-
-unix:!macx: PRE_TARGETDEPS += $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/libhtmlcxx.a
+win32-g++:CONFIG(release, debug|release): LIBS += \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/release/libcss_parser.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/release/libcss_parser_pp.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/release/libhtmlcxx.a
+else:win32-g++:CONFIG(debug, debug|release): LIBS += \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/debug/libcss_parser.a\
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/debug/libcss_parser_pp.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/debug/libhtmlcxx.a
+else:win32:!win32-g++:CONFIG(release, debug|release): LIBS += \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/release/css_parser.lib \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/release/css_parser_pp.lib \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/release/htmlcxx.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): LIBS += \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/debug/css_parser.lib \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/debug/css_parser_pp.lib \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/debug/htmlcxx.lib
+else:unix: LIBS += \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/libcss_parser.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/libcss_parser_pp.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/libhtmlcxx.a
