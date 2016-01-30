@@ -10,3 +10,28 @@ Emoji显示问题（似乎由Sailfish OS本身的问题所引起，暂时等待�
 
 下载依赖库
 git submodule update --init --recursive
+
+
+以下是在windows下使用QtCreator编译的方法
+
+1. 在Qt Creator中打开.pro文件
+
+2. 修改项目=>构建步骤:
+
+	构建步骤:
+
+		添加自定义处理步骤:
+
+		自定义处理步骤参数如下:
+
+				命令: htmlcxx-win-$target.cmd的完整路径
+							注意: i486编译时, $target是i486, arm编译时, $target 是 armv7hl
+								  你可能需要根据你当前的系统环境修改这两个.cmd文件里面的环境变量设置
+				参数: 留空
+		        工作目录: %{buildDir}
+		
+		将此自定义构建步骤往上移动，最终的构建顺序如下:
+		1. start sdk
+		2. 自定义处理步骤
+		3. qmake
+		4. make
