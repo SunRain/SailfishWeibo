@@ -1,6 +1,7 @@
 [submodule "src/QSinaWeiboApi"]
 	path = src/QSinaWeiboApi
 	url = https://github.com/SunRain/QSinaWeiboApi.git
+	branch = NewStyle
 	
 [submodule "WeiboPyModule"]
 	path = WeiboPyModule
