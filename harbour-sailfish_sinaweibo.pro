@@ -8,6 +8,10 @@ CONFIG += sailfishapp sailfishapp_no_deploy_qml
 CONFIG += c++11
 CONFIG += WITH_HACKLOGIN
 
+QMAKE_CFLAGS_DEBUG += -fPIC
+QMAKE_CFLAGS_RELEASE += -fPIC
+QMAKE_CXXFLAGS += -fPIC
+
 DEFINES += \
     SAILFISH_OS
 
@@ -76,13 +80,13 @@ TRANSLATIONS += translations/harbour-sailfish_sinaweibo-de.ts \
 RESOURCES += \
     qml/resource.qrc
 
-#win32 {
-#    COPY = copy /y
-#    MKDIR = mkdir
-#} else {
-#    COPY = cp
-#    MKDIR = mkdir -p
-#}
+win32 {
+    COPY = copy /y
+    MKDIR = mkdir
+} else {
+    COPY = cp
+    MKDIR = mkdir -p
+}
 
 #url=http://htmlcxx.sourceforge.net/
 #prefix=/usr
@@ -109,15 +113,15 @@ RESOURCES += \
 #    }
 #}
 
-#TAGLIB_BUILD_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build
-##TAGLIB_TARGET_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/target
-#BUILD_TAGLIB = cd $$TAGLIB_BUILD_DIR \
-#    && ../configure --enable-shared --enable-static \
-#    && make
-##    && make install
-#system ($$MKDIR $$TAGLIB_BUILD_DIR)
-##system ($$MKDIR $$TAGLIB_TARGET_DIR)
-#system ($$BUILD_TAGLIB)
+LIB_BUILD_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build
+#TAGLIB_TARGET_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/target
+BUILD_LIB = cd $$LIB_BUILD_DIR \
+#    && export LDFLAGS="-fPIC" CFLAGS="-fPIC" CXXFLAGS="-fPIC" \
+    && ../configure --enable-shared --enable-static \
+    && make
+system ($$MKDIR $$LIB_BUILD_DIR)
+#system ($$MKDIR $$TAGLIB_TARGET_DIR)
+system ($$BUILD_LIB)
 
 #TAGLIB_FILE = \
 #    $$PWD/../../../ThirdParty/Taglib/target/lib/*.so \
