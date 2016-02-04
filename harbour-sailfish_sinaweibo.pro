@@ -6,7 +6,7 @@ QT += qml quick network
 
 CONFIG += sailfishapp sailfishapp_no_deploy_qml
 CONFIG += c++11
-CONFIG += WITH_HACKLOGIN
+CONFIG += WITH_HACKLOGIN WITH_SDK_WRAPPER
 
 QMAKE_CFLAGS_DEBUG += -fPIC
 QMAKE_CFLAGS_RELEASE += -fPIC
