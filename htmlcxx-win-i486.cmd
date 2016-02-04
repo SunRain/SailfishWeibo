@@ -27,7 +27,7 @@ set SSH_EXEC=%SSH_BIN% -p %MER_SSH_PORT% -l %MER_SSH_USERNAME% -i %MER_SSH_PRIVA
 ::ECHO %TARGET_PATH%
 ::echo ../src1/%SOURCE_TREE%/build/../configure
 
-%SSH_EXEC% sb2 -t %MER_SSH_TARGET_NAME% mkdir ../src1/%SOURCE_TREE%/build
+%SSH_EXEC% sb2 -t %MER_SSH_TARGET_NAME% mkdir ../src1/%SOURCE_TREE%/../htmlcxx-build
 ::%SSH_EXEC% sb2 -t %MER_SSH_TARGET_NAME% sh ../src1/%SOURCE_TREE%/build/../configure --enable-shared --enable-static
-%SSH_EXEC% 'cd ../src1/%SOURCE_TREE%/build ; sb2 -t %MER_SSH_TARGET_NAME% ../configure --enable-shared --enable-static; sb2 -t %MER_SSH_TARGET_NAME% make'
+%SSH_EXEC% 'cd ../src1/%SOURCE_TREE%/../htmlcxx-build ; sb2 -t %MER_SSH_TARGET_NAME% ../htmlcxx/configure --enable-shared --enable-static; sb2 -t %MER_SSH_TARGET_NAME% make'
 ::%SSH_EXEC% sb2 -t %MER_SSH_TARGET_NAME% make 
