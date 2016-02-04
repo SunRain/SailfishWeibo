@@ -113,11 +113,11 @@ win32 {
 #    }
 #}
 
-LIB_BUILD_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build
+LIB_BUILD_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build
 #TAGLIB_TARGET_DIR = $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/target
 BUILD_LIB = cd $$LIB_BUILD_DIR \
 #    && export LDFLAGS="-fPIC" CFLAGS="-fPIC" CXXFLAGS="-fPIC" \
-    && ../configure --enable-shared --enable-static \
+    && ../htmlcxx/configure --enable-shared --enable-static \
     && make
 system ($$MKDIR $$LIB_BUILD_DIR)
 #system ($$MKDIR $$TAGLIB_TARGET_DIR)
@@ -150,22 +150,22 @@ DEPENDPATH += \
         $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/html
 
 win32-g++:CONFIG(release, debug|release): LIBS += \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/release/libcss_parser.a \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/release/libcss_parser_pp.a \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/release/libhtmlcxx.a
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/release/libcss_parser.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/release/libcss_parser_pp.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/html/.libs/release/libhtmlcxx.a
 else:win32-g++:CONFIG(debug, debug|release): LIBS += \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/debug/libcss_parser.a\
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/debug/libcss_parser_pp.a \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/debug/libhtmlcxx.a
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/debug/libcss_parser.a\
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/debug/libcss_parser_pp.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/html/.libs/debug/libhtmlcxx.a
 else:win32:!win32-g++:CONFIG(release, debug|release): LIBS += \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/release/css_parser.lib \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/release/css_parser_pp.lib \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/release/htmlcxx.lib
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/release/css_parser.lib \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/release/css_parser_pp.lib \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/html/.libs/release/htmlcxx.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): LIBS += \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/debug/css_parser.lib \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/debug/css_parser_pp.lib \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/debug/htmlcxx.lib
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/debug/css_parser.lib \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/debug/css_parser_pp.lib \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/html/.libs/debug/htmlcxx.lib
 else:unix: LIBS += \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/libcss_parser.a \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/css/.libs/libcss_parser_pp.a \
-        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx/build/html/.libs/libhtmlcxx.a
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/libcss_parser.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/css/.libs/libcss_parser_pp.a \
+        $$PWD/src/QSinaWeiboApi/QWeiboSDK/HackLogin/htmlcxx-build/html/.libs/libhtmlcxx.a
