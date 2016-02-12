@@ -4,6 +4,8 @@
 #include <QStringList>
 #include <QDateTime>
 
+#include "TokenProvider.h"
+
 MyType::MyType(QObject *parent) :
     QObject(parent),
     _key(APPKEY), _secret(APPSECRET)
@@ -24,6 +26,9 @@ MyType::~MyType() {
 
 QString MyType::dateParse(const QString &datestring) // "Mon Oct 28 20:00:23 +0800 2013"
 {
+    if (QWeiboSDK::TokenProvider::instance ()->useHackLogin ())
+        return datestring;
+
     QString str = datestring;
     QStringList dateList = str.split(" ");
     QStringList timeList = dateList[3].split(":");

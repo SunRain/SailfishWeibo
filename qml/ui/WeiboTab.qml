@@ -42,7 +42,7 @@ SilicaListView {
         }
     }
 
-    FriendshipsGroupsTimeline {
+    /*FriendshipsGroupsTimeline*/WrapperFriendshipsGroupsTimeline {
         id: friendshipsGroupsTimeline
         onRequestAbort: {
             console.log("== friendshipsGroupsTimeline onRequestAbort");
@@ -51,6 +51,7 @@ SilicaListView {
             console.log("== friendshipsGroupsTimeline onRequestFailure ["+replyData+"]")
         }
         onRequestSuccess: { //replyData
+            console.log("== friendshipsGroupsTimeline onRequestSuccess ["+replyData+"]")
             var jsonObj = JSON.parse(replyData);
             for (var i=0; i<jsonObj.statuses.length; i++) {
                 modelWeibo.append(jsonObj.statuses[i])

@@ -14,7 +14,7 @@ SilicaListView {
     property string _newGroupName: ""
     property string _newGroupIdstr: ""
 
-    FriendshipsGroups {
+    /*FriendshipsGroups*/WrapperFriendshipsGroups {
         id: friendshipsGroups
         onRequestAbort: {
             console.log("== friendshipsGroups onRequestAbort");
@@ -214,12 +214,14 @@ SilicaListView {
                         width: parent.width
                         anchors.verticalCenter: parent.verticalCenter
                         text: model.name == "" ||  model.idstr == ""
+                              || model.name == undefined ||  model.idstr == undefined
                               ? qsTr("All Groups")
                               : model.name
                         color: text.highlighted ? Theme.highlightColor : Theme.primaryColor
                         font.pixelSize: Theme.fontSizeMedium
                     }
                     onClicked: {
+                        console.log("==== click idstr "+model.idstr+" name "+model.name)
                         groupItem.clickItem(model.idstr, model.name);
                     }
                 }
