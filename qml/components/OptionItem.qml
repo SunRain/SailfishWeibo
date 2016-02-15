@@ -19,7 +19,7 @@ BackgroundItem {
     property bool __silica_item_removed
     
     signal menuStateChanged(bool opened)
-    signal clicked
+//    signal clicked
     
     Binding on opacity {
         when: __silica_item_removed
@@ -86,9 +86,9 @@ BackgroundItem {
     contentHeight: Theme.itemSizeSmall
     _backgroundColor: Theme.rgba(Theme.highlightBackgroundColor, _showPress && !menuOpen ? Theme.highlightBackgroundOpacity : 0)
 
-    onClicked: {
-        optionItem.clicked();
-    }
+//    onClicked: {
+//        optionItem.clicked();
+//    }
 
     Item {
         anchors.fill: parent
