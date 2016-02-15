@@ -1,24 +1,33 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-Item {
+SilicaFlickable {
     id: bottomPopupToolBar
     width: Screen.width
     height: column.height
+    contentHeight: column.height
 
     property int menuSize: Theme.iconSizeMedium
-    property bool showPopup: false
-    property bool popuped: showPopup
+    property bool popuped: false
+    property bool enableToolbarMenu: true
 
     property alias popupContent: popupItem.children
+    property alias toolBarContent: toolbar.children
 
-    property real _progress: showPopup ? 1.0 : 0.0
+    property real _progress: popuped ? 1.0 : 0.0
 
     readonly property int maxPopupHeight: Screen.height - Theme.itemSizeLarge - toolBarAreaHeight
     readonly property int toolBarAreaHeight: toolBarArea.height + column.spacing
-    default property alias content: toolbar.data
+//    default property alias content: toolbar.data
 
     signal popupReady
+
+    function showPopup() {
+        popuped = true;
+    }
+    function hidePopup() {
+        popuped = false;
+    }
 
     Behavior on _progress {
         SequentialAnimation{
@@ -36,10 +45,6 @@ Item {
             }
         }
     }
-//    onPopupedChanged: {
-//        if (popuped)
-//            popupReady();
-//    }
 
     Column {
         id: column
@@ -82,6 +87,13 @@ Item {
             id: toolBarArea
             width: parent.width
             height: Math.max(toolbar.height, menu.height)
+//            color: Theme.rgba(pullDownMenu.backgroundColor, Theme.highlightBackgroundOpacity)
+            Rectangle {
+                anchors.fill: parent
+                z: parent.z -1
+                color: Theme.highlightDimmerColor
+                opacity: 0.5
+            }
             Item {
                 id: toolbar
                 anchors {
@@ -100,13 +112,15 @@ Item {
                     right: parent.right
                     verticalCenter: toolBarArea.verticalCenter
                 }
+                enabled: enableToolbarMenu ? true : false
+                visible: enableToolbarMenu ? true : false
                 height: bottomPopupToolBar.menuSize
-                width: menu.height
-                icon.source: bottomPopupToolBar.showPopup
+                width: enableToolbarMenu ? menu.height : 0
+                icon.source: bottomPopupToolBar.popuped
                              ? "image://theme/icon-m-clear"
                              : "image://theme/icon-m-menu"
                 onClicked: {
-                    bottomPopupToolBar.showPopup = !bottomPopupToolBar.showPopup;
+                    bottomPopupToolBar.popuped = !bottomPopupToolBar.popuped;
                 }
             }
         }
