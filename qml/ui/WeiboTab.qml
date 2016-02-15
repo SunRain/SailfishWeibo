@@ -78,18 +78,11 @@ SilicaListView {
     }
 
     function refresh() {
-        //showBusyIndicator();
-        fetchPending();
-        modelWeibo.clear();
-        _allWeiboPageNum = 1;
-        _isGroupType = false;
-//        var method = WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
-//        api.setWeiboAction(method, {
-//                               'page':_allWeiboPageNum,
-//                               'access_token':settings.accessToken//Settings.getAccess_token()
-//                           });
-        statusesFriendsTimeline.setParameters("page", " "+_allWeiboPageNum);
-        statusesFriendsTimeline.getRequest();
+        if (_isGroupType) {
+            showGroupWeibo(_groupIdstr);
+        } else {
+            showAllWeibo();
+        }
     }
     
     function addMore() {
@@ -117,7 +110,14 @@ SilicaListView {
     }
 
     function showAllWeibo() {
-        refresh();
+        fetchPending();
+        modelWeibo.clear();
+
+        _isGroupType = false;
+        _allWeiboPageNum = 1;
+
+        statusesFriendsTimeline.setParameters("page", " "+_allWeiboPageNum);
+        statusesFriendsTimeline.getRequest();
     }
 
     function addToFavorites(weiboId) {

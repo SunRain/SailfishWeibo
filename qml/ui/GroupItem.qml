@@ -70,31 +70,21 @@ SilicaListView {
         //WBOPT_GET_FRIENDSHIPS_GROUPS
         groupItem.fetchPending();
         listModel.clear();
-//        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS;
-//        api.setWeiboAction(method, {'access_token':settings.accessToken/*Settings.getAccess_token()*/});
         friendshipsGroups.getRequest();
     }
 
     function deleteGroup(idstr) {
         groupItem.fetchPending();
-//        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_DESTROY;
-//        api.setWeiboAction(method, {
-//                               "access_token":settings.accessToken,//Settings.getAccess_token(),
-//                               "list_id":idstr
-//                           });
         friendshipsGroupsDestroy.setParameters("list_id", idstr);
-        friendshipsGroupsDestroy.postRequest();
+        if (tokenProvider.useHackLogin) {
+            friendshipsGroupsDestroy.getRequest();
+        } else {
+            friendshipsGroupsDestroy.postRequest();
+        }
     }
 
     function updateGroupName() {
-        // WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE, //更新好友分组
         groupItem.fetchPending();
-//        var method = WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE;
-//        api.setWeiboAction(method, {
-//                               "access_token":settings.accessToken,//Settings.getAccess_token(),
-//                               "list_id":_newGroupIdstr,
-//                               "name":_newGroupName
-//                           });
         friendshipsGroupsUpdate.setParameters("list_id", _newGroupIdstr);
         friendshipsGroupsUpdate.setParameters("name", _newGroupName);
         friendshipsGroupsUpdate.postRequest();

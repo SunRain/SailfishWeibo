@@ -19,13 +19,12 @@ WBPage {
     }
     WeiboTab {
         id: weiboTab
-//        anchors {
-//            top: parent.top
-//            bottom: toolBar.top
-//        }
         property int yIndex: 0
-        anchors.fill: parent
-//        pressDelay: 200
+        width: parent.width
+        anchors {
+            top: parent.top
+            bottom: toolBar.popuped ? toolBar.top : parent.bottom
+        }
         header:  PageHeader {
             id:pageHeader
             title: _title
@@ -72,15 +71,16 @@ WBPage {
                 easing.type: Easing.InOutCubic
             }
         }
-        Rectangle {
-            anchors.fill: parent
-            z: parent.z - 1
-            color: Theme.highlightDimmerColor
-        }
-
         popupContent: GroupItem {
             id: groupItem
             anchors.fill: parent
+            property bool showBusyIndicator: false
+            onFetchPending: {
+                groupItem.showBusyIndicator = true;
+            }
+            onFetchFinished: {
+                groupItem.showBusyIndicator = false;
+            }
             header:  PageHeader {
                 id:groupHeader
                 title: qsTr("Close")
@@ -90,6 +90,14 @@ WBPage {
                         toolBar.hidePopup();
                     }
                 }
+                extraContent.data: [
+                    BusyIndicator {
+                        size: BusyIndicatorSize.Small
+                        anchors.centerIn: parent
+                        running: groupItem.showBusyIndicator
+                        opacity: running ? 1 : 0
+                    }
+                ]
             }
             onClickItem: {
                 if (idstr == "" || idstr == undefined) {
@@ -102,11 +110,12 @@ WBPage {
                 toolBar.hidePopup();
             }
         }
-        toolBarContent: Item {
+        toolBarContent: /*Item*/Rectangle {
             id: tools
-            width: parent.width - Theme.paddingMedium * 2
+            width: parent.width// - Theme.paddingMedium * 2
             anchors.horizontalCenter: parent.horizontalCenter
             height: Theme.itemSizeMedium
+            color: Theme.highlightDimmerColor
             Row {
                 anchors.centerIn: parent
                 BackgroundItem {
@@ -134,6 +143,7 @@ WBPage {
                         color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
                     }
                     onClicked: {
+                        //TODO: add to create new group when open popup
                         toSendPage("", {});
                     }
                 }
@@ -150,7 +160,10 @@ WBPage {
                         color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
                     }
                     onClicked: {
-                        weiboTab.refresh();
+                        if (toolBar.popuped)
+                            groupItem.fetchGroups();
+                        else
+                            weiboTab.refresh();
                     }
                 }
             }
