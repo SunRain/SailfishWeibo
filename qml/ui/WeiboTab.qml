@@ -186,6 +186,7 @@ SilicaListView {
     footer: modelWeibo.count == 0 ? null : footerComponent
     delegate: delegateWeibo
     spacing: Theme.paddingSmall
+    clip: true
     
     ScrollDecorator{}
 

@@ -164,29 +164,33 @@
 <context>
     <name>FirstPage</name>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="18"/>
-        <location filename="../qml/pages/FirstPage.qml" line="53"/>
+        <location filename="../qml/pages/FirstPage.qml" line="15"/>
+        <location filename="../qml/pages/FirstPage.qml" line="97"/>
         <source>Sailfish Weibo</source>
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="82"/>
+        <location filename="../qml/pages/FirstPage.qml" line="36"/>
         <source>Logout</source>
         <translation>注销</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="90"/>
+        <location filename="../qml/pages/FirstPage.qml" line="86"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/FirstPage.qml" line="149"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="32"/>
-        <location filename="../qml/pages/FirstPage.qml" line="94"/>
+        <location filename="../qml/pages/FirstPage.qml" line="116"/>
         <source>Groups</source>
         <translation>分组</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="103"/>
+        <location filename="../qml/pages/FirstPage.qml" line="133"/>
         <source>New</source>
         <translation>写微博</translation>
     </message>
@@ -202,29 +206,24 @@
 <context>
     <name>GroupItem</name>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="183"/>
+        <location filename="../qml/ui/GroupItem.qml" line="140"/>
         <source>Rename %1 ==&gt; %2 (%3/8)</source>
         <translation>重命名分组 %1 为 %2 (%3/8)</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="187"/>
+        <location filename="../qml/ui/GroupItem.qml" line="144"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="218"/>
+        <location filename="../qml/ui/GroupItem.qml" line="176"/>
         <source>All Groups</source>
         <translation>所有分组</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="260"/>
+        <location filename="../qml/ui/GroupItem.qml" line="191"/>
         <source>Delete Group</source>
         <translation>删除分组</translation>
-    </message>
-    <message>
-        <location filename="../qml/ui/GroupItem.qml" line="268"/>
-        <source>Rename Group</source>
-        <translation>重命名</translation>
     </message>
 </context>
 <context>
@@ -762,17 +761,17 @@
         <translation>添加收藏失败</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="231"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="232"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="242"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="243"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="248"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="249"/>
         <source>Add to favorites</source>
         <translation>收藏</translation>
     </message>

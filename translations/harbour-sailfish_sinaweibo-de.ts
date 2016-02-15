@@ -157,6 +157,10 @@
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FooterLoadMore</name>
@@ -181,10 +185,6 @@
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename Group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

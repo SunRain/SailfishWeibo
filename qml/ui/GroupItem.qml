@@ -14,7 +14,7 @@ SilicaListView {
     property string _newGroupName: ""
     property string _newGroupIdstr: ""
 
-    /*FriendshipsGroups*/WrapperFriendshipsGroups {
+    WrapperFriendshipsGroups {
         id: friendshipsGroups
         onRequestAbort: {
             console.log("== friendshipsGroups onRequestAbort");
@@ -37,7 +37,7 @@ SilicaListView {
         }
     }
 
-    FriendshipsGroupsDestroy {
+    WrapperFriendshipsGroupsDestroy {
         id: friendshipsGroupsDestroy
         onRequestAbort: {
             console.log("== friendshipsGroupsDestroy onRequestAbort");
@@ -83,7 +83,7 @@ SilicaListView {
 //                               "list_id":idstr
 //                           });
         friendshipsGroupsDestroy.setParameters("list_id", idstr);
-        friendshipsGroups.postRequest();
+        friendshipsGroupsDestroy.postRequest();
     }
 
     function updateGroupName() {
@@ -101,30 +101,6 @@ SilicaListView {
 
     }
 
-//    Connections {
-//        target: api
-//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-//        onWeiboPutSucceed: {
-//            if (action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS) {
-//                var jsonObj = JSON.parse(replyData);
-//                listModel.append({"JSON":{
-//                                         "id": "",
-//                                         "idstr":"",
-//                                         "name": ""
-//                                     }}); //添加一个空列表用于显示所有分组功能
-//                for (var i=0; i<jsonObj.lists.length; i++) {
-//                    listModel.append(jsonObj.lists[i])
-//                }
-//                groupItem.fetchFinished();
-//            }
-//            if (action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_DESTROY
-//                    || action == WeiboMethod.WBOPT_POST_FRIENDSHIPS_GROUPS_UPDATE) {
-//                groupItem.fetchFinished();
-//                groupItem.fetchGroups();
-//            }
-//        }
-//    }
-
     ListModel {
         id: listModel
     }
@@ -139,10 +115,7 @@ SilicaListView {
         id: listViewdDlegate
         Item {
             id: listItem
-            anchors {
-                left:parent.left
-                right:parent.right
-            }
+            width: parent.width
             height: childrenRect.height
 
             //TODO: ugly hack for fix contextMenu display
@@ -153,26 +126,10 @@ SilicaListView {
 
             Loader {
                 id: leftLoader
-                anchors {
-                    left: listItem.left
-                    leftMargin: Theme.paddingLarge
-                    right: listItem._showInputType
-                           ? listItem.right
-                           : rightLoader.left
-                }
-                sourceComponent: listItem._showInputType ? textInputComponent : infoItemComponent
-            }
-            Loader {
-                id: rightLoader
-                anchors {
-                    //TODO: remove this, but how can I fix the contextMenuOpen display ?
-//                    left: listItem._contextMenuOpen ? listItem.left : parent.left
-                    right: listItem.right
-                    rightMargin: Theme.paddingLarge
-                }
+                width: parent.width
                 sourceComponent: listItem._showInputType
-                                 ? rightLoader.Null
-                                 : optionComponent
+                                 ? textInputComponent
+                                 : infoItemComponent
             }
 
             Component {
@@ -201,18 +158,19 @@ SilicaListView {
 
             Component {
                 id: infoItemComponent
-                BackgroundItem {
+                OptionItem {
                     id: text
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-
-                    height: Math.max(label.height, Theme.itemSizeSmall)
+                    width: Screen.width
+//                    menu: model.name == "" ||  model.idstr == ""
+//                          || model.name == undefined ||  model.idstr == undefined
+//                        ? null
+//                        : menuComponent
+                    contentHeight: Math.max(label.height, Theme.itemSizeSmall)
+//                    var idstr = model.idstr;
                     Label {
                         id: label
-                        width: parent.width
-                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width - Theme.horizontalPageMargin *2
+                        anchors.centerIn: parent
                         text: model.name == "" ||  model.idstr == ""
                               || model.name == undefined ||  model.idstr == undefined
                               ? qsTr("All Groups")
@@ -224,54 +182,29 @@ SilicaListView {
                         console.log("==== click idstr "+model.idstr+" name "+model.name)
                         groupItem.clickItem(model.idstr, model.name);
                     }
+
+//                    Component {
+//                        id: menuComponent
+                        menu: ContextMenu {
+                            id:options
+                            MenuItem {
+                                text: qsTr("Delete Group")
+                                onClicked: {
+                                    remorseItem.execute(listItem,"Deleting", function(){
+                                        groupItem.deleteGroup(idstr);
+                                        listModel.remove(index);})
+                                }
+                            }
+//                            MenuItem {
+//                                text: qsTr("Rename Group")
+//                                onClicked: {
+//                                    listItem._showInputType = true;
+//                                }
+//                            }
+//                        }
+                    }
                 }
 
-            }
-            Component {
-                id: optionComponent
-                OptionItem {
-                    id: optionItem
-                    width: optionItem.menuOpen ? Screen.width : image.width
-
-                    visible: !(model.idstr == "" || model.id == "" || model.name == "")
-                    Image {
-                        id: image
-                        anchors{
-                            top:parent.top
-                            bottom: parent.bottom
-                            right: parent.right
-                        }
-                        smooth: true
-                        width: Theme.iconSizeMedium
-                        height: width
-                        fillMode: Image.PreserveAspectFit
-                        source: optionItem.menuOpen ?
-                                    util.pathTo("qml/graphics/action_collapse.png") :
-                                    util.pathTo("qml/graphics/action_open.png")
-                    }
-
-                    onMenuStateChanged: {
-                        listItem._contextMenuOpen = opened;
-                    }
-
-                    menu: ContextMenu {
-                        id:options
-                        MenuItem {
-                            text: qsTr("Delete Group")
-                            onClicked: {
-                                remorseItem.execute(listItem,"Deleting", function(){
-                                    groupItem.deleteGroup(model.idstr);
-                                    listModel.remove(index);})
-                            }
-                        }
-                        MenuItem {
-                            text: qsTr("Rename Group")
-                            onClicked: {
-                                listItem._showInputType = true;
-                            }
-                        }
-                    }
-                }
             }
         }
     }
