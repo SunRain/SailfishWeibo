@@ -10,6 +10,7 @@ SilicaFlickable {
     property int menuSize: Theme.iconSizeMedium
     property bool popuped: false
     property bool enableToolbarMenu: true
+    property bool showPaddingLine: false
 
     property alias popupContent: popupItem.children
     property alias toolBarContent: toolbar.children
@@ -81,6 +82,14 @@ SilicaFlickable {
                         ? bottomPopupToolBar._progress * bottomPopupToolBar.maxPopupHeight
                         : 0
             }
+        }
+
+        Rectangle {
+            id: paddingLine
+            width: parent.width
+            height: showPaddingLine && bottomPopupToolBar.popuped ? 1 : 0
+            color: Theme.highlightColor
+            opacity: showPaddingLine && bottomPopupToolBar.popuped ? 1 : 0
         }
 
         Item {
