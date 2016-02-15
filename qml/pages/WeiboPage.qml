@@ -247,7 +247,7 @@ Page {
             console.log("==== toolBar onPopupReady ")
             _getInfo(userWeiboJSONContent.id);
         }
-        Item {
+        toolBarContent: Item {
             id: tools
             width: parent.width - Theme.paddingLarge*2//parent.width
             anchors.horizontalCenter: parent.horizontalCenter
