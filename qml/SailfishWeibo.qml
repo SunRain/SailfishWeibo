@@ -46,10 +46,15 @@ ApplicationWindow
     property bool tokenValid: false
     property bool reminderRefreshed: false
 
+    QtObject {
+        id: globalInner
+        property RemindObject remindObject: null
+        property UserInfoObject userInfoObject: null
+    }
+
     initialPage: Component {
         SplashesPage { //SplashesPage，同时用于初始化数据库和检测token值
             id: splashes
-//            property bool _settingsInitialized: false
             property int _delayType: -1; // 0 ==> start login page
                                         // 1 ==> start index page
             onStatusChanged: {
@@ -99,7 +104,6 @@ ApplicationWindow
         FirstPage {
             id: indexPage
             property bool _dataInitialized: false
-            property bool withPanelView: true
             Binding {
                 target: indexPage.contentItem
                 property: "parent"
@@ -119,31 +123,6 @@ ApplicationWindow
             }
         }
     }
-
-//    //Dirty hack
-//    //Use a Timer to fix Warning: cannot pop while transition is in progress
-//    function startLogin() {
-//        pageStack.completeAnimation();
-//        loginDelay.restart();
-//    }
-//    Timer {
-//        id: loginDelay
-//        interval: 500
-//        onTriggered: {
-//            _startLogin();
-//        }
-//    }
-
-//    function _startLogin() {
-//        var dialog = pageStack.push(Qt.resolvedUrl("ui/LoginDialog.qml"),{ token: Settings.getAccess_token()});
-//        dialog.accepted.connect(function() {
-//            tokenValid = true;
-
-//        })
-//        dialog.rejected.connect(function() {
-//            startLogin();
-//        })
-//    }
 
     Item{
         id:notiItem
@@ -175,6 +154,7 @@ ApplicationWindow
         running: runningBusyIndicator
         opacity: busyIndicator.running ? 1: 0
     }
+
     Timer {
         id: busyIndicatorTimeout
         interval: 5000
@@ -191,7 +171,7 @@ ApplicationWindow
         property bool maximumFlickVelocity: false
 
         width: pageStack.currentPage.width
-        panelWidth: Screen.width / 3 * 2
+        panelWidth: Screen.width *0.6
         panelHeight: pageStack.currentPage.height
         height: currentPage && currentPage.contentHeight || pageStack.currentPage.height
         visible:  (!!currentPage && !!currentPage.withPanelView) || !panelView.closed
@@ -233,7 +213,6 @@ ApplicationWindow
         id: commentAllComponent
         CommentAllPage {
             id: commentAllPage
-            property bool withPanelView: true
             property bool _refreshed: false
             Binding {
                 target: commentAllPage.contentItem
@@ -257,7 +236,6 @@ ApplicationWindow
         id: commentMentionedComponent
         CommentMentioned {
             id: commentMentionedPage
-            property bool withPanelView: true
             property bool _refreshed: false
             Binding {
                 target: commentMentionedPage.contentItem
@@ -281,7 +259,6 @@ ApplicationWindow
         id: weiboMentionedComponent
         WeiboMentioned {
             id: weiboMentionedPage
-            property bool withPanelView: true
             property bool _refreshed: false
             Binding {
                 target: weiboMentionedPage.contentItem
@@ -305,7 +282,6 @@ ApplicationWindow
         id: weiboFavoritesComponent
         WeiboFavorites {
             id: weiboFavoritesPage
-            property bool withPanelView: true
             property bool _refreshed: false
             Binding {
                 target: weiboFavoritesPage.contentItem
@@ -339,8 +315,4 @@ ApplicationWindow
     MyType {
         id: appData
     }
-
-//    WeiboApi {
-//        id:api
-//    }
 }

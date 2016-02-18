@@ -3,6 +3,12 @@ import QtQuick 2.0
 QtObject {
     id: userInfoObject
     objectName: "UserInfoObject"
+    function deleteSelf() {
+        console.log("[UserInfoObject] : Destroying...");
+//        userInfoObject.deleteLater();
+        userInfoObject.destroy();
+    }
+
     property var usrInfo: {
         "id":-1,
         "idstr":"",

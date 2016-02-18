@@ -271,7 +271,7 @@
 <context>
     <name>LoginPage</name>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="46"/>
+        <location filename="../qml/pages/LoginPage.qml" line="47"/>
         <source>Login Autheticator</source>
         <translation type="unfinished"></translation>
     </message>
@@ -281,12 +281,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="33"/>
+        <location filename="../qml/pages/LoginPage.qml" line="34"/>
         <source>User Password Autheticator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="39"/>
+        <location filename="../qml/pages/LoginPage.qml" line="40"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -341,37 +341,37 @@
 <context>
     <name>NavigationPanel</name>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="127"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="245"/>
         <source>Home</source>
         <translation>首页</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="143"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="261"/>
         <source>AtMeWeibo</source>
         <translation>微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="172"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="290"/>
         <source>AtMeComment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="201"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="319"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="230"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="348"/>
         <source>PM</source>
         <translation>私信</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="258"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="376"/>
         <source>Favourite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="272"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="390"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>

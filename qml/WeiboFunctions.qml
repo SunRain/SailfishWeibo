@@ -1,9 +1,18 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+//import "./WeiboFunctions.js" as Func
+
 QtObject {
     id: wbFunctions
     objectName: "WeiboFunctions"
+
+//    Connections {
+//        target: tokenProvider
+//        onUseHackLoginChanged: { //useHackLogin
+//            Func.useHackLogin = useHackLogin
+//        }
+//    }
 
     function showBusyIndicator() {
         busyIndicatorTimeout.restart();
@@ -38,6 +47,7 @@ QtObject {
     }
     ///////////// 登陆页面
     function toLoginPage() {
+        console.log("===== toLoginPage ===== ")
         popAttachedPages();
         pageStack.replace(loginPageComponent);
     }
@@ -45,6 +55,7 @@ QtObject {
     ///////////// 主页（微博列表显示页面）
     function toIndexPage() {
         popAttachedPages();
+        console.log("===== toIndexPage ===== ")
         pageStack.replace(indexPageComponent)
     }
 

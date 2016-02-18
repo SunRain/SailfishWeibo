@@ -4,6 +4,12 @@ QtObject {
     id: remindObject
     objectName: "RemindObject"
 
+    function deleteSelf() {
+        console.log("[RemindObject] : Destroying...");
+//        remindObject.deleteLater();
+        remindObject.destroy();
+    }
+
 //    status 	int 	新微博未读数
 //    follower 	int 	新粉丝数
 //    cmt 	int 	新评论数

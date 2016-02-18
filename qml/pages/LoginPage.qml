@@ -26,6 +26,7 @@ Page {
                 id: manualBtn
                 text: qsTr("Manual Autheticator")
                 onClicked: {
+                    console.log("=== to url ", AutheticatorUrl.getWeicoAuthorizeUrl());
                     webView.url = AutheticatorUrl.getWeicoAuthorizeUrl();
                 }
             }

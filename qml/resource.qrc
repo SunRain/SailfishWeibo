@@ -53,5 +53,9 @@
         <file>components/BottomPopupToolBar.qml</file>
         <file>components/WBPage.qml</file>
         <file>WeiboFunctions.qml</file>
+        <file>WeiboFunctions.js</file>
+        <file>requests/oauth/UsersShow.qml</file>
+        <file>requests/oauth/RemindUnreadCount.qml</file>
+        <file>requests/hack/HackRemindUnreadCount.qml</file>
     </qresource>
 </RCC>

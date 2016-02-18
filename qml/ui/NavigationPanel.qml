@@ -2,67 +2,185 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
+import "../WeiboFunctions.js" as WBLoader
+
 import "../components"
 
 Panel {
     id: panel
 
-//    property var _usrInfo: {"id":-1,"idstr":"","class":1,"screen_name":"","name":"","province":"","city":"","location":"","description":"","url":"","cover_image_phone":"","profile_image_url":"","profile_url":"","domain":"","weihao":"","gender":"","followers_count":0,"friends_count":0,"statuses_count":0,"favourites_count":0,"created_at":"Sun Jan 22 13:32:37 +0800 1999","following":false,"allow_all_act_msg":false,"geo_enabled":true,"verified":false,"verified_type":-1,"remark":"","status":{"text": "", "reposts_count": 0, "comments_count": 0, "attitudes_count": 0},"ptype":0,"allow_all_comment":true,"avatar_large":"","avatar_hd":"","verified_reason":"","follow_me":false,"online_status":0,"bi_followers_count":0,"lang":"zh-cn","star":0,"mbtype":0,"mbrank":0,"block_word":0}
-
-    property bool _userAvatarLock: false
-
     signal clicked
     signal userAvatarClicked
 
-    UsersShow {
-        id: usersShow
-        onRequestAbort: {
-            console.log("== usersShow onRequestAbort");
-        }
-        onRequestFailure: { //replyData
-            console.log("== usersShow onRequestFailure ["+replyData+"]")
-        }
-        onRequestSuccess: { //replyData
-            console.log("== usersShow onRequestSuccess ["+replyData+"]")
-
-            if (!panel._userAvatarLock) {
-                userInfoObject.usrInfo = JSON.parse(replyData)
-                panel._userAvatarLock = !panel._userAvatarLock;
+    Connections {
+        target: tokenProvider
+        onUseHackLoginChanged: { //useHackLogin
+            if (inner.remindUnreadCountExist()) {
+                WBLoader.cleanup(inner.rc_object, inner.rc_component, inner.rc_incubator);
+                panel.messageGetRemind();
             }
         }
     }
 
-    RemindUnreadCount {
-        id: remindUnreadCount
-        onRequestAbort: {
-            console.log("== remindUnreadCount onRequestAbort");
+    QtObject {
+        id: inner
+        property bool userAvatarLock: false
+        //////////////////////// UsersShow
+        property var us_component: null
+        property var us_object: null
+        property var us_incubator: null
+        function usersShowExist() {
+            if (us_component || us_object || us_incubator)
+                return true;
+            return false;
         }
-        onRequestFailure: { //replyData
-            console.log("== remindUnreadCount onRequestFailure ["+replyData+"]")
-        }
-        onRequestSuccess: { //replyData
-            console.log("== remindUnreadCount onRequestSuccess ["+replyData+"]")
+        function initUserAvatar(callback) {
+//            if (tokenProvider.useHackLogin) {
+//                //TODO useHackLogin
+//            } else {
+                WBLoader.create("../requests/oauth/UsersShow.qml", panel,
+                    function(object, component, incubator) {
+                        inner.us_component = component;
+                        inner.us_incubator = incubator;
+                        inner.us_object = object;
+                        if (inner.us_object) {
+                            inner.us_object.requestResult.connect(
+                                function(ret, replyData) {
+                                    console.log("=== usersShow connect ===");
+                                    if (ret == BaseRequest.RET_ABORT) {
+                                        console.log("== usersShow onRequestAbort");
+                                    } else if (ret == BaseRequest.RET_FAILURE) {
+                                        console.log("== usersShow onRequestFailure ["+replyData+"]")
+                                    } else {
+                                        console.log("== usersShow onRequestSuccess ["+replyData+"]")
 
-            remindObject.remind = JSON.parse(replyData);
+                                        //create userInfoObject if not created
+                                        if (!globalInner.userInfoObject) {
+                                            WBLoader.create("../components/UserInfoObject.qml", panel,
+                                                function(object, component, incubator){
+                                                    if (object)
+                                                        globalInner.userInfoObject = object;
+                                                    if (!inner.userAvatarLock) {
+                                                        globalInner.userInfoObject.usrInfo = JSON.parse(replyData)
+                                                        inner.userAvatarLock = !inner.userAvatarLock;
+                                                    }
+                                                });
+                                        } else if (!inner.userAvatarLock) {
+                                            globalInner.userInfoObject.usrInfo = JSON.parse(replyData)
+                                            inner.userAvatarLock = !inner.userAvatarLock;
+                                        }
+                                    }
+                                });
+                            callback.call(this, inner.us_object);
+                        } else {
+                            callback.call(this, inner.us_object);
+                        }
+                    });
+//            }
+        }
+
+        //////////////////////////RemindUnreadCount
+        property var rc_component: null
+        property var rc_object: null
+        property var rc_incubator: null
+        function remindUnreadCountExist() {
+            if (rc_component || us_object || rc_incubator)
+                return true;
+            return false;
+        }
+        function messageGetRemind(callback) {
+            if (tokenProvider.useHackLogin) {
+                WBLoader.create("../requests/hack/HackRemindUnreadCount.qml", panel,
+                    function(object, component, incubator) {
+                        inner.rc_component = component;
+                        inner.rc_incubator = incubator;
+                        inner.rc_object = object;
+                        if (inner.rc_object) {
+                            inner.rc_object.requestResult.connect(function(ret, replyData) {
+                                console.log("=== HackRemindUnreadCount connect ===");
+                                if (ret == BaseRequest.RET_ABORT) {
+                                    console.log("== HackRemindUnreadCount onRequestAbort");
+                                } else if (ret == BaseRequest.RET_FAILURE) {
+                                    console.log("== HackRemindUnreadCount onRequestFailure ["+replyData+"]")
+                                } else {
+                                    console.log("== HackRemindUnreadCount onRequestSuccess ["+replyData+"]")
+                                    //create remindObject if not created
+                                    if (!globalInner.remindObject) {
+                                        WBLoader.create("../components/RemindObject.qml", panel,
+                                            function(object, component, incubator){
+                                                if (object)
+                                                    globalInner.remindObject = object;
+//                                                globalInner.remindObject.remind = JSON.parse(replyData);
+                                            });
+                                    } else {
+//                                        globalInner.remindObject.remind = JSON.parse(replyData);
+                                    }
+                                }
+                                });
+                            callback.call(this, inner.rc_object);
+                        } else {
+                            callback.call(this, inner.rc_object);
+                        }
+                    });
+            } else {
+                WBLoader.create("../requests/oauth/RemindUnreadCount.qml", panel,
+                    function(object, component, incubator) {
+                        inner.rc_component = component;
+                        inner.rc_incubator = incubator;
+                        inner.rc_object = object;
+                        if (inner.rc_object) {
+                            inner.rc_object.requestResult.connect(function(ret, replyData) {
+                                console.log("=== remindUnreadCount connect ===");
+                                if (ret == BaseRequest.RET_ABORT) {
+                                    console.log("== remindUnreadCount onRequestAbort");
+                                } else if (ret == BaseRequest.RET_FAILURE) {
+                                    console.log("== remindUnreadCount onRequestFailure ["+replyData+"]")
+                                } else {
+                                    console.log("== remindUnreadCount onRequestSuccess ["+replyData+"]")
+                                    //create remindObject if not created
+                                    if (!globalInner.remindObject) {
+                                        WBLoader.create("../components/RemindObject.qml", panel,
+                                            function(object, component, incubator){
+                                                if (object)
+                                                    globalInner.remindObject = object;
+                                                globalInner.remindObject.remind = JSON.parse(replyData);
+                                            });
+                                    } else {
+                                        globalInner.remindObject.remind = JSON.parse(replyData);
+                                    }
+                                }
+                                });
+                            callback.call(this, inner.rc_object);
+                        } else {
+                            callback.call(this, inner.rc_object);
+                        }
+                    });
+            }
         }
     }
 
     function initUserAvatar() {
         console.log("=== panel initUserAvatar");
-        usersShow.getRequest();
+        if (!inner.us_object) {
+            inner.initUserAvatar(function(obj) {
+                if (obj)
+                    obj.getRequest();
+            });
+        } else {
+            inner.us_object.getRequest();
+        }
     }
 
     function messageGetRemind() {
         console.log("=== panel messageGetRemind");
-        remindUnreadCount.getRequest();
-    }
-
-
-    RemindObject {
-        id: remindObject
-    }
-    UserInfoObject {
-        id: userInfoObject
+        if (!inner.rc_object) {
+            inner.messageGetRemind(function(obj) {
+                if (obj)
+                    obj.getRequest();
+            });
+        } else {
+            inner.rc_object.getRequest();
+        }
     }
 
     Column {
@@ -92,7 +210,7 @@ Panel {
                 height: cover.width *2/3
                 fillMode: Image.PreserveAspectCrop
                 asynchronous: true
-                source: util.parseImageUrl(userInfoObject.usrInfo.cover_image_phone)
+                source: util.parseImageUrl(globalInner.userInfoObject.usrInfo.cover_image_phone)
             }
             Image {
                 id: profile
@@ -100,7 +218,7 @@ Panel {
                 height: width
                 anchors.centerIn: cover
                 asynchronous: true
-                source: util.parseImageUrl(userInfoObject.usrInfo.profile_image_url)
+                source: util.parseImageUrl(globalInner.userInfoObject.usrInfo.profile_image_url)
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -110,7 +228,7 @@ Panel {
             }
             Label {
                 id: screenName
-                text: userInfoObject.usrInfo.screen_name
+                text: globalInner.userInfoObject.usrInfo.screen_name
                 anchors {
                     top: profile.bottom
                     topMargin: Theme.paddingSmall
@@ -160,7 +278,7 @@ Panel {
                 height: width
                 z: parent.z + 1
                 color: Theme.highlightColor
-                opacity: remindObject.remind.mention_status == "0" ? 0 : 1
+                opacity: globalInner.remindObject.remind.mention_status == "0" ? 0 : 1
             }
         }
         HorizontalIconTextButton {
@@ -189,7 +307,7 @@ Panel {
                 height: width
                 z: parent.z + 1
                 color: Theme.highlightColor
-                opacity: remindObject.remind.mention_cmt == "0" ? 0 : 1
+                opacity: globalInner.remindObject.remind.mention_cmt == "0" ? 0 : 1
             }
         }
         HorizontalIconTextButton {
@@ -218,7 +336,7 @@ Panel {
                 height: width
                 z: parent.z + 1
                 color: Theme.highlightColor
-                opacity: remindObject.remind.cmt == "0" ? 0 : 1
+                opacity: globalInner.remindObject.remind.cmt == "0" ? 0 : 1
             }
         }
         HorizontalIconTextButton {
@@ -247,7 +365,7 @@ Panel {
                 height: width
                 z: parent.z + 1
                 color: Theme.highlightColor
-                opacity: remindObject.remind.cmt == "0" ? 0 : 1
+                opacity: globalInner.remindObject.remind.cmt == "0" ? 0 : 1
             }
         }
         HorizontalIconTextButton {
