@@ -165,12 +165,12 @@
     <name>FirstPage</name>
     <message>
         <location filename="../qml/pages/FirstPage.qml" line="15"/>
-        <location filename="../qml/pages/FirstPage.qml" line="97"/>
+        <location filename="../qml/pages/FirstPage.qml" line="105"/>
         <source>Sailfish Weibo</source>
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="36"/>
+        <location filename="../qml/pages/FirstPage.qml" line="35"/>
         <source>Logout</source>
         <translation>注销</translation>
     </message>
@@ -180,17 +180,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="149"/>
+        <location filename="../qml/pages/FirstPage.qml" line="159"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="116"/>
+        <location filename="../qml/pages/FirstPage.qml" line="125"/>
         <source>Groups</source>
         <translation>分组</translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="133"/>
+        <location filename="../qml/pages/FirstPage.qml" line="142"/>
         <source>New</source>
         <translation>写微博</translation>
     </message>
@@ -206,22 +206,22 @@
 <context>
     <name>GroupItem</name>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="140"/>
+        <location filename="../qml/ui/GroupItem.qml" line="130"/>
         <source>Rename %1 ==&gt; %2 (%3/8)</source>
         <translation>重命名分组 %1 为 %2 (%3/8)</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="144"/>
+        <location filename="../qml/ui/GroupItem.qml" line="134"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="176"/>
+        <location filename="../qml/ui/GroupItem.qml" line="166"/>
         <source>All Groups</source>
         <translation>所有分组</translation>
     </message>
     <message>
-        <location filename="../qml/ui/GroupItem.qml" line="191"/>
+        <location filename="../qml/ui/GroupItem.qml" line="181"/>
         <source>Delete Group</source>
         <translation>删除分组</translation>
     </message>
@@ -341,37 +341,37 @@
 <context>
     <name>NavigationPanel</name>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="128"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="127"/>
         <source>Home</source>
         <translation>首页</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="144"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="143"/>
         <source>AtMeWeibo</source>
         <translation>微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="173"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="172"/>
         <source>AtMeComment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="202"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="201"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="231"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="230"/>
         <source>PM</source>
         <translation>私信</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="259"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="258"/>
         <source>Favourite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="273"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="272"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>

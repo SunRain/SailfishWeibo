@@ -1,18 +1,8 @@
 import QtQuick 2.0
-import Sailfish.Silica 1.0
-
-import "../js/dateutils.js" as DateUtils
-import "../js/weiboapi.js" as WB
-//import "../js/Settings.js" as Settings
-import "../components"
-
-import harbour.sailfish_sinaweibo.sunrain 1.0
 
 QtObject {
     id: remindObject
     objectName: "RemindObject"
-
-
 
 //    status 	int 	新微博未读数
 //    follower 	int 	新粉丝数

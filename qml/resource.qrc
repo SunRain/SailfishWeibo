@@ -52,5 +52,6 @@
         <file>pages/LoginSelectPage.qml</file>
         <file>components/BottomPopupToolBar.qml</file>
         <file>components/WBPage.qml</file>
+        <file>WeiboFunctions.qml</file>
     </qresource>
 </RCC>

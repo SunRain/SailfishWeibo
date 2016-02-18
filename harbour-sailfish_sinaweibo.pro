@@ -37,7 +37,8 @@ OTHER_FILES += \
     qml/cover/*.qml \
     qml/ui/*.qml \
     qml/SailfishWeibo.qml \
-    qml/js/*.js
+    qml/js/*.js \
+    qml/WeiboFunctions.qml
 
 graphics.path = /usr/share/$${TARGET}/qml/graphics
 graphics.files += qml/graphics/*

@@ -135,6 +135,9 @@ bool Util::saveToCache(const QString &remoteUrl, const QString &dirName, const Q
 
 QString Util::parseWeiboContent(const QString &weiboContent, const QString &contentColor, const QString &userColor, const QString &linkColor)
 {
+    if (QWeiboSDK::TokenProvider::instance ()->useHackLogin ())
+        return weiboContent;
+
     QString tmp = weiboContent;
 
     //注意这几行代码的顺序不能乱，否则会造成多次替换

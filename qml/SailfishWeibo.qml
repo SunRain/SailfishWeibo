@@ -34,7 +34,6 @@ import "pages"
 import "components"
 import "ui"
 import "cover"
-//import "js/Settings.js" as Settings
 
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
@@ -71,10 +70,10 @@ ApplicationWindow
                 interval: 1000
                 onTriggered: {
                     if (splashes._delayType == 0) {
-                        toLoginPage();
+                        wbFunc.toLoginPage();
                     }
                     if (splashes._delayType == 1) {
-                        toIndexPage();
+                        wbFunc.toIndexPage();
                     }
                 }
             }
@@ -221,7 +220,7 @@ ApplicationWindow
                 panelView.hidePanel();
             }
             onUserAvatarClicked: {
-                toUserPage(tokenProvider.uid);
+                wbFunc.toUserPage(tokenProvider.uid);
             }
 
             Component.onCompleted: {
@@ -329,137 +328,12 @@ ApplicationWindow
     Component {
         id: loginPageComponent
         LoginPage {
-            onLogined: {toIndexPage();}
+            onLogined: {wbFunc.toIndexPage();}
         }
     }
 
-    function showBusyIndicator() {
-        busyIndicatorTimeout.restart();
-        busyIndicator.runningBusyIndicator = true
-    }
-    function stopBusyIndicator() {
-        busyIndicatorTimeout.stop();
-        busyIndicator.runningBusyIndicator = false
-    }
-
-    function addNotification(inText, inTime) {
-        var text = inText == undefined ? "" : inText
-        var time = inTime == undefined ? 3 : inTime
-        var noti = Qt.createComponent("components/Notification.qml")
-        if (noti.status == Component.Ready) {
-            var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
-        }
-    }
-
-//    function attachSecondPage() {
-//        if (pageStack.depth == 1) {
-//            pageStack.pushAttached("pages/SecondPage.qml");
-//        }
-//    }
-
-    function popAttachedPages() {
-        // find the first page
-        var firstPage = pageStack.previousPage();
-        if (!firstPage) {
-            return;
-        }
-        while (pageStack.previousPage(firstPage)) {
-            firstPage = pageStack.previousPage(firstPage);
-        }
-        // pop to first page
-        pageStack.pop(firstPage);
-    }
-
-    ///////////// 登陆页面
-    function toLoginPage() {
-        popAttachedPages();
-        pageStack.replace(loginPageComponent);
-    }
-
-    ///////////// 主页（微博列表显示页面）
-    function toIndexPage() {
-        popAttachedPages();
-        pageStack.replace(indexPageComponent)
-    }
-
-    //////////////////////////////////////////////////////////////////         go to weibo page
-    function toWeiboPage(jsonContent) {
-        //console.log("toWeiboPage  index " + index + " model " + model);
-        var content = jsonContent;
-//        popAttachedPages();
-        pageStack.push(Qt.resolvedUrl("pages/WeiboPage.qml"),
-                        {"userWeiboJSONContent":content})
-    }
-
-    //////////////////////////////////////////////////////////////////         go to send page
-    function toSendPage(mode, userInfo, placeHoldText, shouldPopAttachedPages) {
-        //sendPage.setMode(mode, info)
-        //mainStack.push(sendPage)
-        var m = mode;
-        var info = userInfo;
-        var pht = placeHoldText;
-
-//        if(shouldPopAttachedPages)
-//            popAttachedPages();
-
-        pageStack.push(Qt.resolvedUrl("pages/SendPage.qml"),
-                        {"mode":m,
-                           "placeHoldText":pht,
-                           "userInfo":info})
-    }
-
-    function toUserPage(uid) {
-        pageStack.push(Qt.resolvedUrl("pages/UserPage.qml"), { "uid": uid/*, title: qsTr("About user")*/ })
-    }
-
-    function toFriendsPage(mode, uid) {
-        pageStack.push(Qt.resolvedUrl("pages/FriendsPage.qml"), { "mode": mode, "uid": uid })
-    }
-
-    function toUserWeibo(uid, name) {
-        pageStack.push(Qt.resolvedUrl("ui/UserWeibo.qml"), { "uid": uid, "userName": name })
-        //mainStack.currentPage.refresh()
-    }
-
-    function toGalleryPage(model, index) {
-        pageStack.push(Qt.resolvedUrl("pages/Gallery.qml"), { "modelGallery": model, "index": index })
-    }
-
-//    function toFriendsPage(model, uid) {
-//        pageStack.push(Qt.resolvedUrl("pages/FriendsPage.qml"), { "mode": model, "uid": uid })
-//    }
-
-    function weiboLogout() {
-        tokenProvider.accessToken = "";
-        tokenProvider.uid = "";
-        toLoginPage();
-    }
-
-    function toCommentAllPage() {
-        popAttachedPages();
-        pageStack.replace(commentAllComponent);
-    }
-
-    function toCommentMentionedPage() {
-        popAttachedPages();
-        pageStack.replace(commentMentionedComponent);
-    }
-
-    function toWeiboMentionedPage() {
-        popAttachedPages();
-        pageStack.replace(weiboMentionedComponent);
-    }
-
-    function toSettingsPage() {
-        pageStack.push(Qt.resolvedUrl("pages/AboutPage.qml"));
-    }
-
-    function toFavoritesPage() {
-        pageStack.push(weiboFavoritesComponent);
-    }
-
-    function toDummyDialog() {
-        pageStack.push(Qt.resolvedUrl("pages/Dummy.qml"));
+    WeiboFunctions {
+        id: wbFunc
     }
 
     MyType {
