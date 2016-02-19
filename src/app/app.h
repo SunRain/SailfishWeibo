@@ -2,7 +2,7 @@
 #define APP_H
 
 //#define Q_PROCESSOR_ARM
-#define Q_PROCESSOR_X86
+//#define Q_PROCESSOR_X86
 
 //TODO:使用了https://github.com/WeCase的api key
 static const char *APPKEY = /*"4091495491";*/ "1011524190";
