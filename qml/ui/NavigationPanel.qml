@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import harbour.sailfish_sinaweibo.sunrain 1.0
 
 import "../WeiboFunctions.js" as WBLoader
+import "../js/Utility.js" as Utility
 
 import "../components"
 
@@ -35,9 +36,40 @@ Panel {
             return false;
         }
         function initUserAvatar(callback) {
-//            if (tokenProvider.useHackLogin) {
-//                //TODO useHackLogin
-//            } else {
+            if (tokenProvider.useHackLogin) {
+                WBLoader.create("../requests/hack/HackUsersInfoMe.qml", panel,
+                    function(object, component, incubator) {
+                        inner.us_component = component;
+                        inner.us_incubator = incubator;
+                        inner.us_object = object;
+                        if (inner.us_object) {
+                            inner.us_object.requestResult.connect(function(ret, replyData) {
+                                console.log("=== HackUsersInfoMe connect ===");
+                                if (ret == BaseRequest.RET_ABORT) {
+                                    console.log("== HackUsersInfoMe onRequestAbort");
+                                } else if (ret == BaseRequest.RET_FAILURE) {
+                                    console.log("== HackUsersInfoMe onRequestFailure ["+replyData+"]")
+                                } else {
+                                    console.log("== HackUsersInfoMe onRequestSuccess ["+replyData+"]")
+                                    //create remindObject if not created
+                                    if (!globalInner.userInfoObject) {
+                                        WBLoader.create("../components/UserInfoObject.qml", panel,
+                                            function(object, component, incubator){
+                                                if (object)
+                                                    globalInner.userInfoObject = object;
+                                                Utility.parserUserInfoMe(globalInner.userInfoObject, JSON.parse(replyData));
+                                            });
+                                    } else {
+                                        Utility.parserUserInfoMe(globalInner.userInfoObject, JSON.parse(replyData));
+                                    }
+                                }
+                                });
+                            callback.call(this, inner.us_object);
+                        } else {
+                            callback.call(this, inner.us_object);
+                        }
+                    });
+            } else {
                 WBLoader.create("../requests/oauth/UsersShow.qml", panel,
                     function(object, component, incubator) {
                         inner.us_component = component;
@@ -61,12 +93,12 @@ Panel {
                                                     if (object)
                                                         globalInner.userInfoObject = object;
                                                     if (!inner.userAvatarLock) {
-                                                        globalInner.userInfoObject.usrInfo = JSON.parse(replyData)
+                                                        globalInner.userInfoObject.userInfo = JSON.parse(replyData)
                                                         inner.userAvatarLock = !inner.userAvatarLock;
                                                     }
                                                 });
                                         } else if (!inner.userAvatarLock) {
-                                            globalInner.userInfoObject.usrInfo = JSON.parse(replyData)
+                                            globalInner.userInfoObject.userInfo = JSON.parse(replyData)
                                             inner.userAvatarLock = !inner.userAvatarLock;
                                         }
                                     }
@@ -76,7 +108,7 @@ Panel {
                             callback.call(this, inner.us_object);
                         }
                     });
-//            }
+            }
         }
 
         //////////////////////////RemindUnreadCount
@@ -88,29 +120,6 @@ Panel {
                 return true;
             return false;
         }
-        function parserRemind(jsonObject) {
-            if (!globalInner.remindObject || !jsonObject) {
-                console.log("[Panel]: no remind object or remind data found!");
-                return;
-            }
-            /*****
-            {"qp":{"pl":1,"sx":3，"new":2},"ht":{"pl":1,"sx":3}}
-            pl 评论
-            sx 私信
-            new 新微博
-            fs 粉丝
-             ******/
-//            console.log("[Panel]: parserRemind " + "cmt " + jsonObject.qp.pl
-//                        + " dm " + jsonObject.qp.sx);
-            globalInner.remindObject.cmt = jsonObject.qp.pl == undefined ? 0 : jsonObject.qp.pl;
-            //TODO mention_cmt?
-            globalInner.remindObject.mention_cmt = 0;
-            //TODO mention_status
-            globalInner.remindObject.mention_status = 0;
-            globalInner.remindObject.dm = jsonObject.qp.sx == undefined ? 0 : jsonObject.qp.sx;
-            globalInner.remindObject.status = jsonObject.qp.new == undefined ? 0 : jsonObject.qp.new;
-        }
-
         function messageGetRemind(callback) {
             if (tokenProvider.useHackLogin) {
                 WBLoader.create("../requests/hack/HackRemindUnreadCount.qml", panel,
@@ -133,10 +142,12 @@ Panel {
                                             function(object, component, incubator){
                                                 if (object)
                                                     globalInner.remindObject = object;
-                                                parserRemind(JSON.parse(replyData));
+//                                                parserRemind(JSON.parse(replyData));
+                                                Utility.parserRemind(globalInner.remindObject, JSON.parse(replyData));
                                             });
                                     } else {
-                                        parserRemind(JSON.parse(replyData));
+//                                        parserRemind(JSON.parse(replyData));
+                                        Utility.parserRemind(globalInner.remindObject, JSON.parse(replyData));
                                     }
                                 }
                                 });
@@ -233,7 +244,7 @@ Panel {
                 height: cover.width *2/3
                 fillMode: Image.PreserveAspectCrop
                 asynchronous: true
-                source: util.parseImageUrl(globalInner.userInfoObject.usrInfo.cover_image_phone)
+                source: util.parseImageUrl(globalInner.userInfoObject.cover_image_phone)
             }
             Image {
                 id: profile
@@ -241,7 +252,7 @@ Panel {
                 height: width
                 anchors.centerIn: cover
                 asynchronous: true
-                source: util.parseImageUrl(globalInner.userInfoObject.usrInfo.profile_image_url)
+                source: util.parseImageUrl(globalInner.userInfoObject.profile_image_url)
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -251,7 +262,7 @@ Panel {
             }
             Label {
                 id: screenName
-                text: globalInner.userInfoObject.usrInfo.screen_name
+                text: globalInner.userInfoObject.screen_name
                 anchors {
                     top: profile.bottom
                     topMargin: Theme.paddingSmall

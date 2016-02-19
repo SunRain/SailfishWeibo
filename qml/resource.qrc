@@ -57,5 +57,7 @@
         <file>requests/oauth/UsersShow.qml</file>
         <file>requests/oauth/RemindUnreadCount.qml</file>
         <file>requests/hack/HackRemindUnreadCount.qml</file>
+        <file>js/Utility.js</file>
+        <file>requests/hack/HackUsersInfoMe.qml</file>
     </qresource>
 </RCC>

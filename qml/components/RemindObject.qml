@@ -10,7 +10,7 @@ QtObject {
         remindObject.destroy();
     }
 
-    signal remindInfoChanged
+    signal infoChanged
 
     //status 	int 	新微博未读数
     property int status: 0
@@ -68,7 +68,7 @@ QtObject {
             remindObject.cmt = remind.cmt
             remindObject.dm = remind.dm
             remindObject.status = remind.status
-            remindObject.remindInfoChanged();
+            remindObject.infoChanged();
         }
     }
 }

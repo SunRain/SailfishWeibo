@@ -39,7 +39,7 @@ Page {
         showBusyIndicator();
         _pageNum = 1;
         statusesUserTimeline.setParameters("page", _pageNum)
-        statusesUserTimeline.setParameters("uid", userInfoObject.usrInfo.id);
+        statusesUserTimeline.setParameters("uid", userInfoObject.userInfo.id);
         statusesUserTimeline.getRequest();
     }
     function showUserWeibo() {
@@ -66,7 +66,7 @@ Page {
     function showUserInfo() {
         modelWeibo.clear();
         if (userPage._refreshUserInfoLock) {
-            modelWeibo.append(userInfoObject.usrInfo.status);
+            modelWeibo.append(userInfoObject.userInfo.status);
             if (lvUserWeibo.model == undefined) {
                 lvUserWeibo.model = modelWeibo;
             }
@@ -80,7 +80,7 @@ Page {
         showBusyIndicator();
         _pageNum++
         statusesUserTimeline.setParameters("page", _pageNum);
-        statusesUserTimeline.setParameters("uid", userInfoObject.usrInfo.id);
+        statusesUserTimeline.setParameters("uid", userInfoObject.userInfo.id);
         statusesUserTimeline.getRequest();
     }
     StatusesUserTimeline {
@@ -115,14 +115,14 @@ Page {
             if (!userPage._pageActive) {
                 return;
             }
-            userInfoObject.usrInfo = JSON.parse(replyData);
+            userInfoObject.userInfo = JSON.parse(replyData);
 
-            console.log("==== == usersShow object value "+ userInfoObject.usrInfo)
+            console.log("==== == usersShow object value "+ userInfoObject.userInfo)
 
-            console.log(">>>>> usersShow object value "+ JSON.stringify(userInfoObject.usrInfo))
+            console.log(">>>>> usersShow object value "+ JSON.stringify(userInfoObject.userInfo))
 
-            _isFollowing = userInfoObject.usrInfo.following;
-            modelWeibo.append(userInfoObject.usrInfo.status);
+            _isFollowing = userInfoObject.userInfo.following;
+            modelWeibo.append(userInfoObject.userInfo.status);
 
             if (lvUserWeibo.model == undefined) {
                 lvUserWeibo.model = modelWeibo;
@@ -395,7 +395,7 @@ Page {
                             anchors.verticalCenter: rowUserColumn.verticalCenter
                             smooth: true
                             fillMode: Image.PreserveAspectFit
-                            source: userInfoObject.usrInfo.avatar_hd
+                            source: userInfoObject.userInfo.avatar_hd
                         }
 
                         Column {
@@ -408,7 +408,7 @@ Page {
                                 font.pixelSize: Theme.fontSizeMedium
                                 width:rowUser.width - usAvatar.width - Theme.paddingMedium
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                                text: userInfoObject.usrInfo.screen_name
+                                text: userInfoObject.userInfo.screen_name
                             }
 
                             Label {
@@ -417,12 +417,12 @@ Page {
                                 font.pixelSize: Theme.fontSizeSmall
                                 width: labelUserName.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                                text: userInfoObject.usrInfo.location
+                                text: userInfoObject.userInfo.location
                             }
                             OptionItem {
                                 id:optionItem
                                 width: parent.width
-                                visible: userInfoObject.usrInfo.id != tokenProvider.uid
+                                visible: userInfoObject.userInfo.id != tokenProvider.uid
                                 Rectangle {
                                     z: optionItem.z - 1
                                     width: optionItem.width
@@ -443,13 +443,13 @@ Page {
                                     font.pixelSize: Theme.fontSizeMedium
                                     text: {
                                         if (_isFollowing == true) {
-                                            if (userInfoObject.usrInfo.follow_me == true) {
+                                            if (userInfoObject.userInfo.follow_me == true) {
                                                 return qsTr("Bilateral")
                                             } else {
                                                 return qsTr("Following")
                                             }
                                         } else {
-                                            if (userInfoObject.usrInfo.follow_me == true) {
+                                            if (userInfoObject.userInfo.follow_me == true) {
                                                 return qsTr("Follower")
                                             } else {
                                                 return qsTr("Follow")
@@ -515,7 +515,7 @@ Page {
                             width: parent.width
                             font.pixelSize: Theme.fontSizeMedium
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                            text: userInfoObject.usrInfo.description
+                            text: userInfoObject.userInfo.description
                         }
                     }
 
@@ -540,7 +540,7 @@ Page {
                                 anchors.centerIn: parent
                                 color: Theme.secondaryColor
                                 font.pixelSize: Theme.fontSizeTiny
-                                text: qsTr("Weibo: ") + userInfoObject.usrInfo.statuses_count
+                                text: qsTr("Weibo: ") + userInfoObject.userInfo.statuses_count
                             }
                         }
                         Rectangle {
@@ -555,14 +555,14 @@ Page {
                                 anchors.centerIn: parent
                                 color: Theme.secondaryColor
                                 font.pixelSize:Theme.fontSizeTiny
-                                text: qsTr("following: ") + userInfoObject.usrInfo.friends_count
+                                text: qsTr("following: ") + userInfoObject.userInfo.friends_count
                             }
                             //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    //pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfoObject.usrInfo.id })
-                                    toFriendsPage("following", userInfoObject.usrInfo.id);
+                                    //pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfoObject.userInfo.id })
+                                    toFriendsPage("following", userInfoObject.userInfo.id);
                                 }
                             }
                         }
@@ -578,14 +578,14 @@ Page {
                                 anchors.centerIn: parent
                                 color: Theme.secondaryColor
                                 font.pixelSize: Theme.fontSizeTiny
-                                text: qsTr("follower: ") + userInfoObject.usrInfo.followers_count
+                                text: qsTr("follower: ") + userInfoObject.userInfo.followers_count
                             }
                             //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-//                                    pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: userInfoObject.usrInfo.id })
-                                    toFriendsPage("follower", userInfoObject.usrInfo.id);
+//                                    pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: userInfoObject.userInfo.id })
+                                    toFriendsPage("follower", userInfoObject.userInfo.id);
                                 }
                             }
                         }
@@ -606,7 +606,7 @@ Page {
                 height: /*userPage._showUserWeibo ? 0 : */implicitHeight
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeMedium
-                text: userInfoObject.usrInfo.screen_name + qsTr("'s RecentWeibo")
+                text: userInfoObject.userInfo.screen_name + qsTr("'s RecentWeibo")
 //                Behavior on opacity {
 //                    FadeAnimation{}
 //                }
