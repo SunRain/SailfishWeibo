@@ -341,17 +341,17 @@
 <context>
     <name>NavigationPanel</name>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="245"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="270"/>
         <source>Home</source>
         <translation>首页</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="261"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="287"/>
         <source>AtMeWeibo</source>
         <translation>微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="290"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="303"/>
         <source>AtMeComment</source>
         <translation>评论</translation>
     </message>
@@ -361,17 +361,17 @@
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="348"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="335"/>
         <source>PM</source>
         <translation>私信</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="376"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="350"/>
         <source>Favourite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="390"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="364"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>

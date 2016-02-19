@@ -88,6 +88,29 @@ Panel {
                 return true;
             return false;
         }
+        function parserRemind(jsonObject) {
+            if (!globalInner.remindObject || !jsonObject) {
+                console.log("[Panel]: no remind object or remind data found!");
+                return;
+            }
+            /*****
+            {"qp":{"pl":1,"sx":3，"new":2},"ht":{"pl":1,"sx":3}}
+            pl 评论
+            sx 私信
+            new 新微博
+            fs 粉丝
+             ******/
+//            console.log("[Panel]: parserRemind " + "cmt " + jsonObject.qp.pl
+//                        + " dm " + jsonObject.qp.sx);
+            globalInner.remindObject.cmt = jsonObject.qp.pl == undefined ? 0 : jsonObject.qp.pl;
+            //TODO mention_cmt?
+            globalInner.remindObject.mention_cmt = 0;
+            //TODO mention_status
+            globalInner.remindObject.mention_status = 0;
+            globalInner.remindObject.dm = jsonObject.qp.sx == undefined ? 0 : jsonObject.qp.sx;
+            globalInner.remindObject.status = jsonObject.qp.new == undefined ? 0 : jsonObject.qp.new;
+        }
+
         function messageGetRemind(callback) {
             if (tokenProvider.useHackLogin) {
                 WBLoader.create("../requests/hack/HackRemindUnreadCount.qml", panel,
@@ -110,10 +133,10 @@ Panel {
                                             function(object, component, incubator){
                                                 if (object)
                                                     globalInner.remindObject = object;
-//                                                globalInner.remindObject.remind = JSON.parse(replyData);
+                                                parserRemind(JSON.parse(replyData));
                                             });
                                     } else {
-//                                        globalInner.remindObject.remind = JSON.parse(replyData);
+                                        parserRemind(JSON.parse(replyData));
                                     }
                                 }
                                 });
@@ -249,8 +272,9 @@ Panel {
             icon: util.pathTo("qml/graphics/panel_home.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
-                toIndexPage();
+                wbFunc.toIndexPage();
             }
+            dotOpacity: globalInner.remindObject.status == 0 ? 0 : 1
         }
         HorizontalIconTextButton {
             id: atMeWeibo
@@ -264,22 +288,9 @@ Panel {
             icon: util.pathTo("qml/graphics/panel_at.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
-                toWeiboMentionedPage();
+                wbFunc.toWeiboMentionedPage();
             }
-            Rectangle {
-                radius: 90
-                anchors {
-                    left: atMeWeibo.left
-                    leftMargin: atMeWeibo.iconSize
-                    top: atMeWeibo.top
-                    topMargin: atMeWeibo.height - atMeWeibo.fontSize
-                }
-                width: atMeWeibo.height - atMeWeibo.fontSize
-                height: width
-                z: parent.z + 1
-                color: Theme.highlightColor
-                opacity: globalInner.remindObject.remind.mention_status == "0" ? 0 : 1
-            }
+            dotOpacity: globalInner.remindObject.mention_status == "0" ? 0 : 1
         }
         HorizontalIconTextButton {
             id: atMeComment
@@ -293,22 +304,9 @@ Panel {
             icon: util.pathTo("qml/graphics/panel_at.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
-                toCommentMentionedPage();
+                wbFunc.toCommentMentionedPage();
             }
-            Rectangle {
-                radius: 90
-                anchors {
-                    left: atMeComment.left
-                    leftMargin: atMeComment.iconSize
-                    top: atMeComment.top
-                    topMargin: atMeComment.height - atMeComment.fontSize
-                }
-                width: atMeComment.height - atMeComment.fontSize
-                height: width
-                z: parent.z + 1
-                color: Theme.highlightColor
-                opacity: globalInner.remindObject.remind.mention_cmt == "0" ? 0 : 1
-            }
+            dotOpacity: globalInner.remindObject.mention_cmt == "0" ? 0 : 1
         }
         HorizontalIconTextButton {
             id: comment
@@ -322,22 +320,9 @@ Panel {
             icon: util.pathTo("qml/graphics/panel_comment.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
-                toCommentAllPage();
+                wbFunc.toCommentAllPage();
             }
-            Rectangle {
-                radius: 90
-                anchors {
-                    left: comment.left
-                    leftMargin: comment.iconSize
-                    top: comment.top
-                    topMargin: comment.height - comment.fontSize
-                }
-                width: comment.height - comment.fontSize
-                height: width
-                z: parent.z + 1
-                color: Theme.highlightColor
-                opacity: globalInner.remindObject.remind.cmt == "0" ? 0 : 1
-            }
+            dotOpacity: globalInner.remindObject.cmt == "0" ? 0 : 1
         }
         HorizontalIconTextButton {
             id: pm
@@ -351,22 +336,9 @@ Panel {
             icon: util.pathTo("qml/graphics/panel_pm.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
-                toDummyDialog();
+                wbFunc.toDummyDialog();
             }
-            Rectangle {
-                radius: 90
-                anchors {
-                    left: pm.left
-                    leftMargin: pm.iconSize
-                    top: pm.top
-                    topMargin: pm.height - pm.fontSize
-                }
-                width: pm.height - pm.fontSize
-                height: width
-                z: parent.z + 1
-                color: Theme.highlightColor
-                opacity: globalInner.remindObject.remind.cmt == "0" ? 0 : 1
-            }
+            dotOpacity: globalInner.remindObject.dm == "0" ? 0 : 1
         }
         HorizontalIconTextButton {
             width: column.width - Theme.paddingLarge *2
@@ -379,7 +351,7 @@ Panel {
             icon: util.pathTo("qml/graphics/panel_fav.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
-                toFavoritesPage();
+                wbFunc.toFavoritesPage();
             }
         }
         HorizontalIconTextButton {
@@ -393,7 +365,7 @@ Panel {
             icon: util.pathTo("qml/graphics/panel_set.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
-                toSettingsPage();
+                wbFunc.toSettingsPage();
             }
         }
     }

@@ -10,6 +10,19 @@ QtObject {
         remindObject.destroy();
     }
 
+    signal remindInfoChanged
+
+    //status 	int 	新微博未读数
+    property int status: 0
+    // mention_status 	int 	新提及我的微博数
+    property int mention_status: 0
+    //mention_cmt 	int 	新提及我的评论数
+    property int mention_cmt: 0
+    //cmt 	int 	新评论数
+    property int cmt: 0
+    //dm 	int 	新私信数
+    property int dm: 0
+
 //    status 	int 	新微博未读数
 //    follower 	int 	新粉丝数
 //    cmt 	int 	新评论数
@@ -23,7 +36,7 @@ QtObject {
 //    badge 	int 	新勋章数
 //    photo 	int 	相册消息未读数
 //    msgbox 	int 	{{{3}}}
-    property var remind: {
+    property var remind: ({
         "status": 0,
         "follower": 0,
         "cmt": 0,
@@ -47,5 +60,15 @@ QtObject {
         "attention_follower": 0,
         "page_friends_to_me": 0,
         "chat_group_notice": 0
+    })
+    onRemindChanged: {
+        if (remind) {
+            remindObject.mention_cmt = remind.mention_cmt
+            remindObject.mention_status = remind.mention_status
+            remindObject.cmt = remind.cmt
+            remindObject.dm = remind.dm
+            remindObject.status = remind.status
+            remindObject.remindInfoChanged();
+        }
     }
 }
