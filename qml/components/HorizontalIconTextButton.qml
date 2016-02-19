@@ -13,6 +13,7 @@ MouseArea {
     property int spacing: Theme.paddingSmall
     property alias icon: image.source
     property real iconSize: Theme.iconSizeSmall
+    property real dotOpacity: 0
     //property alias source: image.source
 
 //    onPressedChanged: {
@@ -52,5 +53,21 @@ MouseArea {
         color: _showPress ? horizontalIconTextButton.highlightColor : horizontalIconTextButton.color
         font.bold: _showPress
         font.pixelSize: Math.min(horizontalIconTextButton.fontSize, horizontalIconTextButton.height)
+    }
+
+    Rectangle {
+        radius: 90
+        anchors {
+            left: parent.left
+            leftMargin: parent.iconSize
+            top: parent.top
+            topMargin: horizontalIconTextButton.height - horizontalIconTextButton.fontSize
+        }
+        enabled: horizontalIconTextButton.dotOpacity > 0
+        width: horizontalIconTextButton.height - horizontalIconTextButton.fontSize
+        height: width
+        z: parent.z + 1
+        color: Theme.highlightColor
+        opacity: horizontalIconTextButton.dotOpacity
     }
 }
