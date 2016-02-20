@@ -1,5 +1,7 @@
 .pragma library
 
+Qt.include("JsonPath.js")
+
 function parserRemind(target, jsonObject) {
     if (!target || !jsonObject) {
         console.log("[parserRemind]: no remind object or remind data found!");
@@ -24,9 +26,22 @@ function parserRemind(target, jsonObject) {
 }
 
 function parserUserInfoMe(target, jsonObject) {
-    var userObject = jsonObject[0].card_group[0];
-
-    target.cover_image_phone = "";
-    target.profile_image_url = userObject.user.profile_image_url;
-    target.screen_name = userObject.user.screen_name;
+    for (var i=0; i<jsonObject.length; ++i) {
+        var mainArray = jsonObject[i].card_group;
+        for (var j=0; j<mainArray.length; ++j) {
+            var main = mainArray[j];
+            if (main.card_type == "30") { //userInfo
+                target.cover_image_phone = "";
+                target.profile_image_url = main.user.profile_image_url;
+                target.screen_name = main.user.screen_name;
+            } else if (main.card_type == "4") { // Favorites and others
+                var itemID = main.itemid;
+                if (itemID == undefined)
+                    continue;
+                if (itemID.match("WEIBO_INDEX_PROFILE_FAVORITE")) {
+                    target.containerid = main.scheme.replace(/\/p\/index\?containerid=/, "");
+                }
+            }
+        }
+    }
 }

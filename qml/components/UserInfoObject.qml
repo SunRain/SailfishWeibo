@@ -11,6 +11,9 @@ QtObject {
 
     signal infoChanged
 
+    //containerid for user favorites (HackLogin only)
+    property string containerid: ""
+
     property url cover_image_phone: ""
 
 //    id 	int64 	用户UID

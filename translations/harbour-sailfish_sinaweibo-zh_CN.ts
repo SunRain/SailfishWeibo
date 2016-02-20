@@ -670,22 +670,22 @@
 <context>
     <name>WeiboFavorites</name>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="39"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="38"/>
         <source>Removing from favorites</source>
         <translation>正在删除...</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="119"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="89"/>
         <source>Weibo Favorites</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="124"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="94"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="167"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="137"/>
         <source>Remove from favorites</source>
         <translation>取消收藏</translation>
     </message>
@@ -746,12 +746,12 @@
 <context>
     <name>WeiboTab</name>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="124"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="115"/>
         <source>Start adding to favorites</source>
         <translation>正在添加到收藏</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="76"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="77"/>
         <source>Succeed to add to favorites</source>
         <translation>添加收藏成功</translation>
     </message>
@@ -761,17 +761,17 @@
         <translation>添加收藏失败</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="232"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="186"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="243"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="197"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="249"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="203"/>
         <source>Add to favorites</source>
         <translation>收藏</translation>
     </message>

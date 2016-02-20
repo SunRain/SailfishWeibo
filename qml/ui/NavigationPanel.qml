@@ -35,7 +35,7 @@ Panel {
                 return true;
             return false;
         }
-        function initUserAvatar(callback) {
+        function initUserInfo(callback) {
             if (tokenProvider.useHackLogin) {
                 WBLoader.create("../requests/hack/HackUsersInfoMe.qml", panel,
                     function(object, component, incubator) {
@@ -193,10 +193,10 @@ Panel {
         }
     }
 
-    function initUserAvatar() {
-        console.log("=== panel initUserAvatar");
+    function initUserInfo() {
+        console.log("=== panel initUserInfo");
         if (!inner.us_object) {
-            inner.initUserAvatar(function(obj) {
+            inner.initUserInfo(function(obj) {
                 if (obj)
                     obj.getRequest();
             });

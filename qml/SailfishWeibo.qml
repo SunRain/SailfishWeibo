@@ -115,7 +115,7 @@ ApplicationWindow
                 if (indexPage.status === PageStatus.Active) {
                     if (!_dataInitialized) {
                         indexPage.refresh();
-                        panelView.initUserAvatar();
+                        panelView.initUserInfo();
                         panelView.initRemind();
                         _dataInitialized = true;
                     }
@@ -185,8 +185,8 @@ ApplicationWindow
             onCurrentPageChanged: panelView.hidePanel()
         }
 
-        function initUserAvatar() {
-            leftPanel.initUserAvatar();
+        function initUserInfo() {
+            leftPanel.initUserInfo();
         }
         function initRemind() {
             leftPanel.messageGetRemind();

@@ -6,6 +6,7 @@ SilicaFlickable {
     width: Screen.width
     height: column.height
     contentHeight: column.height
+    enabled: opacity != 0
 
     property int menuSize: Theme.iconSizeMedium
     property bool popuped: false

@@ -1,12 +1,9 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import "../js/dateutils.js" as DateUtils
-import "../js/weiboapi.js" as WB
-//import "../js/Settings.js" as Settings
-import "../components"
-
 import harbour.sailfish_sinaweibo.sunrain 1.0
+
+import "../components"
 
 WBPage {
     id: weiboFavoritesPage
@@ -29,20 +26,20 @@ WBPage {
     //////////////////////////////////////////////////////////////////         user status mentioned me
     function _weiboFavorites(page) {
         pullDownMenu.busy = true;
-//        var method = WeiboMethod.WBOPT_GET_FAVORITES;
-//        api.setWeiboAction(method, {"page":_pageNum});
         favorites.setParameters("page", _pageNum);
+        if (tokenProvider.useHackLogin) {
+            console.log("=== weiboFavoritesPage containerid "+globalInner.userInfoObject.containerid);
+            favorites.setParameters("containerid", globalInner.userInfoObject.containerid);
+        }
         favorites.getRequest();
     }
 
     function _removeFromFavorites(weiboId) {
         addNotification(qsTr("Removing from favorites"))
-//        var method = WeiboMethod.WBOPT_POST_FAVORITES_DESTROY;
-//        api.setWeiboAction(method, {"id":" "+weiboId+" "});
         favoritesDestroy.setParameters("id", weiboId);
         favoritesDestroy.postRequest();
     }
-    Favorites {
+    WrapperFavoritesList {
         id: favorites
         onRequestAbort: {
             console.log("== favorites onRequestAbort");
@@ -51,6 +48,8 @@ WBPage {
             console.log("== favorites onRequestFailure ["+replyData+"]")
         }
         onRequestSuccess: { //replyData
+            console.log("== favorites onRequestSuccess ["+replyData+"]")
+
             var jsonObj = JSON.parse(replyData);
             for (var i=0; i<jsonObj.favorites.length; i++) {
                 modelWeibo.append( jsonObj.favorites[i] )
@@ -73,35 +72,6 @@ WBPage {
             refresh();
         }
     }
-
-//    Connections {
-//        target: api
-//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-//        onWeiboPutSucceed: {
-//            if (action == WeiboMethod.WBOPT_GET_FAVORITES) {
-//                var jsonObj = JSON.parse(replyData);
-//                for (var i=0; i<jsonObj.favorites.length; i++) {
-//                    modelWeibo.append( jsonObj.favorites[i] )
-//                }
-//                if (lvUserWeibo.model == undefined) {
-//                    lvUserWeibo.model = modelWeibo;
-//                }
-//                pullDownMenu.busy = false;
-//            }
-//            if (action == WeiboMethod.WBOPT_POST_FAVORITES_DESTROY) {
-//                refresh();
-//            }
-//        }
-//        onWeiboPutFail: {
-//            if (action == WeiboMethod.WBOPT_POST_FAVORITES_DESTROY) {
-//                addNotification(qsTr("Fail to remove from favorites"));
-//            }
-//        }
-//    }
-    
-//    Component.onCompleted: {
-//        weiboFavoritesPage.refresh();
-//    }
 
     SilicaListView{
         id: lvUserWeibo

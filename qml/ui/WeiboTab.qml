@@ -22,7 +22,7 @@ SilicaListView {
     signal fetchPending
     signal fetchFinished
 
-    StatusesFriendsTimeline {
+    WrapperStatusesFriendsTimeline {
         id: statusesFriendsTimeline
         onRequestAbort: {
             console.log("== statusesFriendsTimeline onRequestAbort");
@@ -42,7 +42,7 @@ SilicaListView {
         }
     }
 
-    /*FriendshipsGroupsTimeline*/WrapperFriendshipsGroupsTimeline {
+    WrapperFriendshipsGroupsTimeline {
         id: friendshipsGroupsTimeline
         onRequestAbort: {
             console.log("== friendshipsGroupsTimeline onRequestAbort");
@@ -63,17 +63,18 @@ SilicaListView {
         }
     }
 
-    FavoritesCreate {
+    WrapperFavoritesCreate {
         id: favoritesCreate
         onRequestAbort: {
             console.log("== favoritesCreate onRequestAbort");
         }
         onRequestFailure: { //replyData
             console.log("== favoritesCreate onRequestFailure ["+replyData+"]")
-            addNotification(qsTr("Fail to add to favorites"));
+            wbFunc.addNotification(qsTr("Fail to add to favorites"));
         }
         onRequestSuccess: { //replyData
-            addNotification(qsTr("Succeed to add to favorites"));
+            console.log("== favoritesCreate onRequestSuccess ["+replyData+"]")
+            wbFunc.addNotification(qsTr("Succeed to add to favorites"));
         }
     }
 
@@ -89,21 +90,11 @@ SilicaListView {
         fetchPending();
         if(_isGroupType) {
             _groupWeiboPageNum++;
-//            var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE;
-//            api.setWeiboAction(method, {
-//                                   "page":_groupWeiboPageNum,
-//                                   "access_token":settings.accessToken, //Settings.getAccess_token(),
-//                                   "list_id":_groupIdstr});
             friendshipsGroupsTimeline.setParameters("page", " "+_groupWeiboPageNum);
             friendshipsGroupsTimeline.setParameters("list_id", _groupIdstr);
             friendshipsGroupsTimeline.getRequest();
         } else {
             _allWeiboPageNum++;
-//            var method = WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE;
-//            api.setWeiboAction(method, {
-//                                   'page':_allWeiboPageNum,
-//                                   'access_token':settings.accessToken//Settings.getAccess_token()
-//                               });
             statusesFriendsTimeline.setParameters("page", _allWeiboPageNum);
             statusesFriendsTimeline.getRequest();
         }
@@ -121,29 +112,21 @@ SilicaListView {
     }
 
     function addToFavorites(weiboId) {
-        addNotification(qsTr("Start adding to favorites"));
-//        var method = WeiboMethod.WBOPT_POST_FAVORITES_CREATE; //添加收藏
-//        api.setWeiboAction(method, {
-//                               "id":" "+weiboId+" ", //FIXME: How can I avoid to change string ==> int when using QVariant ?
-//                               "access_token":settings.accessToken//Settings.getAccess_token()
-//                           });
-        favoritesCreate.setParameters("id", " "+weiboId);
+        wbFunc.addNotification(qsTr("Start adding to favorites"));
+        if (tokenProvider.useHackLogin)
+            favoritesCreate.appendPostDataParameters("id", " "+weiboId);
+        else
+            favoritesCreate.setParameters("id", " "+weiboId);
         favoritesCreate.postRequest();
     }
 
     function showGroupWeibo(groupIdstr) {
         //        WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE, //获取某一好友分组的微博列表
-        //showBusyIndicator();
         fetchPending();
         modelWeibo.clear();
         _groupWeiboPageNum = 1;
         _groupIdstr = groupIdstr;
         _isGroupType = true;
-//        var method = WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE;
-//        api.setWeiboAction(method, {
-//                               "page":_groupWeiboPageNum,
-//                               "access_token":settings.accessToken,//Settings.getAccess_token(),
-//                               "list_id":_groupIdstr});
         friendshipsGroupsTimeline.setParameters("page", " "+_groupWeiboPageNum);
         friendshipsGroupsTimeline.setParameters("list_id", _groupIdstr);
         friendshipsGroupsTimeline.getRequest();
@@ -152,35 +135,6 @@ SilicaListView {
     ListModel {
         id: modelWeibo
     }
-    
-//    Connections {
-//        target: api
-//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-//        //weiboPutFail(mWeiboMethod.getWeiboAction(parseRequestedWeiboPutUrl(requestedUrl)), error);
-//        onWeiboPutSucceed: {
-//            if (action == WeiboMethod.WBOPT_GET_STATUSES_FRIENDS_TIMELINE
-//                    || action == WeiboMethod.WBOPT_GET_FRIENDSHIPS_GROUPS_TIMELINE) {
-//                var jsonObj = JSON.parse(replyData);
-//                for (var i=0; i<jsonObj.statuses.length; i++) {
-//                    modelWeibo.append(jsonObj.statuses[i])
-//                }
-//                if (weiboTab.model == undefined) {
-//                    weiboTab.model = modelWeibo;
-//                }
-//                fetchFinished();
-//            }
-//            if (action == WeiboMethod.WBOPT_POST_FAVORITES_CREATE) {
-//                addNotification(qsTr("Succeed to add to favorites"));
-//            }
-//        }
-//        onWeiboPutFail: {
-//            if (action == WeiboMethod.WBOPT_POST_FAVORITES_CREATE) {
-//                addNotification(qsTr("Fail to add to favorites"));
-//            }
-//        }
-//        onTokenExpired: {}
-//    }
-
     cacheBuffer: 999999
     // model: modelWeibo
     footer: modelWeibo.count == 0 ? null : footerComponent
@@ -212,26 +166,26 @@ SilicaListView {
                 weiboJSONContent: modelWeibo.get(index)
                 optionMenu: options
                 onRepostedWeiboClicked: {
-                    toWeiboPage(modelWeibo.get(index).retweeted_status);
+                    wbFunc.toWeiboPage(modelWeibo.get(index).retweeted_status);
                 }
                 onUsWeiboClicked: {
-                    toWeiboPage(modelWeibo.get(index));
+                    wbFunc.toWeiboPage(modelWeibo.get(index));
                 }
                 onAvatarHeaderClicked: {
-                    toUserPage(userId);
+                    wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
                     Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {
-                    toGalleryPage(modelImages, index);
+                    wbFunc.toGalleryPage(modelImages, index);
                 }
                 ContextMenu {
                     id:options
                     MenuItem {
                         text: qsTr("Repost")
                         onClicked: {
-                            toSendPage("repost",
+                            wbFunc.toSendPage("repost",
                                        {"id": model.id},
                                        (model.retweeted_status == undefined || model.retweeted_status == "") == true
                                        ? ""
@@ -242,7 +196,7 @@ SilicaListView {
                     MenuItem {
                         text: qsTr("Comment")
                         onClicked: {
-                            toSendPage("comment", {"id": model.id}, "", true);
+                            wbFunc.toSendPage("comment", {"id": model.id}, "", true);
                         }
                     }
                     MenuItem {

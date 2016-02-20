@@ -34,7 +34,7 @@ WBPage {
             MenuItem {
                 text: qsTr("Logout")
                 onClicked: {
-                    weiboLogout();
+                    wbFunc.weiboLogout();
                 }
             }
         }
@@ -110,9 +110,9 @@ WBPage {
                 toolBar.hidePopup();
             }
         }
-        toolBarContent: /*Item*/Rectangle {
+        toolBarContent: Rectangle {
             id: tools
-            width: parent.width// - Theme.paddingMedium * 2
+            width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
             height: Theme.itemSizeMedium
             color: Theme.highlightDimmerColor
@@ -144,7 +144,7 @@ WBPage {
                     }
                     onClicked: {
                         //TODO: add to create new group when open popup
-                        toSendPage("", {});
+                        wbFunc.toSendPage("", {});
                     }
                 }
                 Rectangle {
@@ -171,9 +171,9 @@ WBPage {
     }
 
     //////////////////////////////////////////////////////////////////         settings
-    NetworkHelper {
-        id: networkHelper
-    }
+//    NetworkHelper {
+//        id: networkHelper
+//    }
 }
 
 

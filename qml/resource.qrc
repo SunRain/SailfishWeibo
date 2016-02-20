@@ -59,5 +59,6 @@
         <file>requests/hack/HackRemindUnreadCount.qml</file>
         <file>js/Utility.js</file>
         <file>requests/hack/HackUsersInfoMe.qml</file>
+        <file>js/JsonPath.js</file>
     </qresource>
 </RCC>
