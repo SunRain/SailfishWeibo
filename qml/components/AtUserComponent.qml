@@ -30,7 +30,7 @@ Item {
 //        }
 //        onTokenExpired: {}
 //    }
-    SearchSuggestionsAtUsers {
+    /*SearchSuggestionsAtUsers*/WrapperSearchSuggestionsAtUsers {
         id: searchSuggestionsAtUsers
         onRequestAbort: {}
         onRequestFailure: { //replyData

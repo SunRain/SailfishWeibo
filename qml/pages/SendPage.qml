@@ -50,7 +50,7 @@ Page {
         statusesUpdate.setParameters("status", status);
         statusesUpdate.postRequest();
     }
-    StatusesUpdate {
+    /*StatusesUpdate*/WrapperStatusesUpdate {
         id: statusesUpdate
         onRequestAbort: {
             console.log("== statusesUpdate onRequestAbort");
@@ -141,9 +141,11 @@ Page {
         statusesRepost.setParameters("status", status);
         statusesRepost.setParameters("id", " "+id+" ");
         statusesRepost.setParameters("is_comment", is_comment);
+        //TODO 同时评论的用户id（即发送被转发的微博的用户id） for hacklogin
+        statusesRepost.setParameters("rtcomment", "");
         statusesRepost.postRequest();
     }
-    StatusesRepost {
+    /*StatusesRepost*/WrapperStatusesRepost {
         id: statusesRepost
         onRequestAbort: {
             console.log("== statusesRepost onRequestAbort");
@@ -190,7 +192,7 @@ Page {
         commentsCreate.setParameters("comment_ori", comment_ori);
         commentsCreate.postRequest();
     }
-    CommentsCreate {
+    /*CommentsCreate*/WrapperCommentsCreate {
         id: commentsCreate
         onRequestAbort: {
             console.log("== commentsCreate onRequestAbort");
@@ -244,7 +246,7 @@ Page {
         commentsReply.setParameters("without_mention", without_mention);
         commentsReply.postRequest();
     }
-    CommentsReply {
+    /*CommentsReply*/WrapperCommentsReply {
         id: commentsReply
         onRequestAbort: {
             console.log("== commentsReply onRequestAbort");

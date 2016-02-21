@@ -25,8 +25,6 @@ Page {
         _weiboId = String(id);
         modelInfo.clear();
         if (_footInfoBarIndex == 0) {
-//            method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
-//            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_repostPageNum});
             statusesRepostTimeline.setParameters("id", " "+id+" ");
             statusesRepostTimeline.setParameters("page", _repostPageNum);
             statusesRepostTimeline.setParameters("count", 20)  //单页返回的记录条数，默认为50。
@@ -34,8 +32,6 @@ Page {
         }
         
         if (_footInfoBarIndex == 1) {
-//            method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-//            api.setWeiboAction(method, {'id':" "+id+" ", 'page':_commentsPageNum});
             commentsShow.setParameters("id", " "+id+" ");
             commentsShow.setParameters("page", _commentsPageNum);
             commentsShow.setParameters("count", 20)  //单页返回的记录条数，默认为50。
@@ -48,8 +44,6 @@ Page {
         var method
         if (_footInfoBarIndex == 0) {
             _repostPageNum++;
-//            method = WeiboMethod.WBOPT_GET_STATUSES_REPOST_TIMELINE;
-//            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_repostPageNum});
             statusesRepostTimeline.setParameters("id", " "+_weiboId+" ");
             statusesRepostTimeline.setParameters("page", _repostPageNum);
             statusesRepostTimeline.setParameters("count", 20)  //单页返回的记录条数，默认为50。
@@ -58,17 +52,16 @@ Page {
         
         if (_footInfoBarIndex == 1) {
             _commentsPageNum++;
-//            method = WeiboMethod.WBOPT_GET_COMMENTS_SHOW;
-//            api.setWeiboAction(method, {'id':" "+_weiboId+" ", 'page':_commentsPageNum});
             commentsShow.setParameters("id", " "+_weiboId+" ");
             commentsShow.setParameters("page", _commentsPageNum);
-            commentsShow.setParameters("count", 20)  //单页返回的记录条数，默认为50。
+            if (!tokenProvider.useHackLogin)
+                commentsShow.setParameters("count", 20)  //单页返回的记录条数，默认为50。
             commentsShow.getRequest();
         }
 
     }
     
-    CommentsShow {
+    /*CommentsShow*/WrapperCommentsShow {
         id: commentsShow
         onRequestAbort: {
             weiboPage._gettingInfo = false
@@ -93,7 +86,7 @@ Page {
         }
     }
 
-    StatusesRepostTimeline {
+    /*StatusesRepostTimeline*/ WrapperStatusesRepostTimeline{
         id: statusesRepostTimeline
         onRequestAbort: {
             weiboPage._gettingInfo = false
