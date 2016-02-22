@@ -31,7 +31,7 @@ WBPage {
 
     //////////////////////////////////////////////////////////////////         user status mentioned me
     function _weiboMentioned(page) {
-        showBusyIndicator();
+        wbFunc.showBusyIndicator();
 
 //        var method = WeiboMethod.WBOPT_GET_STATUSES_MENTIONS;
 //        api.setWeiboAction(method, {'page':_pageNum});
@@ -39,7 +39,7 @@ WBPage {
         statusesMentions.getRequest();
     }
 
-    StatusesMentions {
+    /*StatusesMentions*/WrapperStatusesMentions {
         id: statusesMentions
         onRequestAbort: {
             console.log("== statusesMentions onRequestAbort");
@@ -55,7 +55,7 @@ WBPage {
             if (lvUserWeibo.model == undefined) {
                 lvUserWeibo.model = modelWeibo;
             }
-            stopBusyIndicator();
+            wbFunc.stopBusyIndicator();
         }
     }
 
@@ -123,20 +123,20 @@ WBPage {
                                    {"userWeiboJSONContent":modelWeibo.get(index)})
                 }
                 onAvatarHeaderClicked: {
-                    toUserPage(userId);
+                    wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
                     Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {
-                    toGalleryPage(modelImages, index);
+                    wbFunc.toGalleryPage(modelImages, index);
                 }
                 ContextMenu {
                     id:options
                     MenuItem {
                         text: qsTr("Repost")
                         onClicked: {
-                            toSendPage("repost", {"id": model.id},
+                            wbFunc.toSendPage("repost", {"id": model.id},
                                        (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
                                            "" :
                                            "//@"+model.user.name +": " + model.text ,
@@ -146,7 +146,7 @@ WBPage {
                     MenuItem {
                         text: qsTr("Comment")
                         onClicked: {
-                            toSendPage("comment", {"id": model.id}, "", false)
+                            wbFunc.toSendPage("comment", {"id": model.id}, "", false)
                         }
                     }
                 }

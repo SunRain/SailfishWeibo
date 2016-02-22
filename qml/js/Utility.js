@@ -13,16 +13,18 @@ function parserRemind(target, jsonObject) {
     sx 私信
     new 新微博
     fs 粉丝
+    at at me
+    atcmt at me comment
+    attitude
      ******/
 //            console.log("[Panel]: parserRemind " + "cmt " + jsonObject.qp.pl
 //                        + " dm " + jsonObject.qp.sx);
     target.cmt = jsonObject.qp.pl == undefined ? 0 : jsonObject.qp.pl;
-    //TODO mention_cmt?
-    target.mention_cmt = 0;
-    //TODO mention_status
-    target.mention_status = 0;
+    target.mention_cmt = jsonObject.qp.atcmt == undefined ? 0 : jsonObject.qp.atcmt;
+    target.mention_status = jsonObject.qp.at == undefined ? 0 : jsonObject.qp.at;
     target.dm = jsonObject.qp.sx == undefined ? 0 : jsonObject.qp.sx;
     target.status = jsonObject.qp.new == undefined ? 0 : jsonObject.qp.new;
+    target.attitude = jsonObject.qp.attitude == undefined ? 0 : jsonObject.qp.attitude;
 }
 
 function parserUserInfoMe(target, jsonObject) {

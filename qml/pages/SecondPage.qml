@@ -108,7 +108,7 @@ Page {
                             if (arg == "getUid") {
                                 //pageStack.push(Qt.resolvedUrl(page))
                                 var uid = settings.uid; //Settings.getUid();
-                                toUserPage(uid);
+                                wbFunc.toUserPage(uid);
                             } else {
                                 pageStack.push(Qt.resolvedUrl(page))
                             }

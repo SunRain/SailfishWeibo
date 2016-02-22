@@ -159,13 +159,13 @@ Page {
                                       {"userWeiboJSONContent":userWeiboJSONContent.retweeted_status})
                 }
                 onAvatarHeaderClicked: {
-                    toUserPage(userId);
+                    wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
                     Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {
-                    toGalleryPage(modelImages, index);
+                    wbFunc.toGalleryPage(modelImages, index);
                 }
                 onRepostButtonClicked: {
 //                    _footInfoBarIndex = 0;
@@ -184,7 +184,7 @@ Page {
                     MenuItem {
                         text: qsTr("Repost")
                         onClicked: {
-                            toSendPage("repost", {"id": userWeiboJSONContent.id},
+                            wbFunc.toSendPage("repost", {"id": userWeiboJSONContent.id},
                                        (userWeiboJSONContent.retweeted_status == undefined || userWeiboJSONContent.retweeted_status == "") == true ?
                                            "" :
                                            "//@"+userWeiboJSONContent.user.name +": " + userWeiboJSONContent.text ,
@@ -194,7 +194,7 @@ Page {
                     MenuItem {
                         text: qsTr("Comment")
                         onClicked: {
-                            toSendPage("comment", {"id": userWeiboJSONContent.id}, "", true)
+                            wbFunc.toSendPage("comment", {"id": userWeiboJSONContent.id}, "", true)
                         }
                     }
                 }

@@ -29,7 +29,7 @@ Page {
     property int optionIndex: 0
 
     function popAndShowError() {
-        addNotification(qsTr("Oops.. something wrong"), 3)
+        wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
         pageStack.pop();
     }
 
@@ -67,10 +67,10 @@ Page {
                 return;
             }
             if (result.id != undefined) {
-                addNotification(qsTr("New Weibo sent"), 3)
+                wbFunc.addNotification(qsTr("New Weibo sent"), 3)
                 pageStack.pop()
             } else {
-                addNotification(qsTr("Oops.. something wrong"), 3)
+                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
             }
         }
     }
@@ -82,20 +82,20 @@ Page {
         id: imageUploader
         onRequestAbort: {
             console.log("== imageUploader onRequestAbort");
-            addNotification(qsTr("Oops.. something wrong"), 3)
+            wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
         }
         onRequestFailure: { //replyData
             console.log("== imageUploader onRequestFailure ["+replyData+"]")
-            addNotification(qsTr("Oops.. something wrong"), 3)
+            wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
         }
         onRequestSuccess: { //replyData
             console.log("===== imageUploader onRequestSuccess [" + replyData +"]")
             var reply = JSON.parse(replyData)
             if (reply.error) {
-                addNotification(qsTr("Oops.. something wrong"), 3)
+                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
             } else {
                 if (reply.id != undefined) {
-                    addNotification(qsTr("New Weibo sent"), 3)
+                    wbFunc.addNotification(qsTr("New Weibo sent"), 3)
                     pageStack.pop()
                 }
             }
@@ -162,10 +162,10 @@ Page {
                 return;
             }
             if (result.id != undefined) {
-                addNotification(qsTr("Repost sent"), 3)
+                wbFunc.addNotification(qsTr("Repost sent"), 3)
                 pageStack.pop()
             }else {
-                addNotification(qsTr("Oops.. something wrong"), 3)
+                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
             }
         }
     }
@@ -209,10 +209,10 @@ Page {
                 return;
             }
             if (result.id != undefined) {
-                addNotification(qsTr("Comment sent"), 3)
+                wbFunc.addNotification(qsTr("Comment sent"), 3)
                 pageStack.pop()
             }else {
-                addNotification(qsTr("Oops.. something wrong"), 3)
+                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
             }
         }
     }
@@ -263,10 +263,10 @@ Page {
                 return;
             }
             if (result.id != undefined) {
-                addNotification(qsTr("Reply sent"), 3)
+                wbFunc.addNotification(qsTr("Reply sent"), 3)
                 pageStack.pop()
             } else {
-                addNotification(qsTr("Oops.. something wrong"), 3)
+                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
             }
         }
     }
@@ -339,7 +339,7 @@ Page {
                 sendStatus(content.text)
             }
             else {
-                addNotification(qsTr("Uploading, please wait.."), 2)
+                wbFunc.addNotification(qsTr("Uploading, please wait.."), 2)
                 var status = encodeURIComponent(content.text)
 //                networkHelper.uploadImgStatus(api.accessToken, status, imgPath)
                 imageUploader.uploadImage(status, imgPath);

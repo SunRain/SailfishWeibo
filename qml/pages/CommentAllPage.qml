@@ -19,8 +19,6 @@ WBPage {
     property var _commentInfo
     property var _weiboTmp
 
-//    property alias contentItem: commentListView
-
     function refresh() {
         modelComment.clear()
 
@@ -33,7 +31,7 @@ WBPage {
         _commentAll(_pageNum)
     }
 
-    CommentsTimeline {
+    /*CommentsTimeline*/WrapperCommentsTimeline {
         id: commentsTimeline
         onRequestAbort: {
             console.log("== commentsTimeline onRequestAbort");
@@ -49,13 +47,13 @@ WBPage {
             }
             if (commentListView.model == undefined)
                 commentListView.model = modelComment;
-            stopBusyIndicator();
+            wbFunc.stopBusyIndicator();
         }
     }
 
     //////////////////////////////////////////////////////////////////         get all comment
     function _commentAll(page) {
-        showBusyIndicator();
+        wbFunc.showBusyIndicator();
         commentsTimeline.setParameters("page", _pageNum);
         commentsTimeline.getRequest();
     }

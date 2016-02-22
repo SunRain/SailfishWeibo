@@ -37,12 +37,12 @@ WBPage{
 
     //////////////////////////////////////////////////////////////////         get all comment mentioned me
     function _commentMentioned(page) {
-        showBusyIndicator();
+        wbFunc.showBusyIndicator();
         commentsMentions.setParameters("page", _pageNum);
         commentsMentions.getRequest();
     }
     
-    CommentsMentions {
+    /*CommentsMentions*/WrapperCommentsMentions {
         id: commentsMentions
         onRequestAbort: {}
         onRequestFailure: { //replyData
@@ -52,7 +52,7 @@ WBPage{
             for (var i=0; i<result.comments.length; i++) {
                 modelComment.append( result.comments[i] )
             }
-            stopBusyIndicator();
+            wbFunc.stopBusyIndicator();
         }
     }
 

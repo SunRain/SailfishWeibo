@@ -418,7 +418,7 @@ Page {
                     //TODO 转到UserPage
                    // mainView.toUserPage(model.id)
                     console.log("===== clicked");
-                    toUserPage(model.id);
+                    wbFunc.toUserPage(model.id);
                 }
             }
         }

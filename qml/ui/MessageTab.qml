@@ -21,7 +21,7 @@ Page {
     }
 
     function refresh() {
-        showBusyIndicator();
+        wbFunc.showBusyIndicator();
         messageGetRemind()
     }
     
@@ -65,13 +65,13 @@ Page {
             remindObject.remind = result
             var mCount = result.follower + result.cmt + result.mention_status + result.mention_cmt
             if (mCount > 1) {
-                addNotification(qsTr("You have ") + mCount + qsTr(" new messages"), 3)
+                wbFunc.addNotification(qsTr("You have ") + mCount + qsTr(" new messages"), 3)
             }
             else if (mCount > 0) {
-                addNotification(qsTr("You have ") + mCount + qsTr(" new message"), 3)
+                wbFunc.addNotification(qsTr("You have ") + mCount + qsTr(" new message"), 3)
             }
             else {
-                addNotification(qsTr("You have no new message"), 3)
+                wbFunc.addNotification(qsTr("You have no new message"), 3)
             }
 
             listModel.append({"title":"New comment", "text":remindObject.remind.cmt, "page":"CommentAllPage.qml", "toFunction":"0"});
@@ -83,7 +83,7 @@ Page {
                 innerAreaColumn.model = listModel;
             }
 
-            stopBusyIndicator();
+            wbFunc.stopBusyIndicator();
         }
     }
     

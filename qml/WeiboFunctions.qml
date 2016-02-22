@@ -7,13 +7,6 @@ QtObject {
     id: wbFunctions
     objectName: "WeiboFunctions"
 
-//    Connections {
-//        target: tokenProvider
-//        onUseHackLoginChanged: { //useHackLogin
-//            Func.useHackLogin = useHackLogin
-//        }
-//    }
-
     function showBusyIndicator() {
         busyIndicatorTimeout.restart();
         busyIndicator.runningBusyIndicator = true

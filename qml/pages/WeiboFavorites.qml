@@ -35,7 +35,7 @@ WBPage {
     }
 
     function _removeFromFavorites(weiboId) {
-        addNotification(qsTr("Removing from favorites"))
+        wbFunc.addNotification(qsTr("Removing from favorites"))
         favoritesDestroy.setParameters("id", weiboId);
         favoritesDestroy.postRequest();
     }
@@ -123,13 +123,13 @@ WBPage {
                                    {"userWeiboJSONContent":modelWeibo.get(index).status})
                 }
                 onAvatarHeaderClicked: {
-                    toUserPage(userId);
+                    wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
                     Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {
-                    toGalleryPage(modelImages, index);
+                    wbFunc.toGalleryPage(modelImages, index);
                 }
                 ContextMenu {
                     id:options

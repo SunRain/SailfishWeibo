@@ -36,7 +36,7 @@ Page {
     }
 
     function refreshUserWeibo() {
-        showBusyIndicator();
+        wbFunc.showBusyIndicator();
         _pageNum = 1;
         statusesUserTimeline.setParameters("page", _pageNum)
         statusesUserTimeline.setParameters("uid", userInfoObject.userInfo.id);
@@ -58,7 +58,7 @@ Page {
     }
 
     function refreshUserInfo() {
-        showBusyIndicator();
+        wbFunc.showBusyIndicator();
         usersShow.setParameters("uid", uid);
         usersShow.getRequest();
     }
@@ -77,7 +77,7 @@ Page {
     }
 
     function userWeiboAddMore() {
-        showBusyIndicator();
+        wbFunc.showBusyIndicator();
         _pageNum++
         statusesUserTimeline.setParameters("page", _pageNum);
         statusesUserTimeline.setParameters("uid", userInfoObject.userInfo.id);
@@ -99,7 +99,7 @@ Page {
             if (lvUserWeibo.model == undefined) {
                 lvUserWeibo.model = modelWeibo;
             }
-            stopBusyIndicator();
+            wbFunc.stopBusyIndicator();
         }
     }
 
@@ -127,7 +127,7 @@ Page {
             if (lvUserWeibo.model == undefined) {
                 lvUserWeibo.model = modelWeibo;
             }
-            stopBusyIndicator();
+            wbFunc.stopBusyIndicator();
         }
     }
 
@@ -312,26 +312,26 @@ Page {
                 weiboJSONContent: modelWeibo.get(index)//.JSON
                 optionMenu: options
                 onRepostedWeiboClicked: {
-                    toWeiboPage(modelWeibo.get(index).retweeted_status);
+                    wbFunc.toWeiboPage(modelWeibo.get(index).retweeted_status);
                 }
                 onUsWeiboClicked: {
-                    toWeiboPage(modelWeibo.get(index)/*.JSON*/);
+                    wbFunc.toWeiboPage(modelWeibo.get(index)/*.JSON*/);
                 }
                 onAvatarHeaderClicked: {
-                    toUserPage(userId);
+                    wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
                     Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {
-                    toGalleryPage(modelImages, index);
+                    wbFunc.toGalleryPage(modelImages, index);
                 }
                 ContextMenu {
                     id:options
                     MenuItem {
                         text: qsTr("Repost")
                         onClicked: {
-                            toSendPage("repost", {"id": model.id},
+                            wbFunc.toSendPage("repost", {"id": model.id},
                                        (model.retweeted_status == undefined || model.retweeted_status == "") == true ?
                                            "" :
                                            "//@"+model.user.name +": " + model.text ,
@@ -341,7 +341,7 @@ Page {
                     MenuItem {
                         text: qsTr("Comment")
                         onClicked: {
-                            toSendPage("comment", {"id": model.id}, "", true)
+                            wbFunc.toSendPage("comment", {"id": model.id}, "", true)
                         }
                     }
                 }
@@ -562,7 +562,7 @@ Page {
                                 anchors.fill: parent
                                 onClicked: {
                                     //pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfoObject.userInfo.id })
-                                    toFriendsPage("following", userInfoObject.userInfo.id);
+                                    wbFunc.toFriendsPage("following", userInfoObject.userInfo.id);
                                 }
                             }
                         }
@@ -585,7 +585,7 @@ Page {
                                 anchors.fill: parent
                                 onClicked: {
 //                                    pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: userInfoObject.userInfo.id })
-                                    toFriendsPage("follower", userInfoObject.userInfo.id);
+                                    wbFunc.toFriendsPage("follower", userInfoObject.userInfo.id);
                                 }
                             }
                         }

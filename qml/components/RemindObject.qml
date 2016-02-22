@@ -14,14 +14,20 @@ QtObject {
 
     //status 	int 	新微博未读数
     property int status: 0
+
     // mention_status 	int 	新提及我的微博数
     property int mention_status: 0
+
     //mention_cmt 	int 	新提及我的评论数
     property int mention_cmt: 0
+
     //cmt 	int 	新评论数
     property int cmt: 0
+
     //dm 	int 	新私信数
     property int dm: 0
+
+    property int attitude: 0
 
 //    status 	int 	新微博未读数
 //    follower 	int 	新粉丝数

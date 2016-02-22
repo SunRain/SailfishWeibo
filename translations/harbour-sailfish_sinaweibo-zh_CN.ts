@@ -102,22 +102,22 @@
 <context>
     <name>CommentAllPage</name>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="74"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="72"/>
         <source>All comments</source>
         <translation>所有评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="82"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="80"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="119"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="117"/>
         <source>Reply comment</source>
         <translation>回复评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="131"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="129"/>
         <source>View weibo</source>
         <translation>查看微博</translation>
     </message>

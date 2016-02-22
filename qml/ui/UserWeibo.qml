@@ -111,7 +111,7 @@ Page {
         DelegateWeibo {
             onUsWeiboClicked: {
                 //                        console.log("weibo Detail:", JSON.stringify(modelWeibo.get(index)))
-                toWeiboPage(modelWeibo, index)
+                wbFunc.toWeiboPage(modelWeibo, index)
             }
         }
     }
