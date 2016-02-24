@@ -662,7 +662,13 @@
     <name>WeiboCard</name>
     <message>
         <location filename="../qml/components/WeiboCard.qml" line="80"/>
-        <location filename="../qml/components/WeiboCard.qml" line="127"/>
+        <location filename="../qml/components/WeiboCard.qml" line="131"/>
+        <location filename="../qml/components/WeiboCard.qml" line="133"/>
+        <source>From</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/WeiboCard.qml" line="82"/>
         <source> From </source>
         <translation> 来自 </translation>
     </message>
@@ -746,32 +752,32 @@
 <context>
     <name>WeiboTab</name>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="115"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="118"/>
         <source>Start adding to favorites</source>
         <translation>正在添加到收藏</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="77"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="80"/>
         <source>Succeed to add to favorites</source>
         <translation>添加收藏成功</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="73"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="76"/>
         <source>Fail to add to favorites</source>
         <translation>添加收藏失败</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="186"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="189"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="197"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="200"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="203"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="206"/>
         <source>Add to favorites</source>
         <translation>收藏</translation>
     </message>

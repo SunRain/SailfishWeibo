@@ -34,12 +34,11 @@
 #include <QQmlEngine>
 #include <sailfishapp.h>
 #include <QGuiApplication>
-#include "mytype.h"
-#include "networkhelper.h"
-#include "Util.h"
+#include "Utility.h"
 #include "Settings.h"
 
 #include "WBNetworkAccessManagerFactory.h"
+#include "WBContentParser.h"
 
 #include "PluginRegister.h"
 #include "TokenProvider.h"
@@ -50,8 +49,8 @@ int main(int argc, char *argv[])
     //QWeiboSDK
     QWeiboSDK::registerPlugins ("harbour.sailfish_sinaweibo.sunrain");
 
-    qmlRegisterType<MyType>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "MyType");
-    qmlRegisterType<NetworkHelper>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "NetworkHelper");
+//    qmlRegisterType<MyType>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "MyType");
+//    qmlRegisterType<NetworkHelper>("harbour.sailfish_sinaweibo.sunrain", 1, 0, "NetworkHelper");
 
     QScopedPointer<QGuiApplication> app (SailfishApp::application(argc, argv));
     app.data()->setOrganizationName("harbour-sailfish_sinaweibo");
@@ -63,10 +62,13 @@ int main(int argc, char *argv[])
     view.data ()->engine ()->setNetworkAccessManagerFactory (factory.data ());
     g_QQmlEngine = view.data ()->engine ();
 
-    Util *util = Util::instance ();
+    Utility *util = Utility::instance ();
 //    util->setEngine(view->engine());
-    view.data ()->rootContext()->setContextProperty("util", util);
-    
+    view.data ()->rootContext()->setContextProperty("appUtility", util);
+
+    WBContentParser *contentParser = WBContentParser::instance ();
+    view.data ()->rootContext ()->setContextProperty ("wbParser", contentParser);
+
     Settings *settings = Settings::instance ();
     view.data ()->rootContext ()->setContextProperty ("settings", settings);
     //Dirty hack for fix SilicaWebView, it seems that SilicaWebView has a own settings property

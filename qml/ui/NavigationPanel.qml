@@ -244,7 +244,7 @@ Panel {
                 height: cover.width *2/3
                 fillMode: Image.PreserveAspectCrop
                 asynchronous: true
-                source: util.parseImageUrl(globalInner.userInfoObject.cover_image_phone)
+                source: appUtility.parseImageUrl(globalInner.userInfoObject.cover_image_phone)
             }
             Image {
                 id: profile
@@ -252,7 +252,7 @@ Panel {
                 height: width
                 anchors.centerIn: cover
                 asynchronous: true
-                source: util.parseImageUrl(globalInner.userInfoObject.profile_image_url)
+                source: appUtility.parseImageUrl(globalInner.userInfoObject.profile_image_url)
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -280,7 +280,7 @@ Panel {
             fontSize: Theme.itemSizeExtraSmall *0.8
             color: Theme.secondaryColor
             spacing: Theme.paddingMedium
-            icon: util.pathTo("qml/graphics/panel_home.png")
+            icon: appUtility.pathTo("qml/graphics/panel_home.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
                 wbFunc.toIndexPage();
@@ -296,7 +296,7 @@ Panel {
             text: qsTr("AtMeWeibo")
             color: Theme.secondaryColor
             spacing: Theme.paddingMedium
-            icon: util.pathTo("qml/graphics/panel_at.png")
+            icon: appUtility.pathTo("qml/graphics/panel_at.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
                 wbFunc.toWeiboMentionedPage();
@@ -312,7 +312,7 @@ Panel {
             text: qsTr("AtMeComment")
             color: Theme.secondaryColor
             spacing: Theme.paddingMedium
-            icon: util.pathTo("qml/graphics/panel_at.png")
+            icon: appUtility.pathTo("qml/graphics/panel_at.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
                 wbFunc.toCommentMentionedPage();
@@ -328,7 +328,7 @@ Panel {
             text: qsTr("Comment")
             color: Theme.secondaryColor
             spacing: Theme.paddingMedium
-            icon: util.pathTo("qml/graphics/panel_comment.png")
+            icon: appUtility.pathTo("qml/graphics/panel_comment.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
                 wbFunc.toCommentAllPage();
@@ -344,7 +344,7 @@ Panel {
             text: qsTr("PM")
             color: Theme.secondaryColor
             spacing: Theme.paddingMedium
-            icon: util.pathTo("qml/graphics/panel_pm.png")
+            icon: appUtility.pathTo("qml/graphics/panel_pm.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
                 wbFunc.toDummyDialog();
@@ -359,7 +359,7 @@ Panel {
             text: qsTr("Favourite")
             color: Theme.secondaryColor
             spacing: Theme.paddingMedium
-            icon: util.pathTo("qml/graphics/panel_fav.png")
+            icon: appUtility.pathTo("qml/graphics/panel_fav.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
                 wbFunc.toFavoritesPage();
@@ -373,7 +373,7 @@ Panel {
             text: qsTr("Settings")
             color: Theme.secondaryColor
             spacing: Theme.paddingMedium
-            icon: util.pathTo("qml/graphics/panel_set.png")
+            icon: appUtility.pathTo("qml/graphics/panel_set.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
                 wbFunc.toSettingsPage();

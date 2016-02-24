@@ -324,7 +324,7 @@ Page {
                     userName: model.user.screen_name
                     userNameFontSize: Theme.fontSizeTiny
                     userAvatar: model.user.profile_image_url
-                    weiboTime:  DateUtils.formatRelativeTime(DateUtils.parseDate(appData.dateParse(model.created_at)))
+                    weiboTime:  DateUtils.formatRelativeTime(DateUtils.parseDate(appUtility.dateParse(model.created_at)))
                                 + qsTr(" From ") + GetURL.linkToStr(model.source)
                     onUserAvatarClicked: {
                         toUserPage(model.user.id)
@@ -339,7 +339,7 @@ Page {
                     //color: Theme.primaryColor
                     textFormat: Text.StyledText
                     font.pixelSize: Theme.fontSizeExtraSmall
-                    text: util.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+                    text: wbParser.parseWeiboContent(model.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
                 }
             }
             

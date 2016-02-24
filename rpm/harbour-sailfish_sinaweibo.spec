@@ -8,7 +8,7 @@ Name:       harbour-sailfish_sinaweibo
 # >> macros
 # %define __provides_exclude_from ^%{_datadir}/.*$
 # list here all the libraries your RPM installs
-#%define __requires_exclude ^libQSinaWeiboAPI|libQSinaWeiboAPI|libQSinaWeiboAPI.*$
+%define __requires_exclude libcss_parser_pp.*$|libcss_parser.*$|libhtmlcxx.*$
 
 # << macros
 %{!?qtc_qmake:%define qtc_qmake %qmake}

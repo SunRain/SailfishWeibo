@@ -593,7 +593,7 @@ Page {
                                 fillMode: Image.PreserveAspectFit
                                 width: modelImages.count == 1 ? implicitWidth : column.width / 4 - Theme.paddingSmall
                                 height: modelImages.count == 1 ? implicitHeight : width
-                                source: util.pathPrefix(model.path)
+                                source: appUtility.pathPrefix(model.path)
                                 MouseArea {
                                     anchors.fill: parent
                                     onClicked: {

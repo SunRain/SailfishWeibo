@@ -24,7 +24,7 @@ SilicaFlickable {
     property alias _source: image.source
 
     onSourceChanged: {
-        _source = util.parseImageUrl(flickable.source);
+        _source = appUtility.parseImageUrl(flickable.source);
         flickable._resetScale();
     }
 
@@ -75,7 +75,7 @@ SilicaFlickable {
 
     function _scaleImage(scale, center, prevCenter) {
 //        if (largePhoto.source != image.source) {
-//            largePhoto.source = util.parseImageUrl(image.source)
+//            largePhoto.source = appUtility.parseImageUrl(image.source)
 //        }
 
         var newWidth
@@ -154,7 +154,7 @@ SilicaFlickable {
 
             onStatusChanged: {
                 if (image.status == Image.Ready) {
-                    util.saveRemoteImage(flickable.source);
+                    appUtility.saveRemoteImage(flickable.source);
                     flickable.loadReady()
                     //flickable._fittedScale = Math.min(flickable.width / flickable.implicitWidth, flickable.height / flickable.implicitHeight)
                    // flickable._menuOpenScale = Math.max(flickable._viewOpenWidth / flickable.implicitWidth, flickable._viewOpenHeight / flickable.implicitHeight)

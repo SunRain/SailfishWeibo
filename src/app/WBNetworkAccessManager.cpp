@@ -22,4 +22,3 @@ QNetworkReply *WBNetworkAccessManager::createRequest(QNetworkAccessManager::Oper
     }
     return QNetworkAccessManager::createRequest (op, req, outgoingData);
 }
-

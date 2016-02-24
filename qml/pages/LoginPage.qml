@@ -10,11 +10,11 @@ Page {
 
     signal logined
 
-    property var _warning_url//: util.pathTo("qml/warning.html")
+    property var _warning_url//: appUtility.pathTo("qml/warning.html")
 
     onStatusChanged:  {
         if (status == PageStatus.Active)
-            loginPage._warning_url = util.pathTo("qml/warning.html");
+            loginPage._warning_url = appUtility.pathTo("qml/warning.html");
     }
 
     SilicaWebView {
@@ -58,7 +58,7 @@ Page {
                     && webView.url != loginPage._warning_url) {
                 pdMenu.busy = false;
             }
-            if (util.parseOauthTokenUrl(loadRequest.url)) {
+            if (appUtility.parseOauthTokenUrl(loadRequest.url)) {
                 console.log("=== parseOauthTokenUrl ok");
                 logined();
             }

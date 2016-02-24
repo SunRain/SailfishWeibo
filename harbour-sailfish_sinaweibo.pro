@@ -107,24 +107,21 @@ QMAKE_LIBDIR += \
     $$PWD/prelibrary/htmlcxx/i486
 
 HEADERS += \
-    src/app/app.h \
     src/app/Emoticons.h \
-    src/app/mytype.h \
-    src/app/networkhelper.h \
     src/app/Settings.h \
-    src/app/Util.h \
     src/app/WBNetworkAccessManagerFactory.h \
     src/app/WBNetworkAccessManager.h \
+    src/app/Utility.h \
+    src/app/WBContentParser.h
 
 SOURCES += \
     src/app/Emoticons.cpp \
-    src/app/mytype.cpp \
-    src/app/networkhelper.cpp \
     src/app/SailfishWeibo.cpp \
     src/app/Settings.cpp \
-    src/app/Util.cpp \
     src/app/WBNetworkAccessManagerFactory.cpp \
-    src/app/WBNetworkAccessManager.cpp
+    src/app/WBNetworkAccessManager.cpp \
+    src/app/Utility.cpp \
+    src/app/WBContentParser.cpp
 
 # to disable building translations every time, comment out the
 # following CONFIG line

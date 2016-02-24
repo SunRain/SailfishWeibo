@@ -40,7 +40,7 @@ Dialog {
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeSmall
                 wrapMode: Text.Wrap
-                text: qsTr("version") + " " + util.getVerison
+                text: qsTr("version") + " " + appUtility.getVerison
             }
             
             //author info
@@ -178,7 +178,7 @@ Dialog {
                 color: Theme.primaryColor
                 wrapMode: Text.WrapAnywhere
                 font.pixelSize: Theme.fontSizeMedium
-                text:qsTr("Cache: ") + util.getCachePath
+                text:qsTr("Cache: ") + appUtility.getCachePath
             }
 
             menu: contextMenu
@@ -188,7 +188,7 @@ Dialog {
                     text: qsTr("DeleteCache")
                     onClicked: {
                         remorse.execute(optionItem, qsTr("Deleting"), function() {
-                            util.deleteDir(util.getCachePath)
+                            appUtility.deleteDir(appUtility.getCachePath)
                         });
                     }
                 }

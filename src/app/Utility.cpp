@@ -1,5 +1,5 @@
 
-#include "Util.h"
+#include "Utility.h"
 
 #include <QSettings>
 #include <QGuiApplication>
@@ -18,17 +18,12 @@
 
 #include "TokenProvider.h"
 
-Util::~Util()
+Utility::~Utility()
 {
     if (m_emoticons)
         m_emoticons->deleteLater ();
     m_emoticons = nullptr;
 }
-
-//void Util::setEngine(QQmlEngine *engine)
-//{
-//    this->m_qmlEngine = engine;
-//}
 
 /*
  * http://oauth.weico.cc/#access_token=
@@ -37,7 +32,7 @@ Util::~Util()
  * &refresh_token=
  */
 
-bool Util::parseOauthTokenUrl(const QString &url)
+bool Utility::parseOauthTokenUrl(const QString &url)
 {
     if (!url.contains ("access_token")
             || !url.contains ("expires_in")
@@ -73,7 +68,7 @@ bool Util::parseOauthTokenUrl(const QString &url)
     return true;
 }
 
-QString Util::getVerison()
+QString Utility::getVerison()
 {
 #ifdef VERSION_STR
     return QString(VERSION_STR);
@@ -82,14 +77,14 @@ QString Util::getVerison()
 #endif
 }
 
-QUrl Util::pathTo(const QString &filename)
+QUrl Utility::pathTo(const QString &filename)
 {
     if (filename.toLower ().startsWith ("qrc:"))
         return filename;
     return SailfishApp::pathTo (filename);
 }
 
-QUrl Util::pathPrefix(const QString &path)
+QUrl Utility::pathPrefix(const QString &path)
 {
     if (path.isEmpty ()) {
         qWarning()<<Q_FUNC_INFO<<"Invalid path!!";
@@ -102,8 +97,30 @@ QUrl Util::pathPrefix(const QString &path)
     return path;
 }
 
+QString Utility::dateParse(const QString &datestring)
+{
+    if (QWeiboSDK::TokenProvider::instance ()->useHackLogin ())
+        return datestring;
+
+    QString str = datestring;
+    QStringList dateList = str.split(" ");
+    QStringList timeList = dateList[3].split(":");
+
+    //Mon Oct 28 20:00:23 +0800 2013"
+    //MM,dd,yyyy,HH,mm,ss
+    //Oct,28 ,2013,20,00,23,"
+    QString tmp = QString("%1,%2,%3,%4,%5,%6")
+            .arg(dateList[1]) //moth
+            .arg(dateList[2]) //day
+            .arg(dateList[5]) //yyyy
+            .arg(timeList[0]) //hh
+            .arg(timeList[1]) //mm
+            .arg(timeList[2]); //ss
+    return tmp;
+}
+
 extern QQmlEngine *g_QQmlEngine;
-bool Util::saveToCache(const QString &remoteUrl, const QString &dirName, const QString &fileName)
+bool Utility::saveToCache(const QString &remoteUrl, const QString &dirName, const QString &fileName)
 {
     if (!g_QQmlEngine) {
         return false;
@@ -133,66 +150,66 @@ bool Util::saveToCache(const QString &remoteUrl, const QString &dirName, const Q
     return false;
 }
 
-QString Util::parseWeiboContent(const QString &weiboContent, const QString &contentColor, const QString &userColor, const QString &linkColor)
-{
-    if (QWeiboSDK::TokenProvider::instance ()->useHackLogin ())
-        return weiboContent;
+//QString Utility::parseWeiboContent(const QString &weiboContent, const QString &contentColor, const QString &userColor, const QString &linkColor)
+//{
+//    if (QWeiboSDK::TokenProvider::instance ()->useHackLogin ())
+//        return weiboContent;
 
-    QString tmp = weiboContent;
+//    QString tmp = weiboContent;
 
-    //注意这几行代码的顺序不能乱，否则会造成多次替换
-    tmp.replace("&","&amp;");     
-    tmp.replace(">","&gt;");
-    tmp.replace("<","&lt;");
-    tmp.replace("\"","&quot;");
-    tmp.replace("\'","&#39;");
-    tmp.replace(" ","&nbsp;");
-    tmp.replace("\n","<br>");
-    tmp.replace("\r","<br>");
+//    //注意这几行代码的顺序不能乱，否则会造成多次替换
+//    tmp.replace("&","&amp;");
+//    tmp.replace(">","&gt;");
+//    tmp.replace("<","&lt;");
+//    tmp.replace("\"","&quot;");
+//    tmp.replace("\'","&#39;");
+//    tmp.replace(" ","&nbsp;");
+//    tmp.replace("\n","<br>");
+//    tmp.replace("\r","<br>");
 
-    //'<font color="' +aa +'">aa + </font> <img src="' + '../emoticons/cool_org.png"' + '> <b>Hello</b> <i>World! ddddddddddddddddddddddddddd</i>'
-    //设置主要字体
-    QString content = QString("<font color=\"%1\">%2</font>").arg(contentColor).arg(tmp);
+//    //'<font color="' +aa +'">aa + </font> <img src="' + '../emoticons/cool_org.png"' + '> <b>Hello</b> <i>World! ddddddddddddddddddddddddddd</i>'
+//    //设置主要字体
+//    QString content = QString("<font color=\"%1\">%2</font>").arg(contentColor).arg(tmp);
 
-    //替换网页链接
-    tmp = QString();
-    int pos = -1;
-    QString reText;
+//    //替换网页链接
+//    tmp = QString();
+//    int pos = -1;
+//    QString reText;
 
-    QRegExp urlRE("http://[\\w+&@#/%?=~_\\\\-|!:,\\\\.;]*[\\w+&@#/%=~_|]");
-                  //("http://[a-zA-Z0-9+&@#/%?=~_\\-|!:,\\.;]*[a-zA-Z0-9+&@#/%=~_|]");
-                 //("http://([\\w-]+\\.)+[\\w-]+(/[A-Za-z0-9]*)");
-    while((pos = urlRE.indexIn(content, pos+1)) != -1) {
-        tmp = urlRE.cap(0);
-        reText = QString("<a href=\"%1\"><font color=\"%2\">%3</font></a>").arg(tmp).arg(linkColor).arg(tmp);
-                // "<a href=\"" +urlRE.cap(0) +"\">"+urlRE.cap(0)+"</a>";
-        content.replace(pos, tmp.length(), reText);
-        pos += reText.length();
-    }
+//    QRegExp urlRE("http://[\\w+&@#/%?=~_\\\\-|!:,\\\\.;]*[\\w+&@#/%=~_|]");
+//                  //("http://[a-zA-Z0-9+&@#/%?=~_\\-|!:,\\.;]*[a-zA-Z0-9+&@#/%=~_|]");
+//                 //("http://([\\w-]+\\.)+[\\w-]+(/[A-Za-z0-9]*)");
+//    while((pos = urlRE.indexIn(content, pos+1)) != -1) {
+//        tmp = urlRE.cap(0);
+//        reText = QString("<a href=\"%1\"><font color=\"%2\">%3</font></a>").arg(tmp).arg(linkColor).arg(tmp);
+//                // "<a href=\"" +urlRE.cap(0) +"\">"+urlRE.cap(0)+"</a>";
+//        content.replace(pos, tmp.length(), reText);
+//        pos += reText.length();
+//    }
 
-    //替换@用户
-    pos = -1;
-    reText = QString();
-    tmp = QString();
+//    //替换@用户
+//    pos = -1;
+//    reText = QString();
+//    tmp = QString();
     
-    //"@[\\w\\p{InCJKUnifiedIdeographs}-]{1,26}"
-    QRegExp atRE("@[\\w\\p{InCJKUnifiedIdeographs}-]{1,26}");
+//    //"@[\\w\\p{InCJKUnifiedIdeographs}-]{1,26}"
+//    QRegExp atRE("@[\\w\\p{InCJKUnifiedIdeographs}-]{1,26}");
 
-    while((pos = atRE.indexIn(content, pos+1)) != -1) {
-        tmp = atRE.cap(0).replace("@", "@:");
-        reText = QString("<a href=\"%1\"><font color=\"%2\">%3</font></a>").arg(tmp).arg(userColor).arg(atRE.cap(0));
-                //"<a href=\"" +atRE.cap(0) +"\">"+atRE.cap(0)+"</a>";
-        content.replace(pos, atRE.cap(0).length(), reText);
-        pos += reText.length();
-    }
+//    while((pos = atRE.indexIn(content, pos+1)) != -1) {
+//        tmp = atRE.cap(0).replace("@", "@:");
+//        reText = QString("<a href=\"%1\"><font color=\"%2\">%3</font></a>").arg(tmp).arg(userColor).arg(atRE.cap(0));
+//                //"<a href=\"" +atRE.cap(0) +"\">"+atRE.cap(0)+"</a>";
+//        content.replace(pos, atRE.cap(0).length(), reText);
+//        pos += reText.length();
+//    }
 
-    //替换表情符号
-    content = parseEmoticons("\\[(\\S{1,2})\\]", content);
-    content = parseEmoticons("\\[(\\S{3,4})\\]", content);
-    return content;
-}
+//    //替换表情符号
+//    content = parseEmoticons("\\[(\\S{1,2})\\]", content);
+//    content = parseEmoticons("\\[(\\S{3,4})\\]", content);
+//    return content;
+//}
 
-QUrl Util::parseImageUrl(const QString &remoteUrl)
+QUrl Utility::parseImageUrl(const QString &remoteUrl)
 {
     QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     QByteArray byteArray = remoteUrl.toLocal8Bit().toBase64();
@@ -203,7 +220,7 @@ QUrl Util::parseImageUrl(const QString &remoteUrl)
     return QUrl(remoteUrl);
 }
 
-void Util::saveRemoteImage(const QString &remoteUrl)
+void Utility::saveRemoteImage(const QString &remoteUrl)
 {
     QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     QByteArray byteArray = remoteUrl.toLocal8Bit().toBase64();
@@ -216,12 +233,12 @@ void Util::saveRemoteImage(const QString &remoteUrl)
     saveToCache(remoteUrl, cachePath,fileName);
 }
 
-QString Util::getCachePath() const
+QString Utility::getCachePath() const
 {
     return QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
 }
 
-bool Util::deleteDir(const QString &dirName)
+bool Utility::deleteDir(const QString &dirName)
 {
     if (dirName.isEmpty())  return false;
     
@@ -252,14 +269,14 @@ bool Util::deleteDir(const QString &dirName)
     return dir.entryInfoList().isEmpty();    
 }
 
-Util::Util(QObject *parent)
+Utility::Utility(QObject *parent)
     :QObject(parent)
     ,m_settings(Settings::instance ())
     ,m_emoticons(nullptr)
 {
 }
 
-QString Util::parseEmoticons(const QString &pattern, const QString &str)
+QString Utility::parseEmoticons(const QString &pattern, const QString &str)
 {
     QString tmp = str;
 

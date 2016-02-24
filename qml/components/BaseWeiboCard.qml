@@ -7,7 +7,7 @@ import "../js/getURL.js" as GetURL
 Item {
     id:baseWeiboCard
     width: parent ? parent.width : Screen.width
-    height: isInvalid ? 0 : columnWContent.height// + Theme.paddingMedium
+    height: isInvalid ? 0 : columnWContent.height
 
     property var picURLs: undefined
     
@@ -33,18 +33,18 @@ Item {
     Component.onCompleted: {
         if ( !isInvalid && picURLs != undefined && (picURLs.length > 0 || picURLs.count > 0)) {
             modelImages.clear()
+//            console.log(" >>>>>> picURLs "+picURLs);
             //picURLs as a json object
             if (picURLs.length > 0) {
                 for (var i=0; i<picURLs.length; i++) {
-                    modelImages.append( picURLs[i] )
+//                    console.log("========  json object "+picURLs[i]);
+                    modelImages.append(picURLs[i]);
                 }
             } else { //picURLs as a qml list model
-//                console.log("======== picURLs.count " + picURLs.count);
-//                console.log(" *** avaterHeaderUserName " + avaterHeaderUserName);
-                for (var i=0; i<picURLs.count; i++) {
-                    var value = JSON.stringify(picURLs.get(i))
-//                    console.log(" >>>>> " + value + " <<<< ")
-                    modelImages.append( JSON.parse(value) )
+                for (var j=0; j<picURLs.count; ++j) {
+//                    console.log("========  list model "+picURLs.get(j) + " value " + JSON.stringify(picURLs.get(j)));
+                    var value = JSON.stringify(picURLs.get(j))
+                    modelImages.append(JSON.parse(value));
                 }
             }
 
@@ -115,7 +115,7 @@ Item {
                         height: modelImages.count == 1
                                 ? implicitHeight > Screen.height/2 ? Screen.width/2 : implicitHeight
                                 : width
-                        source: model.thumbnail_pic
+                        source: model.thumbnail_pic || model.url
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {

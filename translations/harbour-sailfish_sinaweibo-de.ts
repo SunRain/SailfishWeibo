@@ -540,6 +540,10 @@
         <source> From </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>From</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeiboFavorites</name>

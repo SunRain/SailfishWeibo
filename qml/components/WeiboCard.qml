@@ -76,12 +76,16 @@ Item {
             avaterHeaderFontSize: Theme.fontSizeExtraSmall
             avaterHeaderUserName: weiboJSONContent.user.screen_name
             avaterHeaderAvaterImage: weiboJSONContent.user.profile_image_url
-            avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(weiboJSONContent.created_at))
-                    + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.source)
+            avaterHeaderWeiboTime:tokenProvider.useHackLogin
+                                  ? weiboJSONContent.created_at + " " + qsTr("From") + " " + weiboJSONContent.source
+                                  : DateUtils.parseDate(appUtility.dateParse(weiboJSONContent.created_at))
+                                        + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.source)
 
             labelFontSize: Theme.fontSizeMedium
-            labelContent: util.parseWeiboContent(weiboJSONContent.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-            picURLs: weiboJSONContent.pic_urls
+            labelContent: wbParser.parseWeiboContent(weiboJSONContent.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+            picURLs: tokenProvider.useHackLogin
+                     ? weiboJSONContent.pics
+                     : weiboJSONContent.pic_urls
 
             onUserAvatarHeaderClicked: {
                 weiboCard.avatarHeaderClicked(weiboJSONContent.user.id);
@@ -118,17 +122,21 @@ Item {
                         left: parent.left
                         leftMargin: Theme.paddingSmall
                     }
-                    isInvalid:  inner.subValue == undefined
+                    isInvalid: inner.subValue == undefined
                     avatarHeaderHeight: Theme.itemSizeSmall
                     avaterHeaderFontSize: Theme.fontSizeExtraSmall
                     avaterHeaderUserName: inner.subValue.user.screen_name
                     avaterHeaderAvaterImage: inner.subValue.user.profile_image_url
-                    avaterHeaderWeiboTime: DateUtils.parseDate(appData.dateParse(inner.subValue.created_at))
-                                           + qsTr(" From ") + GetURL.linkToStr(inner.subValue.source)
+                    avaterHeaderWeiboTime: tokenProvider.useHackLogin
+                            ? inner.subValue.created_at + " " + qsTr("From") + " " + inner.subValue.source
+                            : DateUtils.parseDate(appUtility.dateParse(inner.subValue.created_at))
+                                + qsTr("From") + GetURL.linkToStr(inner.subValue.source)
 
                     labelFontSize: Theme.fontSizeMedium
-                    labelContent: util.parseWeiboContent(inner.subValue.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
-                    picURLs: inner.subValue.pic_urls
+                    labelContent: wbParser.parseWeiboContent(inner.subValue.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
+                    picURLs: tokenProvider.useHackLogin
+                            ? inner.subValue.pics
+                            : inner.subValue.pic_urls
 
                     onUserAvatarHeaderClicked: {
                         weiboCard.avatarHeaderClicked(inner.subValue.user.id);
@@ -146,7 +154,7 @@ Item {
                 Image {
                     id: background
                     anchors.fill: parent
-                    source: util.pathTo("qml/graphics/mask_background_reposted.png")
+                    source: appUtility.pathTo("qml/graphics/mask_background_reposted.png")
                     fillMode:Image.TileHorizontally
                 }
             }
@@ -167,7 +175,7 @@ Item {
                     height: parent.height
                     spacing: Theme.paddingSmall/2
                     Image {
-                        source: util.pathTo("qml/graphics/repost.png")
+                        source: appUtility.pathTo("qml/graphics/repost.png")
                         height: parent.height
                         width: height
                         fillMode: Image.PreserveAspectFit
@@ -199,7 +207,7 @@ Item {
                     height: parent.height
                     spacing: Theme.paddingSmall/2
                     Image {
-                        source: util.pathTo("qml/graphics/comment.png")
+                        source: appUtility.pathTo("qml/graphics/comment.png")
                         height: parent.height
                         width: height
                         fillMode: Image.PreserveAspectFit
@@ -231,7 +239,7 @@ Item {
                     height: parent.height
                     spacing: Theme.paddingSmall/2
                     Image {
-                        source: util.pathTo("qml/graphics/like.png")
+                        source: appUtility.pathTo("qml/graphics/like.png")
                         height: parent.height
                         width: height
                         fillMode: Image.PreserveAspectFit

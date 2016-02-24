@@ -236,8 +236,8 @@ Page {
                         width: implicitWidth
                         height: implicitHeight
                         source: userPage._showUserWeibo
-                                ? util.pathTo("qml/graphics/action_collapse.png")
-                                : util.pathTo("qml/graphics/action_open.png")
+                                ? appUtility.pathTo("qml/graphics/action_collapse.png")
+                                : appUtility.pathTo("qml/graphics/action_open.png")
                         //                    RotationAnimator on rotation {
                         //                        id: animation
                         //                        from: userPage._showUserWeibo ? 0 : 180

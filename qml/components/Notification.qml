@@ -37,7 +37,7 @@ Item {
 
         Image {
             id: background
-            source: util.pathTo("qml/graphics/notifactionbar.png")
+            source: appUtility.pathTo("qml/graphics/notifactionbar.png")
             fillMode: Image.PreserveAspectCrop
         }
         

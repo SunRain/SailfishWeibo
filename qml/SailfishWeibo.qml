@@ -312,7 +312,7 @@ ApplicationWindow
         id: wbFunc
     }
 
-    MyType {
-        id: appData
-    }
+//    MyType {
+//        id: appData
+//    }
 }

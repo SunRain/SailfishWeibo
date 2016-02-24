@@ -129,7 +129,7 @@ Page {
                     width: parent.width
                     color: Theme.primaryColor
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    text:qsTr("Cache: ") + util.getCachePath
+                    text:qsTr("Cache: ") + appUtility.getCachePath
                 }
 
                 menu: contextMenu
@@ -139,7 +139,7 @@ Page {
                         text: qsTr("DeleteCache")
                         onClicked: {
                             remorse.execute(/*optionItem, */"Deleting", function() {
-                                util.deleteDir(util.getCachePath)
+                                appUtility.deleteDir(appUtility.getCachePath)
                             });
                         }
                     }

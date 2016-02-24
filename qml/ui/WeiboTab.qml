@@ -32,6 +32,9 @@ SilicaListView {
         }
         onRequestSuccess: { //replyData
             var jsonObj = JSON.parse(replyData);
+
+            console.log("== statusesFriendsTimeline onRequestSuccess ["+replyData+"]")
+
             for (var i=0; i<jsonObj.statuses.length; i++) {
                 modelWeibo.append(jsonObj.statuses[i])
             }

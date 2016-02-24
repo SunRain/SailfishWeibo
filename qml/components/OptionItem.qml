@@ -7,8 +7,8 @@ BackgroundItem {
     property Item _menuItem
     property bool menuOpen: _menuItem != null && _menuItem._open
     property real arrowSize: Theme.iconSizeSmallPlus
-    property string openActionIcon: util.pathTo("qml/graphics/action_open.png")
-    property string closeActionIcon: util.pathTo("qml/graphics/action_collapse.png")
+    property string openActionIcon: appUtility.pathTo("qml/graphics/action_open.png")
+    property string closeActionIcon: appUtility.pathTo("qml/graphics/action_collapse.png")
 
     default property alias children: subcontent.data
 
