@@ -54,6 +54,58 @@ warning.path = /usr/share/$${TARGET}/qml
 warning.files += qml/warning.html
 INSTALLS += warning
 
+###############################################
+# ugly hack for i486 and arm platform
+# Currently, I can only distinguish between i486 and arm from this g++ flag
+####################
+#arm
+linux-g++ {
+    lib_armv7hl.path = /usr/share/$${TARGET}/lib/armv7hl
+    lib_armv7hl.files += \
+        prelibrary/htmlcxx/armv7hl/libcss_parser_pp.so \
+        prelibrary/htmlcxx/armv7hl/libcss_parser.so \
+        prelibrary/htmlcxx/armv7hl/libhtmlcxx.so
+    INSTALLS += lib_armv7hl
+}
+
+#i486
+linux-g++-32 {
+    lib_i486.path = /usr/share/$${TARGET}/lib/i486
+    lib_i486.files += \
+        prelibrary/htmlcxx/i486/libcss_parser_pp.so.0 \
+        prelibrary/htmlcxx/i486/libcss_parser.so.0 \
+        prelibrary/htmlcxx/i486/libhtmlcxx.so.3
+
+    INSTALLS += lib_i486
+}
+
+INCLUDEPATH += $$PWD/prelibrary/htmlcxx/include
+LIBS += \
+    -lhtmlcxx \
+    -lcss_parser_pp \
+    -lcss_parser
+
+#QMAKE_LFLAGS_RPATH += \
+#    /usr/share/$${TARGET}/lib \
+#    /usr/share/$${TARGET}/lib/i486 \
+#    /usr/share/$${TARGET}/lib/armv7hl \
+#    $$PWD/prelibrary/htmlcxx/armv7hl \
+#    $$PWD/prelibrary/htmlcxx/i486
+
+QMAKE_RPATHDIR += \
+    /usr/share/$${TARGET}/lib \
+    /usr/share/$${TARGET}/lib/i486 \
+    /usr/share/$${TARGET}/lib/armv7hl \
+    $$PWD/prelibrary/htmlcxx/armv7hl \
+    $$PWD/prelibrary/htmlcxx/i486
+
+QMAKE_LIBDIR += \
+    /usr/share/$${TARGET}/lib \
+    /usr/share/$${TARGET}/lib/i486 \
+    /usr/share/$${TARGET}/lib/armv7hl \
+    $$PWD/prelibrary/htmlcxx/armv7hl \
+    $$PWD/prelibrary/htmlcxx/i486
+
 HEADERS += \
     src/app/app.h \
     src/app/Emoticons.h \
