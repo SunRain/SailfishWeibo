@@ -78,7 +78,7 @@ Page {
 //    NetworkHelper {
 //        id: networkHelper
 //    }
-    ImageUploader {
+    /*ImageUploader*/WrapperImageUploader {
         id: imageUploader
         onRequestAbort: {
             console.log("== imageUploader onRequestAbort");
@@ -91,12 +91,18 @@ Page {
         onRequestSuccess: { //replyData
             console.log("===== imageUploader onRequestSuccess [" + replyData +"]")
             var reply = JSON.parse(replyData)
-            if (reply.error) {
-                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
+            if (tokenProvider.useHackLogin) {
+                if (reply.ok) {
+                    imgPath = imgPath +"," + reply.pic_id;
+                }
             } else {
-                if (reply.id != undefined) {
-                    wbFunc.addNotification(qsTr("New Weibo sent"), 3)
-                    pageStack.pop()
+                if (reply.error) {
+                    wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
+                } else {
+                    if (reply.id != undefined) {
+                        wbFunc.addNotification(qsTr("New Weibo sent"), 3)
+                        pageStack.pop()
+                    }
                 }
             }
         }
@@ -320,7 +326,11 @@ Page {
     //////////////////////////////////////////////////////////////////         set img path
     function setImgPath(filePath) {
         console.log("filePath: ", filePath)
-        imgPath = filePath
+        if (!tokenProvider.useHackLogin) {
+            imgPath = filePath
+        } else {
+            imageUploader.uploadImage(filePath);
+        }
     }
     
     function sendWeibo() {
@@ -335,15 +345,20 @@ Page {
             replyComment(content.text, userInfo.id, optionIndex, userInfo.cid, 0)
             break
         default:
-            if (imgPath == "" || imgPath == undefined) {
-                sendStatus(content.text)
-            }
-            else {
-                wbFunc.addNotification(qsTr("Uploading, please wait.."), 2)
-                var status = encodeURIComponent(content.text)
-//                networkHelper.uploadImgStatus(api.accessToken, status, imgPath)
-//                imageUploader.uploadImage(status, imgPath);
-                imageUploader.sendWeiboWithImage(status, imgPath);
+            if (tokenProvider.useHackLogin) {
+                statusesUpdate.setParameters("status", encodeURIComponent(content.text));
+                if (imgPath != "" && imgPath != undefined) {
+                    statusesUpdate.setParameters("picId", imgPath);
+                }
+                statusesUpdate.postRequest();
+            } else {
+                if (imgPath == "" || imgPath == undefined) {
+                    sendStatus(content.text)
+                } else {
+                    wbFunc.addNotification(qsTr("Uploading, please wait.."), 2)
+                    var status = encodeURIComponent(content.text)
+                    imageUploader.sendWeiboWithImage(status, imgPath);
+                }
             }
             break
         }
