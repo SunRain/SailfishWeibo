@@ -341,37 +341,37 @@
 <context>
     <name>NavigationPanel</name>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="279"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="238"/>
         <source>Home</source>
         <translation>首页</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="296"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="255"/>
         <source>AtMeWeibo</source>
         <translation>微博</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="312"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="271"/>
         <source>AtMeComment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="328"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="287"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="344"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="303"/>
         <source>PM</source>
         <translation>私信</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="359"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="318"/>
         <source>Favourite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/ui/NavigationPanel.qml" line="373"/>
+        <location filename="../qml/ui/NavigationPanel.qml" line="332"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
@@ -582,72 +582,90 @@
     </message>
 </context>
 <context>
+    <name>UserInfoTab</name>
+    <message>
+        <location filename="../qml/ui/UserInfoTab.qml" line="88"/>
+        <source>Bilateral</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserInfoTab.qml" line="90"/>
+        <source>Following</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserInfoTab.qml" line="94"/>
+        <source>Follower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserInfoTab.qml" line="96"/>
+        <location filename="../qml/ui/UserInfoTab.qml" line="109"/>
+        <source>Follow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserInfoTab.qml" line="107"/>
+        <source>CancelFollowing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserInfoTab.qml" line="129"/>
+        <source>Description: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserInfoTab.qml" line="152"/>
+        <source>Weibo:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserInfoTab.qml" line="167"/>
+        <source>following:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/UserInfoTab.qml" line="189"/>
+        <source>follower:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UserPage</name>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="231"/>
-        <source>About user</source>
-        <translation>关于用户</translation>
+        <location filename="../qml/pages/UserPage.qml" line="318"/>
+        <source>User Info</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="447"/>
-        <source>Bilateral</source>
-        <translation>互相关注</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UserPage.qml" line="449"/>
-        <source>Following</source>
-        <translation>关注中</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UserPage.qml" line="453"/>
-        <source>Follower</source>
-        <translation>关注我的</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UserPage.qml" line="455"/>
-        <location filename="../qml/pages/UserPage.qml" line="468"/>
-        <source>Follow</source>
-        <translation>关注</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UserPage.qml" line="466"/>
-        <source>CancelFollowing</source>
-        <translation>取消关注</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UserPage.qml" line="509"/>
-        <source>Description: </source>
-        <translation>基本信息</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UserPage.qml" line="543"/>
-        <source>Weibo: </source>
-        <translation>微博：</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UserPage.qml" line="558"/>
-        <source>following: </source>
-        <translation>Ta关注的用户：</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UserPage.qml" line="581"/>
-        <source>follower: </source>
-        <translation>关注Ta的：</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UserPage.qml" line="609"/>
+        <location filename="../qml/pages/UserPage.qml" line="346"/>
         <source>&apos;s RecentWeibo</source>
-        <translation>的最新微博</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="332"/>
+        <location filename="../qml/pages/UserPage.qml" line="280"/>
+        <source>UserInfo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/UserPage.qml" line="291"/>
+        <source>UserWeibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/UserPage.qml" line="382"/>
+        <source>&apos;s Weibo</source>
+        <translation type="unfinished">的微博</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/UserPage.qml" line="431"/>
         <source>Repost</source>
-        <translation>转发</translation>
+        <translation type="unfinished">转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="342"/>
+        <location filename="../qml/pages/UserPage.qml" line="441"/>
         <source>Comment</source>
-        <translation>评论</translation>
+        <translation type="unfinished">评论</translation>
     </message>
 </context>
 <context>
@@ -661,14 +679,14 @@
 <context>
     <name>WeiboCard</name>
     <message>
-        <location filename="../qml/components/WeiboCard.qml" line="80"/>
-        <location filename="../qml/components/WeiboCard.qml" line="131"/>
-        <location filename="../qml/components/WeiboCard.qml" line="133"/>
+        <location filename="../qml/components/WeiboCard.qml" line="84"/>
+        <location filename="../qml/components/WeiboCard.qml" line="146"/>
+        <location filename="../qml/components/WeiboCard.qml" line="148"/>
         <source>From</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/WeiboCard.qml" line="82"/>
+        <location filename="../qml/components/WeiboCard.qml" line="86"/>
         <source> From </source>
         <translation> 来自 </translation>
     </message>
@@ -727,24 +745,24 @@
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="185"/>
-        <location filename="../qml/pages/WeiboPage.qml" line="272"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="189"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="276"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="195"/>
-        <location filename="../qml/pages/WeiboPage.qml" line="287"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="199"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="291"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="328"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="332"/>
         <source> From </source>
         <translation type="unfinished"> 来自 </translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="350"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="354"/>
         <source>Reply</source>
         <translation type="unfinished">回复</translation>
     </message>
@@ -767,17 +785,17 @@
         <translation>添加收藏失败</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="189"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="206"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="200"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="217"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="206"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="223"/>
         <source>Add to favorites</source>
         <translation>收藏</translation>
     </message>

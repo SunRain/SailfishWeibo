@@ -473,19 +473,7 @@
     </message>
 </context>
 <context>
-    <name>UserPage</name>
-    <message>
-        <source>About user</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repost</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="unfinished"></translation>
-    </message>
+    <name>UserInfoTab</name>
     <message>
         <source>Bilateral</source>
         <translation type="unfinished"></translation>
@@ -511,19 +499,46 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weibo: </source>
+        <source>Weibo:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>following: </source>
+        <source>following:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>follower: </source>
+        <source>follower:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserPage</name>
+    <message>
+        <source>UserInfo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UserWeibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&apos;s RecentWeibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;s Weibo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

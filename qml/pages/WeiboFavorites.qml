@@ -28,8 +28,8 @@ WBPage {
         pullDownMenu.busy = true;
         favorites.setParameters("page", _pageNum);
         if (tokenProvider.useHackLogin) {
-            console.log("=== weiboFavoritesPage containerid "+globalInner.userInfoObject.containerid);
-            favorites.setParameters("containerid", globalInner.userInfoObject.containerid);
+            console.log("=== weiboFavoritesPage containerid "+userMeObject.containerid);
+            favorites.setParameters("containerid", userMeObject.containerid);
         }
         favorites.getRequest();
     }

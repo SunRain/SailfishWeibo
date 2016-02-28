@@ -162,7 +162,11 @@ Page {
                     wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
-                    Qt.openUrlExternally(link);
+//                    Qt.openUrlExternally(link);
+                    console.log("==== onLabelLinkClicked "+ link);
+                    var obj = JSON.parse(link);
+                    console.log("== onLabelLinkClicked type "+ obj.LinkType);
+                    console.log("== onLabelLinkClicked Url "+ obj.Url);
                 }
                 onLabelImageClicked: {
                     wbFunc.toGalleryPage(modelImages, index);

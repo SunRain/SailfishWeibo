@@ -10,13 +10,21 @@ QtObject {
     }
 
     signal infoChanged
-
+    //scheme for show a specific user's weibo, used for HackStatusesUserTimeline
+//    property string userWeiboDisplayScheme: ""
+    property string userWeiboListScheme: ""
     //containerid for user favorites (HackLogin only)
     property string containerid: ""
+//    onContaineridChanged: {
+//        console.log("==== userInfoObject onContaineridChanged " +containerid);
+//        userWeiboDisplayScheme = containerid+"_-_WEIBO_SECOND_PROFILE_WEIBO";
+//        console.log("==== userInfoObject userWeiboDisplayScheme " +userWeiboDisplayScheme);
+//    }
 
     property url cover_image_phone: ""
 
 //    id 	int64 	用户UID
+    property string id: ""
 //    idstr 	string 	字符串型的用户UID
 //    screen_name 	string 	用户昵称
     property string screen_name: undefined
@@ -24,7 +32,9 @@ QtObject {
 //    province 	int 	用户所在省级ID
 //    city 	int 	用户所在城市ID
 //    location 	string 	用户所在地
+    property string location: ""
 //    description 	string 	用户个人描述
+    property string description: ""
 //    url 	string 	用户博客地址
 //    profile_image_url 	string 	用户头像地址（中图），50×50像素
     property url profile_image_url: ""
@@ -33,11 +43,15 @@ QtObject {
 //    weihao 	string 	用户的微号
 //    gender 	string 	性别，m：男、f：女、n：未知
 //    followers_count 	int 	粉丝数
+    property int followers_count: 0
 //    friends_count 	int 	关注数
+    property int friends_count: 0
 //    statuses_count 	int 	微博数
+    property int statuses_count: 0
 //    favourites_count 	int 	收藏数
 //    created_at 	string 	用户创建（注册）时间
 //    following 	boolean 	暂未支持
+    property bool following: false
 //    allow_all_act_msg 	boolean 	是否允许所有人给我发私信，true：是，false：否
 //    geo_enabled 	boolean 	是否允许标识用户的地理位置，true：是，false：否
 //    verified 	boolean 	是否是微博认证用户，即加V用户，true：是，false：否
@@ -47,8 +61,10 @@ QtObject {
 //    allow_all_comment 	boolean 	是否允许所有人对我的微博进行评论，true：是，false：否
 //    avatar_large 	string 	用户头像地址（大图），180×180像素
 //    avatar_hd 	string 	用户头像地址（高清），高清头像原图
+    property string avatar_hd: ""
 //    verified_reason 	string 	认证原因
 //    follow_me 	boolean 	该用户是否关注当前登录用户，true：是，false：否
+    property bool follow_me: false
 //    online_status 	int 	用户的在线状态，0：不在线、1：在线
 //    bi_followers_count 	int 	用户的互粉数
 //    lang 	string 	用户当前的语言版本，zh-cn：简体中文，zh-tw：繁体中文，en：英语
@@ -135,9 +151,20 @@ QtObject {
         "urank": 0
     }
     onUserInfoChanged: {
-        userInfoObject.cover_image_phone = userInfo.cover_image_phone;
-        userInfoObject.profile_image_url = userInfo.profile_image_url;
-        userInfoObject.screen_name = userInfo.screen_name;
+        userInfoObject.cover_image_phone = cover_image_phone;
+        userInfoObject.profile_image_url = profile_image_url;
+        userInfoObject.screen_name = screen_name;
+        userInfoObject.avatar_hd = avatar_hd;
+        userInfoObject.location = location;
+        userInfoObject.follow_me = follow_me;
+        userInfoObject.description = description;
+        userInfoObject.statuses_count = statuses_count;
+        userInfoObject.friends_count = friends_count;
+        userInfoObject.followers_count = followers_count;
+        userInfoObject.following = following;
+        userInfoObject.id = id;
+
+
         userInfoObject.infoChanged();
     }
 }

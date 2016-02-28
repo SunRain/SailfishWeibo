@@ -179,7 +179,24 @@ SilicaListView {
                 }
                 onLabelLinkClicked: {
                     Qt.openUrlExternally(link);
+//                    console.log("==== onLabelLinkClicked "+ link);
+//                    var obj = JSON.parse(link);
+//                    console.log("== onLabelLinkClicked type "+ obj.LinkType);
+//                    console.log("== onLabelLinkClicked Url "+ obj.Url);
                 }
+                onLinkAtClicked: {
+                    console.log("==== onLinkAtClicked")
+                }
+                onLinkTopicClicked: {
+                    console.log("==== onLinkTopicClicked")
+                }
+                onLinkUnknowClicked: {
+                    console.log("==== onLinkUnknowClicked")
+                }
+                onLinkWebOrVideoClicked: {
+                    console.log("==== onLinkWebOrVideoClicked")
+                }
+
                 onLabelImageClicked: {
                     wbFunc.toGalleryPage(modelImages, index);
                 }

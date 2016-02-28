@@ -54,11 +54,13 @@
         <file>components/WBPage.qml</file>
         <file>WeiboFunctions.qml</file>
         <file>WeiboFunctions.js</file>
-        <file>requests/oauth/UsersShow.qml</file>
-        <file>requests/oauth/RemindUnreadCount.qml</file>
-        <file>requests/hack/HackRemindUnreadCount.qml</file>
         <file>js/Utility.js</file>
-        <file>requests/hack/HackUsersInfoMe.qml</file>
         <file>js/JsonPath.js</file>
+        <file>ui/UserInfoTab.qml</file>
+        <file>requests/OauthRemindUnreadCount.qml</file>
+        <file>requests/OauthUsersShow.qml</file>
+        <file>requests/RQHackRemindUnreadCount.qml</file>
+        <file>requests/RQHackUsersInfo.qml</file>
+        <file>requests/RQHackUsersInfoMe.qml</file>
     </qresource>
 </RCC>

@@ -1,18 +1,17 @@
 import QtQuick 2.0
-//import QtQuick 2.2
 import Sailfish.Silica 1.0
-
-import "../js/dateutils.js" as DateUtils
-import "../js/weiboapi.js" as WB
-//import "../js/Settings.js" as Settings
-import "../components"
-
 import harbour.sailfish_sinaweibo.sunrain 1.0
+
+import "../WeiboFunctions.js" as WBLoader
+import "../js/Utility.js" as Utility
+import "../components"
+import "../ui"
 
 Page {
     id: userPage
     
     property var uid: undefined
+
     property bool _isFollowing: false
 
     property int _pageNum: 1
@@ -21,10 +20,105 @@ Page {
     property bool _refreshUserWeiboLock: false
     property bool _refreshUserInfoLock: false
     property bool _pageActive: false
-    property var _userWeiboCache: undefined
 
-    UserInfoObject {
-        id: userInfoObject
+    QtObject {
+        id: inner
+        property var userInfoObject: null
+        property var requestUsersShow: null
+        property var userWeiboListScheme
+
+        function refreshUserInfo() {
+            wbFunc.showBusyIndicator();
+            if (tokenProvider.useHackLogin && tokenProvider.hackLoginUid != userPage.uid) {
+                var path = "u/"+userPage.uid;
+                requestUsersShow.resetUrlPath(path);
+            }
+            requestUsersShow.setParameters("uid", uid);
+            requestUsersShow.getRequest();
+        }
+
+//        function createhackUsersInfoObject(callback) {
+//            WBLoader.create("../requests/RQHackUsersInfoMe.qml", userPage, function(object, component, incubator) {
+//            });
+//        }
+        function parseUsersShowData(replyData) {
+            if (tokenProvider.useHackLogin) {
+                Utility.parserOthersUserInfo(inner.userInfoObject, JSON.parse(replyData));
+                inner.userWeiboListScheme = inner.userInfoObject.userWeiboListScheme;
+            } else {
+                inner.userInfoObject.userInfo = JSON.parse(replyData);
+            }
+            _isFollowing = inner.userInfoObject.following;
+            modelWeibo.append(inner.userInfoObject.userInfo.status);
+            wbFunc.stopBusyIndicator();
+        }
+
+        function createUsersShow(callback) {
+            if (tokenProvider.useHackLogin) {
+                console.log("====== UserPage show other users info =====");
+                if (inner.requestUsersShow)
+                    WBLoader.cleanup(inner.requestUsersShow, null, null);
+                WBLoader.create("../requests/RQHackUsersInfo.qml", userPage, function(object, component, incubator) {
+                    inner.requestUsersShow = object;
+                    if (inner.requestUsersShow) {
+                        inner.requestUsersShow.requestResult.connect(function(ret, replyData) {
+                            console.log("=== HackUsersInfo connect ===");
+                            if (ret == BaseRequest.RET_ABORT) {
+                                console.log("== HackUsersInfo onRequestAbort");
+                            } else if (ret == BaseRequest.RET_FAILURE) {
+                                console.log("== HackUsersInfo onRequestFailure ["+replyData+"]")
+                            } else {
+                                console.log("== HackUsersInfo onRequestSuccess ["+replyData+"]")
+                                //create UserInfoObject if not created
+                                if (!inner.userInfoObject) {
+                                    WBLoader.create("../components/UserInfoObject.qml", userPage,
+                                                    function(object, component, incubator){
+                                                        if (object)
+                                                            inner.userInfoObject = object;
+                                                        parseUsersShowData(replyData)
+                                                    });
+                                } else {
+                                    parseUsersShowData(replyData);
+                                }
+                            }
+                        });
+                        callback.call(this, inner.requestUsersShow);
+                    } else {
+                        callback.call(this, inner.requestUsersShow);
+                    }
+                });
+            } else {
+                WBLoader.create("../requests/OauthUsersShow.qml", userPage, function(object, component, incubator) {
+                    inner.requestUsersShow = object;
+                    if (inner.requestUsersShow) {
+                        inner.requestUsersShow.requestResult.connect(function(ret, replyData) {
+                            console.log("=== UsersShow connect ===");
+                            if (ret == BaseRequest.RET_ABORT) {
+                                console.log("== UsersShow onRequestAbort");
+                            } else if (ret == BaseRequest.RET_FAILURE) {
+                                console.log("== UsersShow onRequestFailure ["+replyData+"]")
+                            } else {
+                                console.log("== HackUsersInfoMe onRequestSuccess ["+replyData+"]")
+                                //create UserInfoObject if not created
+                                if (!inner.userInfoObject) {
+                                    WBLoader.create("../components/UserInfoObject.qml", userPage,
+                                                    function(object, component, incubator){
+                                                        if (object)
+                                                            inner.userInfoObject = object;
+                                                        parseUsersShowData(replyData)
+                                                    });
+                                } else {
+                                    parseUsersShowData(replyData);
+                                }
+                            }
+                        });
+                        callback.call(this, inner.requestUsersShow);
+                    } else {
+                        callback.call(this, inner.requestUsersShow);
+                    }
+                });
+            }
+        }
     }
 
     onStatusChanged: {
@@ -36,43 +130,36 @@ Page {
     }
 
     function refreshUserWeibo() {
+        console.log("=================== User page refreshUserWeibo =======");
         wbFunc.showBusyIndicator();
         _pageNum = 1;
         statusesUserTimeline.setParameters("page", _pageNum)
-        statusesUserTimeline.setParameters("uid", userInfoObject.userInfo.id);
+        statusesUserTimeline.setParameters("uid", userPage.uid);
+        if (tokenProvider.useHackLogin)
+            statusesUserTimeline.setParameters("containerid", inner.userWeiboListScheme);
         statusesUserTimeline.getRequest();
     }
     function showUserWeibo() {
         modelWeibo.clear();
-        if (userPage._refreshUserWeiboLock) {
-            for (var i=0; i<userPage._userWeiboCache.statuses.length; i++) {
-                modelWeibo.append(userPage._userWeiboCache.statuses[i])
-            }
-            if (lvUserWeibo.model == undefined) {
-                lvUserWeibo.model = modelWeibo;
-            }
-        } else {
-            userPage._refreshUserWeiboLock = !userPage._refreshUserWeiboLock;
-            refreshUserWeibo();
-        }
+        refreshUserWeibo();
     }
 
-    function refreshUserInfo() {
-        wbFunc.showBusyIndicator();
-        usersShow.setParameters("uid", uid);
-        usersShow.getRequest();
-    }
 
     function showUserInfo() {
-        modelWeibo.clear();
-        if (userPage._refreshUserInfoLock) {
-            modelWeibo.append(userInfoObject.userInfo.status);
-            if (lvUserWeibo.model == undefined) {
-                lvUserWeibo.model = modelWeibo;
-            }
+        if (tokenProvider.useHackLogin && tokenProvider.hackLoginUid == userPage.uid) {
+            inner.userInfoObject = userMeObject;
+            inner.userWeiboListScheme = userMeObject.userWeiboListScheme;
         } else {
-            userPage._refreshUserInfoLock = !userPage._refreshUserInfoLock;
-            refreshUserInfo();
+            modelWeibo.clear();
+            if (!inner.requestUsersShow) {
+                inner.createUsersShow(function(obj) {
+                    if (obj)
+                        inner.requestUsersShow = obj;
+                    inner.refreshUserInfo();
+                });
+            } else {
+                inner.refreshUserInfo();
+            }
         }
     }
 
@@ -80,10 +167,12 @@ Page {
         wbFunc.showBusyIndicator();
         _pageNum++
         statusesUserTimeline.setParameters("page", _pageNum);
-        statusesUserTimeline.setParameters("uid", userInfoObject.userInfo.id);
+        statusesUserTimeline.setParameters("uid", userPage.uid);
+        if (tokenProvider.useHackLogin)
+            statusesUserTimeline.setParameters("containerid", inner.userWeiboListScheme);
         statusesUserTimeline.getRequest();
     }
-    StatusesUserTimeline {
+    WrapperStatusesUserTimeline {
         id: statusesUserTimeline
         onRequestAbort: {
             console.log("== statusesUserTimeline onRequestAbort");
@@ -92,46 +181,17 @@ Page {
             console.log("== statusesUserTimeline onRequestFailure ["+replyData+"]")
         }
         onRequestSuccess: { //replyData
-            userPage._userWeiboCache = JSON.parse(replyData);
-            for (var i=0; i<userPage._userWeiboCache.statuses.length; i++) {
-                modelWeibo.append(userPage._userWeiboCache.statuses[i])
-            }
-            if (lvUserWeibo.model == undefined) {
-                lvUserWeibo.model = modelWeibo;
-            }
-            wbFunc.stopBusyIndicator();
-        }
-    }
+            console.log("== statusesUserTimeline onRequestSuccess ["+replyData+"]")
 
-    UsersShow {
-        id: usersShow
-        onRequestAbort: {
-            console.log("== usersShow onRequestAbort");
-        }
-        onRequestFailure: { //replyData
-            console.log("== usersShow onRequestFailure ["+replyData+"]")
-        }
-        onRequestSuccess: { //replyData
-            if (!userPage._pageActive) {
-                return;
-            }
-            userInfoObject.userInfo = JSON.parse(replyData);
-
-            console.log("==== == usersShow object value "+ userInfoObject.userInfo)
-
-            console.log(">>>>> usersShow object value "+ JSON.stringify(userInfoObject.userInfo))
-
-            _isFollowing = userInfoObject.userInfo.following;
-            modelWeibo.append(userInfoObject.userInfo.status);
-
-            if (lvUserWeibo.model == undefined) {
-                lvUserWeibo.model = modelWeibo;
+            var data = JSON.parse(replyData);
+            for (var i=0; i<data.statuses.length; i++) {
+                modelWeibo.append(data.statuses[i])
             }
             wbFunc.stopBusyIndicator();
         }
     }
 
-    FriendshipsCreate {
+    WrapperFriendshipsCreate {
         id: friendshipsCreate
         onRequestAbort: {
             console.log("== friendshipsCreate onRequestAbort");
@@ -146,7 +206,7 @@ Page {
             _isFollowing = true;
         }
     }
-    FriendshipsDestroy {
+    WrapperFriendshipsDestroy {
         id: friendshipsDestroy
         onRequestAbort: {
             console.log("== FriendshipsDestroy onRequestAbort");
@@ -171,128 +231,167 @@ Page {
         friendshipsDestroy.setParameters("uid", uid);
         friendshipsDestroy.postRequest();
     }
-    
+
     ListModel {
         id: modelWeibo
     }
-
-    SilicaFlickable {
-        id: scrollArea
-        boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
-        anchors.fill: parent
-        contentHeight: userPage._showUserWeibo ? Screen.height : innerAreaColumn.height + Theme.paddingSmall
-        clip: true
-        ScrollDecorator{
-//            flickable: userPage._showUserWeibo ? lvUserWeibo : scrollArea
+    Loader {
+        id: mainLoader
+        anchors {
+            top: parent.top
+            bottom: toolBar.top
         }
-        Column {
-            id: innerAreaColumn
-            spacing: Theme.paddingMedium
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
+        width: parent.width
+        sourceComponent: userPage._showUserWeibo ? webiboListComponent : userInfoTabComponent
+        onStatusChanged: {
+            if (mainLoader.status == Loader.Ready) {
+                if (userPage._showUserWeibo)
+                    userPage.showUserWeibo();
+                else
+                    userPage.showUserInfo();
             }
+        }
+    }
 
-            Item {
-                id:pageHeader
-                width: parent.width
-                height: childrenRect.height//Math.max(Theme.itemSizeLarge, childrenRect.height)
-                MouseArea {
-                    id: mouseArea
-                    anchors.fill: parent
-                    onClicked: {
-                        userPage._showUserWeibo = !userPage._showUserWeibo;
-                        if(userPage._showUserWeibo) {
-                            userPage.showUserWeibo();
-                        } /*else {
-                            userPage.showuserInfo();
-                        }*/
-                    }
+    Rectangle {
+        id: toolBar
+        width: parent.width
+        height: Theme.itemSizeMedium
+        anchors.bottom: parent.bottom
+        color: Theme.highlightDimmerColor
+        property int index: userPage._showUserWeibo ? 1 : 0
+        Rectangle {
+            id: indicator
+            anchors.top: toolBar.top
+            height: Theme.paddingSmall
+            color: Theme.highlightColor
+            width: toolBar.width/2
+            x: toolBar.width * toolBar.index/2
+            Behavior on x {
+                NumberAnimation {duration: 200}
+            }
+        }
+        Row {
+            anchors.centerIn: parent
+            BackgroundItem {
+                width: toolBar.width/2
+                Label {
+                    anchors.centerIn: parent
+                    text: qsTr("UserInfo")
+                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
                 }
-                Rectangle {
-                    z: -1
-                    width: pageHeader.width
-                    height: pageHeader.height
-                    color: Theme.highlightDimmerColor
-                    opacity: scrollArea.moving || lvUserWeibo.moving || userPage._showUserWeibo ? 0.5 : 0.0
-                    Behavior on opacity { FadeAnimation { } }
-                }
-                Row {
-                    height: Math.max(label.height, image.height) + Theme.paddingMedium
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.horizontalPageMargin
-                    spacing: Theme.paddingMedium
-                    Label {
-                        id: label
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: Theme.fontSizeLarge
-                        color: mouseArea.pressed ? Theme.highlightColor : Theme.primaryColor
-                        text: qsTr("About user")
-                    }
-                    Image {
-                        id: image
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: implicitWidth
-                        height: implicitHeight
-                        source: userPage._showUserWeibo
-                                ? appUtility.pathTo("qml/graphics/action_collapse.png")
-                                : appUtility.pathTo("qml/graphics/action_open.png")
-                        //                    RotationAnimator on rotation {
-                        //                        id: animation
-                        //                        from: userPage._showUserWeibo ? 0 : 180
-                        //                        to: userPage._showUserWeibo ? 180 : 360
-                        //                    }
-
-                    }
+                onClicked: {
+                    userPage._showUserWeibo = false;
                 }
             }
-            Loader {
-                id: loader
-                anchors {
-                    left: parent.left
-                    right: parent.right
+            BackgroundItem {
+                width: toolBar.width/2
+                Label {
+                    anchors.centerIn: parent
+                    text: qsTr("UserWeibo")
+                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
                 }
-                visible: !userPage._showUserWeibo
-                enabled: !userPage._showUserWeibo
-                height: userPage._showUserWeibo ? 0 : implicitHeight
-                sourceComponent: userPage._showUserWeibo ? loader.Null : userInfoComponent
-                onStatusChanged: {
-                    if (loader.status == Loader.Ready) {
-                        userPage.showUserInfo();
-                    }
-                }
-            }
-            SilicaListView{
-                id: lvUserWeibo
-                width: parent.width
-                height: userPage._showUserWeibo
-                        ? userPage.height - pageHeader.height
-                          - Theme.itemSizeMedium //the FooterLoadMore Component height
-                        : lvUserWeibo.contentHeight
-                parent: userPage._showUserWeibo ? userPage : innerAreaColumn
-                anchors{
-                    top: userPage._showUserWeibo ? pageHeader.bottom : undefined
-                    topMargin: userPage._showUserWeibo ? pageHeader.height : undefined
-                }
-                clip: true
-                cacheBuffer: 9999
-                delegate: delegateWeibo
-                footer: userPage._showUserWeibo
-                        ? footerLoadMore
-                        : null
-                Behavior on height {
-                    FadeAnimation{}
+                onClicked: {
+                    userPage._showUserWeibo = true;
                 }
             }
         }
     }
 
     Component {
-        id: footerLoadMore
-        FooterLoadMore {
-            onClicked: {
-                userPage.userWeiboAddMore();
+        id: userInfoTabComponent
+        Flickable {
+            anchors {
+                left: parent.left
+                right: parent.right
+                leftMargin: Theme.horizontalPageMargin
+                rightMargin: Theme.horizontalPageMargin
+            }
+            height: parent.height
+            contentHeight: column.height
+            boundsBehavior: (contentHeight > height) ? Flickable.DragAndOvershootBounds : Flickable.StopAtBounds
+            Column {
+                id: column
+                width: parent.width
+                spacing: Theme.paddingMedium
+                PageHeader {
+                    title: qsTr("User Info")
+                }
+                UserInfoTab {
+                    id: userInfoTab
+                    userInfoObject: inner.userInfoObject
+                    onFollowStateChanged: {
+                        if (_isFollowing)
+                            userFollowCancel();
+                        else
+                            userFollowCreate();
+                    }
+                }
+                ////////// hack login does not support below
+                Column {
+                    width: parent.width
+                    spacing: Theme.paddingMedium
+                    visible: !tokenProvider.useHackLogin
+                    enabled: !tokenProvider.useHackLogin
+                    Separator {
+                        width: parent.width
+                        color: Theme.highlightColor
+                    }
+                    Label {
+                        id:title
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        height: implicitHeight
+                        color: Theme.highlightColor
+                        font.pixelSize: Theme.fontSizeMedium
+                        text: inner.userInfoObject.screen_name + qsTr("'s RecentWeibo")
+                    }
+                    WeiboCard {
+                        id:weiboCard
+                        width: parent.width - Theme.paddingMedium * 2
+                        anchors {
+                            left: parent.left
+                            leftMargin: Theme.paddingMedium
+                        }
+                        weiboJSONContent: inner.userInfoObject.userInfo.status[0]
+                        onRepostedWeiboClicked: {
+                            wbFunc.toWeiboPage(inner.userInfoObject.userInfo.status[0].retweeted_status);
+                        }
+                        onUsWeiboClicked: {
+                            wbFunc.toWeiboPage(inner.userInfoObject.userInfo.status[0]);
+                        }
+                        onAvatarHeaderClicked: {
+                            wbFunc.toUserPage(userId);
+                        }
+                        onLabelLinkClicked: {
+                            Qt.openUrlExternally(link);
+                        }
+                        onLabelImageClicked: {
+                            wbFunc.toGalleryPage(modelImages, index);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Component {
+        id: webiboListComponent
+        SilicaListView{
+            id: lvUserWeibo
+            anchors.fill: parent
+            header: PageHeader {
+                title: inner.userInfoObject.screen_name + qsTr("'s Weibo")
+            }
+            clip: true
+            cacheBuffer: 9999
+            model: modelWeibo
+            delegate: delegateWeibo
+            footer: FooterLoadMore {
+                onClicked: {
+                    userPage.userWeiboAddMore();
+                }
+            }
+            Behavior on height {
+                FadeAnimation{}
             }
         }
     }
@@ -309,13 +408,13 @@ Page {
                     left: parent.left
                     leftMargin: Theme.paddingMedium
                 }
-                weiboJSONContent: modelWeibo.get(index)//.JSON
+                weiboJSONContent: modelWeibo.get(index)
                 optionMenu: options
                 onRepostedWeiboClicked: {
                     wbFunc.toWeiboPage(modelWeibo.get(index).retweeted_status);
                 }
                 onUsWeiboClicked: {
-                    wbFunc.toWeiboPage(modelWeibo.get(index)/*.JSON*/);
+                    wbFunc.toWeiboPage(modelWeibo.get(index));
                 }
                 onAvatarHeaderClicked: {
                     wbFunc.toUserPage(userId);
@@ -357,263 +456,263 @@ Page {
         }
     }
 
-    Component {
-        id: userInfoComponent
-        Column {
-            id: wrapper
-            width: implicitWidth
-            spacing: Theme.paddingMedium
-            Item {
-                id: topItem
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                height: childrenRect.height
-                // user
-                Item {
-                    id: userArea
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    height: rowUser.height + Theme.paddingMedium
-
-                    Row {
-                        id: rowUser
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            top: parent.top
-                            margins: Theme.paddingSmall
-                        }
-                        spacing: Theme.paddingMedium
-                        Image {
-                            id: usAvatar
-                            width: 160
-                            height: width
-                            anchors.verticalCenter: rowUserColumn.verticalCenter
-                            smooth: true
-                            fillMode: Image.PreserveAspectFit
-                            source: userInfoObject.userInfo.avatar_hd
-                        }
-
-                        Column {
-                            id:rowUserColumn
-                            spacing: Theme.paddingSmall
-
-                            Label {
-                                id: labelUserName
-                                color: Theme.primaryColor
-                                font.pixelSize: Theme.fontSizeMedium
-                                width:rowUser.width - usAvatar.width - Theme.paddingMedium
-                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                                text: userInfoObject.userInfo.screen_name
-                            }
-
-                            Label {
-                                id: labelLocation
-                                color: Theme.secondaryColor
-                                font.pixelSize: Theme.fontSizeSmall
-                                width: labelUserName.width
-                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                                text: userInfoObject.userInfo.location
-                            }
-                            OptionItem {
-                                id:optionItem
-                                width: parent.width
-                                visible: userInfoObject.userInfo.id != tokenProvider.uid
-                                Rectangle {
-                                    z: optionItem.z - 1
-                                    width: optionItem.width
-                                    height: optionItem.height
-                                    anchors.left: optionItem.left
-                                    anchors.top: optionItem.top
-                                    border.color:Theme.highlightColor
-                                    color:"#00000000"
-                                    radius: 15
-                                }
-                                Label {
-                                    anchors {
-                                        verticalCenter: parent.verticalCenter
-                                        left: parent.left
-                                        leftMargin: Theme.paddingSmall
-                                    }
-                                    color: Theme.primaryColor
-                                    font.pixelSize: Theme.fontSizeMedium
-                                    text: {
-                                        if (_isFollowing == true) {
-                                            if (userInfoObject.userInfo.follow_me == true) {
-                                                return qsTr("Bilateral")
-                                            } else {
-                                                return qsTr("Following")
-                                            }
-                                        } else {
-                                            if (userInfoObject.userInfo.follow_me == true) {
-                                                return qsTr("Follower")
-                                            } else {
-                                                return qsTr("Follow")
-                                            }
-                                        }
-                                    }
-                                }
-                                menu: optionMenu
-                                ContextMenu {
-                                    id:optionMenu
-                                    MenuItem {
-                                        text: {
-                                            if (_isFollowing == true) {
-                                                return qsTr("CancelFollowing");
-                                            } else {
-                                                return qsTr("Follow");
-                                            }
-                                        }
-                                        onClicked: {
-                                            if (_isFollowing == true) {
-                                                userFollowCancel();
-                                            } else {
-                                                userFollowCreate();
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
-                // description
-                Item {
-                    id: description
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        top: userArea.bottom
-                    }
-                    height: colDesc.height + Theme.paddingMedium
-
-                    Column {
-                        id: colDesc
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            top: parent.top
-                            margins:Theme.paddingSmall
-                        }
-                        spacing: Theme.paddingSmall
-
-                        Label {
-                            id: labelDesc
-                            color: Theme.highlightColor
-                            font.pixelSize: Theme.fontSizeMedium
-                            text: qsTr("Description: ")
-                        }
-
-                        Label {
-                            id: labelDescription
-                            color: Theme.primaryColor
-                            width: parent.width
-                            font.pixelSize: Theme.fontSizeMedium
-                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                            text: userInfoObject.userInfo.description
-                        }
-                    }
-
-                }
-
-                // friends
-                Column {
-                    id: infoBar
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        top: description.bottom
-                    }
-                    spacing: Theme.paddingSmall
-                    Row {
-                        id: rowFriends
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        Item {
-                            width: innerAreaColumn.width/3 - Theme.paddingSmall
-                            height: Theme.fontSizeSmall
-                            Label {
-                                anchors.centerIn: parent
-                                color: Theme.secondaryColor
-                                font.pixelSize: Theme.fontSizeTiny
-                                text: qsTr("Weibo: ") + userInfoObject.userInfo.statuses_count
-                            }
-                        }
-                        Rectangle {
-                            width: 1
-                            height: Theme.fontSizeSmall -2
-                            color: Theme.highlightColor
-                        }
-                        Item {
-                            width: innerAreaColumn.width/3 - Theme.paddingSmall
-                            height: Theme.fontSizeSmall
-                            Label {
-                                anchors.centerIn: parent
-                                color: Theme.secondaryColor
-                                font.pixelSize:Theme.fontSizeTiny
-                                text: qsTr("following: ") + userInfoObject.userInfo.friends_count
-                            }
-                            //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    //pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfoObject.userInfo.id })
-                                    wbFunc.toFriendsPage("following", userInfoObject.userInfo.id);
-                                }
-                            }
-                        }
-                        Rectangle {
-                            width: 1
-                            height: Theme.fontSizeSmall - 2
-                            color: Theme.highlightColor
-                        }
-                        Item {
-                            width: innerAreaColumn.width/3 - Theme.paddingSmall
-                            height: Theme.fontSizeSmall
-                            Label {
-                                anchors.centerIn: parent
-                                color: Theme.secondaryColor
-                                font.pixelSize: Theme.fontSizeTiny
-                                text: qsTr("follower: ") + userInfoObject.userInfo.followers_count
-                            }
-                            //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-//                                    pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: userInfoObject.userInfo.id })
-                                    wbFunc.toFriendsPage("follower", userInfoObject.userInfo.id);
-                                }
-                            }
-                        }
-
-                    }
-
-                    Separator {
-                        width: parent.width
-                        color: Theme.highlightColor
-                    }
-                }
-            } //topItem
-            ///////////////////////////////
-            Label {
-                id:title
-                anchors.horizontalCenter: parent.horizontalCenter
-                //            opacity: userPage._showUserWeibo ? 0 : 1
-                height: /*userPage._showUserWeibo ? 0 : */implicitHeight
-                color: Theme.highlightColor
-                font.pixelSize: Theme.fontSizeMedium
-                text: userInfoObject.userInfo.screen_name + qsTr("'s RecentWeibo")
-//                Behavior on opacity {
-//                    FadeAnimation{}
+//    Component {
+//        id: userInfoComponent
+//        Column {
+//            id: wrapper
+//            width: implicitWidth
+//            spacing: Theme.paddingMedium
+//            Item {
+//                id: topItem
+//                anchors {
+//                    left: parent.left
+//                    right: parent.right
 //                }
-//                Behavior on height {
-//                    FadeAnimation{}
+//                height: childrenRect.height
+//                // user
+//                Item {
+//                    id: userArea
+//                    anchors {
+//                        left: parent.left
+//                        right: parent.right
+//                    }
+//                    height: rowUser.height + Theme.paddingMedium
+
+//                    Row {
+//                        id: rowUser
+//                        anchors {
+//                            left: parent.left
+//                            right: parent.right
+//                            top: parent.top
+//                            margins: Theme.paddingSmall
+//                        }
+//                        spacing: Theme.paddingMedium
+//                        Image {
+//                            id: usAvatar
+//                            width: 160
+//                            height: width
+//                            anchors.verticalCenter: rowUserColumn.verticalCenter
+//                            smooth: true
+//                            fillMode: Image.PreserveAspectFit
+//                            source: userInfoObject.userInfo.avatar_hd
+//                        }
+
+//                        Column {
+//                            id:rowUserColumn
+//                            spacing: Theme.paddingSmall
+
+//                            Label {
+//                                id: labelUserName
+//                                color: Theme.primaryColor
+//                                font.pixelSize: Theme.fontSizeMedium
+//                                width:rowUser.width - usAvatar.width - Theme.paddingMedium
+//                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+//                                text: userInfoObject.userInfo.screen_name
+//                            }
+
+//                            Label {
+//                                id: labelLocation
+//                                color: Theme.secondaryColor
+//                                font.pixelSize: Theme.fontSizeSmall
+//                                width: labelUserName.width
+//                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+//                                text: userInfoObject.userInfo.location
+//                            }
+//                            OptionItem {
+//                                id:optionItem
+//                                width: parent.width
+//                                visible: userInfoObject.userInfo.id != tokenProvider.uid
+//                                Rectangle {
+//                                    z: optionItem.z - 1
+//                                    width: optionItem.width
+//                                    height: optionItem.height
+//                                    anchors.left: optionItem.left
+//                                    anchors.top: optionItem.top
+//                                    border.color:Theme.highlightColor
+//                                    color:"#00000000"
+//                                    radius: 15
+//                                }
+//                                Label {
+//                                    anchors {
+//                                        verticalCenter: parent.verticalCenter
+//                                        left: parent.left
+//                                        leftMargin: Theme.paddingSmall
+//                                    }
+//                                    color: Theme.primaryColor
+//                                    font.pixelSize: Theme.fontSizeMedium
+//                                    text: {
+//                                        if (_isFollowing == true) {
+//                                            if (userInfoObject.userInfo.follow_me == true) {
+//                                                return qsTr("Bilateral")
+//                                            } else {
+//                                                return qsTr("Following")
+//                                            }
+//                                        } else {
+//                                            if (userInfoObject.userInfo.follow_me == true) {
+//                                                return qsTr("Follower")
+//                                            } else {
+//                                                return qsTr("Follow")
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                                menu: optionMenu
+//                                ContextMenu {
+//                                    id:optionMenu
+//                                    MenuItem {
+//                                        text: {
+//                                            if (_isFollowing == true) {
+//                                                return qsTr("CancelFollowing");
+//                                            } else {
+//                                                return qsTr("Follow");
+//                                            }
+//                                        }
+//                                        onClicked: {
+//                                            if (_isFollowing == true) {
+//                                                userFollowCancel();
+//                                            } else {
+//                                                userFollowCreate();
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+
 //                }
-            }
-        }
-    }
+//                // description
+//                Item {
+//                    id: description
+//                    anchors {
+//                        left: parent.left
+//                        right: parent.right
+//                        top: userArea.bottom
+//                    }
+//                    height: colDesc.height + Theme.paddingMedium
+
+//                    Column {
+//                        id: colDesc
+//                        anchors {
+//                            left: parent.left
+//                            right: parent.right
+//                            top: parent.top
+//                            margins:Theme.paddingSmall
+//                        }
+//                        spacing: Theme.paddingSmall
+
+//                        Label {
+//                            id: labelDesc
+//                            color: Theme.highlightColor
+//                            font.pixelSize: Theme.fontSizeMedium
+//                            text: qsTr("Description: ")
+//                        }
+
+//                        Label {
+//                            id: labelDescription
+//                            color: Theme.primaryColor
+//                            width: parent.width
+//                            font.pixelSize: Theme.fontSizeMedium
+//                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+//                            text: userInfoObject.userInfo.description
+//                        }
+//                    }
+
+//                }
+
+//                // friends
+//                Column {
+//                    id: infoBar
+//                    anchors {
+//                        left: parent.left
+//                        right: parent.right
+//                        top: description.bottom
+//                    }
+//                    spacing: Theme.paddingSmall
+//                    Row {
+//                        id: rowFriends
+//                        anchors.horizontalCenter: parent.horizontalCenter
+//                        Item {
+//                            width: innerAreaColumn.width/3 - Theme.paddingSmall
+//                            height: Theme.fontSizeSmall
+//                            Label {
+//                                anchors.centerIn: parent
+//                                color: Theme.secondaryColor
+//                                font.pixelSize: Theme.fontSizeTiny
+//                                text: qsTr("Weibo: ") + userInfoObject.userInfo.statuses_count
+//                            }
+//                        }
+//                        Rectangle {
+//                            width: 1
+//                            height: Theme.fontSizeSmall -2
+//                            color: Theme.highlightColor
+//                        }
+//                        Item {
+//                            width: innerAreaColumn.width/3 - Theme.paddingSmall
+//                            height: Theme.fontSizeSmall
+//                            Label {
+//                                anchors.centerIn: parent
+//                                color: Theme.secondaryColor
+//                                font.pixelSize:Theme.fontSizeTiny
+//                                text: qsTr("following: ") + userInfoObject.userInfo.friends_count
+//                            }
+//                            //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
+//                            MouseArea {
+//                                anchors.fill: parent
+//                                onClicked: {
+//                                    //pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "following", uid: userInfoObject.userInfo.id })
+//                                    wbFunc.toFriendsPage("following", userInfoObject.userInfo.id);
+//                                }
+//                            }
+//                        }
+//                        Rectangle {
+//                            width: 1
+//                            height: Theme.fontSizeSmall - 2
+//                            color: Theme.highlightColor
+//                        }
+//                        Item {
+//                            width: innerAreaColumn.width/3 - Theme.paddingSmall
+//                            height: Theme.fontSizeSmall
+//                            Label {
+//                                anchors.centerIn: parent
+//                                color: Theme.secondaryColor
+//                                font.pixelSize: Theme.fontSizeTiny
+//                                text: qsTr("follower: ") + userInfoObject.userInfo.followers_count
+//                            }
+//                            //TODO 似乎第三方客户端无法调用除本身意外的其他用户的follower/following信息
+//                            MouseArea {
+//                                anchors.fill: parent
+//                                onClicked: {
+////                                    pageStack.replace(Qt.resolvedUrl("FriendsPage.qml"), { mode: "follower", uid: userInfoObject.userInfo.id })
+//                                    wbFunc.toFriendsPage("follower", userInfoObject.userInfo.id);
+//                                }
+//                            }
+//                        }
+
+//                    }
+
+//                    Separator {
+//                        width: parent.width
+//                        color: Theme.highlightColor
+//                    }
+//                }
+//            } //topItem
+//            ///////////////////////////////
+//            Label {
+//                id:title
+//                anchors.horizontalCenter: parent.horizontalCenter
+//                //            opacity: userPage._showUserWeibo ? 0 : 1
+//                height: /*userPage._showUserWeibo ? 0 : */implicitHeight
+//                color: Theme.highlightColor
+//                font.pixelSize: Theme.fontSizeMedium
+//                text: userInfoObject.userInfo.screen_name + qsTr("'s RecentWeibo")
+////                Behavior on opacity {
+////                    FadeAnimation{}
+////                }
+////                Behavior on height {
+////                    FadeAnimation{}
+////                }
+//            }
+//        }
+//    }
 }

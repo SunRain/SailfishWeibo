@@ -47,6 +47,10 @@ Item {
     signal usWeiboClicked
     signal avatarHeaderClicked(string userId)
     signal labelLinkClicked(string link)
+    signal linkTopicClicked(string link)
+    signal linkUnknowClicked(string link)
+    signal linkWebOrVideoClicked(string link)
+    signal linkAtClicked(string link)
     signal labelImageClicked(var modelImages, string index)
     signal commentButtonClicked
     signal repostButtonClicked
@@ -88,10 +92,21 @@ Item {
                      : weiboJSONContent.pic_urls
 
             onUserAvatarHeaderClicked: {
+                console.log("===== weiboCard.avatarHeaderClicked " + weiboJSONContent.user.id);
                 weiboCard.avatarHeaderClicked(weiboJSONContent.user.id);
             }
-            onLabelLinkClicked: {
-                weiboCard.labelLinkClicked(link);
+            onLabelLinkClicked: { //link
+                var data = link.split("||");
+                if (data[0] == "LinkTopic")
+                    weiboCard.linkTopicClicked(data[1]);
+                else if (data[0] == "LinkUnknow")
+                    weiboCard.linkUnknowClicked(data[1])
+                else if (data[0] == "LinkWebOrVideo")
+                    weiboCard.linkWebOrVideoClicked(data[1])
+                else if (data[0] == "LinkAt")
+                    weiboCard.linkAtClicked(data[1])
+                else
+                    weiboCard.labelLinkClicked(data[0]);
             }
             onBaseWeiboCardClicked: {
                 weiboCard.usWeiboClicked();
@@ -142,7 +157,17 @@ Item {
                         weiboCard.avatarHeaderClicked(inner.subValue.user.id);
                     }
                     onLabelLinkClicked: {
-                        weiboCard.labelLinkClicked(link);
+                        var data = link.split("||");
+                        if (data[0] == "LinkTopic")
+                            weiboCard.linkTopicClicked(data[1]);
+                        else if (data[0] == "LinkUnknow")
+                            weiboCard.linkUnknowClicked(data[1])
+                        else if (data[0] == "LinkWebOrVideo")
+                            weiboCard.linkWebOrVideoClicked(data[1])
+                        else if (data[0] == "LinkAt")
+                            weiboCard.linkAtClicked(data[1])
+                        else
+                            weiboCard.labelLinkClicked(data[0]);
                     }
                     onBaseWeiboCardClicked: {
                         weiboCard.repostedWeiboClicked();

@@ -36,8 +36,7 @@ OTHER_FILES += \
     qml/components/*.qml \
     qml/cover/*.qml \
     qml/ui/*.qml \
-    qml/requests/hack/*.qml \
-    qml/requests/oauth/*.qml \
+    qml/requests/*.qml \
     qml/SailfishWeibo.qml \
     qml/js/*.js \
     qml/WeiboFunctions.qml

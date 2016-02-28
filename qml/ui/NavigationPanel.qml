@@ -25,7 +25,7 @@ Panel {
 
     QtObject {
         id: inner
-        property bool userAvatarLock: false
+//        property bool userAvatarLock: false
         //////////////////////// UsersShow
         property var us_component: null
         property var us_object: null
@@ -37,7 +37,7 @@ Panel {
         }
         function initUserInfo(callback) {
             if (tokenProvider.useHackLogin) {
-                WBLoader.create("../requests/hack/HackUsersInfoMe.qml", panel,
+                WBLoader.create("../requests/RQHackUsersInfoMe.qml", panel,
                     function(object, component, incubator) {
                         inner.us_component = component;
                         inner.us_incubator = incubator;
@@ -51,58 +51,32 @@ Panel {
                                     console.log("== HackUsersInfoMe onRequestFailure ["+replyData+"]")
                                 } else {
                                     console.log("== HackUsersInfoMe onRequestSuccess ["+replyData+"]")
-                                    //create remindObject if not created
-                                    if (!globalInner.userInfoObject) {
-                                        WBLoader.create("../components/UserInfoObject.qml", panel,
-                                            function(object, component, incubator){
-                                                if (object)
-                                                    globalInner.userInfoObject = object;
-                                                Utility.parserUserInfoMe(globalInner.userInfoObject, JSON.parse(replyData));
-                                            });
-                                    } else {
-                                        Utility.parserUserInfoMe(globalInner.userInfoObject, JSON.parse(replyData));
-                                    }
+                                    Utility.parserUserInfoMe(userMeObject, JSON.parse(replyData));
                                 }
-                                });
+                            });
                             callback.call(this, inner.us_object);
                         } else {
                             callback.call(this, inner.us_object);
                         }
-                    });
+                });
             } else {
-                WBLoader.create("../requests/oauth/UsersShow.qml", panel,
+                WBLoader.create("../requests/OauthUsersShow.qml", panel,
                     function(object, component, incubator) {
                         inner.us_component = component;
                         inner.us_incubator = incubator;
                         inner.us_object = object;
                         if (inner.us_object) {
-                            inner.us_object.requestResult.connect(
-                                function(ret, replyData) {
-                                    console.log("=== usersShow connect ===");
-                                    if (ret == BaseRequest.RET_ABORT) {
-                                        console.log("== usersShow onRequestAbort");
-                                    } else if (ret == BaseRequest.RET_FAILURE) {
-                                        console.log("== usersShow onRequestFailure ["+replyData+"]")
-                                    } else {
-                                        console.log("== usersShow onRequestSuccess ["+replyData+"]")
-
-                                        //create userInfoObject if not created
-                                        if (!globalInner.userInfoObject) {
-                                            WBLoader.create("../components/UserInfoObject.qml", panel,
-                                                function(object, component, incubator){
-                                                    if (object)
-                                                        globalInner.userInfoObject = object;
-                                                    if (!inner.userAvatarLock) {
-                                                        globalInner.userInfoObject.userInfo = JSON.parse(replyData)
-                                                        inner.userAvatarLock = !inner.userAvatarLock;
-                                                    }
-                                                });
-                                        } else if (!inner.userAvatarLock) {
-                                            globalInner.userInfoObject.userInfo = JSON.parse(replyData)
-                                            inner.userAvatarLock = !inner.userAvatarLock;
-                                        }
-                                    }
-                                });
+                            inner.us_object.requestResult.connect(function(ret, replyData) {
+                                console.log("=== usersShow connect ===");
+                                if (ret == BaseRequest.RET_ABORT) {
+                                    console.log("== usersShow onRequestAbort");
+                                } else if (ret == BaseRequest.RET_FAILURE) {
+                                    console.log("== usersShow onRequestFailure ["+replyData+"]")
+                                } else {
+                                    console.log("== usersShow onRequestSuccess ["+replyData+"]")
+                                    userMeObject.userInfo = JSON.parse(replyData)
+                                }
+                            });
                             callback.call(this, inner.us_object);
                         } else {
                             callback.call(this, inner.us_object);
@@ -122,7 +96,7 @@ Panel {
         }
         function messageGetRemind(callback) {
             if (tokenProvider.useHackLogin) {
-                WBLoader.create("../requests/hack/HackRemindUnreadCount.qml", panel,
+                WBLoader.create("../requests/RQHackRemindUnreadCount.qml", panel,
                     function(object, component, incubator) {
                         inner.rc_component = component;
                         inner.rc_incubator = incubator;
@@ -136,28 +110,16 @@ Panel {
                                     console.log("== HackRemindUnreadCount onRequestFailure ["+replyData+"]")
                                 } else {
                                     console.log("== HackRemindUnreadCount onRequestSuccess ["+replyData+"]")
-                                    //create remindObject if not created
-                                    if (!globalInner.remindObject) {
-                                        WBLoader.create("../components/RemindObject.qml", panel,
-                                            function(object, component, incubator){
-                                                if (object)
-                                                    globalInner.remindObject = object;
-//                                                parserRemind(JSON.parse(replyData));
-                                                Utility.parserRemind(globalInner.remindObject, JSON.parse(replyData));
-                                            });
-                                    } else {
-//                                        parserRemind(JSON.parse(replyData));
-                                        Utility.parserRemind(globalInner.remindObject, JSON.parse(replyData));
-                                    }
+                                    Utility.parserRemind(remindObject, JSON.parse(replyData));
                                 }
-                                });
+                            });
                             callback.call(this, inner.rc_object);
                         } else {
                             callback.call(this, inner.rc_object);
                         }
                     });
             } else {
-                WBLoader.create("../requests/oauth/RemindUnreadCount.qml", panel,
+                WBLoader.create("../requests/OauthRemindUnreadCount.qml", panel,
                     function(object, component, incubator) {
                         inner.rc_component = component;
                         inner.rc_incubator = incubator;
@@ -171,24 +133,14 @@ Panel {
                                     console.log("== remindUnreadCount onRequestFailure ["+replyData+"]")
                                 } else {
                                     console.log("== remindUnreadCount onRequestSuccess ["+replyData+"]")
-                                    //create remindObject if not created
-                                    if (!globalInner.remindObject) {
-                                        WBLoader.create("../components/RemindObject.qml", panel,
-                                            function(object, component, incubator){
-                                                if (object)
-                                                    globalInner.remindObject = object;
-                                                globalInner.remindObject.remind = JSON.parse(replyData);
-                                            });
-                                    } else {
-                                        globalInner.remindObject.remind = JSON.parse(replyData);
-                                    }
+                                    remindObject.remind = JSON.parse(replyData);
                                 }
-                                });
+                            });
                             callback.call(this, inner.rc_object);
                         } else {
                             callback.call(this, inner.rc_object);
                         }
-                    });
+                });
             }
         }
     }
@@ -230,6 +182,13 @@ Panel {
             id: userAvatar
             width: column.width
             height: cover.height
+            Rectangle {
+                anchors.fill: parent
+                color: (userMeObject.cover_image_phone == undefined
+                             || userMeObject.cover_image_phone == "")
+                        ? Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
+                        : "transparent"
+            }
             BusyIndicator {
                 id: avatarLoading
                 anchors.centerIn: parent
@@ -244,7 +203,7 @@ Panel {
                 height: cover.width *2/3
                 fillMode: Image.PreserveAspectCrop
                 asynchronous: true
-                source: appUtility.parseImageUrl(globalInner.userInfoObject.cover_image_phone)
+                source: appUtility.parseImageUrl(userMeObject.cover_image_phone)
             }
             Image {
                 id: profile
@@ -252,7 +211,7 @@ Panel {
                 height: width
                 anchors.centerIn: cover
                 asynchronous: true
-                source: appUtility.parseImageUrl(globalInner.userInfoObject.profile_image_url)
+                source: appUtility.parseImageUrl(userMeObject.profile_image_url)
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -262,7 +221,7 @@ Panel {
             }
             Label {
                 id: screenName
-                text: globalInner.userInfoObject.screen_name
+                text: userMeObject.screen_name
                 anchors {
                     top: profile.bottom
                     topMargin: Theme.paddingSmall
@@ -285,7 +244,7 @@ Panel {
             onClicked: {
                 wbFunc.toIndexPage();
             }
-            dotOpacity: globalInner.remindObject.status == 0 ? 0 : 1
+            dotOpacity: remindObject.status == 0 ? 0 : 1
         }
         HorizontalIconTextButton {
             id: atMeWeibo
@@ -301,7 +260,7 @@ Panel {
             onClicked: {
                 wbFunc.toWeiboMentionedPage();
             }
-            dotOpacity: globalInner.remindObject.mention_status == "0" ? 0 : 1
+            dotOpacity: remindObject.mention_status == "0" ? 0 : 1
         }
         HorizontalIconTextButton {
             id: atMeComment
@@ -317,7 +276,7 @@ Panel {
             onClicked: {
                 wbFunc.toCommentMentionedPage();
             }
-            dotOpacity: globalInner.remindObject.mention_cmt == "0" ? 0 : 1
+            dotOpacity: remindObject.mention_cmt == "0" ? 0 : 1
         }
         HorizontalIconTextButton {
             id: comment
@@ -333,7 +292,7 @@ Panel {
             onClicked: {
                 wbFunc.toCommentAllPage();
             }
-            dotOpacity: globalInner.remindObject.cmt == "0" ? 0 : 1
+            dotOpacity: remindObject.cmt == "0" ? 0 : 1
         }
         HorizontalIconTextButton {
             id: pm
@@ -349,7 +308,7 @@ Panel {
             onClicked: {
                 wbFunc.toDummyDialog();
             }
-            dotOpacity: globalInner.remindObject.dm == "0" ? 0 : 1
+            dotOpacity: remindObject.dm == "0" ? 0 : 1
         }
         HorizontalIconTextButton {
             width: column.width - Theme.paddingLarge *2

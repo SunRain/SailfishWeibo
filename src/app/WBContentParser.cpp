@@ -101,6 +101,8 @@ QString WBContentParser::strToLink(const QString &str, const QString &url, const
 {
     if (str.isEmpty ())
         return str;
+//    if (TokenProvider::instance ()->useHackLogin ())
+//        return QString("<a href=\\\"%1\\\"><font color=\\\"%2\\\">%3</font></a>").arg(url).arg(linkColor).arg(str);
     return QString("<a href=\"%1\"><font color=\"%2\">%3</font></a>").arg(url).arg(linkColor).arg(str);
 }
 
@@ -110,6 +112,7 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
                                                        const QString &linkColor)
 {
     qDebug()<<Q_FUNC_INFO<<" >>>>>>>>>>>>>>>>>>>>> begin parser <<<<<<<<<<<<<<<<< ";
+    qDebug()<<"Origin text ["<<weiboContent<<"]";
 
     HTML::ParserDom parser;
     tree<HTML::Node> dom = parser.parseTree(weiboContent.toStdString ());
@@ -117,7 +120,6 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
     tree<HTML::Node>::iterator it = dom.begin();
     tree<HTML::Node>::iterator end = dom.end();
 
-    QString tmp = QString();
     QStringList retList;
 
     for (; it != end; ++it) {
@@ -140,16 +142,24 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
                 if (!cls.isEmpty ()) {
                     if (cls == "k") { // k for topic
                         //TODO add topic link
+                        QString link = TO_QSTR((*it).attribute ("href").second);
                         (*++it).parseAttributes ();
                         QString text = TO_QSTR((*it).text ());
                         qDebug()<<"topic text value "<<text;
+                        QString tmp = QString("LinkTopic||%1").arg (link);
+                        text = this->strToLink (text, tmp, linkColor);
+                        qDebug()<<"link is "<<text;
                         retList.append (text);
                     }
                     //TODO more types
                     else { // not for topic
+                        QString link = TO_QSTR((*it).attribute ("href").second);
                         (*++it).parseAttributes ();
                         QString text = TO_QSTR((*it).text ());
                         qDebug()<<"text value "<<text;
+                        QString tmp = QString("LinkUnknow||%1").arg (link);
+                        text = this->strToLink (text, tmp, linkColor);
+                        qDebug()<<"link is "<<text;
                         retList.append (text);
                     }
                 } else { //class is empty
@@ -164,10 +174,23 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
         </span>
     </a>
 */
+                    /******************* for web link ,eg. *********************/
+/*
+    <a data-url=\"http://t.cn/RGCVGv8\" href=\"http://weibo.cn/sinaurl?u=http%3A%2F%2Fandroid-developers.blogspot.com%2F2016%2F02%2Fandroid-support-library-232.html&ep=Djrgcz8vq%2C1503535883%2CDjrgcz8vq%2C1503535883\">
+        <i class=\"iconimg iconimg-xs\">
+            <img src=\"http://h5.sinaimg.cn/upload/2015/09/25/3/timeline_card_small_web_default.png\">
+        </i>
+        <span class=\"surl-text\">
+        网页链接
+        </span>
+    </a>
+  */
                     QString dtUrl = TO_QSTR((*it).attribute ("data-url").second);
                     qDebug()<<"tagName a , dtUrl name "<<dtUrl;
-                    if (!dtUrl.isEmpty ()) { //for video
+                    if (!dtUrl.isEmpty ()) { //for video or web link
                         (*++it).parseAttributes ();
+                        if ((*it).tagName () == "i")
+                            (*++it).parseAttributes ();
                         QString videoImg = TO_QSTR((*it).text ());
                         qDebug()<<"tagName a , videoImg "<<videoImg;
                         (*++it).parseAttributes ();
@@ -176,11 +199,19 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
                         (*it).parseAttributes ();
                         QString text = TO_QSTR((*it).text ());
                         qDebug()<<"tagName a , video text is "<<text;
+                        QString tmp = QString("LinkWebOrVideo||%1").arg (dtUrl);
+                        text = QString("%1%2").arg (videoImg).arg (text);
+                        text = this->strToLink (text, tmp, linkColor);
+                        qDebug()<<"link is "<<text;
                         retList.append (text);
                     } else { //for at someone
+                        QString link = TO_QSTR((*it).attribute ("href").second);
                         (*++it).parseAttributes ();
                         QString text = TO_QSTR((*it).text ());
                         qDebug()<<"tagName a , at text is "<<text;
+                        QString tmp = QString("LinkAt||%1").arg (link);
+                        text = this->strToLink (text, tmp, userColor);
+                        qDebug()<<"link is "<<text;
                         retList.append (text);
                     }
                 }
@@ -191,6 +222,9 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
                 QString text = TO_QSTR((*it).text ());
                 qDebug()<<"face text value "<<text;
                 retList.append (text);
+            } else {
+                qWarning()<<Q_FUNC_INFO<<"tagName is a, but we don't know other attributes!!";
+                continue;
             }
         } else { // tag is a text
             QString text = TO_QSTR((*it).text ());
@@ -201,8 +235,8 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
     QString ret = retList.join ("");
     qDebug()<<Q_FUNC_INFO<<"ret is "<<ret;
     qDebug()<<Q_FUNC_INFO<<" >>>>>>>>>>>>>>>>>>>>>  end of parser <<<<<<<<<<<<<< ";
-//    return retList.join ("");
-    return weiboContent;
+    return retList.join ("");
+//    return weiboContent;
 }
 
 QString WBContentParser::parseEmoticons(const QString &pattern, const QString &emoticonStr)

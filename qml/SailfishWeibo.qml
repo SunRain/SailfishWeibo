@@ -46,11 +46,13 @@ ApplicationWindow
     property bool tokenValid: false
     property bool reminderRefreshed: false
 
-    QtObject {
-        id: globalInner
-        property RemindObject remindObject: null
-        property UserInfoObject userInfoObject: null
-    }
+//    QtObject {
+//        id: globalInner
+//        property RemindObject remindObject: null
+//        property UserInfoObject userInfoObject: null
+//    }
+    RemindObject {id: remindObject}
+    UserInfoObject {id: userMeObject}
 
     initialPage: Component {
         SplashesPage { //SplashesPage，同时用于初始化数据库和检测token值
@@ -200,7 +202,7 @@ ApplicationWindow
                 panelView.hidePanel();
             }
             onUserAvatarClicked: {
-                wbFunc.toUserPage(tokenProvider.uid);
+                wbFunc.toUserPage(tokenProvider.hackLoginUid);
             }
 
             Component.onCompleted: {
