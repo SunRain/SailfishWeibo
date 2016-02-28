@@ -493,82 +493,82 @@
         <translation>上传中。。。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="401"/>
+        <location filename="../qml/pages/SendPage.qml" line="402"/>
         <source>comment option</source>
         <translation>评论选项</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="405"/>
+        <location filename="../qml/pages/SendPage.qml" line="406"/>
         <source>Do not comment original Weibo</source>
         <translation>不评论原微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="409"/>
+        <location filename="../qml/pages/SendPage.qml" line="410"/>
         <source>Also comment original Weibo</source>
         <translation>同时评论原微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="421"/>
+        <location filename="../qml/pages/SendPage.qml" line="422"/>
         <source>repost option</source>
         <translation>转发选项</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="425"/>
+        <location filename="../qml/pages/SendPage.qml" line="426"/>
         <source>No comments</source>
         <translation>没有评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="429"/>
+        <location filename="../qml/pages/SendPage.qml" line="430"/>
         <source>Comment current Weibo</source>
         <translation>评论给当前微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="433"/>
+        <location filename="../qml/pages/SendPage.qml" line="434"/>
         <source>Comment original Weibo</source>
         <translation>评论给原微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="437"/>
+        <location filename="../qml/pages/SendPage.qml" line="438"/>
         <source>Both</source>
         <translation>以上都选</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="475"/>
+        <location filename="../qml/pages/SendPage.qml" line="476"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="515"/>
+        <location filename="../qml/pages/SendPage.qml" line="516"/>
         <source>@SomeOne</source>
         <translation>@</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="525"/>
+        <location filename="../qml/pages/SendPage.qml" line="526"/>
         <source>Add Image</source>
         <translation>添加图片</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="577"/>
+        <location filename="../qml/pages/SendPage.qml" line="578"/>
         <source>Click the inserted image to remove from the uploading queue</source>
         <translation>点击已插入的图片可以将图片移除</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="624"/>
+        <location filename="../qml/pages/SendPage.qml" line="625"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="629"/>
+        <location filename="../qml/pages/SendPage.qml" line="630"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="634"/>
+        <location filename="../qml/pages/SendPage.qml" line="635"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="640"/>
+        <location filename="../qml/pages/SendPage.qml" line="641"/>
         <source>Send Weibo</source>
         <translation>发送微博</translation>
     </message>

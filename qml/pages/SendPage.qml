@@ -342,7 +342,8 @@ Page {
                 wbFunc.addNotification(qsTr("Uploading, please wait.."), 2)
                 var status = encodeURIComponent(content.text)
 //                networkHelper.uploadImgStatus(api.accessToken, status, imgPath)
-                imageUploader.uploadImage(status, imgPath);
+//                imageUploader.uploadImage(status, imgPath);
+                imageUploader.sendWeiboWithImage(status, imgPath);
             }
             break
         }
