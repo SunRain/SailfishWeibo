@@ -15,6 +15,8 @@ using namespace QWeiboSDK;
 using namespace htmlcxx;
 using namespace std;
 
+#define DBG_HTMLPARSER 0
+
 #define TO_QSTR(x) QString::fromStdString (x)
 
 WBContentParser::WBContentParser(QObject *parent)
@@ -111,9 +113,10 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
                                                        const QString &userColor,
                                                        const QString &linkColor)
 {
+#if DBG_HTMLPARSER
     qDebug()<<Q_FUNC_INFO<<" >>>>>>>>>>>>>>>>>>>>> begin parser <<<<<<<<<<<<<<<<< ";
     qDebug()<<"Origin text ["<<weiboContent<<"]";
-
+#endif
     HTML::ParserDom parser;
     tree<HTML::Node> dom = parser.parseTree(weiboContent.toStdString ());
 
@@ -124,7 +127,7 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
 
     for (; it != end; ++it) {
         (*it).parseAttributes ();
-
+#if DBG_HTMLPARSER
         if ((*it).isTag ()) {
             qDebug()<<"<TAG> [tagname ="<<TO_QSTR ((*it).tagName ())
                    <<"] [text="<<TO_QSTR ((*it).text ())<<"]";
@@ -135,20 +138,27 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
             qDebug()<<"<TEXT> [tagname ="<<TO_QSTR ((*it).tagName ())
                    <<"] [text="<<TO_QSTR ((*it).text ())<<"]";
         }
+#endif
         if ((*it).isTag ()) {
             if ((*it).tagName () == "a") { //link
                 QString cls = TO_QSTR((*it).attribute ("class").second);
+#if DBG_HTMLPARSER
                 qDebug()<<"tagName a , class name "<<cls;
+#endif
                 if (!cls.isEmpty ()) {
                     if (cls == "k") { // k for topic
                         //TODO add topic link
                         QString link = TO_QSTR((*it).attribute ("href").second);
                         (*++it).parseAttributes ();
                         QString text = TO_QSTR((*it).text ());
+#if DBG_HTMLPARSER
                         qDebug()<<"topic text value "<<text;
+#endif
                         QString tmp = QString("LinkTopic||%1").arg (link);
                         text = this->strToLink (text, tmp, linkColor);
+#if DBG_HTMLPARSER
                         qDebug()<<"link is "<<text;
+#endif
                         retList.append (text);
                     }
                     //TODO more types
@@ -156,10 +166,14 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
                         QString link = TO_QSTR((*it).attribute ("href").second);
                         (*++it).parseAttributes ();
                         QString text = TO_QSTR((*it).text ());
+#if DBG_HTMLPARSER
                         qDebug()<<"text value "<<text;
+#endif
                         QString tmp = QString("LinkUnknow||%1").arg (link);
                         text = this->strToLink (text, tmp, linkColor);
+#if DBG_HTMLPARSER
                         qDebug()<<"link is "<<text;
+#endif
                         retList.append (text);
                     }
                 } else { //class is empty
@@ -186,41 +200,57 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
     </a>
   */
                     QString dtUrl = TO_QSTR((*it).attribute ("data-url").second);
+#if DBG_HTMLPARSER
                     qDebug()<<"tagName a , dtUrl name "<<dtUrl;
+#endif
                     if (!dtUrl.isEmpty ()) { //for video or web link
                         (*++it).parseAttributes ();
                         if ((*it).tagName () == "i")
                             (*++it).parseAttributes ();
                         QString videoImg = TO_QSTR((*it).text ());
+#if DBG_HTMLPARSER
                         qDebug()<<"tagName a , videoImg "<<videoImg;
+#endif
                         (*++it).parseAttributes ();
                         if ((*it).tagName () == "span")
                             (*++it).parseAttributes ();
                         (*it).parseAttributes ();
                         QString text = TO_QSTR((*it).text ());
+#if DBG_HTMLPARSER
                         qDebug()<<"tagName a , video text is "<<text;
+#endif
                         QString tmp = QString("LinkWebOrVideo||%1").arg (dtUrl);
                         text = QString("%1%2").arg (videoImg).arg (text);
                         text = this->strToLink (text, tmp, linkColor);
+#if DBG_HTMLPARSER
                         qDebug()<<"link is "<<text;
+#endif
                         retList.append (text);
                     } else { //for at someone
                         QString link = TO_QSTR((*it).attribute ("href").second);
                         (*++it).parseAttributes ();
                         QString text = TO_QSTR((*it).text ());
+#if DBG_HTMLPARSER
                         qDebug()<<"tagName a , at text is "<<text;
+#endif
                         QString tmp = QString("LinkAt||%1").arg (link);
                         text = this->strToLink (text, tmp, userColor);
+#if DBG_HTMLPARSER
                         qDebug()<<"link is "<<text;
+#endif
                         retList.append (text);
                     }
                 }
             } else if ((*it).tagName () == "i") { //i is for face ?
                 QString cls = TO_QSTR((*it).attribute ("class").second);
+#if DBG_HTMLPARSER
                 qDebug()<<"tagName i , class name "<<cls;
+#endif
                 (*++it).parseAttributes ();
                 QString text = TO_QSTR((*it).text ());
+#if DBG_HTMLPARSER
                 qDebug()<<"face text value "<<text;
+#endif
                 retList.append (text);
             } else {
                 qWarning()<<Q_FUNC_INFO<<"tagName is a, but we don't know other attributes!!";
@@ -228,15 +258,18 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
             }
         } else { // tag is a text
             QString text = TO_QSTR((*it).text ());
+#if DBG_HTMLPARSER
             qDebug()<<"simple text value "<<text;
+#endif
             retList.append (text);
         }
     }
     QString ret = retList.join ("");
+#if DBG_HTMLPARSER
     qDebug()<<Q_FUNC_INFO<<"ret is "<<ret;
     qDebug()<<Q_FUNC_INFO<<" >>>>>>>>>>>>>>>>>>>>>  end of parser <<<<<<<<<<<<<< ";
+#endif
     return retList.join ("");
-//    return weiboContent;
 }
 
 QString WBContentParser::parseEmoticons(const QString &pattern, const QString &emoticonStr)
