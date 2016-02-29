@@ -36,7 +36,10 @@ WBPage {
 
     function _removeFromFavorites(weiboId) {
         wbFunc.addNotification(qsTr("Removing from favorites"))
-        favoritesDestroy.setParameters("id", weiboId);
+        if (tokenProvider.useHackLogin)
+            favoritesDestroy.appendPostDataParameters("id", weiboId);
+        else
+            favoritesDestroy.setParameters("id", weiboId);
         favoritesDestroy.postRequest();
     }
     WrapperFavoritesList {
@@ -60,7 +63,7 @@ WBPage {
             pullDownMenu.busy = false;
         }
     }
-    FavoritesDestroy {
+    /*FavoritesDestroy*/WrapperFavoritesDestroy {
         id: favoritesDestroy
         onRequestAbort: {
             console.log("== favoritesDestroy onRequestAbort");

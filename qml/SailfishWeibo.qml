@@ -314,7 +314,7 @@ ApplicationWindow
         id: wbFunc
     }
 
-//    MyType {
-//        id: appData
-//    }
+    WBSendFunctions {
+        id: wbSend
+    }
 }

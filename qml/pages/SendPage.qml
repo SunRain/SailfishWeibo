@@ -14,354 +14,27 @@ import harbour.sailfish_sinaweibo.sunrain 1.0
 
 Page {
     id: sendPage
-    //    title: qsTr("Send Weibo")
-    //flickable: null
-    
     property string mode: ""
+    onModeChanged: {
+        wbSend.mode = mode;
+    }
+
 //    property var repostType: [qsTr("No comments"), qsTr("Comment current Weibo"), qsTr("Comment original Weibo"), qsTr("Both")]
 //    property var commentType: [qsTr("Do not comment original Weibo"), qsTr("Also comment original Weibo")]
     
     property string sendTitle
     property var userInfo         // include id, cid, etc..
+    onUserInfoChanged: {
+        wbSend.userInfo = userInfo;
+    }
+
     property string placeHoldText:""
-    //property string imgPath: ""
     property string imgPath: ""
     property int optionIndex: 0
 
-    function popAndShowError() {
-        wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
-        pageStack.pop();
-    }
-
-    //////////////////////////////////////////////////////////////////         send weibo
-    function sendStatus(status)  {
-//        REQUEST_API_BEGIN(statuses_update, "2/statuses/update")
-//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
-//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
-//                ("status", "")  //要发布的微博文本内容，必须做URLencode，内容不超过140个汉字。
-//                ("visible", 0)  //微博的可见性，0：所有人能看，1：仅自己可见，2：密友可见，3：指定分组可见，默认为0。
-//                ("list_id", "")  //微博的保护投递指定分组ID，只有当visible参数为3时生效且必选。
-//                ("lat", 0.0)  //纬度，有效范围：-90.0到+90.0，+表示北纬，默认为0.0。
-//                ("long", 0.0)  //经度，有效范围：-180.0到+180.0，+表示东经，默认为0.0。
-//                ("annotations", "")  //元数据，主要是为了方便第三方应用记录一些适合于自己使用的信息，每条微博可以包含一个或者多个元数据，必须以json字串的形式提交，字串长度不超过512个字符，具体内容可以自定。
-//                ("rip", "")  //开发者上报的操作用户真实IP，形如：211.156.0.1。   
-//        var method = WeiboMethod.WBOPT_POST_STATUSES_UPDATE;
-//        api.setWeiboAction(method, {'status':status});
-        statusesUpdate.setParameters("status", status);
-        statusesUpdate.postRequest();
-    }
-    /*StatusesUpdate*/WrapperStatusesUpdate {
-        id: statusesUpdate
-        onRequestAbort: {
-            console.log("== statusesUpdate onRequestAbort");
-            popAndShowError();
-        }
-        onRequestFailure: { //replyData
-            console.log("== statusesUpdate onRequestFailure ["+replyData+"]")
-            popAndShowError();
-        }
-        onRequestSuccess: { //replyData
-            var result = JSON.parse(replyData);
-            if (result.error) {
-                popAndShowError();
-                return;
-            }
-            if (result.id != undefined) {
-                wbFunc.addNotification(qsTr("New Weibo sent"), 3)
-                pageStack.pop()
-            } else {
-                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
-            }
-        }
-    }
-
-//    NetworkHelper {
-//        id: networkHelper
-//    }
-    /*ImageUploader*/WrapperImageUploader {
-        id: imageUploader
-        onRequestAbort: {
-            console.log("== imageUploader onRequestAbort");
-            wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
-        }
-        onRequestFailure: { //replyData
-            console.log("== imageUploader onRequestFailure ["+replyData+"]")
-            wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
-        }
-        onRequestSuccess: { //replyData
-            console.log("===== imageUploader onRequestSuccess [" + replyData +"]")
-            var reply = JSON.parse(replyData)
-            if (tokenProvider.useHackLogin) {
-                if (reply.ok) {
-                    imgPath = imgPath +"," + reply.pic_id;
-                }
-            } else {
-                if (reply.error) {
-                    wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
-                } else {
-                    if (reply.id != undefined) {
-                        wbFunc.addNotification(qsTr("New Weibo sent"), 3)
-                        pageStack.pop()
-                    }
-                }
-            }
-        }
-    }
-    
-//    // Connections for upload image
-//    Connections {
-//        id: connNetworkHelper
-//        target: networkHelper
-        
-//        onUploadFinished: {
-//            var reply = JSON.parse(response)
-//            if (reply.error) {
-//                addNotification(qsTr("Oops.. something wrong"), 3)
-//            } else {
-//                if (reply.id != undefined) {
-//                    addNotification(qsTr("New Weibo sent"), 3)
-//                    pageStack.pop()
-//                }
-//            }
-//        }
-//    }
-    
-    //////////////////////////////////////////////////////////////////         send repost
-    // is_comment 是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
-    function repostStatus(status, id, is_comment) {
-//        REQUEST_API_BEGIN(statuses_repost, "2/statuses/repost")
-//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
-//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
-//                ("id", 0)  //要转发的微博ID。
-//                ("status", "")  //添加的转发文本，必须做URLencode，内容不超过140个汉字，不填则默认为“转发微博”。
-//                ("is_comment", 0)  //是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
-//                ("rip", "")  //开发者上报的操作用户真实IP，形如：211.156.0.1。
-        //WBOPT_POST_STATUSES_REPOST,
-        
-        
-//        var method = WeiboMethod.WBOPT_POST_STATUSES_REPOST;
-//        api.setWeiboAction(method, {
-//                               'status':status,
-//                               'id':" "+id+" ",
-//                               'is_comment':is_comment});
-        statusesRepost.setParameters("status", status);
-        statusesRepost.setParameters("id", " "+id+" ");
-        statusesRepost.setParameters("is_comment", is_comment);
-        //TODO 同时评论的用户id（即发送被转发的微博的用户id） for hacklogin
-        statusesRepost.setParameters("rtcomment", "");
-        statusesRepost.postRequest();
-    }
-    /*StatusesRepost*/WrapperStatusesRepost {
-        id: statusesRepost
-        onRequestAbort: {
-            console.log("== statusesRepost onRequestAbort");
-            popAndShowError();
-        }
-        onRequestFailure: { //replyData
-            console.log("== statusesRepost onRequestFailure ["+replyData+"]")
-            popAndShowError();
-        }
-        onRequestSuccess: { //replyData
-            var result = JSON.parse(replyData);
-            if (result.error) {
-                popAndShowError();
-                return;
-            }
-            if (result.id != undefined) {
-                wbFunc.addNotification(qsTr("Repost sent"), 3)
-                pageStack.pop()
-            }else {
-                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
-            }
-        }
-    }
-    
-    //////////////////////////////////////////////////////////////////         send comment
-    // id 需要评论的微博ID。  // comment_ori 当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
-    function sendComment(comment, id, comment_ori)  {
-//        REQUEST_API_BEGIN(comments_create, "2/comments/create")
-//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
-//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
-//                ("comment", "")  //评论内容，必须做URLencode，内容不超过140个汉字。
-//                ("id", 0)  //需要评论的微博ID。
-//                ("comment_ori", 0)  //当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
-//                ("rip", "")  //开发者上报的操作用户真实IP，形如：211.156.0.1。
-        // WBOPT_POST_COMMENTS_CREATE,//评论一条微博
-        
-//        var method = WeiboMethod.WBOPT_POST_COMMENTS_CREATE;
-//        api.setWeiboAction(method, {
-//                               'comment':comment,
-//                               'id':" "+id+" ",
-//                               'comment_ori':comment_ori});
-        commentsCreate.setParameters("comment", comment);
-        commentsCreate.setParameters("id", " "+id+" ");
-        commentsCreate.setParameters("comment_ori", comment_ori);
-        commentsCreate.postRequest();
-    }
-    /*CommentsCreate*/WrapperCommentsCreate {
-        id: commentsCreate
-        onRequestAbort: {
-            console.log("== commentsCreate onRequestAbort");
-            popAndShowError();
-        }
-        onRequestFailure: { //replyData
-            console.log("== commentsCreate onRequestFailure ["+replyData+"]")
-            popAndShowError();
-        }
-        onRequestSuccess: { //replyData
-            var result = JSON.parse(replyData);
-            if (result.error) {
-                popAndShowError();
-                return;
-            }
-            if (result.id != undefined) {
-                wbFunc.addNotification(qsTr("Comment sent"), 3)
-                pageStack.pop()
-            }else {
-                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
-            }
-        }
-    }
-
-    
-    //////////////////////////////////////////////////////////////////         reply comment
-    // id, comment_ori same above // commentid 需要回复的评论ID。  without_mention 回复中是否自动加入“回复@用户名”，0：是、1：否，默认为0。
-    function replyComment(comment, id, comment_ori, commentid, without_mention) {
-//        REQUEST_API_BEGIN(comments_reply, "2/comments/reply")
-//                ("source", "")  //采用OAuth授权方式不需要此参数，其他授权方式为必填参数，数值为应用的AppKey。
-//                ("access_token", "")  //采用OAuth授权方式为必填参数，其他授权方式不需要此参数，OAuth授权后获得。
-//                ("cid", 0)  //需要回复的评论ID。
-//                ("id", 0)  //需要评论的微博ID。
-//                ("comment", "")  //回复评论内容，必须做URLencode，内容不超过140个汉字。
-//                ("without_mention", 0)  //回复中是否自动加入“回复@用户名”，0：是、1：否，默认为0。
-//                ("comment_ori", 0)  //当评论转发微博时，是否评论给原微博，0：否、1：是，默认为0。
-//                ("rip", "")  //开发者上报的操作用户真实IP，形如：211.156.0.1。
-        //WBOPT_POST_COMMENTS_REPLY,//回复一条评论
-//        var method = WeiboMethod.WBOPT_POST_COMMENTS_REPLY;
-//        api.setWeiboAction(method, {
-//                               'comment':comment,
-//                               'id':" "+id+" ",
-//                               'comment_ori':comment_ori,
-//                               'cid':" "+commentid+" ",
-//                               'without_mention':without_mention});
-
-        commentsReply.setParameters("id", comment);
-        commentsReply.setParameters("comment", " "+id+" ");
-        commentsReply.setParameters("comment_ori", comment_ori);
-        commentsReply.setParameters("cid", " "+commentid+" ");
-        commentsReply.setParameters("without_mention", without_mention);
-        commentsReply.postRequest();
-    }
-    /*CommentsReply*/WrapperCommentsReply {
-        id: commentsReply
-        onRequestAbort: {
-            console.log("== commentsReply onRequestAbort");
-            popAndShowError();
-        }
-        onRequestFailure: { //replyData
-            console.log("== commentsReply onRequestFailure ["+replyData+"]")
-            popAndShowError();
-        }
-        onRequestSuccess: { //replyData
-            var result = JSON.parse(replyData);
-            if (result.error) {
-                popAndShowError();
-                return;
-            }
-            if (result.id != undefined) {
-                wbFunc.addNotification(qsTr("Reply sent"), 3)
-                pageStack.pop()
-            } else {
-                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
-            }
-        }
-    }
-
-//    Connections {
-//        target: api
-//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-//        onWeiboPutSucceed: {
-//            var result = JSON.parse(replyData);
-//            if (result.error) {
-//                addNotification(qsTr("Oops.. something wrong"), 3)
-//                pageStack.pop();
-//                return;
-//            }
-
-//            if (action == WeiboMethod.WBOPT_POST_STATUSES_UPDATE) { //发送微博
-//                if (result.id != undefined) {
-//                    addNotification(qsTr("New Weibo sent"), 3)
-//                    pageStack.pop()
-//                } else {
-//                    addNotification(qsTr("Oops.. something wrong"), 3)
-//                }
-//            }
-//            if (action == WeiboMethod.WBOPT_POST_STATUSES_REPOST) { // send repost
-//                if (result.id != undefined) {
-//                    addNotification(qsTr("Repost sent"), 3)
-//                    pageStack.pop()
-//                }else {
-//                    addNotification(qsTr("Oops.. something wrong"), 3)
-//                }
-//            }
-//            if (action == WeiboMethod.WBOPT_POST_COMMENTS_CREATE) { // send comment
-//                if (result.id != undefined) {
-//                    addNotification(qsTr("Comment sent"), 3)
-//                    pageStack.pop()
-//                }else {
-//                    addNotification(qsTr("Oops.. something wrong"), 3)
-//                }
-//            }
-//            if (action == WeiboMethod.WBOPT_POST_COMMENTS_REPLY) { //  reply comment
-//                if (result.id != undefined) {
-//                    addNotification(qsTr("Reply sent"), 3)
-//                    pageStack.pop()
-//                }else {
-//                    addNotification(qsTr("Oops.. something wrong"), 3)
-//                }
-//            }
-//        }
-//    }
-    
-    //////////////////////////////////////////////////////////////////         set img path
-    function setImgPath(filePath) {
-        console.log("filePath: ", filePath)
-        if (!tokenProvider.useHackLogin) {
-            imgPath = filePath
-        } else {
-            imageUploader.uploadImage(filePath);
-        }
-    }
-    
-    function sendWeibo() {
-        switch (sendPage.mode) {
-        case "repost" :
-            repostStatus(content.text, userInfo.id, optionIndex)
-            break
-        case "comment" :
-            sendComment(content.text, userInfo.id, optionIndex)
-            break
-        case "reply" :
-            replyComment(content.text, userInfo.id, optionIndex, userInfo.cid, 0)
-            break
-        default:
-            if (tokenProvider.useHackLogin) {
-                statusesUpdate.setParameters("status", encodeURIComponent(content.text));
-                if (imgPath != "" && imgPath != undefined) {
-                    statusesUpdate.setParameters("picId", imgPath);
-                }
-                statusesUpdate.postRequest();
-            } else {
-                if (imgPath == "" || imgPath == undefined) {
-                    sendStatus(content.text)
-                } else {
-                    wbFunc.addNotification(qsTr("Uploading, please wait.."), 2)
-                    var status = encodeURIComponent(content.text)
-                    imageUploader.sendWeiboWithImage(status, imgPath);
-                }
-            }
-            break
-        }
+    property alias contentText: content.text
+    onContentTextChanged: {
+        wbSend.contentText = contentText;
     }
 
     Component {
@@ -390,24 +63,6 @@ Page {
             }
         }
     }
-    
-//    Component {
-//        id:insertImageSheet
-//        ImagePreviewComponent {
-//            id: imagePreviewComponent
-//            anchors.fill: parent
-
-//            onImageClicked: {
-//                //console.log("SendPage == imagePreviewComponent clicked " +  model.url);
-//                //TODO 暂时只支持上传一张图片
-//                modelImages.clear();
-//                modelImages.append(
-//                            {"path":/*model.get(index).url*/model.url.toString()}
-//                            );
-//                setImgPath(model.url.toString());
-//            }
-//        }
-//    }
 
     Component {
         id:commentOption
@@ -492,35 +147,7 @@ Page {
                     onClicked: {
                         console.log("SendPage == SendIcon click, we send [" + content.text +"]  for mode " 
                                     + sendPage.mode + " with option " + optionIndex);
-                        sendWeibo();
-                        //TODO 是否添加图片在微博中
-                        //noPic added in content
-                        //sendStatus(Settings.getAccess_token(), content.text)
-                        //pic addedin content
-                        //mainView.addNotification(i18n.tr("Uploading, please wait.."), 2)
-                        //var status = encodeURIComponent(textSendContent.text)
-                        // networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
-//                        switch (sendPage.mode) {
-//                        case "repost" :
-//                            repostStatus(Settings.getAccess_token(), content.text, userInfo.id, optionIndex)
-//                            break
-//                        case "comment" :
-//                            sendComment(Settings.getAccess_token(), content.text, userInfo.id, optionIndex)
-//                            break
-//                        case "reply" :
-//                            replyComment(Settings.getAccess_token(), content.text, userInfo.id, optionIndex, userInfo.cid, 0)
-//                            break
-//                        default:
-//                            if (imgPath == "" || imgPath == undefined) {
-//                                sendStatus(Settings.getAccess_token(), content.text)
-//                            }
-//                            else {
-//                                addNotification(i18n.tr("Uploading, please wait.."), 2)
-//                                var status = encodeURIComponent(content.text)
-//                                networkHelper.uploadImgStatus(Settings.getAccess_token(), status, imgPath)
-//                            }
-//                            break
-//                        }
+                        wbSend.sendWeibo();
                     }
                 }
             }
@@ -553,7 +180,7 @@ Page {
                             modelImages.append(
                                         {"path":tmp}
                                         );
-                            setImgPath(imagePath);
+                            wbSend.setImgPath(imagePath);
                         });
                     }
                 }
@@ -615,7 +242,7 @@ Page {
                                     onClicked: {
                                         console.log("SendPage === inserted image clicked" + index);
                                         modelImages.remove(index);
-                                        setImgPath("");
+                                        wbSend.setImgPath("");
                                     }
                                     onDoubleClicked: {
                                         console.log("SendPage === inserted image onDoubleClicked")

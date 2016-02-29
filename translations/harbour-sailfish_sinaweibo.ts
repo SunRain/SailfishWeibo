@@ -401,10 +401,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New Weibo sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Oops.. something wrong</source>
         <translation type="unfinished"></translation>
     </message>
@@ -454,10 +450,6 @@
     </message>
     <message>
         <source>Send Weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploading, please wait..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -546,6 +538,21 @@
     <name>UserWeibo</name>
     <message>
         <source>&apos;s Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WBSendFunctions</name>
+    <message>
+        <source>New Weibo sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Oops.. something wrong</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploading, please wait..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

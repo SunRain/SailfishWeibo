@@ -62,5 +62,6 @@
         <file>requests/RQHackRemindUnreadCount.qml</file>
         <file>requests/RQHackUsersInfo.qml</file>
         <file>requests/RQHackUsersInfoMe.qml</file>
+        <file>WBSendFunctions.qml</file>
     </qresource>
 </RCC>
