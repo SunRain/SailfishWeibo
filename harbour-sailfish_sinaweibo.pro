@@ -62,8 +62,11 @@ linux-g++ {
     lib_armv7hl.path = /usr/share/$${TARGET}/lib/armv7hl
     lib_armv7hl.files += \
         prelibrary/htmlcxx/armv7hl/libcss_parser_pp.so \
+        prelibrary/htmlcxx/armv7hl/libcss_parser_pp.so.0 \
         prelibrary/htmlcxx/armv7hl/libcss_parser.so \
-        prelibrary/htmlcxx/armv7hl/libhtmlcxx.so
+        prelibrary/htmlcxx/armv7hl/libcss_parser.so.0 \
+        prelibrary/htmlcxx/armv7hl/libhtmlcxx.so \
+        prelibrary/htmlcxx/armv7hl/libhtmlcxx.so.3
     INSTALLS += lib_armv7hl
 }
 
@@ -71,10 +74,12 @@ linux-g++ {
 linux-g++-32 {
     lib_i486.path = /usr/share/$${TARGET}/lib/i486
     lib_i486.files += \
+        prelibrary/htmlcxx/i486/libcss_parser_pp.so \
         prelibrary/htmlcxx/i486/libcss_parser_pp.so.0 \
+        prelibrary/htmlcxx/i486/libcss_parser.so \
         prelibrary/htmlcxx/i486/libcss_parser.so.0 \
+        prelibrary/htmlcxx/i486/libhtmlcxx.so \
         prelibrary/htmlcxx/i486/libhtmlcxx.so.3
-
     INSTALLS += lib_i486
 }
 

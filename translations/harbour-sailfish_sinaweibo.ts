@@ -401,22 +401,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Oops.. something wrong</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repost sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reply sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>@SomeOne</source>
         <translation type="unfinished"></translation>
     </message>
@@ -553,6 +537,18 @@
     </message>
     <message>
         <source>Uploading, please wait..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repost sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reply sent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
