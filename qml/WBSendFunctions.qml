@@ -11,14 +11,14 @@ Item {
 //    property var repostType: [qsTr("No comments"), qsTr("Comment current Weibo"), qsTr("Comment original Weibo"), qsTr("Both")]
 //    property var commentType: [qsTr("Do not comment original Weibo"), qsTr("Also comment original Weibo")]
 
-    property string sendTitle
     property var userInfo         // include id, cid, etc..
-    property string placeHoldText:""
-    //property string imgPath: ""
-    property string imgPath: ""
     property int optionIndex: 0
+    property var contentText: undefined
+    property alias imageModel: imageModel
 
-    property var contentText
+//    property string _imgPath: ""
+//    property var _imageList: []
+    property string _curImagePath:""
 
     function popAndShowError() {
         wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
@@ -30,6 +30,8 @@ Item {
         statusesUpdate.setParameters("status", status);
         statusesUpdate.postRequest();
     }
+
+    ListModel {id: imageModel}
 
     WrapperStatusesUpdate {
         id: statusesUpdate
@@ -70,10 +72,14 @@ Item {
             var reply = JSON.parse(replyData)
             if (tokenProvider.useHackLogin) {
                 if (reply.ok) {
-                    if (imgPath == "" )
-                        imgPath = reply.pic_id;
-                    else
-                        imgPath = imgPath +"," + reply.pic_id;
+//                    if (_imgPath == "" )
+//                        _imgPath = reply.pic_id;
+//                    else
+//                        _imgPath = _imgPath +"," + reply.pic_id;
+                    console.log("=== imageUploader onRequestSuccess  path "+ _curImagePath.replace("file://", ""))
+                    imageModel.append({"picId":reply.pic_id,
+                                        "path": _curImagePath.replace("file://", "")
+                                      });
                 }
             } else {
                 if (reply.error) {
@@ -197,8 +203,11 @@ Item {
     function setImgPath(filePath) {
         console.log("filePath: ", filePath)
         if (!tokenProvider.useHackLogin) {
-            imgPath = filePath
+//            _imgPath = filePath
+            console.log("===== not useHackLogin ")
+            imageModel.append({"path":filePath})
         } else {
+            _curImagePath = filePath;
             imageUploader.uploadImage(filePath);
         }
     }
@@ -218,17 +227,26 @@ Item {
             if (tokenProvider.useHackLogin) {
                 var status = encodeURIComponent(contentText)
                 statusesUpdate.setParameters("status", status);
-                if (imgPath != "" && imgPath != undefined) {
-                    statusesUpdate.setParameters("picId", imgPath);
+//                if (_imgPath != "" && _imgPath != undefined) {
+//                    statusesUpdate.setParameters("picId", _imgPath);
+//                }
+                if (imageModel.count > 0) {
+                    var p = "";
+                    for(var i=0; i<imageModel.count-1; ++i) {
+                        p = p + imageModel.get(i).picId +",";
+                    }
+                    p = p + imageModel.get(imageModel.count);
+                    statusesUpdate.setParameters("picId", p);
                 }
                 statusesUpdate.postRequest();
             } else {
-                if (imgPath == "" || imgPath == undefined) {
+//                if (_imgPath == "" || _imgPath == undefined) {
+                if (imageModel.count == 0) {
                     sendStatus(contentText)
                 } else {
                     wbFunc.addNotification(qsTr("Uploading, please wait.."), 2)
                     status = encodeURIComponent(contentText)
-                    imageUploader.sendWeiboWithImage(status, imgPath);
+                    imageUploader.sendWeiboWithImage(status, /*_imgPath*/imageModel.get(0));
                 }
             }
             break

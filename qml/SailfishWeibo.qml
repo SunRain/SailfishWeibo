@@ -315,6 +315,6 @@ ApplicationWindow
     }
 
     WBSendFunctions {
-        id: wbSend
+        id: wbSender
     }
 }

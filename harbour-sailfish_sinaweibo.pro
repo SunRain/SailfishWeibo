@@ -39,7 +39,8 @@ OTHER_FILES += \
     qml/requests/*.qml \
     qml/SailfishWeibo.qml \
     qml/js/*.js \
-    qml/WeiboFunctions.qml
+    qml/WeiboFunctions.qml \
+    qml/WBSendFunctions.qml
 
 graphics.path = /usr/share/$${TARGET}/qml/graphics
 graphics.files += qml/graphics/*
@@ -116,7 +117,8 @@ HEADERS += \
     src/app/WBNetworkAccessManagerFactory.h \
     src/app/WBNetworkAccessManager.h \
     src/app/Utility.h \
-    src/app/WBContentParser.h
+    src/app/WBContentParser.h \
+    src/app/WBSender.h
 
 SOURCES += \
     src/app/Emoticons.cpp \
@@ -125,7 +127,8 @@ SOURCES += \
     src/app/WBNetworkAccessManagerFactory.cpp \
     src/app/WBNetworkAccessManager.cpp \
     src/app/Utility.cpp \
-    src/app/WBContentParser.cpp
+    src/app/WBContentParser.cpp \
+    src/app/WBSender.cpp
 
 # to disable building translations every time, comment out the
 # following CONFIG line

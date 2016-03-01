@@ -1,11 +1,11 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-SilicaFlickable {
+/*SilicaFlickable*/Item {
     id: bottomPopupToolBar
     width: Screen.width
     height: column.height
-    contentHeight: column.height
+//    contentHeight: column.height
     enabled: opacity != 0
 
     property int menuSize: Theme.iconSizeMedium
@@ -112,8 +112,9 @@ SilicaFlickable {
                     right: menu.left
                     rightMargin: Theme.paddingSmall
                 }
+                height: childrenRect.height
                 clip: true
-                implicitHeight: childrenRect.height
+//                implicitHeight: childrenRect.height
             }
             IconButton {
                 id: menu

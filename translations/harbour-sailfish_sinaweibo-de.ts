@@ -413,14 +413,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>@SomeOne</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Click the inserted image to remove from the uploading queue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -438,6 +430,10 @@
     </message>
     <message>
         <source>Send Weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
