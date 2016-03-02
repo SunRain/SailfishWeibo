@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>components/AtUserComponent.qml</file>
         <file>components/BaseWeiboCard.qml</file>
         <file>components/FooterLoadMore.qml</file>
         <file>components/HorizontalIconTextButton.qml</file>
@@ -41,6 +40,7 @@
         <file>pages/WeiboFavorites.qml</file>
         <file>pages/WeiboMentioned.qml</file>
         <file>pages/WeiboPage.qml</file>
+        <file>ui/AtUserComponent.qml</file>
         <file>ui/GroupItem.qml</file>
         <file>ui/LoginDialog.qml</file>
         <file>ui/MessageTab.qml</file>

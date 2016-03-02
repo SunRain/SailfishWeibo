@@ -69,17 +69,6 @@
     </message>
 </context>
 <context>
-    <name>AtUserComponent</name>
-    <message>
-        <source>SearchUser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>search</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CommentAllPage</name>
     <message>
         <source>All comments</source>
@@ -377,6 +366,10 @@
 <context>
     <name>SendPage</name>
     <message>
+        <source>search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>comment option</source>
         <translation type="unfinished"></translation>
     </message>
@@ -414,26 +407,6 @@
     </message>
     <message>
         <source>Click the inserted image to remove from the uploading queue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repost</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Send Weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

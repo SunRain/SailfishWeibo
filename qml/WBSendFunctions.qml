@@ -14,7 +14,7 @@ Item {
     property var userInfo         // include id, cid, etc..
     property int optionIndex: 0
     property var contentText: undefined
-    property alias imageModel: imageModel
+    property alias imageModel: imgModel
 
 //    property string _imgPath: ""
 //    property var _imageList: []
@@ -31,7 +31,7 @@ Item {
         statusesUpdate.postRequest();
     }
 
-    ListModel {id: imageModel}
+    ListModel {id: imgModel}
 
     WrapperStatusesUpdate {
         id: statusesUpdate
@@ -72,10 +72,6 @@ Item {
             var reply = JSON.parse(replyData)
             if (tokenProvider.useHackLogin) {
                 if (reply.ok) {
-//                    if (_imgPath == "" )
-//                        _imgPath = reply.pic_id;
-//                    else
-//                        _imgPath = _imgPath +"," + reply.pic_id;
                     console.log("=== imageUploader onRequestSuccess  path "+ _curImagePath.replace("file://", ""))
                     imageModel.append({"picId":reply.pic_id,
                                         "path": _curImagePath.replace("file://", "")
@@ -203,7 +199,6 @@ Item {
     function setImgPath(filePath) {
         console.log("filePath: ", filePath)
         if (!tokenProvider.useHackLogin) {
-//            _imgPath = filePath
             console.log("===== not useHackLogin ")
             imageModel.append({"path":filePath})
         } else {
@@ -227,26 +222,22 @@ Item {
             if (tokenProvider.useHackLogin) {
                 var status = encodeURIComponent(contentText)
                 statusesUpdate.setParameters("status", status);
-//                if (_imgPath != "" && _imgPath != undefined) {
-//                    statusesUpdate.setParameters("picId", _imgPath);
-//                }
                 if (imageModel.count > 0) {
                     var p = "";
                     for(var i=0; i<imageModel.count-1; ++i) {
                         p = p + imageModel.get(i).picId +",";
                     }
-                    p = p + imageModel.get(imageModel.count);
+                    p = p + imageModel.get(imageModel.count-1).picId;
                     statusesUpdate.setParameters("picId", p);
                 }
                 statusesUpdate.postRequest();
             } else {
-//                if (_imgPath == "" || _imgPath == undefined) {
                 if (imageModel.count == 0) {
                     sendStatus(contentText)
                 } else {
                     wbFunc.addNotification(qsTr("Uploading, please wait.."), 2)
                     status = encodeURIComponent(contentText)
-                    imageUploader.sendWeiboWithImage(status, /*_imgPath*/imageModel.get(0));
+                    imageUploader.sendWeiboWithImage(status, imageModel.get(0).path);
                 }
             }
             break
