@@ -18,7 +18,7 @@ import Sailfish.Silica 1.0
 
     property real _progress: popuped ? 1.0 : 0.0
 
-    readonly property int maxPopupHeight: Screen.height - Theme.itemSizeLarge - toolBarAreaHeight
+    /*readonly*/ property int maxPopupHeight: Screen.height - Theme.itemSizeLarge - toolBarAreaHeight
     readonly property int toolBarAreaHeight: toolBarArea.height + column.spacing
 //    default property alias content: toolbar.data
 
@@ -112,9 +112,9 @@ import Sailfish.Silica 1.0
                     right: menu.left
                     rightMargin: Theme.paddingSmall
                 }
-                height: childrenRect.height
+                height: childrenRect.height > implicitHeight ? childrenRect.height : undefined
                 clip: true
-//                implicitHeight: childrenRect.height
+                implicitHeight: Theme.itemSizeMedium
             }
             IconButton {
                 id: menu
