@@ -23,6 +23,12 @@ Page {
         imageListview.positionViewAtIndex(imageListview.currentIndex, ListView.Center)
     }
 
+    function _toHackLarge(url, patten) {
+        var tmp = url + ""
+        tmp = tmp.replace(patten, "large")
+        return tmp
+    }
+
     function _toLarge(url) {
         var tmp = url + ""
         tmp = tmp.replace("thumbnail", "large")
@@ -121,7 +127,9 @@ Page {
                         maximumHeight: Screen.height //parent.height
                         enableZoom: true
                         //menuOpen: gallery._menuOpen
-                        source: _toLarge(model.thumbnail_pic)
+                        source: tokenProvider.useHackLogin
+                                ? _toHackLarge(model.url, model.size)
+                                :_toLarge(model.thumbnail_pic )
                         onClicked: {}
                         onLoadReady: {_runningBusyIndicator = false;}
                     }

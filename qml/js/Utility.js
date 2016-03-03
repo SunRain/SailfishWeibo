@@ -80,14 +80,12 @@ function parserOthersUserInfo(target, jsonObject) {
         } else if (top.card_group != undefined) {
             var snd = top.card_group;
             for (var j=0; j<snd.length; ++j) {
-                var trd = snd[i];
+                var trd = snd[j];
                 if (trd.card_type == "11") {
                     var itemID = trd.itemid;
                     if (itemID == undefined)
                         continue;
                     if (itemID.match("WEIBO_INDEX_PROFILE_WEIBO_GROUP_OBJ")) {
-//                        target.containerid = itemID.replace(/_-_WEIBO_INDEX_PROFILE_WEIBO_GROUP_OBJ/, "");
-//                        console.log("====== parserOthersUserInfo containerid  match " + target.containerid);
                         var p = itemID.replace(/_-_WEIBO_INDEX_PROFILE_WEIBO_GROUP_OBJ/, "");
                         target.userWeiboListScheme = p+"_-_WEIBO_SECOND_PROFILE_WEIBO";
                         break;
@@ -98,9 +96,7 @@ function parserOthersUserInfo(target, jsonObject) {
                     continue;
                 }
             }
-        } /*else {
-            target.containerid = "";
-        }*/
+        }
     }
     console.log("====== parserOthersUserInfo userWeiboListScheme " + target.userWeiboListScheme);
 }

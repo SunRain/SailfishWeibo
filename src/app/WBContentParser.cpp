@@ -242,8 +242,8 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
                     }
                 }
             } else if ((*it).tagName () == "i") { //i is for face ?
-                QString cls = TO_QSTR((*it).attribute ("class").second);
 #if DBG_HTMLPARSER
+                QString cls = TO_QSTR((*it).attribute ("class").second);
                 qDebug()<<"tagName i , class name "<<cls;
 #endif
                 (*++it).parseAttributes ();
@@ -264,8 +264,8 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
             retList.append (text);
         }
     }
-    QString ret = retList.join ("");
 #if DBG_HTMLPARSER
+    QString ret = retList.join ("");
     qDebug()<<Q_FUNC_INFO<<"ret is "<<ret;
     qDebug()<<Q_FUNC_INFO<<" >>>>>>>>>>>>>>>>>>>>>  end of parser <<<<<<<<<<<<<< ";
 #endif

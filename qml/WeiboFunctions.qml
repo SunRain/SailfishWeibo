@@ -97,9 +97,8 @@ QtObject {
                            "userInfo":info})
     }
 
-    function toUserPage(uid) {
-        console.log("========= toUserPage , uid " + uid);
-        pageStack.push(Qt.resolvedUrl("pages/UserPage.qml"), { "uid": uid })
+    function toUserPage(uid, uname) {
+        pageStack.push(Qt.resolvedUrl("pages/UserPage.qml"), { "uid":uid, "uname":uname })
     }
 
     function toFriendsPage(mode, uid) {

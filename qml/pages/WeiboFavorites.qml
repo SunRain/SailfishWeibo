@@ -129,6 +129,19 @@ WBPage {
                     wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
+                }
+                onLinkAtClicked: {
+                    wbFunc.toUserPage("", link.replace(/\//, ""))
+                }
+                onLinkTopicClicked: {
+                    console.log("==== onLinkTopicClicked "+ link)
+                    Qt.openUrlExternally(link);
+                }
+                onLinkUnknowClicked: {
+                    Qt.openUrlExternally(link);
+                }
+                onLinkWebOrVideoClicked: {
+                    console.log("==== onLinkWebOrVideoClicked "+ link)
                     Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {

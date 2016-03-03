@@ -162,11 +162,20 @@ Page {
                     wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
-//                    Qt.openUrlExternally(link);
-                    console.log("==== onLabelLinkClicked "+ link);
-                    var obj = JSON.parse(link);
-                    console.log("== onLabelLinkClicked type "+ obj.LinkType);
-                    console.log("== onLabelLinkClicked Url "+ obj.Url);
+                }
+                onLinkAtClicked: {
+                    wbFunc.toUserPage("", link.replace(/\//, ""))
+                }
+                onLinkTopicClicked: {
+                    console.log("==== onLinkTopicClicked "+ link)
+                    Qt.openUrlExternally(link);
+                }
+                onLinkUnknowClicked: {
+                    Qt.openUrlExternally(link);
+                }
+                onLinkWebOrVideoClicked: {
+                    console.log("==== onLinkWebOrVideoClicked "+ link)
+                    Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {
                     wbFunc.toGalleryPage(modelImages, index);
@@ -180,7 +189,7 @@ Page {
 //                    _getInfo(userWeiboJSONContent.id);
                 }
                 onLikeButtonClicked: {
-                    //                        footInfoBarIndex = 2;
+//                        footInfoBarIndex = 2;
                 }
 
                 ContextMenu {

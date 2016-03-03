@@ -11,6 +11,7 @@ Page {
     id: userPage
     
     property var uid: undefined
+    property var uname: undefined
 
     property bool _isFollowing: false
 
@@ -30,20 +31,22 @@ Page {
         function refreshUserInfo() {
             wbFunc.showBusyIndicator();
             if (tokenProvider.useHackLogin && tokenProvider.hackLoginUid != userPage.uid) {
-                var path = "u/"+userPage.uid;
+                if (userPage.uid) {
+                    var path = "u/"+userPage.uid;
+                } else if (userPage.uname) {
+                    path = userPage.uname;
+                }
                 requestUsersShow.resetUrlPath(path);
             }
             requestUsersShow.setParameters("uid", uid);
             requestUsersShow.getRequest();
         }
 
-//        function createhackUsersInfoObject(callback) {
-//            WBLoader.create("../requests/RQHackUsersInfoMe.qml", userPage, function(object, component, incubator) {
-//            });
-//        }
         function parseUsersShowData(replyData) {
             if (tokenProvider.useHackLogin) {
                 Utility.parserOthersUserInfo(inner.userInfoObject, JSON.parse(replyData));
+                if (uname && !uid)
+                    uid = inner.userInfoObject.id;
                 inner.userWeiboListScheme = inner.userInfoObject.userWeiboListScheme;
             } else {
                 inner.userInfoObject.userInfo = JSON.parse(replyData);
@@ -130,7 +133,6 @@ Page {
     }
 
     function refreshUserWeibo() {
-        console.log("=================== User page refreshUserWeibo =======");
         wbFunc.showBusyIndicator();
         _pageNum = 1;
         statusesUserTimeline.setParameters("page", _pageNum)
@@ -420,6 +422,19 @@ Page {
                     wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
+                }
+                onLinkAtClicked: {
+                    wbFunc.toUserPage("", link.replace(/\//, ""))
+                }
+                onLinkTopicClicked: {
+                    console.log("==== onLinkTopicClicked "+ link)
+                    Qt.openUrlExternally(link);
+                }
+                onLinkUnknowClicked: {
+                    Qt.openUrlExternally(link);
+                }
+                onLinkWebOrVideoClicked: {
+                    console.log("==== onLinkWebOrVideoClicked "+ link)
                     Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {

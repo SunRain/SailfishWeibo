@@ -558,37 +558,37 @@
 <context>
     <name>UserPage</name>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="318"/>
+        <location filename="../qml/pages/UserPage.qml" line="320"/>
         <source>User Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="346"/>
+        <location filename="../qml/pages/UserPage.qml" line="348"/>
         <source>&apos;s RecentWeibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="280"/>
+        <location filename="../qml/pages/UserPage.qml" line="282"/>
         <source>UserInfo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="291"/>
+        <location filename="../qml/pages/UserPage.qml" line="293"/>
         <source>UserWeibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="382"/>
+        <location filename="../qml/pages/UserPage.qml" line="384"/>
         <source>&apos;s Weibo</source>
         <translation type="unfinished">的微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="431"/>
+        <location filename="../qml/pages/UserPage.qml" line="446"/>
         <source>Repost</source>
         <translation type="unfinished">转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="441"/>
+        <location filename="../qml/pages/UserPage.qml" line="456"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>
@@ -675,7 +675,7 @@
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="140"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="153"/>
         <source>Remove from favorites</source>
         <translation>取消收藏</translation>
     </message>
@@ -711,24 +711,24 @@
         <translation>Sailfish Weibo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="189"/>
-        <location filename="../qml/pages/WeiboPage.qml" line="276"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="198"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="285"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="199"/>
-        <location filename="../qml/pages/WeiboPage.qml" line="291"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="208"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="300"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="332"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="341"/>
         <source> From </source>
         <translation type="unfinished"> 来自 </translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboPage.qml" line="354"/>
+        <location filename="../qml/pages/WeiboPage.qml" line="363"/>
         <source>Reply</source>
         <translation type="unfinished">回复</translation>
     </message>
@@ -751,17 +751,17 @@
         <translation>添加收藏失败</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="206"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="202"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="217"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="213"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="223"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="219"/>
         <source>Add to favorites</source>
         <translation>收藏</translation>
     </message>
