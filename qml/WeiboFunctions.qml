@@ -78,12 +78,11 @@ QtObject {
     }
 
     //////////////////////////////////////////////////////////////////         go to weibo page
-    function toWeiboPage(jsonContent) {
-        //console.log("toWeiboPage  index " + index + " model " + model);
+    function toWeiboPage(jsonContent, hackLoginSuffix) {
         var content = jsonContent;
-//        popAttachedPages();
+        var fix = hackLoginSuffix;
         pageStack.push(Qt.resolvedUrl("pages/WeiboPage.qml"),
-                        {"userWeiboJSONContent":content})
+                        {"userWeiboJSONContent":content, "weiboHackLoginSuffix":fix})
     }
 
     //////////////////////////////////////////////////////////////////         go to send page

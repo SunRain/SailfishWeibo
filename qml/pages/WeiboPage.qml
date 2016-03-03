@@ -1,9 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../js/dateutils.js" as DateUtils
-import "../js/weiboapi.js" as WB
-//import "../js/Settings.js" as Settings
 import "../js/getURL.js" as GetURL
+import "../WeiboFunctions.js" as WBLoader
 
 import "../components"
 
@@ -13,12 +12,14 @@ Page {
     id: weiboPage
 
     property var userWeiboJSONContent
+    property var weiboHackLoginSuffix: undefined
     
     property int _footInfoBarIndex: 0
     property int _commentsPageNum:1
     property int _repostPageNum: 1
     property bool _gettingInfo: false
     property string _weiboId: ""
+    property var _hackLoginStatusShowObject: undefined
 
     function _getInfo(id) {
         weiboPage._gettingInfo = true;
@@ -61,7 +62,7 @@ Page {
 
     }
     
-    /*CommentsShow*/WrapperCommentsShow {
+    WrapperCommentsShow {
         id: commentsShow
         onRequestAbort: {
             weiboPage._gettingInfo = false
@@ -72,21 +73,17 @@ Page {
             console.log("== commentsShow onRequestFailure ["+replyData+"]")
         }
         onRequestSuccess: { //replyData
-//            console.log("== commentsShow onRequestSuccess")
             weiboPage._gettingInfo = false
             var json = JSON.parse(replyData);
-//            console.log("== commentsShow onRequestSuccess 2 ")
             for (var i=0; i<json.comments.length; i++) {
                 modelInfo.append(json.comments[i])
             }
-//            console.log("== commentsShow onRequestSuccess 3")
             if (commentListView.model == undefined)
                 commentListView.model = modelInfo;
-//            console.log("== commentsShow onRequestSuccess 4")
         }
     }
 
-    /*StatusesRepostTimeline*/ WrapperStatusesRepostTimeline{
+    WrapperStatusesRepostTimeline{
         id: statusesRepostTimeline
         onRequestAbort: {
             weiboPage._gettingInfo = false
@@ -98,19 +95,12 @@ Page {
         }
         onRequestSuccess: { //replyData
             weiboPage._gettingInfo = false
-//            console.log("== statusesRepostTimeline onRequestSuccess");
             var json = JSON.parse(replyData);
-//            console.log("== statusesRepostTimeline onRequestSuccess 2 ");
-
-//            console.log("== statusesRepostTimeline onRequestSuccess ["+replyData+"]");
-
             for (var i=0; i<json.reposts.length; ++i) {
                 modelInfo.append(json.reposts[i])
             }
-//            console.log("== statusesRepostTimeline onRequestSuccess 3");
             if (commentListView.model == undefined)
                 commentListView.model = modelInfo;
-//            console.log("== statusesRepostTimeline onRequestSuccess 4");
         }
     }
     ListModel {
@@ -119,7 +109,22 @@ Page {
     onStatusChanged: {
         console.log("====== weiboPage status " + status)
         if (weiboPage.status == PageStatus.Active) {
-            console.log("====== weiboPage Active")
+            if (weiboPage.weiboHackLoginSuffix) {
+                if (!_hackLoginStatusShowObject) {
+                    WBLoader.create("../requests/RQHackStatusesShow.qml", weiboPage, function(object, component, incubator) {
+                        weiboPage._hackLoginStatusShowObject = object;
+                        if (weiboPage._hackLoginStatusShowObject) {
+                            weiboPage._hackLoginStatusShowObject.requestResult.connect(function(ret, replyData) {
+                                console.log("=== RQHackStatusesShow connect ===");
+                                console.log("== RQHackStatusesShow onRequestSuccess ["+replyData+"]")
+                                //TODO apply to model
+                            });
+                            weiboPage._hackLoginStatusShowObject.resetUrlPath(weiboPage.weiboHackLoginSuffix);
+                            weiboPage._hackLoginStatusShowObject.getRequest();
+                        }
+                    });
+                }
+            }
         }
     }
 

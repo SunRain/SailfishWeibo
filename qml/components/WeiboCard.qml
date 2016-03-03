@@ -32,8 +32,11 @@ Item {
                 inner.subValue = weiboJSONContent.status;
             if (inner.subValue == undefined || inner.subValue == "")
                 inner.subValue = weiboJSONContent.reply_comment;
-            if (inner.subValue == undefined || inner.subValue == "")
-                inner.subValue = undefined;
+            if (inner.subValue == undefined || inner.subValue == "") {
+                inner.subValue = weiboJSONContent.card;
+                if (inner.subValue != undefined && inner.subValue != "")
+                    inner.useSimpleSubView = true;
+            }
         }
     }
 
@@ -63,6 +66,7 @@ Item {
         property var comments_count: undefined
         property var attitudes_count: undefined
         property bool showFooterBar: false
+        property bool useSimpleSubView: false
     }
 
     Column {
@@ -120,9 +124,63 @@ Item {
             id:repostedLoader
             width: parent.width
             height: childrenRect.height
-            sourceComponent: inner.subValue == undefined//weiboJSONContent.retweeted_status == undefined
+            sourceComponent: inner.subValue == undefined
                              ? repostedLoader.Null
-                             : repostedBaseWeiboCard
+                             : inner.useSimpleSubView ? simpleSubViewComponent : repostedBaseWeiboCard
+        }
+
+        Component {
+            id: simpleSubViewComponent
+            BackgroundItem {
+                id: svMain
+                width: parent.width
+                height: Math.max(svImage.height, svColumn.height)
+                onClicked: {
+                    weiboCard.repostedWeiboClicked();
+                }
+                Image {
+                    id: background
+                    anchors.fill: parent
+                    source: appUtility.pathTo("qml/graphics/mask_background_reposted.png")
+                    fillMode:Image.TileHorizontally
+                }
+                Image {
+                    id: svImage
+                    width: Theme.itemSizeMedium
+                    height: width
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.paddingSmal
+                        verticalCenter: parent.verticalCenter
+                    }
+                    source: inner.subValue.page_pic
+                    fillMode: Image.PreserveAspectFit
+                }
+                Column {
+                    id: svColumn
+                    anchors {
+                        left: svImage.right
+                        leftMargin: Theme.paddingSmal
+                        right: parent.right
+                        rightMargin: Theme.paddingSmal
+                        verticalCenter: parent.verticalCenter
+                    }
+                    spacing: Theme.paddingSmall
+                    Label {
+                        width: parent.width
+                        text: inner.subValue.page_title
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        textFormat: Text.StyledText
+                        font.bold: true
+                    }
+                    Label {
+                        width: parent.width
+                        text: inner.subValue.page_desc
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        textFormat: Text.StyledText
+                    }
+                }
+            }
         }
 
         Component {

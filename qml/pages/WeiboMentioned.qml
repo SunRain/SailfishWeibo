@@ -1,12 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
-import "../js/dateutils.js" as DateUtils
-import "../js/weiboapi.js" as WB
-//import "../js/Settings.js" as Settings
-import "../components"
-
 import harbour.sailfish_sinaweibo.sunrain 1.0
+
+import "../components"
 
 WBPage {
     id: weiboMentionedPage
@@ -14,8 +10,6 @@ WBPage {
     property var uid
     property string userName: ""
     property int _pageNum: 1
-
-//    property alias contentItem: lvUserWeibo
 
     function refresh() {
         modelWeibo.clear()
@@ -32,14 +26,11 @@ WBPage {
     //////////////////////////////////////////////////////////////////         user status mentioned me
     function _weiboMentioned(page) {
         wbFunc.showBusyIndicator();
-
-//        var method = WeiboMethod.WBOPT_GET_STATUSES_MENTIONS;
-//        api.setWeiboAction(method, {'page':_pageNum});
         statusesMentions.setParameters("page", _pageNum);
         statusesMentions.getRequest();
     }
 
-    /*StatusesMentions*/WrapperStatusesMentions {
+    WrapperStatusesMentions {
         id: statusesMentions
         onRequestAbort: {
             console.log("== statusesMentions onRequestAbort");
@@ -48,6 +39,8 @@ WBPage {
             console.log("== statusesMentions onRequestFailure ["+replyData+"]")
         }
         onRequestSuccess: { //replyData
+            console.log("== statusesMentions onRequestSuccess ["+replyData+"]")
+
             var jsonObj = JSON.parse(replyData);
             for (var i=0; i<jsonObj.statuses.length; i++) {
                 modelWeibo.append( jsonObj.statuses[i] )
@@ -59,28 +52,10 @@ WBPage {
         }
     }
 
-//    Connections {
-//        target: api
-//        //void weiboPutSucceed(QWeiboMethod::WeiboAction action, const QString& replyData);
-//        onWeiboPutSucceed: {
-//            if (action == WeiboMethod.WBOPT_GET_STATUSES_MENTIONS) {
-//                var jsonObj = JSON.parse(replyData);
-//                for (var i=0; i<jsonObj.statuses.length; i++) {
-//                    modelWeibo.append( jsonObj.statuses[i] )
-//                }
-//                if (lvUserWeibo.model == undefined) {
-//                    lvUserWeibo.model = modelWeibo;
-//                }
-//                stopBusyIndicator();
-//            }
-//        }
-//    }
-    
-    ListView{
+    SilicaListView{
         id: lvUserWeibo
         anchors.fill: parent
         cacheBuffer: 999999
-//        model: modelWeibo
         footer: FooterLoadMore {
             visible: modelWeibo.count != 0
             onClicked: { weiboMentionedPage._addMore();}
@@ -90,7 +65,8 @@ WBPage {
             id:pageHeader
             title: qsTr("Weibo mentioned me")
         }
-        PullDownMenu {
+        ScrollDecorator{flickable: lvUserWeibo}
+        pullDownMenu: PullDownMenu {
             MenuItem {
                 text: qsTr("Refresh")
                 onClicked: {
@@ -115,12 +91,26 @@ WBPage {
                 weiboJSONContent: modelWeibo.get(index)
                 optionMenu: options
                 onRepostedWeiboClicked: {
-                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                   {"userWeiboJSONContent":modelWeibo.get(index).retweeted_status})
+//                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+//                                   {"userWeiboJSONContent":modelWeibo.get(index).retweeted_status})
+                    if (tokenProvider.useHackLogin) {
+                        var suffix = modelWeibo.get(index).card.page_url;
+                        console.log("===== onUsWeiboClicked  suffix "+suffix);
+                        wbFunc.toWeiboPage(modelWeibo.get(index).card, suffix);
+                    } else {
+                        wbFunc.toWeiboPage(modelWeibo.get(index).retweeted_status);
+                    }
                 }
                 onUsWeiboClicked: {
-                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                   {"userWeiboJSONContent":modelWeibo.get(index)})
+//                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+//                                   {"userWeiboJSONContent":modelWeibo.get(index)})
+                    if (tokenProvider.useHackLogin) {
+                        var suffix = modelWeibo.get(index).user.id +"/"+modelWeibo.get(index).bid
+                        console.log("===== onUsWeiboClicked  suffix "+suffix);
+                        wbFunc.toWeiboPage(modelWeibo.get(index), suffix);
+                    } else {
+                        wbFunc.toWeiboPage(modelWeibo.get(index));
+                    }
                 }
                 onAvatarHeaderClicked: {
                     wbFunc.toUserPage(userId);
