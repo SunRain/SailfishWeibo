@@ -24,6 +24,7 @@ Page {
     property string placeHoldText:""
     property var optionIndex: undefined
     onOptionIndexChanged: {
+        console.log("====== sendPage onOptionIndexChanged "+optionIndex);
         if (optionIndex == undefined)
             var a = 0
         else
@@ -221,12 +222,26 @@ Page {
                         }
                     }
                 }
+                TextSwitch {
+                    id: hackReplyTypeCheck
+                    width: parent.width
+                    visible: mode == "reply" && tokenProvider.useHackLogin
+                    enabled: mode == "reply" && tokenProvider.useHackLogin
+                    text: qsTr("Also repost to my weibo")
+                    checked: optionIndex == 1
+                    onCheckedChanged: {
+                        if (checked)
+                            optionIndex = 1;
+                        else
+                            optionIndex = 0
+                    }
+                }
                 ComboBox {
                     id: commentOptionComboBox
                     width: parent.width
                     label: qsTr("comment option")
-                    visible: mode == "comment" || mode == "reply" ? true : false
-                    enabled: mode == "comment" || mode == "reply" ? true : false
+                    visible: (mode == "comment" || mode == "reply") && !tokenProvider.useHackLogin
+                    enabled: (mode == "comment" || mode == "reply") && !tokenProvider.useHackLogin
                     currentIndex: 0
                     menu: ContextMenu {
                         MenuItem {

@@ -112,24 +112,24 @@
 <context>
     <name>CommentMentioned</name>
     <message>
-        <location filename="../qml/pages/CommentMentioned.qml" line="67"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="56"/>
         <source>Comments mentioned me</source>
         <translation>@我的评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentMentioned.qml" line="75"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="64"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentMentioned.qml" line="110"/>
+        <location filename="../qml/pages/CommentMentioned.qml" line="112"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentMentioned.qml" line="122"/>
-        <source>View weibo</source>
-        <translation>查看微博</translation>
+        <location filename="../qml/pages/CommentMentioned.qml" line="124"/>
+        <source>Reply to</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -442,58 +442,63 @@
 <context>
     <name>SendPage</name>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="80"/>
+        <location filename="../qml/pages/SendPage.qml" line="81"/>
         <source>search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="227"/>
+        <location filename="../qml/pages/SendPage.qml" line="230"/>
+        <source>Also repost to my weibo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SendPage.qml" line="242"/>
         <source>comment option</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="233"/>
+        <location filename="../qml/pages/SendPage.qml" line="248"/>
         <source>Do not comment original Weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="237"/>
+        <location filename="../qml/pages/SendPage.qml" line="252"/>
         <source>Also comment original Weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="245"/>
+        <location filename="../qml/pages/SendPage.qml" line="260"/>
         <source>repost option</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="251"/>
+        <location filename="../qml/pages/SendPage.qml" line="266"/>
         <source>No comments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="255"/>
+        <location filename="../qml/pages/SendPage.qml" line="270"/>
         <source>Comment current Weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="259"/>
+        <location filename="../qml/pages/SendPage.qml" line="274"/>
         <source>Comment original Weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="263"/>
+        <location filename="../qml/pages/SendPage.qml" line="278"/>
         <source>Both</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="129"/>
-        <location filename="../qml/pages/SendPage.qml" line="140"/>
+        <location filename="../qml/pages/SendPage.qml" line="130"/>
+        <location filename="../qml/pages/SendPage.qml" line="141"/>
         <source>Send</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="179"/>
+        <location filename="../qml/pages/SendPage.qml" line="180"/>
         <source>Click the inserted image to remove from the uploading queue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -620,12 +625,12 @@
         <translation type="unfinished">评论成功</translation>
     </message>
     <message>
-        <location filename="../qml/WBSendFunctions.qml" line="160"/>
+        <location filename="../qml/WBSendFunctions.qml" line="169"/>
         <source>Reply sent</source>
         <translation type="unfinished">回复成功</translation>
     </message>
     <message>
-        <location filename="../qml/WBSendFunctions.qml" line="238"/>
+        <location filename="../qml/WBSendFunctions.qml" line="248"/>
         <source>Uploading, please wait..</source>
         <translation type="unfinished">上传中。。。</translation>
     </message>
@@ -637,7 +642,8 @@
         <location filename="../qml/WBSendFunctions.qml" line="82"/>
         <location filename="../qml/WBSendFunctions.qml" line="113"/>
         <location filename="../qml/WBSendFunctions.qml" line="138"/>
-        <location filename="../qml/WBSendFunctions.qml" line="163"/>
+        <location filename="../qml/WBSendFunctions.qml" line="165"/>
+        <location filename="../qml/WBSendFunctions.qml" line="172"/>
         <source>Oops.. something wrong</source>
         <translation type="unfinished">出错了。。。</translation>
     </message>

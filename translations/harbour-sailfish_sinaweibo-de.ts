@@ -102,7 +102,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>View weibo</source>
+        <source>Reply to</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -407,6 +407,10 @@
     </message>
     <message>
         <source>Click the inserted image to remove from the uploading queue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Also repost to my weibo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

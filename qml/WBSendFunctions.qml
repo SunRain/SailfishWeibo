@@ -152,15 +152,25 @@ Item {
         }
         onRequestSuccess: { //replyData
             var result = JSON.parse(replyData);
+            console.log("=== commentsReply onRequestSuccess ["+replyData+"]")
             if (result.error) {
                 popAndShowError();
                 return;
             }
-            if (result.id != undefined) {
-                wbFunc.addNotification(qsTr("Reply sent"), 3)
-                pageStack.pop()
+            if (tokenProvider.useHackLogin) {
+                if (result.ok) {
+                    wbFunc.addNotification(result.msg, 3);
+                    pageStack.pop();
+                } else {
+                    wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
+                }
             } else {
-                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
+                if (result.id != undefined) {
+                    wbFunc.addNotification(qsTr("Reply sent"), 3)
+                    pageStack.pop()
+                } else {
+                    wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
+                }
             }
         }
     }
@@ -186,9 +196,9 @@ Item {
 
     //////////////////////////////////////////////////////////////////         reply comment
     // id, comment_ori same above // commentid 需要回复的评论ID。  without_mention 回复中是否自动加入“回复@用户名”，0：是、1：否，默认为0。
-    function replyComment(comment, id, comment_ori, commentid, without_mention) {
-        commentsReply.setParameters("id", comment);
-        commentsReply.setParameters("comment", " "+id+" ");
+    function replyComment(comment, id, comment_ori, commentid, without_mention, replyToUser) {
+        commentsReply.setParameters("id", " "+id+" ");
+        commentsReply.setParameters("comment", comment);
         commentsReply.setParameters("comment_ori", comment_ori);
         commentsReply.setParameters("cid", " "+commentid+" ");
         commentsReply.setParameters("without_mention", without_mention);
@@ -216,7 +226,7 @@ Item {
             sendComment(contentText, userInfo.id, optionIndex)
             break
         case "reply" :
-            replyComment(contentText, userInfo.id, optionIndex, userInfo.cid, 0)
+            replyComment(contentText, userInfo.id, optionIndex, userInfo.cid, 0, userInfo.replyToUser)
             break
         default:
             if (tokenProvider.useHackLogin) {

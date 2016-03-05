@@ -1,17 +1,11 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
-import "../js/dateutils.js" as DateUtils
-import "../js/weiboapi.js" as WB
-//import "../js/Settings.js" as Settings
-import "../js/getURL.js" as GetURL
-import "../components"
-
 import harbour.sailfish_sinaweibo.sunrain 1.0
+
+import "../components"
 
 WBPage{
     id: commentMentionedPage
-    //title: qsTr("Comments mentioned me")
 
     property var uid
     property string userName: ""
@@ -19,14 +13,9 @@ WBPage{
 
     property var _commentInfo
     property var _weiboTmp
-
-//    property alias contentItem: commentMentionedListView
-
     function refresh() {
         modelComment.clear()
-
         _pageNum = 1
-//        isRefresh = true
         _commentMentioned(_pageNum)
     }
 
@@ -42,7 +31,7 @@ WBPage{
         commentsMentions.getRequest();
     }
     
-    /*CommentsMentions*/WrapperCommentsMentions {
+    WrapperCommentsMentions {
         id: commentsMentions
         onRequestAbort: {}
         onRequestFailure: { //replyData
@@ -84,7 +73,7 @@ WBPage{
         id: delegateComment
         Column {
             width: parent.width
-            spacing: Theme.paddingSmall
+            spacing: Theme.paddingMedium
             WeiboCard {
                 id: weiboCard
                 width: parent.width - Theme.paddingMedium * 2
@@ -95,14 +84,27 @@ WBPage{
                 weiboJSONContent: modelComment.get(index)
                 optionMenu: options
                 onRepostedWeiboClicked: {
+                    if (tokenProvider.useHackLogin) {
+                        var suffix = modelComment.get(index).card.page_url;
+                        console.log("===== onRepostedWeiboClicked  suffix "+suffix);
+                        wbFunc.toWeiboPage(modelComment.get(index).card, suffix);
+                    } else {
+                        wbFunc.toWeiboPage(modelComment.get(index).retweeted_status);
+                    }
                 }
                 onUsWeiboClicked: {
+                    if (!tokenProvider.useHackLogin) {
+                        wbFunc.toWeiboPage(modelWeibo.get(index));
+                    }
                 }
                 onAvatarHeaderClicked: {
+                    wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
+                    Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {
+                    wbFunc.toGalleryPage(modelImages, index);
                 }
                 ContextMenu {
                     id:options
@@ -110,26 +112,20 @@ WBPage{
                         text:  qsTr("Reply")
                         onClicked: {
                             /////////// Ugly code
-                            commentMentionedPage._commentInfo = { "id": model.status.id, "cid": model.id}
+                            if (tokenProvider.useHackLogin) {
+                                commentMentionedPage._commentInfo = {"id": model.card.page_id,
+                                                                    "cid": model.id,
+                                                                    "replyToUser": model.user.screen_name}
+                            } else {
+                                commentMentionedPage._commentInfo = { "id": model.status.id, "cid": model.id}
+                            }
                             commentMentionedPage._weiboTmp = model.status
-                            //toSendPage("reply", commentMentionedPage.commentInfo)
-                            pageStack.push(Qt.resolvedUrl("SendPage.qml"),
-                                           {"mode":"reply",
-                                               "userInfo":commentMentionedPage._commentInfo})
-                        }
-                    }
-                    MenuItem {
-                        text: qsTr("View weibo")
-                        onClicked: {
-                            /////////// Ugly code
-                            //                            commentMentionedPage.commentInfo = { "id": model.status.id, "cid": model.id}
-                            //                            commentMentionedPage.weiboTmp = model.status
-
-                            //                            modelWeiboTemp.clear()
-                            //                            modelWeiboTemp.append(weiboTmp)
-                            //                            //toWeiboPage(modelWeiboTemp, 0)
-                            pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                           {"userWeiboJSONContent":model.status})
+                            if (tokenProvider.useHackLogin) {
+                                var placeHold = qsTr("Reply to")+":"+model.card.page_title+" ";
+                                wbFunc.toSendPage("reply", commentMentionedPage._commentInfo, placeHold)
+                            } else {
+                                wbFunc.toSendPage("reply", commentMentionedPage._commentInfo)
+                            }
                         }
                     }
                 }
@@ -137,6 +133,10 @@ WBPage{
             Separator {
                 width: parent.width
                 color: Theme.highlightColor
+            }
+            Item {
+                width: parent.width
+                height: Theme.paddingSmall
             }
         }
     }// component
