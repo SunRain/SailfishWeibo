@@ -452,42 +452,43 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="242"/>
+        <location filename="../qml/pages/SendPage.qml" line="256"/>
         <source>comment option</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="248"/>
+        <location filename="../qml/pages/SendPage.qml" line="262"/>
         <source>Do not comment original Weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="252"/>
+        <location filename="../qml/pages/SendPage.qml" line="244"/>
+        <location filename="../qml/pages/SendPage.qml" line="266"/>
         <source>Also comment original Weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="260"/>
+        <location filename="../qml/pages/SendPage.qml" line="274"/>
         <source>repost option</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="266"/>
+        <location filename="../qml/pages/SendPage.qml" line="280"/>
         <source>No comments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="270"/>
+        <location filename="../qml/pages/SendPage.qml" line="284"/>
         <source>Comment current Weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="274"/>
+        <location filename="../qml/pages/SendPage.qml" line="288"/>
         <source>Comment original Weibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendPage.qml" line="278"/>
+        <location filename="../qml/pages/SendPage.qml" line="292"/>
         <source>Both</source>
         <translation type="unfinished"></translation>
     </message>
@@ -620,17 +621,17 @@
         <translation type="unfinished">转发成功</translation>
     </message>
     <message>
-        <location filename="../qml/WBSendFunctions.qml" line="135"/>
+        <location filename="../qml/WBSendFunctions.qml" line="143"/>
         <source>Comment sent</source>
         <translation type="unfinished">评论成功</translation>
     </message>
     <message>
-        <location filename="../qml/WBSendFunctions.qml" line="169"/>
+        <location filename="../qml/WBSendFunctions.qml" line="178"/>
         <source>Reply sent</source>
         <translation type="unfinished">回复成功</translation>
     </message>
     <message>
-        <location filename="../qml/WBSendFunctions.qml" line="248"/>
+        <location filename="../qml/WBSendFunctions.qml" line="258"/>
         <source>Uploading, please wait..</source>
         <translation type="unfinished">上传中。。。</translation>
     </message>
@@ -641,9 +642,6 @@
         <location filename="../qml/WBSendFunctions.qml" line="68"/>
         <location filename="../qml/WBSendFunctions.qml" line="82"/>
         <location filename="../qml/WBSendFunctions.qml" line="113"/>
-        <location filename="../qml/WBSendFunctions.qml" line="138"/>
-        <location filename="../qml/WBSendFunctions.qml" line="165"/>
-        <location filename="../qml/WBSendFunctions.qml" line="172"/>
         <source>Oops.. something wrong</source>
         <translation type="unfinished">出错了。。。</translation>
     </message>
@@ -767,12 +765,12 @@
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="213"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="217"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="../qml/ui/WeiboTab.qml" line="219"/>
+        <location filename="../qml/ui/WeiboTab.qml" line="223"/>
         <source>Add to favorites</source>
         <translation>收藏</translation>
     </message>

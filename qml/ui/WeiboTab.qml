@@ -201,18 +201,22 @@ SilicaListView {
                     MenuItem {
                         text: qsTr("Repost")
                         onClicked: {
-                            wbFunc.toSendPage("repost",
-                                       {"id": model.id},
-                                       (model.retweeted_status == undefined || model.retweeted_status == "") == true
+                            var info;
+                            if (tokenProvider.useHackLogin) {
+                                info = {"id": model.id, "rtid": model.user.id}
+                            } else {
+                                info = {"id": model.id};
+                            }
+                            wbFunc.toSendPage("repost", info,
+                                       (model.retweeted_status == undefined || model.retweeted_status == "")
                                        ? ""
-                                       : "//@"+model.user.name +": " + model.text ,
-                                         true);
+                                       : "//@"+model.user.name +": " + model.text);
                         }
                     }
                     MenuItem {
                         text: qsTr("Comment")
                         onClicked: {
-                            wbFunc.toSendPage("comment", {"id": model.id}, "", true);
+                            wbFunc.toSendPage("comment", {"id": model.id});
                         }
                     }
                     MenuItem {

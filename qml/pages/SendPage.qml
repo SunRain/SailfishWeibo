@@ -236,6 +236,20 @@ Page {
                             optionIndex = 0
                     }
                 }
+                TextSwitch {
+                    id: hackRepostTypeCheck
+                    width: parent.width
+                    visible: mode == "repost" && tokenProvider.useHackLogin
+                    enabled: mode == "repost" && tokenProvider.useHackLogin
+                    text: qsTr("Also comment original Weibo")
+                    checked: optionIndex == 1
+                    onCheckedChanged: {
+                        if (checked)
+                            optionIndex = 1;
+                        else
+                            optionIndex = 0
+                    }
+                }
                 ComboBox {
                     id: commentOptionComboBox
                     width: parent.width
@@ -258,8 +272,8 @@ Page {
                     id: repostTypeComboBox
                     width: parent.width
                     label: qsTr("repost option")
-                    visible: mode == "repost" ? true : false
-                    enabled: mode == "repost" ? true : false
+                    visible: mode == "repost" && !tokenProvider.useHackLogin
+                    enabled: mode == "repost" && !tokenProvider.useHackLogin
                     currentIndex: 0
                     menu: ContextMenu {
                         MenuItem {

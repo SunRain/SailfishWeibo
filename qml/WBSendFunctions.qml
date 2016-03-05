@@ -106,11 +106,20 @@ Item {
                 popAndShowError();
                 return;
             }
-            if (result.id != undefined) {
-                wbFunc.addNotification(qsTr("Repost sent"), 3)
-                pageStack.pop()
-            }else {
-                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
+            if (tokenProvider.useHackLogin) {
+                if (result.ok) {
+                    wbFunc.addNotification(result.msg, 3);
+                    pageStack.pop();
+                } else {
+                    popAndShowError();
+                }
+            } else {
+                if (result.id != undefined) {
+                    wbFunc.addNotification(qsTr("Comment sent"), 3)
+                    pageStack.pop()
+                }else {
+                    popAndShowError();
+                }
             }
         }
     }
@@ -131,11 +140,20 @@ Item {
                 popAndShowError();
                 return;
             }
-            if (result.id != undefined) {
-                wbFunc.addNotification(qsTr("Comment sent"), 3)
-                pageStack.pop()
-            }else {
-                wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
+            if (tokenProvider.useHackLogin) {
+                if (result.ok) {
+                    wbFunc.addNotification(result.msg, 3);
+                    pageStack.pop();
+                } else {
+                    popAndShowError();
+                }
+            } else {
+                if (result.id != undefined) {
+                    wbFunc.addNotification(qsTr("Comment sent"), 3)
+                    pageStack.pop()
+                }else {
+                    popAndShowError();
+                }
             }
         }
     }
@@ -162,26 +180,27 @@ Item {
                     wbFunc.addNotification(result.msg, 3);
                     pageStack.pop();
                 } else {
-                    wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
+                    popAndShowError();
                 }
             } else {
                 if (result.id != undefined) {
                     wbFunc.addNotification(qsTr("Reply sent"), 3)
                     pageStack.pop()
                 } else {
-                    wbFunc.addNotification(qsTr("Oops.. something wrong"), 3)
+                    popAndShowError();
                 }
             }
         }
     }
     //////////////////////////////////////////////////////////////////         send repost
     // is_comment 是否在转发的同时发表评论，0：否、1：评论给当前微博、2：评论给原微博、3：都评论，默认为0 。
-    function repostStatus(status, id, is_comment) {
+    function repostStatus(status, id, is_comment, rtid) {
         statusesRepost.setParameters("status", status);
         statusesRepost.setParameters("id", " "+id+" ");
         statusesRepost.setParameters("is_comment", is_comment);
         //TODO 同时评论的用户id（即发送被转发的微博的用户id） for hacklogin
-        statusesRepost.setParameters("rtcomment", "");
+        if (tokenProvider.useHackLogin && is_comment)
+            statusesRepost.setParameters("rtcomment", rtid);
         statusesRepost.postRequest();
     }
 
@@ -220,13 +239,13 @@ Item {
     function sendWeibo() {
         switch (wbSendFunctions.mode) {
         case "repost" :
-            repostStatus(contentText, userInfo.id, optionIndex)
+            repostStatus(contentText, userInfo.id, optionIndex, userInfo.rtid);
             break
         case "comment" :
-            sendComment(contentText, userInfo.id, optionIndex)
+            sendComment(contentText, userInfo.id, optionIndex);
             break
         case "reply" :
-            replyComment(contentText, userInfo.id, optionIndex, userInfo.cid, 0, userInfo.replyToUser)
+            replyComment(contentText, userInfo.id, optionIndex, userInfo.cid, 0, userInfo.replyToUser);
             break
         default:
             if (tokenProvider.useHackLogin) {
