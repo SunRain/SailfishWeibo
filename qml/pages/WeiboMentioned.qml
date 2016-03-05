@@ -91,19 +91,15 @@ WBPage {
                 weiboJSONContent: modelWeibo.get(index)
                 optionMenu: options
                 onRepostedWeiboClicked: {
-//                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-//                                   {"userWeiboJSONContent":modelWeibo.get(index).retweeted_status})
                     if (tokenProvider.useHackLogin) {
                         var suffix = modelWeibo.get(index).card.page_url;
-                        console.log("===== onUsWeiboClicked  suffix "+suffix);
+                        console.log("===== onRepostedWeiboClicked  suffix "+suffix);
                         wbFunc.toWeiboPage(modelWeibo.get(index).card, suffix);
                     } else {
                         wbFunc.toWeiboPage(modelWeibo.get(index).retweeted_status);
                     }
                 }
                 onUsWeiboClicked: {
-//                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-//                                   {"userWeiboJSONContent":modelWeibo.get(index)})
                     if (tokenProvider.useHackLogin) {
                         var suffix = modelWeibo.get(index).user.id +"/"+modelWeibo.get(index).bid
                         console.log("===== onUsWeiboClicked  suffix "+suffix);

@@ -100,3 +100,12 @@ function parserOthersUserInfo(target, jsonObject) {
     }
     console.log("====== parserOthersUserInfo userWeiboListScheme " + target.userWeiboListScheme);
 }
+
+function parserHackStatusesShow(jsonObject) {
+    for (var i=0; i<jsonObject.length; ++i) {
+        var object = jsonObject[i].mblog;
+        if (object)
+            return object
+    }
+    return undefined
+}

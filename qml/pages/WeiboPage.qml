@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import "../js/dateutils.js" as DateUtils
 import "../js/getURL.js" as GetURL
 import "../WeiboFunctions.js" as WBLoader
+import "../js/Utility.js" as Utility
 
 import "../components"
 
@@ -107,7 +108,7 @@ Page {
         id: modelInfo
     }
     onStatusChanged: {
-        console.log("====== weiboPage status " + status)
+//        console.log("====== weiboPage status " + status)
         if (weiboPage.status == PageStatus.Active) {
             if (weiboPage.weiboHackLoginSuffix) {
                 if (!_hackLoginStatusShowObject) {
@@ -116,8 +117,13 @@ Page {
                         if (weiboPage._hackLoginStatusShowObject) {
                             weiboPage._hackLoginStatusShowObject.requestResult.connect(function(ret, replyData) {
                                 console.log("=== RQHackStatusesShow connect ===");
-                                console.log("== RQHackStatusesShow onRequestSuccess ["+replyData+"]")
-                                //TODO apply to model
+                                if (ret == BaseRequest.RET_SUCCESS) {
+                                    console.log("== RQHackStatusesShow onRequestSuccess")
+                                    userWeiboJSONContent = undefined;
+                                    userWeiboJSONContent = Utility.parserHackStatusesShow(JSON.parse(replyData));
+                                } else {
+                                    wbFunc.addNotification(qsTr("Request for addNotification error!!"));
+                                }
                             });
                             weiboPage._hackLoginStatusShowObject.resetUrlPath(weiboPage.weiboHackLoginSuffix);
                             weiboPage._hackLoginStatusShowObject.getRequest();
