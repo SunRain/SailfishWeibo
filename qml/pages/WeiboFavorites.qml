@@ -10,8 +10,6 @@ WBPage {
 
     property int _pageNum: 1
 
-//    property alias contentItem: lvUserWeibo
-
     function refresh() {
         modelWeibo.clear()
         _pageNum = 1
@@ -63,7 +61,7 @@ WBPage {
             pullDownMenu.busy = false;
         }
     }
-    /*FavoritesDestroy*/WrapperFavoritesDestroy {
+    WrapperFavoritesDestroy {
         id: favoritesDestroy
         onRequestAbort: {
             console.log("== favoritesDestroy onRequestAbort");
@@ -81,7 +79,7 @@ WBPage {
         anchors.fill: parent
         cacheBuffer: 999999
         spacing: Theme.paddingSmall
-//        model: modelWeibo
+        model: modelWeibo
         footer: FooterLoadMore {
             visible: modelWeibo.count != 0
             onClicked: { weiboFavoritesPage._addMore();}
@@ -118,12 +116,14 @@ WBPage {
                 weiboJSONContent: modelWeibo.get(index).status
                 optionMenu: options
                 onRepostedWeiboClicked: {
-                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                   {"userWeiboJSONContent":modelWeibo.get(index).status.retweeted_status})
+                    wbFunc.toWeiboPage(modelWeibo.get(index).status.retweeted_status);
+//                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+//                                   {"userWeiboJSONContent":modelWeibo.get(index).status.retweeted_status})
                 }
                 onUsWeiboClicked: {
-                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                   {"userWeiboJSONContent":modelWeibo.get(index).status})
+                    wbFunc.toWeiboPage(modelWeibo.get(index).status)
+//                    pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
+//                                   {"userWeiboJSONContent":modelWeibo.get(index).status})
                 }
                 onAvatarHeaderClicked: {
                     wbFunc.toUserPage(userId);

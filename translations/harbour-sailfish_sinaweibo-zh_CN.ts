@@ -666,17 +666,17 @@
 <context>
     <name>WeiboFavorites</name>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="38"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="36"/>
         <source>Removing from favorites</source>
         <translation>正在删除...</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="92"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="90"/>
         <source>Weibo Favorites</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/WeiboFavorites.qml" line="97"/>
+        <location filename="../qml/pages/WeiboFavorites.qml" line="95"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
