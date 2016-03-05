@@ -140,9 +140,4 @@ WBPage{
             }
         }
     }// component
-
-    ListModel {
-        id: modelWeiboTemp
-    }
-
 }
