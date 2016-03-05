@@ -11,6 +11,7 @@ Item {
 
     property var weiboJSONContent: undefined
     onWeiboJSONContentChanged: {
+        inner.resetValues();
         if (weiboJSONContent != undefined && weiboJSONContent != "") {
             inner.attitudes_count = weiboJSONContent.attitudes_count;
             inner.comments_count = weiboJSONContent.comments_count;
@@ -67,6 +68,14 @@ Item {
         property var attitudes_count: undefined
         property bool showFooterBar: false
         property bool useSimpleSubView: false
+        function resetValues () {
+            subValue = undefined;
+            reposts_count = undefined
+            comments_count = undefined
+            attitudes_count = undefined
+            showFooterBar = false
+            useSimpleSubView = false
+        }
     }
 
     Column {
@@ -78,7 +87,7 @@ Item {
         }
         spacing: Theme.paddingMedium
         BaseWeiboCard {
-            id:usWeibo
+            id: usWeibo
             isInvalid: false
             avatarHeaderHeight: Theme.itemSizeSmall
             avaterHeaderFontSize: Theme.fontSizeExtraSmall
@@ -96,7 +105,6 @@ Item {
                      : weiboJSONContent.pic_urls
 
             onUserAvatarHeaderClicked: {
-                console.log("===== weiboCard.avatarHeaderClicked " + weiboJSONContent.user.id);
                 weiboCard.avatarHeaderClicked(weiboJSONContent.user.id);
             }
             onLabelLinkClicked: { //link
@@ -150,8 +158,8 @@ Item {
                     height: width
                     anchors {
                         left: parent.left
-                        leftMargin: Theme.paddingSmal
-                        verticalCenter: parent.verticalCenter
+                        top: parent.top
+                        margins: Theme.paddingSmall
                     }
                     source: inner.subValue.page_pic
                     fillMode: Image.PreserveAspectFit
@@ -160,10 +168,9 @@ Item {
                     id: svColumn
                     anchors {
                         left: svImage.right
-                        leftMargin: Theme.paddingSmal
                         right: parent.right
-                        rightMargin: Theme.paddingSmal
-                        verticalCenter: parent.verticalCenter
+                        top: parent.top
+                        margins: Theme.paddingSmall
                     }
                     spacing: Theme.paddingSmall
                     Label {
@@ -172,12 +179,17 @@ Item {
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         textFormat: Text.StyledText
                         font.bold: true
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.highlightColor
+
                     }
                     Label {
                         width: parent.width
                         text: inner.subValue.page_desc
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         textFormat: Text.StyledText
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        color: Theme.secondaryColor
                     }
                 }
             }

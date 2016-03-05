@@ -4,8 +4,8 @@ import Sailfish.Silica 1.0
 import "../js/dateutils.js" as DateUtils
 import "../js/getURL.js" as GetURL
 
-Item {
-    id:baseWeiboCard
+MouseArea {
+    id: baseWeiboCard
     width: parent ? parent.width : Screen.width
     height: isInvalid ? 0 : columnWContent.height
 
@@ -29,8 +29,17 @@ Item {
     signal labelLinkClicked(string link)
     signal labelImageClicked(var modelImages, string index)
     
-    
+    onPicURLsChanged: {
+        calculatePics();
+    }
     Component.onCompleted: {
+        calculatePics();
+    }
+    onClicked: {
+        baseWeiboCard.baseWeiboCardClicked();
+    }
+
+    function calculatePics() {
         if ( !isInvalid && picURLs != undefined && (picURLs.length > 0 || picURLs.count > 0)) {
             modelImages.clear()
 //            console.log(" >>>>>> picURLs "+picURLs);
@@ -47,20 +56,12 @@ Item {
                     modelImages.append(JSON.parse(value));
                 }
             }
-
             if (gridRepeater.model == undefined) {
                 gridRepeater.model = modelImages;
             }
-        } 
+        }
     }
-    
     ListModel { id: modelImages }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: { baseWeiboCard.baseWeiboCardClicked(); }
-    }
-    
     Column {
         id: columnWContent
         width: parent.width
@@ -68,9 +69,7 @@ Item {
             left: parent.left
             top: parent.top
         }
-
         spacing: Theme.paddingSmall
-        
         Item {
             id: avatarBar
             width: parent.width
