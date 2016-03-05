@@ -89,24 +89,24 @@
 <context>
     <name>CommentAllPage</name>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="72"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="66"/>
         <source>All comments</source>
         <translation>所有评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="80"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="74"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="117"/>
+        <location filename="../qml/pages/CommentAllPage.qml" line="121"/>
         <source>Reply comment</source>
         <translation>回复评论</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CommentAllPage.qml" line="129"/>
-        <source>View weibo</source>
-        <translation>查看微博</translation>
+        <location filename="../qml/pages/CommentAllPage.qml" line="133"/>
+        <source>Reply to</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

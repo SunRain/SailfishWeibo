@@ -1,13 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
-import "../js/dateutils.js" as DateUtils
-import "../js/weiboapi.js" as WB
-//import "../js/Settings.js" as Settings
-import "../js/getURL.js" as GetURL
-import "../components"
-
 import harbour.sailfish_sinaweibo.sunrain 1.0
+
+import "../components"
 
 WBPage {
     id: commentAllPage
@@ -31,7 +26,7 @@ WBPage {
         _commentAll(_pageNum)
     }
 
-    /*CommentsTimeline*/WrapperCommentsTimeline {
+    WrapperCommentsTimeline {
         id: commentsTimeline
         onRequestAbort: {
             console.log("== commentsTimeline onRequestAbort");
@@ -65,7 +60,6 @@ WBPage {
         anchors.fill: parent
         spacing: Theme.paddingLarge
         delegate: delegateComment
-
         cacheBuffer: 9999
         header:PageHeader {
             id:pageHeader
@@ -90,8 +84,7 @@ WBPage {
 
         Column {
             width: parent.width
-            spacing: Theme.paddingSmall
-
+            spacing: Theme.paddingMedium
             WeiboCard {
                 id: weiboCard
                 width: parent.width - Theme.paddingMedium * 2
@@ -102,14 +95,25 @@ WBPage {
                 weiboJSONContent: modelComment.get(index)
                 optionMenu: options
                 onRepostedWeiboClicked: {
+                    if (tokenProvider.useHackLogin) {
+                        var suffix = modelComment.get(index).card.page_url;
+                        console.log("===== onRepostedWeiboClicked  suffix "+suffix);
+                        wbFunc.toWeiboPage(modelComment.get(index).card, suffix);
+                    }
                 }
                 onUsWeiboClicked: {
+                    if (!tokenProvider.useHackLogin) {
+                        wbFunc.toWeiboPage(modelWeibo.get(index).status);
+                    }
                 }
                 onAvatarHeaderClicked: {
+                    wbFunc.toUserPage(userId);
                 }
                 onLabelLinkClicked: {
+                    Qt.openUrlExternally(link);
                 }
                 onLabelImageClicked: {
+                    wbFunc.toGalleryPage(modelImages, index);
                 }
                 ContextMenu {
                     id:options
@@ -117,20 +121,20 @@ WBPage {
                         text: qsTr("Reply comment")
                         onClicked: {
                             /////////// Ugly code
-                            commentAllPage._commentInfo = { "id": model.status.id, "cid": model.id}
+                            if (tokenProvider.useHackLogin) {
+                                commentAllPage._commentInfo = {"id": model.card.page_id,
+                                                               "cid": model.id,
+                                                               "replyToUser": model.user.screen_name}
+                            } else {
+                                commentAllPage._commentInfo = { "id": model.status.id, "cid": model.id}
+                            }
                             commentAllPage._weiboTmp = model.status
-                            //toSendPage("reply", commentAllPage.commentInfo)
-                            pageStack.push(Qt.resolvedUrl("SendPage.qml"),
-                                           {"mode":"reply",
-                                               "userInfo":commentAllPage._commentInfo})
-                        }
-                    }
-                    MenuItem {
-                        text: qsTr("View weibo")
-                        onClicked: {
-                            /////////// Ugly code
-                            pageStack.push(Qt.resolvedUrl("WeiboPage.qml"),
-                                           {"userWeiboJSONContent":model.status})
+                            if (tokenProvider.useHackLogin) {
+                                var placeHold = qsTr("Reply to")+":"+model.user.screen_name+" ";
+                                wbFunc.toSendPage("reply", commentAllPage._commentInfo, placeHold)
+                            } else {
+                                wbFunc.toSendPage("reply", commentAllPage._commentInfo)
+                            }
                         }
                     }
                 }
@@ -139,11 +143,10 @@ WBPage {
                 width: parent.width
                 color: Theme.highlightColor
             }
+            Item {
+                width: parent.width
+                height: Theme.paddingSmall
+            }
         }
     }// component
-
-    ListModel {
-        id: modelWeiboTemp
-    }
-
 }

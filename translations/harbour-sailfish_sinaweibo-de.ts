@@ -83,7 +83,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>View weibo</source>
+        <source>Reply to</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

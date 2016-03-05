@@ -71,10 +71,6 @@
 <context>
     <name>CommentAllPage</name>
     <message>
-        <source>View weibo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>All comments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -84,6 +80,10 @@
     </message>
     <message>
         <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reply to</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
