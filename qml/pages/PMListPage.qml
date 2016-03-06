@@ -164,6 +164,10 @@ WBPage {
             BackgroundItem {
                 width: parent.width
                 height: Math.max(avatar.height, column.height)
+                onClicked: {
+                    wbFunc.toPMChatPage(model.user.id, model.user.screen_name)
+                }
+
                 MouseArea {
                     id: avatar
                     height: Theme.itemSizeMedium
@@ -176,6 +180,7 @@ WBPage {
                     Image {
                         anchors.fill: parent
                         source: _showUnfollow
+                        //silly typo, sina used a wrong word, should be avatar lol
                                 ? listModel.get(index).data.sender.avanta
                                 : model.user.avatar_large
                         fillMode: Image.PreserveAspectFit

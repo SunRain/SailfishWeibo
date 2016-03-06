@@ -239,15 +239,19 @@ Item {
     function sendWeibo() {
         switch (wbSendFunctions.mode) {
         case "repost" :
+            console.log("===== repost")
             repostStatus(contentText, userInfo.id, optionIndex, userInfo.rtid);
             break
         case "comment" :
+            console.log("===== comment")
             sendComment(contentText, userInfo.id, optionIndex);
             break
         case "reply" :
+            console.log("===== reply")
             replyComment(contentText, userInfo.id, optionIndex, userInfo.cid, 0, userInfo.replyToUser);
             break
         default:
+            console.log("===== default")
             if (tokenProvider.useHackLogin) {
                 var status = encodeURIComponent(contentText)
                 statusesUpdate.setParameters("status", status);

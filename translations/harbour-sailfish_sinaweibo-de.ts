@@ -300,6 +300,21 @@
     </message>
 </context>
 <context>
+    <name>PMChatPage</name>
+    <message>
+        <source>Send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknow person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t send empty msg</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PMListPage</name>
     <message>
         <source>Unfollowed PM</source>

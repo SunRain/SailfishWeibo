@@ -7,8 +7,9 @@ import "../ui"
 
 Page {
     id: sendPage
-    property string mode: ""
+    property string mode
     onModeChanged: {
+        console.log("===== onModeChanged " + mode)
         wbSender.mode = mode;
     }
 
@@ -38,6 +39,8 @@ Page {
     }
     Component.onCompleted: {
         wbSender.imageModel.clear();
+        wbSender.mode = mode;
+        contentText = "";
     }
 
     Component {

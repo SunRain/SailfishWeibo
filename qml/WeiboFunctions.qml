@@ -124,4 +124,9 @@ QtObject {
     function toPMListPage() {
         pageStack.replace(pmComponent)
     }
+
+    function toPMChatPage(uid, chatPerson) {
+        pageStack.push(Qt.resolvedUrl("pages/PMChatPage.qml"),
+                       { "uid": uid, "chatPerson": chatPerson })
+    }
 }

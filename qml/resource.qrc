@@ -65,5 +65,6 @@
         <file>WBSendFunctions.qml</file>
         <file>requests/RQHackStatusesShow.qml</file>
         <file>pages/PMListPage.qml</file>
+        <file>pages/PMChatPage.qml</file>
     </qresource>
 </RCC>
