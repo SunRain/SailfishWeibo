@@ -74,7 +74,7 @@ QtObject {
     }
 
     function toFavoritesPage() {
-        pageStack.push(weiboFavoritesComponent);
+        pageStack.replace(weiboFavoritesComponent);
     }
 
     //////////////////////////////////////////////////////////////////         go to weibo page
@@ -122,6 +122,6 @@ QtObject {
     }
 
     function toPMListPage() {
-        pageStack.push(pmComponent)
+        pageStack.replace(pmComponent)
     }
 }
