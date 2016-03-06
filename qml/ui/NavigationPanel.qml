@@ -306,7 +306,7 @@ Panel {
             icon: appUtility.pathTo("qml/graphics/panel_pm.png")
             iconSize: Theme.itemSizeExtraSmall *0.6
             onClicked: {
-                wbFunc.toDummyDialog();
+                wbFunc.toPMListPage();
             }
             dotOpacity: remindObject.dm == "0" ? 0 : 1
         }

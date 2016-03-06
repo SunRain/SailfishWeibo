@@ -302,6 +302,28 @@ ApplicationWindow
             }
         }
     }
+    Component {
+        id: pmComponent
+        PMListPage {
+            id: pmListPage
+            property bool _refreshed: false
+            Binding {
+                target: pmListPage.contentItem
+                property: "parent"
+                value: pmListPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : pmListPage)
+                       : pmListPage
+            }
+            onStatusChanged: {
+                if (status == PageStatus.Active) {
+                    if (!_refreshed) {
+                        pmListPage.refresh();
+                        _refreshed = true;
+                    }
+                }
+            }
+        }
+    }
 
     Component {
         id: loginPageComponent

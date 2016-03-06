@@ -300,6 +300,25 @@
     </message>
 </context>
 <context>
+    <name>PMListPage</name>
+    <message>
+        <source>Unfollowed PM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>followed PM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>followed message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unfollowed message</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>S:</name>
     <message>
         <source></source>
@@ -510,10 +529,6 @@
     </message>
     <message>
         <source>Uploading, please wait..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repost sent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

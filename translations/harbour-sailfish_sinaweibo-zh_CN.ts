@@ -364,6 +364,29 @@
     </message>
 </context>
 <context>
+    <name>PMListPage</name>
+    <message>
+        <location filename="../qml/pages/PMListPage.qml" line="92"/>
+        <source>Unfollowed PM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PMListPage.qml" line="92"/>
+        <source>followed PM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PMListPage.qml" line="131"/>
+        <source>followed message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PMListPage.qml" line="145"/>
+        <source>unfollowed message</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>S:</name>
     <message>
         <location filename="../qml/js/dateutils.js" line="37"/>
@@ -616,22 +639,18 @@
         <translation type="unfinished">发送成功</translation>
     </message>
     <message>
-        <location filename="../qml/WBSendFunctions.qml" line="110"/>
-        <source>Repost sent</source>
-        <translation type="unfinished">转发成功</translation>
-    </message>
-    <message>
-        <location filename="../qml/WBSendFunctions.qml" line="143"/>
+        <location filename="../qml/WBSendFunctions.qml" line="118"/>
+        <location filename="../qml/WBSendFunctions.qml" line="152"/>
         <source>Comment sent</source>
         <translation type="unfinished">评论成功</translation>
     </message>
     <message>
-        <location filename="../qml/WBSendFunctions.qml" line="178"/>
+        <location filename="../qml/WBSendFunctions.qml" line="187"/>
         <source>Reply sent</source>
         <translation type="unfinished">回复成功</translation>
     </message>
     <message>
-        <location filename="../qml/WBSendFunctions.qml" line="258"/>
+        <location filename="../qml/WBSendFunctions.qml" line="267"/>
         <source>Uploading, please wait..</source>
         <translation type="unfinished">上传中。。。</translation>
     </message>
@@ -641,7 +660,6 @@
         <location filename="../qml/WBSendFunctions.qml" line="64"/>
         <location filename="../qml/WBSendFunctions.qml" line="68"/>
         <location filename="../qml/WBSendFunctions.qml" line="82"/>
-        <location filename="../qml/WBSendFunctions.qml" line="113"/>
         <source>Oops.. something wrong</source>
         <translation type="unfinished">出错了。。。</translation>
     </message>

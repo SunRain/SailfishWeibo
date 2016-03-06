@@ -120,4 +120,8 @@ QtObject {
     function toDummyDialog() {
         pageStack.push(Qt.resolvedUrl("pages/Dummy.qml"));
     }
+
+    function toPMListPage() {
+        pageStack.push(pmComponent)
+    }
 }

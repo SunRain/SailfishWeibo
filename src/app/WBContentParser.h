@@ -25,6 +25,8 @@ public:
     /// \param linkColor link color
     /// \return like this <a href="url"><font color="linkColor">str</font></a>
     static QString strToLink(const QString &str, const QString &url, const QString &linkColor);
+
+    Q_INVOKABLE QString parseHackPrivateMessageNoteList(const QString &content);
 private:
     QString parseHackLoginWeiboContent(const QString &weiboContent,
                                        const QString &contentColor,

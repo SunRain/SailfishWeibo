@@ -1,6 +1,12 @@
 #include "WBContentParser.h"
 
 #include <QDebug>
+#include <QJsonParseError>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QDateTime>
 
 #include "sailfishapp.h"
 
@@ -106,6 +112,73 @@ QString WBContentParser::strToLink(const QString &str, const QString &url, const
 //    if (TokenProvider::instance ()->useHackLogin ())
 //        return QString("<a href=\\\"%1\\\"><font color=\\\"%2\\\">%3</font></a>").arg(url).arg(linkColor).arg(str);
     return QString("<a href=\"%1\"><font color=\"%2\">%3</font></a>").arg(url).arg(linkColor).arg(str);
+}
+
+QString WBContentParser::parseHackPrivateMessageNoteList(const QString &content)
+{
+    if (content.isEmpty ())
+        return QString();
+
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson (content.toUtf8 (), &error);
+    if (error.error != QJsonParseError::NoError) {
+        qDebug()<<Q_FUNC_INFO<<"Parse main json content error ["<<error.errorString ()<<"]";
+        return QString();
+    }
+    if (doc.isNull () || doc.isEmpty ()) {
+        qDebug()<<Q_FUNC_INFO<<"Parse main json content, result isNull or isEmpty";
+        return QString();
+    }
+    QJsonObject topObj = doc.object ();
+    if (topObj.isEmpty ()) {
+        qDebug()<<Q_FUNC_INFO<<"Convert to top object error";
+        return QString();
+    }
+    QJsonObject mainObj = topObj.value ("data").toObject ();
+    if (mainObj.isEmpty ()) {
+        qDebug()<<Q_FUNC_INFO<<"Convert to main object error";
+        return QString();
+    }
+    QList<QJsonObject> objList;
+    foreach (QString key, mainObj.keys ()) {
+        QJsonObject o;
+        QJsonObject sub = mainObj.value (key).toObject ();
+        o.insert ("id", key);
+        o.insert ("data", sub);
+        objList.append (o);
+    }
+    //sort array by data.time
+    qStableSort(objList.begin (), objList.end (),
+                [](const QJsonObject &a, const QJsonObject &b) ->bool {
+        QString astr = a.value ("data").toObject ().value ("time").toString ();
+//        qDebug()<<Q_FUNC_INFO<<" astr "<<astr;
+        //eg. 2015-12-24 18:28
+        QDateTime da = QDateTime::fromString (astr, "yyyy-MM-dd hh:mm");
+        if (!da.isValid () || da.isNull ()) {
+            //eg. 02-05 20:27
+            QString str = QString("%1-%2").arg (QDateTime::currentDateTime ().date ().year ()).arg (astr);
+//            qDebug()<<Q_FUNC_INFO<<" new astr "<<str;
+            da = QDateTime::fromString (str, "yyyy-MM-dd hh:mm");
+        }
+
+        QString bstr = b.value ("data").toObject ().value ("time").toString ();
+//        qDebug()<<Q_FUNC_INFO<<" bstr "<<bstr;
+        //eg. 2015-12-24 18:28
+        QDateTime db = QDateTime::fromString (bstr, "yyyy-MM-dd hh:mm");
+        if (!db.isValid () || db.isNull ()) {
+            //eg. 02-05 20:27
+            QString str = QString("%1-%2").arg (QDateTime::currentDateTime ().date ().year ()).arg (bstr);
+//            qDebug()<<Q_FUNC_INFO<<" new bstr "<<str;
+            db = QDateTime::fromString (str, "yyyy-MM-dd hh:mm");
+        }
+        return da > db;
+    });
+    QJsonArray retArray;
+    foreach (QJsonObject obj, objList) {
+        retArray.append (obj);
+    }
+    QJsonDocument d(retArray);
+    return d.toJson ();
 }
 
 QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
@@ -233,8 +306,13 @@ QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
 #if DBG_HTMLPARSER
                         qDebug()<<"tagName a , at text is "<<text;
 #endif
-                        QString tmp = QString("LinkAt||%1").arg (link);
-                        text = this->strToLink (text, tmp, userColor);
+                        //update for HackPrivateMessageNoteList
+                        if (!link.startsWith ("http")) { //for weibo content @ text
+                            QString tmp = QString("LinkAt||%1").arg (link);
+                            text = this->strToLink (text, tmp, userColor);
+                        } else { //for HackPrivateMessageNoteList
+                            text = this->strToLink (text, link, linkColor);
+                        }
 #if DBG_HTMLPARSER
                         qDebug()<<"link is "<<text;
 #endif
