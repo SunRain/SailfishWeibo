@@ -615,37 +615,43 @@
 <context>
     <name>UserPage</name>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="320"/>
+        <location filename="../qml/pages/UserPage.qml" line="346"/>
         <source>User Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="348"/>
+        <location filename="../qml/pages/UserPage.qml" line="374"/>
         <source>&apos;s RecentWeibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="282"/>
+        <location filename="../qml/pages/UserPage.qml" line="306"/>
         <source>UserInfo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="293"/>
+        <location filename="../qml/pages/UserPage.qml" line="249"/>
+        <location filename="../qml/pages/UserPage.qml" line="257"/>
+        <source>send PM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/UserPage.qml" line="317"/>
         <source>UserWeibo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="400"/>
+        <location filename="../qml/pages/UserPage.qml" line="426"/>
         <source>&apos;s Weibo</source>
         <translation type="unfinished">的微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="465"/>
+        <location filename="../qml/pages/UserPage.qml" line="491"/>
         <source>Repost</source>
         <translation type="unfinished">转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="475"/>
+        <location filename="../qml/pages/UserPage.qml" line="501"/>
         <source>Comment</source>
         <translation type="unfinished">评论</translation>
     </message>

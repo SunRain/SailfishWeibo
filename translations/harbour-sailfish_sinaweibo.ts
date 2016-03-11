@@ -531,6 +531,10 @@
         <source>&apos;s Weibo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>send PM</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserWeibo</name>
