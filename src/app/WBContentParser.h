@@ -27,6 +27,8 @@ public:
     static QString strToLink(const QString &str, const QString &url, const QString &linkColor);
 
     Q_INVOKABLE QString parseHackPrivateMessageNoteList(const QString &content);
+
+    Q_INVOKABLE QString parseHackPrivateMessageToken(const QString &content);
 private:
     QString parseHackLoginWeiboContent(const QString &weiboContent,
                                        const QString &contentColor,

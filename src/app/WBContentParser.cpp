@@ -181,6 +181,61 @@ QString WBContentParser::parseHackPrivateMessageNoteList(const QString &content)
     return d.toJson ();
 }
 
+QString WBContentParser::parseHackPrivateMessageToken(const QString &content)
+{
+    HTML::ParserDom parser;
+    tree<HTML::Node> dom = parser.parseTree(content.toStdString ());
+
+    tree<HTML::Node>::iterator it = dom.begin();
+    tree<HTML::Node>::iterator end = dom.end();
+
+
+    for (; it != end; ++it) {
+        (*it).parseAttributes ();
+
+        if ((*it).isTag ()) {
+            if ((*it).tagName () == "script") { //script
+                QString id = TO_QSTR((*it).attribute ("id").second);
+                QString type = TO_QSTR((*it).attribute ("type").second);
+                if (id.isEmpty () && type.isEmpty ()) {
+                    (*++it).parseAttributes ();
+                    QString text = TO_QSTR((*it).text ());
+                    if (text.contains ("CONFIG.exp=")) {
+                        QStringList list = text.split (";");
+                        foreach (QString str, list) {
+                            if (str.contains ("$CONFIG.exp=")) {
+                                QString s = str.replace ("$CONFIG.exp=", "");
+                                qDebug()<<"str value ["<<s<<"]";
+                                QJsonParseError error;
+                                QJsonDocument doc = QJsonDocument::fromJson (s.toUtf8 (), &error);
+                                if (error.error != QJsonParseError::NoError) {
+//                                    qDebug()<<Q_FUNC_INFO<<"Parse json content error ["<<error.errorString ()<<"]";
+                                    continue;
+                                }
+                                if (doc.isNull () || doc.isEmpty ()) {
+//                                    qDebug()<<Q_FUNC_INFO<<"Parse json content, result isNull or isEmpty";
+                                    continue;
+                                }
+                                QJsonObject obj = doc.object ();
+                                if (obj.isEmpty ()) {
+//                                    qDebug()<<Q_FUNC_INFO<<"Convert to object error";
+                                    continue;
+                                }
+                                QString token = obj.value ("st").toString ();
+                                if (!token.isEmpty ())
+                                    return token;
+                                continue;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return QString();
+}
+
 QString WBContentParser::parseHackLoginWeiboContent(const QString &weiboContent,
                                                        const QString &contentColor,
                                                        const QString &userColor,

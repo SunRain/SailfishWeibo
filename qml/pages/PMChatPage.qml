@@ -10,6 +10,12 @@ Page {
     property var uid: undefined
     property var chatPerson: undefined
     property int _pageNum: 1
+    property string _token: ""
+
+    Component.onCompleted: {
+        token.setParameters("uid", uid);
+        token.getRequest();
+    }
 
     onStatusChanged: {
         if (pmChatPage.status == PageStatus.Active) {
@@ -35,7 +41,22 @@ Page {
     function _sendMsg(content) {
         chatSend.setParameters("uid", uid);
         chatSend.setParameters("content", content);
+        chatSend.setParameters("st", _token);
         chatSend.postRequest();
+    }
+
+    HackPrivateMessageToken {
+        id: token
+        onRequestResult: { //ret, replyData
+            if (ret != BaseRequest.RET_SUCCESS) {
+                console.log("== HackPrivateMessageToken ret "+ret+" replydata " + replyData);
+                wbFunc.addNotification(qsTr("Oops, get message token error, can't send pm!!!"));
+            } else {
+//               console.log("== HackPrivateMessageToken RET_SUCCESS replydata " + replyData)
+                _token = wbParser.parseHackPrivateMessageToken(replyData);
+                console.log("== HackPrivateMessageToken token "+_token)
+            }
+        }
     }
 
     HackPrivateMessageChatList {

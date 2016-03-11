@@ -320,6 +320,10 @@
         <source>Can&apos;t send empty msg</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Oops, get message token error, can&apos;t send pm!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PMListPage</name>

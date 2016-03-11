@@ -374,19 +374,24 @@
 <context>
     <name>PMChatPage</name>
     <message>
-        <location filename="../qml/pages/PMChatPage.qml" line="79"/>
-        <location filename="../qml/pages/PMChatPage.qml" line="86"/>
-        <location filename="../qml/pages/PMChatPage.qml" line="147"/>
+        <location filename="../qml/pages/PMChatPage.qml" line="53"/>
+        <source>Oops, get message token error, can&apos;t send pm!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PMChatPage.qml" line="100"/>
+        <location filename="../qml/pages/PMChatPage.qml" line="107"/>
+        <location filename="../qml/pages/PMChatPage.qml" line="168"/>
         <source>Send</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/PMChatPage.qml" line="102"/>
+        <location filename="../qml/pages/PMChatPage.qml" line="123"/>
         <source>Unknow person</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/PMChatPage.qml" line="140"/>
+        <location filename="../qml/pages/PMChatPage.qml" line="161"/>
         <source>Can&apos;t send empty msg</source>
         <translation type="unfinished"></translation>
     </message>
