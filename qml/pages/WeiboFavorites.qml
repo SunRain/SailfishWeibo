@@ -147,6 +147,9 @@ WBPage {
                 onLabelImageClicked: {
                     wbFunc.toGalleryPage(modelImages, index);
                 }
+                onContentVideoImgClicked: {
+                    Qt.openUrlExternally(link)
+                }
                 ContextMenu {
                     id:options
                     MenuItem {

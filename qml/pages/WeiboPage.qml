@@ -191,6 +191,9 @@ Page {
                 onLabelImageClicked: {
                     wbFunc.toGalleryPage(modelImages, index);
                 }
+                onContentVideoImgClicked: {
+                    Qt.openUrlExternally(link)
+                }
                 onRepostButtonClicked: {
 //                    _footInfoBarIndex = 0;
 //                    _getInfo(userWeiboJSONContent.id);
