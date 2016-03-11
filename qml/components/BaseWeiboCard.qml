@@ -22,12 +22,14 @@ MouseArea {
     property alias labelFontSize: labelWeibo.font.pixelSize
     property alias labelContent: labelWeibo.text
     
+    property alias videoPic: videoImage.source
     property alias optionMenu: optionItem.menu
     
     signal baseWeiboCardClicked
     signal userAvatarHeaderClicked
     signal labelLinkClicked(string link)
     signal labelImageClicked(var modelImages, string index)
+    signal videoPicClicked
     
     onPicURLsChanged: {
         calculatePics();
@@ -97,7 +99,15 @@ MouseArea {
                 baseWeiboCard.labelLinkClicked(link);
             }
         }
-
+        Image {
+            id: videoImage
+            width: parent.width
+            fillMode: Image.PreserveAspectFit
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {videoPicClicked()}
+            }
+        }
         Grid {
             id: gridWeiboPics
             columns: modelImages.count == 1 ? 1 : 3

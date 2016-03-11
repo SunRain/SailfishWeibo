@@ -56,6 +56,7 @@ Item {
     signal linkWebOrVideoClicked(string link)
     signal linkAtClicked(string link)
     signal labelImageClicked(var modelImages, string index)
+    signal contentVideoImgClicked(string link)
     signal commentButtonClicked
     signal repostButtonClicked
     signal likeButtonClicked
@@ -97,7 +98,9 @@ Item {
                                   ? weiboJSONContent.created_at + " " + qsTr("From") + " " + weiboJSONContent.source
                                   : DateUtils.parseDate(appUtility.dateParse(weiboJSONContent.created_at))
                                         + qsTr(" From ") + GetURL.linkToStr(weiboJSONContent.source)
-
+            videoPic: weiboJSONContent.page_info != undefined && weiboJSONContent.page_info.media_info != undefined
+                      ? weiboJSONContent.page_info.page_pic
+                      : ""
             labelFontSize: Theme.fontSizeMedium
             labelContent: wbParser.parseWeiboContent(weiboJSONContent.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
             picURLs: tokenProvider.useHackLogin
@@ -119,6 +122,9 @@ Item {
                     weiboCard.linkAtClicked(data[1])
                 else
                     weiboCard.labelLinkClicked(data[0]);
+            }
+            onVideoPicClicked: {
+                weiboCard.contentVideoImgClicked(weiboJSONContent.page_info.page_url);
             }
             onBaseWeiboCardClicked: {
                 weiboCard.usWeiboClicked();
@@ -217,6 +223,9 @@ Item {
                             : DateUtils.parseDate(appUtility.dateParse(inner.subValue.created_at))
                                 + qsTr("From") + GetURL.linkToStr(inner.subValue.source)
 
+                    videoPic: inner.subValue.page_info != undefined && inner.subValue.page_info.media_info != undefined
+                              ? inner.subValue.page_info.page_pic
+                              : ""
                     labelFontSize: Theme.fontSizeMedium
                     labelContent: wbParser.parseWeiboContent(inner.subValue.text, Theme.primaryColor, Theme.highlightColor, Theme.secondaryHighlightColor)
                     picURLs: tokenProvider.useHackLogin
@@ -238,6 +247,9 @@ Item {
                             weiboCard.linkAtClicked(data[1])
                         else
                             weiboCard.labelLinkClicked(data[0]);
+                    }
+                    onVideoPicClicked: {
+                        weiboCard.contentVideoImgClicked(inner.subValue.page_info.page_url);
                     }
                     onBaseWeiboCardClicked: {
                         weiboCard.repostedWeiboClicked();
