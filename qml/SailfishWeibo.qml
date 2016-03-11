@@ -126,21 +126,18 @@ ApplicationWindow
         }
     }
 
-    Item{
+    Rectangle {
         id:notiItem
-        width: parent.width
-        height:Screen.height/5
+        width: parent.width - Theme.horizontalPageMargin * 2
+        x: Theme.horizontalPageMargin
+        y: Theme.horizontalPageMargin
+        height: notificationBar.height
         z: 20
+        color: Theme.highlightDimmerColor
         Column {
             id: notificationBar
-            anchors {
-                top:parent.top
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-                margins:Theme.paddingMedium
-            }
-            spacing: Theme.paddingMedium
+            width: parent.width
+            spacing: Theme.paddingSmall
             move: Transition { NumberAnimation { properties: "y" } }
         }
     }
