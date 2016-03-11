@@ -64,17 +64,23 @@ Page {
                     _runningBusyIndicator = false;
                 }
             }
+            onClick: {
+                pageStack.pop()
+            }
             BusyIndicator {
                 size: BusyIndicatorSize.Medium
                 anchors.centerIn: parent
                 running: imageweibo._runningBusyIndicator
                 z: parent.z + 10
             }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    pageStack.pop();
-                }
+            Label {
+                id: indicator
+                anchors.top: parent.top
+                anchors.topMargin: Theme.paddingLarge
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
+                text: index+1 + " / "+ modelGallery.count
             }
         }
     }

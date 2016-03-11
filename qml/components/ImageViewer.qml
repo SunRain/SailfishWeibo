@@ -18,6 +18,7 @@ PinchArea {
     property bool _scaling: false
 
     signal loadingStatus(var status)
+    signal click
 
     pinch.minimumScale: _fittedScale
 
@@ -65,7 +66,7 @@ PinchArea {
         }
     }
 
-    Flickable {
+    SilicaFlickable {
         id: flickable
         width: parent.width > imageWrapper.width ? imageWrapper.width : parent.width
         height: parent.height > imageWrapper.height ? imageWrapper.height : parent.height
@@ -85,10 +86,10 @@ PinchArea {
                               ? Flickable.VerticalFlick
                               : (width < contentWidth && height >= contentHeight
                                  ? Flickable.HorizontalFlick
-                                 : Flickable.HorizontalAndVerticalFlick
+                                 : Flickable.AutoFlickDirection
                                 )
                             : Flickable.AutoFlickDirection
-
+        ScrollDecorator{}
         Item {
             id: imageWrapper
             width: initialWidth * _scale
@@ -151,6 +152,15 @@ PinchArea {
                         }
                     }
                 }
+            }
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                pinchArea.click()
+            }
+            onDoubleClicked: {
+                _scale = _fittedScale;
             }
         }
     }
