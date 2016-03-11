@@ -1,244 +1,158 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-/*
- * ImageViewer from Jolla Sailfish Gallery Component
- * With some modification
- *
- */
+PinchArea {
+    id: pinchArea
+    width: parent ? parent.width : Screen.width
+    height: parent ? parent.height : Screen.height
 
-//TODO: 缩放小于屏幕大小的图片时候会出现图片闪烁
-SilicaFlickable {
-    id: flickable
-    //anchors.centerIn: parent
-//    anchors.fill: parent
-    //property bool menuOpen: false
-    property bool enableZoom: true//!menuOpen
-    property bool scaled: false
-
-    // maximumWidth maximumHeight用于设置FlickableView支持的最大窗口
-    property int maximumWidth
-    property int maximumHeight
-
-    property string source: "" //: image.source
-    property alias _source: image.source
-
+    property alias source: imageWrapper._source
     onSourceChanged: {
-        _source = appUtility.parseImageUrl(flickable.source);
-        flickable._resetScale();
+        if (_errorLabel)
+            _errorLabel.destroy();
     }
 
-    signal clicked()
-    signal loadReady()
-
-    property real _fittedScale: Math.min(flickable.width / flickable.implicitWidth, flickable.height / flickable.implicitHeight) //: Math.min(width / implicitWidth, height / implicitHeight)
-    //property real _menuOpenScale //: Math.max(_viewOpenWidth / implicitWidth, _viewOpenHeight / implicitHeight)
+    property var _errorLabel
+    property real _fittedScale: 1.0
     property real _scale
+    property bool _scaling: false
 
-    // if those values aren't valid then fall back to the image.
-    property int _actualWidth: maximumWidth > 1 ? Math.min(image.implicitWidth, flickable.maximumWidth) : image.implicitWidth
-    property int _actualHeight: maximumHeight > 1 ? Math.min(image.implicitHeight, flickable.maximumHeight) : image.implicitHeight
-   // property int _viewOpenWidth:  flickable.width//Screen.width
-   // property int _viewOpenHeight: flickable.height/2 //Screen.height / 2
+    signal loadingStatus(var status)
 
-    width: Math.min(image.width > 0 ? image.width : flickable._actualWidth, flickable.maximumWidth)
-    height: Math.min(image.height > 0 ? image.height : flickable._actualHeight, flickable.maximumHeight)
+    pinch.minimumScale: _fittedScale
 
-    implicitWidth: flickable._actualWidth
-    implicitHeight: flickable._actualHeight
-
-
-    contentWidth: container.width
-    contentHeight: container.height
-
-
-    children: ScrollDecorator {}
-
-     interactive: scaled
-     // Override SilicaFlickable's pressDelay because otherwise it will
-     // block touch events going to PinchArea in certain cases.
-     pressDelay: 0
-
-//     function _updateScale() {
-//         if (image.status != Image.Ready) {
-//             return
-//         }
-//         //state = menuOpen ? "menuOpen" : "fullscreen"
-//     }
-
-    function _resetScale() {
-        if (scaled) {
-            _scale = _fittedScale
-            scaled = false
-        }
-    }
-
-    function _scaleImage(scale, center, prevCenter) {
-//        if (largePhoto.source != image.source) {
-//            largePhoto.source = appUtility.parseImageUrl(image.source)
-//        }
-
-        var newWidth
-        var newHeight
-        var oldWidth = image.width
-        var oldHeight = image.height
-
-//      move center
-        contentX += prevCenter.x - center.x
-        contentY += prevCenter.y - center.y
-
-        // Scale and bounds check the width, and then apply the same scale to height.
-        newWidth = image.width * scale
-        if (newWidth <= _fittedScale * flickable.implicitWidth) {
-            _resetScale()
-            return
+    function _updateFittedScale(width, height) {
+        var scale = 1;
+        if (height/width > 5) { // for long weibo images
+            if (width > pinchArea.width)
+                scale = pinchArea.width / width
+            if (scale > 0.5)
+                scale = 0.3
         } else {
-            newWidth = /*Math.min*/Math.max(newWidth, flickable._actualWidth)
-            _scale = newWidth / flickable.implicitWidth
-            newHeight = Math.max(image.height, Screen.height)
+            scale = Math.min(pinchArea.width/width, pinchArea.height/height)
         }
-
-        // scale about center
-        if (newWidth > flickable.width)
-            contentX -= (oldWidth - newWidth)/(oldWidth/prevCenter.x)
-        if (newHeight > flickable.height)
-            contentY -= (oldHeight - newHeight)/(oldHeight/prevCenter.y)
-
-        scaled = true;
+        if (scale > 1)
+            scale = 1;
+        _fittedScale = scale;
+        _scale = _fittedScale;
+        imageWrapper.initialWidth = width
+        imageWrapper.initialHeight = height;
     }
 
-    PinchArea {
-        id: container
-        //anchors.fill: parent
-        //pinch.maximumScale: 20;
-        // pinch.minimumScale: 0.2;
-        // pinch.minimumRotation: 0;
-        //pinch.maximumRotation: 90;
-        enabled: /*!flickable.menuOpen &&*/ flickable.enableZoom && image.status == Image.Ready
-        width: Math.max(flickable.width, image.width)
-        height: Math.max(flickable.height, image.height)
+    onPinchStarted: {
+        _scaling = true;
+    }
+    onPinchUpdated: {
+        pinchArea._scale = (pinch.scale - pinch.previousScale + 1) * pinchArea._scale;
+    }
+    onPinchFinished: {
+        if (pinchArea._scale < _fittedScale)
+            _scale = _fittedScale;
+        _scaling = false;
+    }
 
-        onPinchStarted: {
-            //pinch.accepted = true;
+    Component {
+        id: errorLabelComponent
+        Label {
+            id: errorLabel
+            text: qsTr("Oops, can't display the image")
+            width: parent.width
+            anchors.centerIn: parent - Theme.paddingMedium*2
+            font.pixelSize: Theme.fontSizeMedium
+            wrapMode: Text.Wrap
+            horizontalAlignment: Text.AlignHCenter
+            color: Theme.secondaryColor
         }
-        onPinchUpdated: {
-            //transformRect.scale *= pinch.scale;
-            //transformRect.rotation += pinch.rotation;
-             flickable._scaleImage(1.0 + pinch.scale - pinch.previousScale, pinch.center, pinch.previousCenter)
-        }
-        onPinchFinished: {
-            //transformRect.scale *= pinch.scale;
-            //transformRect.rotation += pinch.rotation;
-            flickable.returnToBounds();
-        }
+    }
 
+    Flickable {
+        id: flickable
+        width: parent.width > imageWrapper.width ? imageWrapper.width : parent.width
+        height: parent.height > imageWrapper.height ? imageWrapper.height : parent.height
+        x: parent.width > imageWrapper.width ? (parent.width - imageWrapper.width)/2 : 0
+        y: parent.height > imageWrapper.height ? (parent.height - imageWrapper.height)/2 : 0
 
-        Image {
-            id: image
-            anchors.centerIn: parent
-            horizontalAlignment: Image.Left
-            verticalAlignment: Image.Top
-            width: Math.ceil(flickable._actualWidth * flickable._scale)
-            height: Math.ceil(flickable._actualHeight * flickable._scale)
-            fillMode: Image.PreserveAspectFit
-            //sourceSize.height: implicitHeight
-            //sourceSize.width: implicitWidth>Screen.width ? Screen.width : implicitWidth
-            //source: flickable._source
+        property bool flickRestrict: width > contentWidth || height > contentHeight
+        contentWidth: imageWrapper.width
+        contentHeight: imageWrapper.height
+        contentX: (contentWidth - flickable.width)/2
+        contentY: (contentHeight - flickable.height)/2
 
-            //asynchronous for LOCAL filesystem, http are always loaded asynchonously.
-            //anyway, we set this
-            asynchronous: true
+        clip: true
+        interactive: !_scaling
+        flickableDirection: flickRestrict
+                            ? width >= contentWidth && height < contentHeight
+                              ? Flickable.VerticalFlick
+                              : (width < contentWidth && height >= contentHeight
+                                 ? Flickable.HorizontalFlick
+                                 : Flickable.HorizontalAndVerticalFlick
+                                )
+                            : Flickable.AutoFlickDirection
 
-//            opacity: status == Image.Ready ? 1 : 0
-//            Behavior on opacity { FadeAnimation{} }
+        Item {
+            id: imageWrapper
+            width: initialWidth * _scale
+            height: initialHeight *_scale
 
-            onStatusChanged: {
-                if (image.status == Image.Ready) {
-                    appUtility.saveRemoteImage(flickable.source);
-                    flickable.loadReady()
-                    //flickable._fittedScale = Math.min(flickable.width / flickable.implicitWidth, flickable.height / flickable.implicitHeight)
-                   // flickable._menuOpenScale = Math.max(flickable._viewOpenWidth / flickable.implicitWidth, flickable._viewOpenHeight / flickable.implicitHeight)
-                    //flickable._resetScale();
-                     flickable._scale = flickable._fittedScale
+            property var _source
+            property real initialWidth: 0.0
+            property real initialHeight: 0.0
+
+            on_SourceChanged: {
+                loader.sourceComponent = loader.Null
+                var tmp = _source + "";
+                if (tmp.substr(-4,4) == ".gif") {
+                    loader.sourceComponent = aiComponent;
+                } else {
+                    loader.sourceComponent = photoComponent
                 }
             }
-            onSourceChanged: {
-                flickable.scaled = false
+
+            Loader {
+                id: loader
+                anchors.fill: parent
             }
-        }
-
-//        Image {
-//            id: largePhoto
-//            sourceSize {
-//                width: 3264
-//                height: 3264
-//            }
-//            cache: false
-//            asynchronous: true
-//            anchors.fill: container //image
-//            onStatusChanged: {
-//                if (image.status == Image.Ready) {
-//                    console.log("===== image ready")
-//                }
-//            }
-//            z: 1
-//        }
-
-        MouseArea {
-            anchors.fill: parent
-            enabled: !flickable.scaled
-            onCanceled: {
-                flickable.clicked()
+            Component {
+                id: aiComponent
+                AnimatedImage {
+                    id: aImage
+                    anchors.fill: parent
+                    asynchronous: true
+                    cache: true
+                    source: imageWrapper._source
+                    fillMode: Image.PreserveAspectFit
+                    onStatusChanged: {
+                        loadingStatus(status)
+                        if (status == Image.Ready) {
+                            _updateFittedScale(aImage.implicitWidth, aImage.implicitHeight);
+                        }
+                        if (status == Image.Error) {
+                            errorLabel = errorLabelComponent.createObject(pinchArea)
+                        }
+                    }
+                }
+            }
+            Component {
+                id: photoComponent
+                Image {
+                    id: photo
+                    anchors.fill: parent
+                    asynchronous: true
+                    cache: true
+                    source: imageWrapper._source
+                    fillMode: Image.PreserveAspectFit
+                    onStatusChanged: {
+                        loadingStatus(status)
+                        if (status == Image.Ready) {
+                            _updateFittedScale(photo.implicitWidth, photo.implicitHeight);
+                        }
+                        if (status == Image.Error) {
+                            errorLabel = errorLabelComponent.createObject(pinchArea)
+                        }
+                    }
+                }
             }
         }
     }
-
-//    states: [
-//            State {
-//                name: "menuOpen"
-//                when: flickable.menuOpen && photo.status === Image.Ready
-//                PropertyChanges {
-//                    target: flickable
-//                    _scale: flickable._menuOpenScale
-//                    scaled: false
-//                    contentX: (flickable.implicitWidth  * flickable._menuOpenScale - flickable._viewOpenWidth ) / 2
-//                    contentY:  0
-//                }
-//            },
-//            State {
-//                name: "fullscreen"
-//                PropertyChanges {
-//                    target: flickable
-//                    // 1.0 for smaller images. _fittedScale for images which are larger than view
-//                    _scale: flickable._fittedScale //flickable._fittedScale >= 1 ? 1.0 : flickable._fittedScale
-//                    scaled: false
-//                    contentX: 0
-//                    contentY: 0
-//                }
-//            }
-//        ]
-
-//    transitions: [
-//            Transition {
-//                from: '*'
-//                to: 'menuOpen'
-//                PropertyAnimation {
-//                    target: flickable
-//                    properties: "_scale,contentX,contentY"
-//                    duration: 300
-//                    easing.type: Easing.InOutCubic
-//                }
-//            },
-//            Transition {
-//                from: 'menuOpen'
-//                to: '*'
-//                PropertyAnimation {
-//                    target: flickable
-//                    properties: "_scale,contentX,contentY"
-//                    duration: 300
-//                    easing.type: Easing.InOutCubic
-//                }
-//            }
-//        ]
-
 }
+

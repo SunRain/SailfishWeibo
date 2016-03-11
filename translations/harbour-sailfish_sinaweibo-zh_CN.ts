@@ -222,6 +222,14 @@
     </message>
 </context>
 <context>
+    <name>ImageViewer</name>
+    <message>
+        <location filename="../qml/components/ImageViewer.qml" line="59"/>
+        <source>Oops, can&apos;t display the image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LoginComponent</name>
     <message>
         <location filename="../qml/components/LoginComponent.qml" line="57"/>

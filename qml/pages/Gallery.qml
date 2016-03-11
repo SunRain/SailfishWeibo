@@ -5,14 +5,12 @@ import "../components"
 
 Page {
     id: gallery
-    anchors.fill: parent
 
-    property alias modelGallery: imageListview.model
+    property alias modelGallery : imageListview.model
     property var index
+    property int _indicatorIndex: 0
 
-    //property alias _menuOpen: drawer.opened
-
-    //backNavigation: drawer.open
+    showNavigationIndicator: false
 
     Component.onCompleted: {
         _setNewIndex(index);
@@ -43,98 +41,41 @@ Page {
         return false;
     }
 
-    //////////////////////////////////////////////      a listview to show the images of one weibo
     SilicaListView {
         id: imageListview
-
-        anchors{
-            top:parent.top
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            margins: Theme.paddingSmall
-        }
-        
+        anchors.fill: parent
         snapMode: ListView.SnapOneItem
         orientation: ListView.HorizontalFlick
         model: modelGallery
-        delegate: delageteImage
         clip: true
-        cacheBuffer: width
+        cacheBuffer: 0
         highlightRangeMode: ListView.StrictlyEnforceRange
-    }
-
-    Component {
-        id: delageteImage
-
-        Item {
-            id: flickContainer
-            width: imageListview.width
-            height: imageListview.height
-            clip: true
-
+        delegate: ImageViewer {
+            id: imageweibo
+            property var _busyIndicator
             property bool _runningBusyIndicator: true
-
+            width: ListView.view.width
+            height: ListView.view.height
+            source: tokenProvider.useHackLogin
+                    ? _toHackLarge(model.url, model.size)
+                    : _toLarge(model.thumbnail_pic)
+            onLoadingStatus: {
+                if (status == Image.Ready) {
+                    _runningBusyIndicator = false;
+                }
+            }
             BusyIndicator {
-                id:busyIndicator
-                running: _runningBusyIndicator
-                size: BusyIndicatorSize.Large
+                size: BusyIndicatorSize.Medium
                 anchors.centerIn: parent
-                enabled: _runningBusyIndicator
+                running: imageweibo._runningBusyIndicator
+                z: parent.z + 10
             }
-
-            Loader {
+            MouseArea {
                 anchors.fill: parent
-                sourceComponent: _isGifImage(model.thumbnail_pic) ? animatedImageComponent : imageComponent
-            }
-
-            ////////////////////// for gif image
-            Component {
-                id:animatedImageComponent
-                AnimatedImage {
-                    id:animatedImageWeibo
-                    anchors.fill: parent
-                    fillMode: Image.PreserveAspectFit
-
-                    //asynchronous for LOCAL filesystem, http are always loaded asynchonously.
-                    //anyway, we set this
-                    asynchronous: true
-
-                    source: _toLarge(model.thumbnail_pic)
-                    onStatusChanged: {
-                        if (animatedImageWeibo.status == AnimatedImage.Ready) {
-                            _runningBusyIndicator = false;
-                        }
-                    }
+                onClicked: {
+                    pageStack.pop();
                 }
             }
-            /////////////////////// other image
-            Component {
-                id: imageComponent
-                Flickable {
-                    anchors.centerIn: parent
-                    width: imageweibo.width > Screen.width ? Screen.width : imageweibo.width
-                    height: imageweibo.height> Screen.height? Screen.height : imageweibo.height
-
-                    contentWidth: imageweibo.width
-                    contentHeight: imageweibo.height
-
-                    ImageViewer {
-                        id: imageweibo
-                        //anchors.fill: parent
-                        //anchors.centerIn: parent
-                        maximumWidth: Screen.width//parent.width
-                        maximumHeight: Screen.height //parent.height
-                        enableZoom: true
-                        //menuOpen: gallery._menuOpen
-                        source: tokenProvider.useHackLogin
-                                ? _toHackLarge(model.url, model.size)
-                                :_toLarge(model.thumbnail_pic )
-                        onClicked: {}
-                        onLoadReady: {_runningBusyIndicator = false;}
-                    }
-                }
-            } // Component
-        } //Item
-    } //Component
+        }
+    }
 }

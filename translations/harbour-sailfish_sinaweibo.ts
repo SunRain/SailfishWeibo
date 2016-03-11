@@ -185,6 +185,13 @@
     </message>
 </context>
 <context>
+    <name>ImageViewer</name>
+    <message>
+        <source>Oops, can&apos;t display the image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LoginComponent</name>
     <message>
         <source>UserName</source>
