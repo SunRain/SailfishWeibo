@@ -569,7 +569,7 @@
 <context>
     <name>SplashesPage</name>
     <message>
-        <location filename="../qml/pages/SplashesPage.qml" line="39"/>
+        <location filename="../qml/pages/SplashesPage.qml" line="36"/>
         <source>Loading ...</source>
         <translation>Loading ...</translation>
     </message>

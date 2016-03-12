@@ -61,14 +61,18 @@ ApplicationWindow
                                         // 1 ==> start index page
             onStatusChanged: {
                 if (splashes.status === PageStatus.Active) {
-                    var token = tokenProvider.accessToken;
-
-                    console.log("===== main view token is " + token);
-                    if (token == "" || token == undefined) {
-                        _delayType = 0;
-                        delay.restart();
+                    if (!tokenProvider.useHackLogin) {
+                        var token = tokenProvider.accessToken;
+                        console.log("===== main view token is " + token);
+                        if (token == "" || token == undefined) {
+                            _delayType = 0;
+                            delay.restart();
+                        } else {
+                            tokenProvider.checkToken(token);
+                        }
                     } else {
-                        tokenProvider.checkToken(token);
+                        _delayType = 1;
+                        delay.restart();
                     }
                 }
             }
