@@ -106,7 +106,7 @@
     <message>
         <location filename="../qml/pages/CommentAllPage.qml" line="136"/>
         <source>Reply to</source>
-        <translation type="unfinished"></translation>
+        <translation>回复给</translation>
     </message>
 </context>
 <context>
@@ -129,7 +129,7 @@
     <message>
         <location filename="../qml/pages/CommentMentioned.qml" line="139"/>
         <source>Reply to</source>
-        <translation type="unfinished"></translation>
+        <translation>回复给</translation>
     </message>
 </context>
 <context>
@@ -137,7 +137,7 @@
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="40"/>
         <source>Weibo</source>
-        <translation type="unfinished"></translation>
+        <translation>微博</translation>
     </message>
 </context>
 <context>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../qml/pages/FirstPage.qml" line="86"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <location filename="../qml/pages/FirstPage.qml" line="159"/>
@@ -226,7 +226,7 @@
     <message>
         <location filename="../qml/components/ImageViewer.qml" line="59"/>
         <source>Oops, can&apos;t display the image</source>
-        <translation type="unfinished"></translation>
+        <translation>天啦撸，不知道为什么图片看不了了</translation>
     </message>
 </context>
 <context>
@@ -234,17 +234,17 @@
     <message>
         <location filename="../qml/ui/LoginComponent.qml" line="24"/>
         <source>Try hack login failure on prelogin, error code is</source>
-        <translation type="unfinished"></translation>
+        <translation>预登陆失败，错误代码</translation>
     </message>
     <message>
         <location filename="../qml/ui/LoginComponent.qml" line="33"/>
         <source>Try hack login failur</source>
-        <translation type="unfinished"></translation>
+        <translation>模拟登陆失败</translation>
     </message>
     <message>
         <location filename="../qml/ui/LoginComponent.qml" line="77"/>
         <source>Enter e-mail or username</source>
-        <translation type="unfinished"></translation>
+        <translation>输入用户名或e-mail</translation>
     </message>
     <message>
         <location filename="../qml/ui/LoginComponent.qml" line="78"/>
@@ -259,12 +259,12 @@
     <message>
         <location filename="../qml/ui/LoginComponent.qml" line="119"/>
         <source>Enter captcha</source>
-        <translation type="unfinished"></translation>
+        <translation>输入验证码</translation>
     </message>
     <message>
         <location filename="../qml/ui/LoginComponent.qml" line="120"/>
         <source>Captcha</source>
-        <translation type="unfinished"></translation>
+        <translation>验证码</translation>
     </message>
     <message>
         <location filename="../qml/ui/LoginComponent.qml" line="129"/>
@@ -283,13 +283,13 @@
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="31"/>
         <source>Login</source>
-        <translation type="unfinished">登入</translation>
+        <translation>登入</translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="37"/>
         <location filename="../qml/pages/LoginPage.qml" line="83"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>帮助</translation>
     </message>
 </context>
 <context>
@@ -382,24 +382,24 @@
     <message>
         <location filename="../qml/pages/PMChatPage.qml" line="53"/>
         <source>Oops, get message token error, can&apos;t send pm!!!</source>
-        <translation type="unfinished"></translation>
+        <translation>天啦撸，私信验证错误了，你没法给基友发私信了！！！</translation>
     </message>
     <message>
         <location filename="../qml/pages/PMChatPage.qml" line="100"/>
         <location filename="../qml/pages/PMChatPage.qml" line="107"/>
         <location filename="../qml/pages/PMChatPage.qml" line="168"/>
         <source>Send</source>
-        <translation type="unfinished"></translation>
+        <translation>发送</translation>
     </message>
     <message>
         <location filename="../qml/pages/PMChatPage.qml" line="123"/>
         <source>Unknow person</source>
-        <translation type="unfinished"></translation>
+        <translation>未知用户</translation>
     </message>
     <message>
         <location filename="../qml/pages/PMChatPage.qml" line="161"/>
         <source>Can&apos;t send empty msg</source>
-        <translation type="unfinished"></translation>
+        <translation>我觉得你不应该发空白信息，这是不对的</translation>
     </message>
 </context>
 <context>
@@ -407,22 +407,22 @@
     <message>
         <location filename="../qml/pages/PMListPage.qml" line="92"/>
         <source>Unfollowed PM</source>
-        <translation type="unfinished"></translation>
+        <translation>未关注人私信</translation>
     </message>
     <message>
         <location filename="../qml/pages/PMListPage.qml" line="92"/>
         <source>followed PM</source>
-        <translation type="unfinished"></translation>
+        <translation>关注人私信</translation>
     </message>
     <message>
         <location filename="../qml/pages/PMListPage.qml" line="131"/>
         <source>followed message</source>
-        <translation type="unfinished"></translation>
+        <translation>关注人信息</translation>
     </message>
     <message>
         <location filename="../qml/pages/PMListPage.qml" line="145"/>
         <source>unfollowed message</source>
-        <translation type="unfinished"></translation>
+        <translation>未关注人私信</translation>
     </message>
 </context>
 <context>
@@ -506,64 +506,64 @@
     <message>
         <location filename="../qml/pages/SendPage.qml" line="84"/>
         <source>search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="233"/>
         <source>Also repost to my weibo</source>
-        <translation type="unfinished"></translation>
+        <translation>同时转发到我的微博</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="259"/>
         <source>comment option</source>
-        <translation type="unfinished"></translation>
+        <translation>评论选项</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="265"/>
         <source>Do not comment original Weibo</source>
-        <translation type="unfinished"></translation>
+        <translation>不同时评论原微博</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="247"/>
         <location filename="../qml/pages/SendPage.qml" line="269"/>
         <source>Also comment original Weibo</source>
-        <translation type="unfinished"></translation>
+        <translation>同时评论原微博</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="277"/>
         <source>repost option</source>
-        <translation type="unfinished"></translation>
+        <translation>转发选项</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="283"/>
         <source>No comments</source>
-        <translation type="unfinished"></translation>
+        <translation>不评论</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="287"/>
         <source>Comment current Weibo</source>
-        <translation type="unfinished"></translation>
+        <translation>评论当前微博</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="291"/>
         <source>Comment original Weibo</source>
-        <translation type="unfinished"></translation>
+        <translation>评论原微博</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="295"/>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>全部选择</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="133"/>
         <location filename="../qml/pages/SendPage.qml" line="144"/>
         <source>Send</source>
-        <translation type="unfinished"></translation>
+        <translation>发送</translation>
     </message>
     <message>
         <location filename="../qml/pages/SendPage.qml" line="183"/>
         <source>Click the inserted image to remove from the uploading queue</source>
-        <translation type="unfinished"></translation>
+        <translation>点击图片以便删除</translation>
     </message>
 </context>
 <context>
@@ -579,48 +579,48 @@
     <message>
         <location filename="../qml/ui/UserInfoTab.qml" line="88"/>
         <source>Bilateral</source>
-        <translation type="unfinished"></translation>
+        <translation>双向关注</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserInfoTab.qml" line="90"/>
         <source>Following</source>
-        <translation type="unfinished"></translation>
+        <translation>已关注</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserInfoTab.qml" line="94"/>
         <source>Follower</source>
-        <translation type="unfinished"></translation>
+        <translation>关注我的</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserInfoTab.qml" line="96"/>
         <location filename="../qml/ui/UserInfoTab.qml" line="109"/>
         <source>Follow</source>
-        <translation type="unfinished"></translation>
+        <translation>关注</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserInfoTab.qml" line="107"/>
         <source>CancelFollowing</source>
-        <translation type="unfinished"></translation>
+        <translation>取消关注</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserInfoTab.qml" line="129"/>
         <source>Description: </source>
-        <translation type="unfinished"></translation>
+        <translation>信息</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserInfoTab.qml" line="152"/>
         <source>Weibo:</source>
-        <translation type="unfinished"></translation>
+        <translation>微博:</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserInfoTab.qml" line="167"/>
         <source>following:</source>
-        <translation type="unfinished"></translation>
+        <translation>关注:</translation>
     </message>
     <message>
         <location filename="../qml/ui/UserInfoTab.qml" line="189"/>
         <source>follower:</source>
-        <translation type="unfinished"></translation>
+        <translation>粉丝:</translation>
     </message>
 </context>
 <context>
@@ -628,43 +628,43 @@
     <message>
         <location filename="../qml/pages/UserPage.qml" line="346"/>
         <source>User Info</source>
-        <translation type="unfinished"></translation>
+        <translation>用户信息</translation>
     </message>
     <message>
         <location filename="../qml/pages/UserPage.qml" line="374"/>
         <source>&apos;s RecentWeibo</source>
-        <translation type="unfinished"></translation>
+        <translation>的最新微博</translation>
     </message>
     <message>
         <location filename="../qml/pages/UserPage.qml" line="306"/>
         <source>UserInfo</source>
-        <translation type="unfinished"></translation>
+        <translation>用户信息</translation>
     </message>
     <message>
         <location filename="../qml/pages/UserPage.qml" line="249"/>
         <location filename="../qml/pages/UserPage.qml" line="257"/>
         <source>send PM</source>
-        <translation type="unfinished"></translation>
+        <translation>发送私信</translation>
     </message>
     <message>
         <location filename="../qml/pages/UserPage.qml" line="317"/>
         <source>UserWeibo</source>
-        <translation type="unfinished"></translation>
+        <translation>用户微博</translation>
     </message>
     <message>
         <location filename="../qml/pages/UserPage.qml" line="426"/>
         <source>&apos;s Weibo</source>
-        <translation type="unfinished">的微博</translation>
+        <translation>的微博</translation>
     </message>
     <message>
         <location filename="../qml/pages/UserPage.qml" line="491"/>
         <source>Repost</source>
-        <translation type="unfinished">转发</translation>
+        <translation>转发</translation>
     </message>
     <message>
         <location filename="../qml/pages/UserPage.qml" line="501"/>
         <source>Comment</source>
-        <translation type="unfinished">评论</translation>
+        <translation>评论</translation>
     </message>
 </context>
 <context>
@@ -681,23 +681,23 @@
         <location filename="../qml/WBSendFunctions.qml" line="53"/>
         <location filename="../qml/WBSendFunctions.qml" line="85"/>
         <source>New Weibo sent</source>
-        <translation type="unfinished">发送成功</translation>
+        <translation>发送成功</translation>
     </message>
     <message>
         <location filename="../qml/WBSendFunctions.qml" line="118"/>
         <location filename="../qml/WBSendFunctions.qml" line="152"/>
         <source>Comment sent</source>
-        <translation type="unfinished">评论成功</translation>
+        <translation>评论成功</translation>
     </message>
     <message>
         <location filename="../qml/WBSendFunctions.qml" line="187"/>
         <source>Reply sent</source>
-        <translation type="unfinished">回复成功</translation>
+        <translation>回复成功</translation>
     </message>
     <message>
         <location filename="../qml/WBSendFunctions.qml" line="271"/>
         <source>Uploading, please wait..</source>
-        <translation type="unfinished">上传中。。。</translation>
+        <translation>上传中。。。</translation>
     </message>
     <message>
         <location filename="../qml/WBSendFunctions.qml" line="24"/>
@@ -706,7 +706,7 @@
         <location filename="../qml/WBSendFunctions.qml" line="68"/>
         <location filename="../qml/WBSendFunctions.qml" line="82"/>
         <source>Oops.. something wrong</source>
-        <translation type="unfinished">出错了。。。</translation>
+        <translation>天啦撸，不知道哪里出错了。。。</translation>
     </message>
 </context>
 <context>
@@ -716,7 +716,7 @@
         <location filename="../qml/components/WeiboCard.qml" line="222"/>
         <location filename="../qml/components/WeiboCard.qml" line="224"/>
         <source>From</source>
-        <translation type="unfinished"></translation>
+        <translation>来自</translation>
     </message>
     <message>
         <location filename="../qml/components/WeiboCard.qml" line="100"/>
@@ -775,7 +775,7 @@
     <message>
         <location filename="../qml/pages/WeiboPage.qml" line="125"/>
         <source>Request for addNotification error!!</source>
-        <translation type="unfinished"></translation>
+        <translation>获取微博信息错误！！</translation>
     </message>
     <message>
         <location filename="../qml/pages/WeiboPage.qml" line="153"/>
@@ -797,12 +797,12 @@
     <message>
         <location filename="../qml/pages/WeiboPage.qml" line="355"/>
         <source> From </source>
-        <translation type="unfinished"> 来自 </translation>
+        <translation> 来自 </translation>
     </message>
     <message>
         <location filename="../qml/pages/WeiboPage.qml" line="377"/>
         <source>Reply</source>
-        <translation type="unfinished">回复</translation>
+        <translation>回复</translation>
     </message>
 </context>
 <context>
