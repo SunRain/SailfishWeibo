@@ -232,33 +232,48 @@
 <context>
     <name>LoginComponent</name>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="57"/>
+        <location filename="../qml/ui/LoginComponent.qml" line="24"/>
+        <source>Try hack login failure on prelogin, error code is</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/LoginComponent.qml" line="33"/>
+        <source>Try hack login failur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/LoginComponent.qml" line="77"/>
+        <source>Enter e-mail or username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/LoginComponent.qml" line="78"/>
         <source>UserName</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="66"/>
+        <location filename="../qml/ui/LoginComponent.qml" line="89"/>
         <source>Password</source>
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="71"/>
+        <location filename="../qml/ui/LoginComponent.qml" line="119"/>
+        <source>Enter captcha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/LoginComponent.qml" line="120"/>
+        <source>Captcha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ui/LoginComponent.qml" line="129"/>
         <source>Show Password</source>
         <translation>显示密码</translation>
     </message>
     <message>
-        <location filename="../qml/components/LoginComponent.qml" line="123"/>
-        <source>Login fail</source>
-        <translation>登录失败</translation>
-    </message>
-    <message>
-        <location filename="../qml/components/LoginComponent.qml" line="123"/>
-        <source>Please try again.</source>
-        <translation>请重试</translation>
-    </message>
-    <message>
-        <location filename="../qml/components/LoginComponent.qml" line="32"/>
-        <location filename="../qml/components/LoginComponent.qml" line="80"/>
+        <location filename="../qml/ui/LoginComponent.qml" line="58"/>
+        <location filename="../qml/ui/LoginComponent.qml" line="138"/>
         <source>Login</source>
         <translation>登入</translation>
     </message>
@@ -266,22 +281,13 @@
 <context>
     <name>LoginPage</name>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="47"/>
-        <source>Login Autheticator</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qml/pages/LoginPage.qml" line="31"/>
+        <source>Login</source>
+        <translation type="unfinished">登入</translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="27"/>
-        <source>Manual Autheticator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/LoginPage.qml" line="34"/>
-        <source>User Password Autheticator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/LoginPage.qml" line="40"/>
+        <location filename="../qml/pages/LoginPage.qml" line="37"/>
+        <location filename="../qml/pages/LoginPage.qml" line="83"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>

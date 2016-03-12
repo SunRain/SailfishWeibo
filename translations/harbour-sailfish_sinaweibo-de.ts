@@ -206,34 +206,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Login fail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please try again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try hack login failure on prelogin, error code is</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try hack login failur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter e-mail or username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter captcha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Captcha</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LoginPage</name>
     <message>
-        <source>Manual Autheticator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User Password Autheticator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Login Autheticator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

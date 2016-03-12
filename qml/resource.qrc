@@ -5,7 +5,6 @@
         <file>components/HorizontalIconTextButton.qml</file>
         <file>components/ImagePreviewComponent.qml</file>
         <file>components/ImageViewer.qml</file>
-        <file>components/LoginComponent.qml</file>
         <file>components/MainComponent.qml</file>
         <file>components/Notification.qml</file>
         <file>components/OptionItem.qml</file>
@@ -66,5 +65,6 @@
         <file>requests/RQHackStatusesShow.qml</file>
         <file>pages/PMListPage.qml</file>
         <file>pages/PMChatPage.qml</file>
+        <file>ui/LoginComponent.qml</file>
     </qresource>
 </RCC>
