@@ -11,12 +11,13 @@ Name:       harbour-sailfish_sinaweibo
 %define __requires_exclude libcss_parser_pp.*$|libcss_parser.*$|libhtmlcxx.*$
 
 # << macros
+
 %{!?qtc_qmake:%define qtc_qmake %qmake}
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    A Sina weibo for SailfishOS
-Version:    1.2
+Version:    2.0
 Release:    0
 Group:      Qt/Qt
 License:    GPL v3
@@ -56,10 +57,10 @@ A native SinaWeibo for Sailfish OS
 
 %install
 rm -rf %{buildroot}
-
 # >> install pre
 # << install pre
 %qmake5_install
+
 # >> install post
 # << install post
 
