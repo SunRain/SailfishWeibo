@@ -649,6 +649,10 @@
         <source>Request for addNotification error!!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Reply to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeiboTab</name>
