@@ -8,39 +8,31 @@ import "../ui"
 Page {
     id: sendPage
     property string mode
-    onModeChanged: {
-        console.log("===== onModeChanged " + mode)
-        wbSender.mode = mode;
-    }
-
 //    property var repostType: [qsTr("No comments"), qsTr("Comment current Weibo"), qsTr("Comment original Weibo"), qsTr("Both")]
 //    property var commentType: [qsTr("Do not comment original Weibo"), qsTr("Also comment original Weibo")]
-    
     property string sendTitle
     property var userInfo         // include id, cid, etc..
-    onUserInfoChanged: {
-        wbSender.userInfo = userInfo;
-    }
-
     property string placeHoldText:""
     property var optionIndex: undefined
-    onOptionIndexChanged: {
-        console.log("====== sendPage onOptionIndexChanged "+optionIndex);
+
+    property alias contentText: content.text
+    Component.onCompleted: {
+        wbSender.imageModel.clear();
+        wbSender.mode = mode;
+        wbSender.contentText = "";
+        wbSender.userInfo = undefined;
+    }
+
+    function doSendWeibo() {
+        wbSender.mode = mode;
+        wbSender.userInfo = userInfo;
         if (optionIndex == undefined)
             var a = 0
         else
             a = optionIndex
         wbSender.optionIndex = a;
-    }
-
-    property alias contentText: content.text
-    onContentTextChanged: {
         wbSender.contentText = contentText;
-    }
-    Component.onCompleted: {
-        wbSender.imageModel.clear();
-        wbSender.mode = mode;
-        contentText = "";
+        wbSender.sendWeibo();
     }
 
     Component {
@@ -134,7 +126,8 @@ Page {
                 onClicked: {
                     console.log("SendPage == SendIcon click, we send [" + content.text +"]  for mode "
                                 + sendPage.mode + " with option " + optionIndex);
-                    wbSender.sendWeibo();
+                    //wbSender.sendWeibo();
+                    doSendWeibo();
                 }
             }
         }
@@ -145,7 +138,8 @@ Page {
                 onClicked: {
                     console.log("SendPage == SendIcon click, we send [" + content.text +"]  for mode "
                                 + sendPage.mode + " with option " + optionIndex);
-                    wbSender.sendWeibo();
+                    //wbSender.sendWeibo();
+                    doSendWeibo();
                 }
             }
         }

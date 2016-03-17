@@ -8,6 +8,7 @@ Item {
     id: wbSendFunctions
 
     property string mode: ""
+
 //    property var repostType: [qsTr("No comments"), qsTr("Comment current Weibo"), qsTr("Comment original Weibo"), qsTr("Both")]
 //    property var commentType: [qsTr("Do not comment original Weibo"), qsTr("Also comment original Weibo")]
 
