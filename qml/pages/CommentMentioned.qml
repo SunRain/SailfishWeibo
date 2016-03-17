@@ -136,7 +136,7 @@ WBPage{
                             }
                             commentMentionedPage._weiboTmp = model.status
                             if (tokenProvider.useHackLogin) {
-                                var placeHold = qsTr("Reply to")+":"+model.card.page_title+" ";
+                                var placeHold = qsTr("Reply to")+":@"+model.card.page_title+" ";
                                 wbFunc.toSendPage("reply", commentMentionedPage._commentInfo, placeHold)
                             } else {
                                 wbFunc.toSendPage("reply", commentMentionedPage._commentInfo)

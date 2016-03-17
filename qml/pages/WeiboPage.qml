@@ -377,9 +377,13 @@ Page {
                         text: qsTr("Reply")
                         onClicked: {
                             var commentInfo = { "id": userWeiboJSONContent.id, "cid": model.id}
-                            pageStack.push(Qt.resolvedUrl("SendPage.qml"),
-                                           {"mode":"reply",
-                                               "userInfo":commentInfo})
+                            if (tokenProvider.useHackLogin) {
+                                var placeHold = qsTr("Reply to")+":@"+model.user.screen_name+" ";
+                                console.log("===== reply to "+placeHold)
+                                wbFunc.toSendPage("reply", commentInfo, placeHold)
+                            } else {
+                                wbFunc.toSendPage("reply", commentInfo)
+                            }
                         }
                     }
                 }
