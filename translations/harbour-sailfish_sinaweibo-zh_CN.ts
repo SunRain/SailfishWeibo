@@ -626,43 +626,43 @@
 <context>
     <name>UserPage</name>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="346"/>
+        <location filename="../qml/pages/UserPage.qml" line="354"/>
         <source>User Info</source>
         <translation>用户信息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="374"/>
+        <location filename="../qml/pages/UserPage.qml" line="382"/>
         <source>&apos;s RecentWeibo</source>
         <translation>的最新微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="306"/>
+        <location filename="../qml/pages/UserPage.qml" line="314"/>
         <source>UserInfo</source>
         <translation>用户信息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="249"/>
         <location filename="../qml/pages/UserPage.qml" line="257"/>
+        <location filename="../qml/pages/UserPage.qml" line="265"/>
         <source>send PM</source>
         <translation>发送私信</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="317"/>
+        <location filename="../qml/pages/UserPage.qml" line="325"/>
         <source>UserWeibo</source>
         <translation>用户微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="426"/>
+        <location filename="../qml/pages/UserPage.qml" line="434"/>
         <source>&apos;s Weibo</source>
         <translation>的微博</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="491"/>
+        <location filename="../qml/pages/UserPage.qml" line="499"/>
         <source>Repost</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UserPage.qml" line="501"/>
+        <location filename="../qml/pages/UserPage.qml" line="509"/>
         <source>Comment</source>
         <translation>评论</translation>
     </message>

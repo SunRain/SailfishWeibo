@@ -197,32 +197,40 @@ Page {
 
     WrapperFriendshipsCreate {
         id: friendshipsCreate
-        onRequestAbort: {
-            console.log("== friendshipsCreate onRequestAbort");
+        onRequestResult: { //ret replyData
+            if (ret == BaseRequest.RET_ABORT) {
+                wbFunc.addNotification("RequestAbort");
+            } else if (ret == BaseRequest.RET_FAILURE) {
+                wbFunc.addNotification(replyData);
+            }
         }
-        onRequestFailure: { //replyData
-            console.log("== friendshipsCreate onRequestFailure ["+replyData+"]")
-        }
-        onRequestSuccess: { //replyData
+        onRequestSuccess: {
             if (!userPage._pageActive) {
                 return;
             }
+            var obj = JSON.parse(replyData);
+            wbFunc.addNotification(obj.msg);
             _isFollowing = true;
+            showUserInfo();
         }
     }
     WrapperFriendshipsDestroy {
         id: friendshipsDestroy
-        onRequestAbort: {
-            console.log("== FriendshipsDestroy onRequestAbort");
+        onRequestResult: {
+            if (ret == BaseRequest.RET_ABORT) {
+                wbFunc.addNotification("RequestAbort");
+            } else if (ret == BaseRequest.RET_FAILURE) {
+                wbFunc.addNotification(replyData);
+            }
         }
-        onRequestFailure: { //replyData
-            console.log("== FriendshipsDestroy onRequestFailure ["+replyData+"]")
-        }
-        onRequestSuccess: { //replyData
+        onRequestSuccess: {
             if (!userPage._pageActive) {
                 return;
             }
+            var obj = JSON.parse(replyData);
+            wbFunc.addNotification(obj.msg);
             _isFollowing = false;
+            showUserInfo();
         }
     }
 
